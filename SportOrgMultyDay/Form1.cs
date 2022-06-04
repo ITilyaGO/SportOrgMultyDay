@@ -5,7 +5,7 @@ namespace SportOrgMultyDay
     public partial class Form1 : Form
     {
         const string StartStrJson = "var race = ";
-        string Html;
+       // string Html;
         string jsonSource1;
         string jsonSource2;
 
@@ -16,13 +16,22 @@ namespace SportOrgMultyDay
 
         private void buttonImportHtml_Click(object sender, EventArgs e)
         {
-            openFileDialog1.ShowDialog();
-            Html = File.ReadAllText(openFileDialog1.FileName);
-            jsonSource1= FindJson(Html);
-            richTextBoxOut.Text = jsonSource1;
+            jsonSource1 = FindJson(ImportHtml());
         }
 
-        private void DeserializeJson(string start1,string start2)
+
+        private void PutToNumbers(string json)
+        {
+            if (saveFileDialog1.ShowDialog() != DialogResult.OK) return;
+            string shablon = Properties.Resources.HtmlNumbers;
+           // string shablon = ;
+            shablon = shablon.Replace("<|JsonRace|>", json);
+            shablon = shablon.Replace("<|StartTime|>", textBoxStart1.Text);
+            shablon = shablon.Replace("<|StartTime2|>", textBoxStart2.Text);
+            File.WriteAllText(saveFileDialog1.FileName, shablon);
+        }
+
+        private string CombineJson(string start1,string start2)
         {
             var data1 = JObject.Parse(start1);
             var data2 = JObject.Parse(start2);
@@ -49,7 +58,7 @@ namespace SportOrgMultyDay
             }
 
             string newjson = data1.ToString(Newtonsoft.Json.Formatting.None);
-            richTextBoxOut.Text = newjson;
+            return newjson;
         }
 
         private string FindJson(string html)
@@ -63,17 +72,30 @@ namespace SportOrgMultyDay
             //jsonStart + StartStrJson.Length
         }
 
-        private void buttonDeserialize_Click(object sender, EventArgs e)
+        private string ImportHtml()
         {
-            DeserializeJson(jsonSource1,jsonSource2);
+            openFileDialog1.ShowDialog();
+            string Html = File.ReadAllText(openFileDialog1.FileName);
+            return Html;
+           // jsonSource2 = FindJson(Html);
         }
 
         private void buttonImportHtml2_Click(object sender, EventArgs e)
         {
-            openFileDialog1.ShowDialog();
-            Html = File.ReadAllText(openFileDialog1.FileName);
-            jsonSource2 = FindJson(Html);
-           // richTextBoxOut.Text = jsonSource2;
+            jsonSource2 = FindJson(ImportHtml());
+            // richTextBoxOut.Text = jsonSource2;
+        }
+
+        private void buttonCombine_Click(object sender, EventArgs e)
+        {
+            richTextBoxOut.Text = CombineJson(jsonSource1, jsonSource2);
+        }
+
+        private void buttonPutToBib_Click(object sender, EventArgs e)
+        {
+            //  openFileDialog1.ShowDialog();
+            //  string sh = File.ReadAllText(openFileDialog1.FileName);
+            PutToNumbers(richTextBoxOut.Text);
         }
     }
 }

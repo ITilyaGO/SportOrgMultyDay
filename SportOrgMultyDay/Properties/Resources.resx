@@ -1,0 +1,951 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="HtmlNumbers" xml:space="preserve">
+    <value>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Bib&lt;/title&gt;
+    
+    &lt;style&gt;
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        p,
+        blockquote,
+        ul,
+        ol,
+        dl,
+        table,
+        pre {
+            margin-top: 0;
+            margin-bottom: 16px;
+        }
+
+        hr {
+            box-sizing: content-box;
+            height: 0;
+        }
+
+        hr {
+            height: 0;
+            margin: 15px 0;
+            overflow: hidden;
+            background: transparent;
+            border: 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        hr:before {
+            display: table;
+            content: "";
+        }
+
+        hr:after {
+            display: table;
+            clear: both;
+            content: "";
+        }
+
+        hr {
+            height: 4px;
+            padding: 0;
+            margin: 16px 0;
+            background-color: #e7e7e7;
+            border: 0 none;
+        }
+
+        a:not([href]) {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        a {
+            color: #4078c0;
+            text-decoration: none;
+        }
+
+        a:hover,
+        a:active {
+            text-decoration: underline;
+        }
+
+        a {
+            background-color: transparent;
+        }
+
+        a:active,
+        a:hover {
+            outline: 0;
+        }
+
+        .print {
+            display: none;
+        }
+
+        .no-print {
+            display: block;
+        }
+
+        /*=== BIB ===*/
+        .bib-item {
+            width: 26.4cm;
+            float: left;
+            padding: 1cm;
+            border: 1px solid #e7e7e7;
+        }
+        .bib-title {
+            text-align: center;
+            font-size: 1.2cm;
+            height: 4.2cm;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .bib-number {
+            text-align: center;
+            font-size: 9cm;
+            height: 9cm;
+            font-weight: bold;
+        }
+        .bib-info {
+            font-size: 0.8cm;
+        }
+        .bib-info .left-info, .bib-info .right-info {
+            width: 50%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .bib-info .left-info {
+            float: left;
+        }
+        .bib-info .right-info {
+            float: right;
+        }
+        .info-item {
+            white-space: nowrap;
+        }
+        .rotatable {
+            -webkit-transform: rotate(-180deg); //Chrome, Safari
+        -moz-transform: rotate(-180deg); //Firefox
+        -o-transform: rotate(-180deg); //Opera
+        -ms-transform: rotate(-180deg); //IE
+        transform: rotate(-180deg);
+        }
+        /*=== BIB ===*/
+
+        @page {
+            size: A4 landscape;
+        }
+
+        @media print {
+            @page {
+                margin: 0.5cm;
+            }
+            body {
+                margin: 0;
+                zoom: 50%;
+            }
+            table {
+                display: table;
+                width: 100%;
+            }
+            table th,
+            table td {
+                padding: 1px 10px;
+            }
+            table,
+            pre {
+                margin-bottom: 1px;
+            }
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+                margin: 1px 0;
+            }
+            section {
+                page-break-before: always;
+            }
+            .new-page:nth-child(4n) {
+                page-break-after: always;
+            }
+            ul {
+                page-break-inside: avoid;
+            }
+            p {
+                widows: 4;
+            }
+            a[href^="http"]:after {
+                content: " (" attr(href) ")";
+            }
+            abbr[title]:after {
+                content: " (" attr(title) ")";
+            }
+            .print {
+                display: block;
+            }
+            .no-print {
+                display: none;
+            }
+        }
+    &lt;/style&gt;
+    
+    
+&lt;style&gt;
+    /* SETTINGS */
+    .sportorg-settings {
+        position: fixed;
+        border: 1px solid #dddddd;
+        border-radius: 5px;
+        background: white;
+        top: 3px;
+        right: 3px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+
+    .sportorg-settings-row {
+        margin: 5px;
+    }
+
+    @media print {
+        .sportorg-settings {
+            display: none;
+        }
+    }
+&lt;/style&gt;
+&lt;script&gt;
+    var MAX_ORG_NAME = 30;
+    var MAX_PERSON_NAME = 30;
+
+    var TableGenerator = (function () {
+        var Table = function () {
+            return document.createElement('table');
+        };
+        var THead = function () {
+            return document.createElement('thead');
+        };
+        var TBody = function () {
+            return document.createElement('tbody');
+        };
+        var Tr = function () {
+            return document.createElement('tr');
+        };
+        var Th = function () {
+            return document.createElement('th');
+        };
+        var Td = function () {
+            return document.createElement('td');
+        };
+
+        function TableGenerator(data, fields) {
+            this.data = data;
+            this.fields = fields;
+        }
+
+        TableGenerator.prototype.getTable = function (options) {
+            var table = Table();
+            if (options &amp;&amp; options.className) table.className = options.className;
+            table.appendChild(this.getHead());
+            table.appendChild(this.getBody());
+            return table;
+        };
+
+        TableGenerator.prototype.getHead = function () {
+            var tr = Tr();
+            for (var _i = 0, _a = this.headers(); _i &lt; _a.length; _i++) {
+                var key = _a[_i];
+                var th = Th();
+                var title = this.getHeaderName(key);
+                if (title instanceof Node) {
+                    th.appendChild(title);
+                }
+                else {
+                    th.appendChild(document.createTextNode(title));
+                }
+                tr.appendChild(th);
+            }
+            var thead = THead();
+            thead.appendChild(tr);
+            return thead;
+        };
+
+        TableGenerator.prototype.getBody = function () {
+            var tbody = TBody();
+            var cols = this.headers().length;
+            for (var _b = 0, _c = this.data; _b &lt; _c.length; _b++) {
+                var obj = _c[_b];
+                var tr = Tr();
+                if (obj instanceof Node || typeof obj === 'string') {
+                    var td = Td();
+                    td.colSpan = cols;
+                    if (typeof obj === 'string') {
+                        td.appendChild(document.createTextNode(obj));
+                    }
+                    else {
+                        td.appendChild(obj);
+                    }
+                    tr.appendChild(td);
+                }
+                else {
+                    for (var _i = 0, _a = this.headers(); _i &lt; _a.length; _i++) {
+                        var key = _a[_i];
+                        var td = Td();
+                        if (obj[key]) {
+                            if (obj[key] instanceof Node) {
+                                td.appendChild(obj[key]);
+                            }
+                            else {
+                                td.appendChild(document.createTextNode(obj[key]));
+                            }
+                        }
+                        tr.appendChild(td);
+                    }
+                }
+                tbody.appendChild(tr);
+            }
+            return tbody;
+        };
+
+        TableGenerator.prototype.headers = function () {
+            if (this._headers) {
+                return this._headers
+            }
+            if (!this.fields) {
+                var headers = {};
+                for (var _i = 0, _a = this.data; _i &lt; _a.length; _i++) {
+                    var obj = _a[_i];
+                    for (var key in obj) {
+                        headers[key] = true;
+                    }
+                }
+                this._headers = Object.keys(headers)
+            } else if (this.fields instanceof Array) {
+                this._headers = [];
+                for (var _i = 0, _a = this.fields; _i &lt; _a.length; _i++) {
+                    var field = _a[_i];
+                    if (typeof field === 'string') {
+                        this._headers.push(field);
+                    }
+                    else if (field.active !== false) {
+                        this._headers.push(field.key);
+                    }
+                }
+            }
+            return this._headers;
+        };
+
+        TableGenerator.prototype.getHeaderName = function (key) {
+            if (this.fields &amp;&amp; this.fields instanceof Array) {
+                for (var _i = 0, _a = this.fields; _i &lt; _a.length; _i++) {
+                    var field = _a[_i];
+                    if (typeof field === 'object' &amp;&amp; field.key === key) {
+                        return field.title;
+                    }
+                }
+            }
+            return key;
+        };
+
+        return TableGenerator
+    }());
+
+    var TableTextGenerator = (function () {
+
+        function TableTextGenerator(data, fields) {
+            this.data = data;
+            this.fields = fields;
+        }
+
+        TableTextGenerator.prototype.getTable = function (options) {
+            var node = document.createElement('pre');
+            if (options &amp;&amp; options.className) node.className = options.className;
+            node.appendChild(this.getHead());
+            node.appendChild(this.getBody());
+            return node;
+        };
+
+        TableTextGenerator.prototype.getSliceText = function (text, size) {
+            if (text === undefined) {
+                text = '';
+            }
+            text = String(text);
+            if (size) {
+                text = text.slice(0, size);
+                if (text.length &lt; size + 1) {
+                    var arr = [];
+                    for (var i = 0; i &lt; size + 1 - text.length; i++) {
+                        arr.push(' ');
+                    }
+                    text += arr.join('');
+                }
+            } else {
+                text += '\t';
+            }
+            return text;
+        };
+
+        TableTextGenerator.prototype.getHead = function () {
+            var text = '';
+            for (var _i = 0, _a = this.headers(); _i &lt; _a.length; _i++) {
+                var key = _a[_i];
+                var h = this.getHeaderObj(key);
+                var title = h &amp;&amp; h.title;
+                var size = h &amp;&amp; h.size;
+                if (size) {
+                    text += this.getSliceText(title, size);
+                } else {
+                    text += title;
+                }
+            }
+            text += '\n';
+            var blockU = document.createElement('u');
+            var blockB = document.createElement('b');
+            blockB.appendChild(document.createTextNode(text));
+            blockU.appendChild(blockB);
+            return blockU;
+        };
+
+        TableTextGenerator.prototype.getBody = function () {
+            var text = '';
+            for (var _b = 0, _c = this.data; _b &lt; _c.length; _b++) {
+                var obj = _c[_b];
+                if (typeof obj === 'string') {
+                    text += obj;
+                } else {
+                    for (var _i = 0, _a = this.headers(); _i &lt; _a.length; _i++) {
+                        var key = _a[_i];
+                        var h = this.getHeaderObj(key);
+                        var size = h &amp;&amp; h.size;
+                        if (size) {
+                            text += this.getSliceText(obj[key], size);
+                        } else {
+                            text += obj[key];
+                        }
+                    }
+                }
+                text += '\n';
+            }
+            return document.createTextNode(text);
+        };
+
+        TableTextGenerator.prototype.headers = function () {
+            if (this._headers) {
+                return this._headers
+            }
+            if (!this.fields) {
+                var headers = {};
+                for (var _i = 0, _a = this.data; _i &lt; _a.length; _i++) {
+                    var obj = _a[_i];
+                    for (var key in obj) {
+                        headers[key] = true;
+                    }
+                }
+                this._headers = Object.keys(headers)
+            } else if (this.fields instanceof Array) {
+                this._headers = [];
+                for (var _i = 0, _a = this.fields; _i &lt; _a.length; _i++) {
+                    var field = _a[_i];
+                    if (typeof field === 'string') {
+                        this._headers.push(field);
+                    }
+                    else if (field.active !== false) {
+                        this._headers.push(field.key);
+                    }
+                }
+            }
+            return this._headers;
+        };
+
+        TableTextGenerator.prototype.getHeaderName = function (key) {
+            if (this.fields &amp;&amp; this.fields instanceof Array) {
+                for (var _i = 0, _a = this.fields; _i &lt; _a.length; _i++) {
+                    var field = _a[_i];
+                    if (typeof field === 'object' &amp;&amp; field.key === key) {
+                        return field.title;
+                    }
+                }
+            }
+            return key;
+        };
+
+        TableTextGenerator.prototype.getHeaderObj = function (key) {
+            if (this.fields &amp;&amp; this.fields instanceof Array) {
+                for (var _i = 0, _a = this.fields; _i &lt; _a.length; _i++) {
+                    var field = _a[_i];
+                    if (typeof field === 'object' &amp;&amp; field.key === key) {
+                        return field;
+                    }
+                }
+            }
+        };
+
+        return TableTextGenerator
+    }());
+
+    var SettingsGenerator = (function () {
+        var Block = function () {
+            var el = document.createElement('div');
+            el.className = 'sportorg-settings';
+            return el
+        };
+        var Row = function () {
+            var el = document.createElement('div');
+            el.className = 'sportorg-settings-row';
+            return el
+        };
+
+        function SettingsGenerator(settings) {
+            this.settings = settings;
+            this.isShow = true;
+        }
+
+        SettingsGenerator.prototype.show = function () {
+            var block = Block();
+            this.el = block;
+            for (var _i = 0, _a = this.settings; _i &lt; _a.length; _i++) {
+                var setting = _a[_i];
+                var row = Row();
+                row.className = row.className + ' ' + 'sportorg-settings-hidden';
+                row.appendChild(this.getElBySetting(setting));
+                block.appendChild(row);
+            }
+            var btn = Row();
+            btn.appendChild(this.getHiddenButton());
+            block.appendChild(btn);
+            document.body.appendChild(block);
+            this.toggleHidden();
+        };
+        SettingsGenerator.prototype.getElBySetting = function (setting) {
+            if (typeof setting.value === 'boolean') {
+                var i = document.createElement('input');
+                i.type = 'checkbox';
+                if (setting.value) {
+                    i.checked = true;
+                }
+                if (setting.change) {
+                    i.onchange = function () {
+                        if (i.checked !== setting.value) {
+                            setting.change(i.checked);
+                            setting.value = i.checked;
+                        }
+                    }
+                }
+                var label = document.createElement('label');
+                label.appendChild(i);
+                label.appendChild(document.createTextNode(setting.title));
+                return label
+            } else if (setting.value instanceof Array) {
+                var s = document.createElement('select');
+                for (var _i = 0, _a = setting.value; _i &lt; _a.length; _i++) {
+                    var obj = _a[_i];
+                    s.appendChild(new Option(obj.text, obj.value));
+                }
+                if (setting.change) {
+                    s.onchange = function () {
+                        var results = [];
+                        for (var _i = 0, _a = s.selectedOptions; _i &lt; _a.length; _i++) {
+                            var item = _a[_i];
+                            results.push(item.value);
+                        }
+                        setting.change(results);
+                    };
+                }
+                var label = document.createElement('label');
+                label.appendChild(document.createTextNode(setting.title));
+                label.appendChild(s);
+                return label
+            }
+        };
+        SettingsGenerator.prototype.toggleHidden = function () {
+            var els = document.getElementsByClassName('sportorg-settings-hidden');
+            for (var _i = 0, els_ = els; _i &lt; els_.length; _i++) {
+                var el = els_[_i];
+                if (this.isShow) {
+                    el.style.display = 'none';
+                    if (this.el) {
+                        this.el.style.opacity = '.3';
+                    }
+                }
+                else {
+                    el.style.display = 'block';
+                    if (this.el) {
+                        this.el.style.opacity = '1';
+                    }
+                }
+            }
+            this.isShow = !this.isShow;
+        };
+        SettingsGenerator.prototype.getHiddenButton = function () {
+            var el = document.createElement('button');
+            el.appendChild(document.createTextNode('Свернуть/Развернуть'));
+            var _this = this;
+            el.onclick = function (ev) { _this.toggleHidden() };
+            return el;
+        };
+        return SettingsGenerator;
+    }());
+
+    function toHHMMSS(value) {
+        if (value === 0) {
+            return '00:00:00'
+        }
+        if (!value) return '';
+        value /= 1000;
+        var hours = Math.floor(value / 3600);
+        value %= 3600;
+        var minutes = Math.floor(value / 60);
+        var seconds = ~~(value % 60);
+
+        var date = new Date(2000, 0, 1, hours, minutes, seconds);
+
+        var with0 = function (dd) {
+            return (dd &lt; 10 ? '0' + dd : dd) + '';
+        };
+
+        return with0(date.getHours()) + ':' + with0(date.getMinutes()) + ':' + with0(date.getSeconds());
+    }
+
+    function getById(list, id) {
+        if (id) {
+            for (var _i = 0, list_ = list; _i &lt; list_.length; _i++) {
+                var obj = list_[_i];
+                if (obj.id === id) {
+                    return obj;
+                }
+            }
+        }
+        return null;
+    }
+
+    function racePreparation(race) {
+        for (var _i = 0, _a = race.persons; _i &lt; _a.length; _i++) {
+            var obj = _a[_i];
+            obj.organization = getById(race.organizations, obj.organization_id);
+            obj.group = getById(race.groups, obj.group_id);
+        }
+        for (var _b = 0, _c = race.results; _b &lt; _c.length; _b++) {
+            var obj = _c[_b];
+            obj.status = obj.status === 16 ? 1 : obj.status;
+            obj.person = getById(race.persons, obj.person_id);
+        }
+        for (var _d = 0, _e = race.groups; _d &lt; _e.length; _d++) {
+            var obj = _e[_d];
+            obj.course = getById(race.courses, obj.course_id);
+        }
+        for (var _f = 0, _g = ['groups', 'courses', 'organizations']; _f &lt; _g.length; _f++) {
+            var itemName = _g[_f];
+            race[itemName].sort(function (a, b) {
+                if (a.name.toUpperCase() &lt; b.name.toUpperCase())
+                    return -1;
+                if (a.name.toUpperCase() &gt; b.name.toUpperCase())
+                    return 1;
+                return 0;
+            });
+        }
+        return race;
+    }
+
+    function getGroupsBlockElement(race) {
+        var groupBlock = document.createElement('div');
+        groupBlock.className = 'no-print';
+        for (var _i = 0, _a = race.groups; _i &lt; _a.length; _i++) {
+            var group = _a[_i];
+            var a = document.createElement('a');
+            a.href = '#' + group.name;
+            a.appendChild(document.createTextNode(group.name + ' '));
+            groupBlock.appendChild(a);
+        }
+        return groupBlock;
+    }
+
+    function dateFormat(date) {
+        date = date ? new Date(date) : new Date();
+        return date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear();
+    }
+
+    var Qualification = {
+        '': 'б/р',
+        0: 'б/р',
+        3: 'IIIю',
+        2: 'IIю',
+        1: 'Iю',
+        6: 'III',
+        5: 'II',
+        4: 'I',
+        7: 'КМС',
+        8: 'МС',
+        9: 'МСМК'
+    };
+
+    var STATUS_PRIORITY = [8, 4, 3, 5, 13];
+
+    function guid() {
+        function s4() {
+            return Math.floor((1 + Math.random()) * 0x10000)
+                .toString(16)
+                .substring(1);
+        }
+        return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+    }
+&lt;/script&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class="bib-list" id="bib-list"&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+    var race = &lt;|JsonRace|&gt;;
+    racePreparation(race);
+    var store = {
+        bibDetailedRotatableText: true,
+        isRelayView: false
+    };
+    function render (options) {
+        var sort = options &amp;&amp; options.sort;
+        var sortFunc = function (a, b) {
+            return !options.isRelayView ? a.bib - b.bib: a.bib % 1000 - b.bib % 1000;
+        };
+        if (sort === 'name') {
+            sortFunc = function (a, b) {
+                var nameA = a.surname &amp;&amp; a.surname.toLowerCase() || '';
+                var nameB = b.surname &amp;&amp; b.surname.toLowerCase() || '';
+                if (nameA &lt; nameB) //sort string ascending
+                    return -1;
+                if (nameA &gt; nameB)
+                    return 1;
+                return 0;
+            };
+        } else if (sort === 'group') {
+            sortFunc = function (a, b) {
+                var nameA = a.group &amp;&amp; a.group.name.toLowerCase() || '';
+                var nameB = b.group &amp;&amp; b.group.name.toLowerCase() || '';
+                if (nameA &lt; nameB) //sort string ascending
+                    return -1;
+                if (nameA &gt; nameB)
+                    return 1;
+                return 0;
+            };
+        }else if (sort === 'organization') {
+            sortFunc = function (a, b) {
+                var nameA = a.organization &amp;&amp; a.organization.name.toLowerCase() || '';
+                var nameB = b.organization &amp;&amp; b.organization.name.toLowerCase() || '';
+                if (nameA &lt; nameB) //sort string ascending
+                    return -1;
+                if (nameA &gt; nameB)
+                    return 1;
+                return 0;
+            };
+        }
+        race.persons.sort(sortFunc);
+        var bibListBlock = document.getElementById('bib-list');
+        bibListBlock.innerHTML = '';
+        for (var _i = 0, _a = race.persons; _i &lt; _a.length; _i++) {
+            var person = _a[_i];
+            var bibItemBlock = document.createElement('div');
+            bibItemBlock.className = 'bib-item';
+            var bibTitleBlock = document.createElement('div');
+            bibTitleBlock.className = 'bib-title';
+            var bibNumberBlock = document.createElement('div');
+            bibNumberBlock.className = 'bib-number';
+            var bibInfoBlock = document.createElement('div');
+            bibInfoBlock.className = 'bib-info';
+            var bibDetailedBlock = document.createElement('div');
+            var detildData = [
+                { title: '', value: person.surname + ' ' + person.name },
+                { title: 'Номер чипа: ', value: person.card_number || '' },
+                { title: '&lt;|StartTime|&gt;', value: toHHMMSS(person.start_time) },
+				{ title: '&lt;|StartTime2|&gt;', value: toHHMMSS(person.start_time2) },
+                { title: 'Группа: ', value: person.group &amp;&amp; person.group.name },
+                { title: 'Коллектив: ', value: person.organization &amp;&amp; person.organization.name || '' }
+            ];
+            for (var _b = 0, detildData_ = detildData; _b &lt; detildData_.length; _b++) {
+                var obj = detildData_[_b];
+                var itemSpan = document.createElement('span');
+                itemSpan.className = 'info-item';
+                itemSpan.appendChild(document.createTextNode(obj.title));
+                var strong = document.createElement('strong');
+                strong.appendChild(document.createTextNode(obj.value));
+                itemSpan.appendChild(strong);
+                bibDetailedBlock.appendChild(itemSpan);
+                bibDetailedBlock.appendChild(document.createElement('br'));
+            }
+            var bibDetailedRotatableBlock = bibDetailedBlock.cloneNode(true);
+            bibDetailedBlock.className = 'left-info';
+            bibDetailedRotatableBlock.className = 'right-info rotatable';
+            bibTitleBlock.appendChild(document.createTextNode(race.data.title));
+            bibTitleBlock.appendChild(document.createElement('br'));
+            bibTitleBlock.appendChild(document.createTextNode(''));
+            bibNumberBlock.appendChild(document.createTextNode(!options.isRelayView ? person.bib : person.bib % 1000 + '.' + ~~(person.bib / 1000)));
+            bibInfoBlock.appendChild(bibDetailedBlock);
+            if (options &amp;&amp; options.bibDetailedRotatableText) {
+                bibInfoBlock.appendChild(bibDetailedRotatableBlock);
+            }
+            bibItemBlock.appendChild(bibTitleBlock);
+            bibItemBlock.appendChild(bibNumberBlock);
+            bibItemBlock.appendChild(bibInfoBlock);
+            bibListBlock.appendChild(bibItemBlock);
+            var newPageBlock = document.createElement('div');
+            newPageBlock.className = 'new-page';
+            bibListBlock.appendChild(newPageBlock);
+        }
+    }
+    render(store);
+    new SettingsGenerator([
+        {
+            title: 'Сортировать по: ',
+            value: [
+                {text: 'номеру', value: 'bib'},
+                {text: 'имени', value: 'name'},
+                {text: 'группе', value: 'group'},
+                {text: 'коллективу', value: 'organization'}
+            ],
+            change: function (arr) {
+                store.sort = arr[0];
+                render(store);
+            }
+        },
+        {
+            title: 'Отображать перевернутые данные',
+            value: store.bibDetailedRotatableText,
+            change: function (checked) {
+                store.bibDetailedRotatableText = checked;
+                render(store);
+            }
+        },
+        {
+            title: '1002 -&gt; 2.1',
+            value: store.isRelayView,
+            change: function (checked) {
+                store.isRelayView = checked;
+                render(store);
+            }
+        }
+    ]).show()
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</value>
+  </data>
+</root>
