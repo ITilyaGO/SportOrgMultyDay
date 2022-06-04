@@ -17,6 +17,9 @@ namespace SportOrgMultyDay
         private void buttonImportHtml_Click(object sender, EventArgs e)
         {
             jsonSource1 = FindJson(ImportHtml());
+            var data1 = JObject.Parse(jsonSource1);
+            //var data1pers = data1["persons"];
+            labelDay1Info.Text = "Участники:" + data1["persons"].Count();
         }
 
 
@@ -83,6 +86,9 @@ namespace SportOrgMultyDay
         private void buttonImportHtml2_Click(object sender, EventArgs e)
         {
             jsonSource2 = FindJson(ImportHtml());
+            var data2 = JObject.Parse(jsonSource1);
+            labelDay2Info.Text = "Участники:" + data2["persons"].Count();
+
             // richTextBoxOut.Text = jsonSource2;
         }
 

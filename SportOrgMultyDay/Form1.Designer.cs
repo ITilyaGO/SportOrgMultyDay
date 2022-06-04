@@ -32,7 +32,6 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.richTextBoxOut = new System.Windows.Forms.RichTextBox();
             this.labelRaceIndex = new System.Windows.Forms.Label();
-            this.labelTest = new System.Windows.Forms.Label();
             this.buttonCombine = new System.Windows.Forms.Button();
             this.buttonImportHtml2 = new System.Windows.Forms.Button();
             this.textBoxStart1 = new System.Windows.Forms.TextBox();
@@ -41,6 +40,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.buttonPutToBib = new System.Windows.Forms.Button();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.labelDay1Info = new System.Windows.Forms.Label();
+            this.labelDay2Info = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // buttonImportHtml
@@ -69,20 +70,11 @@
             // labelRaceIndex
             // 
             this.labelRaceIndex.AutoSize = true;
-            this.labelRaceIndex.Location = new System.Drawing.Point(750, 308);
+            this.labelRaceIndex.Location = new System.Drawing.Point(474, 308);
             this.labelRaceIndex.Name = "labelRaceIndex";
             this.labelRaceIndex.Size = new System.Drawing.Size(38, 15);
             this.labelRaceIndex.TabIndex = 2;
             this.labelRaceIndex.Text = "label1";
-            // 
-            // labelTest
-            // 
-            this.labelTest.AutoSize = true;
-            this.labelTest.Location = new System.Drawing.Point(752, 349);
-            this.labelTest.Name = "labelTest";
-            this.labelTest.Size = new System.Drawing.Size(38, 15);
-            this.labelTest.TabIndex = 3;
-            this.labelTest.Text = "label1";
             // 
             // buttonCombine
             // 
@@ -152,11 +144,29 @@
             // 
             this.saveFileDialog1.Filter = "Html|*.html|All files|*.*";
             // 
+            // labelDay1Info
+            // 
+            this.labelDay1Info.AutoSize = true;
+            this.labelDay1Info.Location = new System.Drawing.Point(266, 9);
+            this.labelDay1Info.Name = "labelDay1Info";
+            this.labelDay1Info.Size = new System.Drawing.Size(0, 15);
+            this.labelDay1Info.TabIndex = 10;
+            // 
+            // labelDay2Info
+            // 
+            this.labelDay2Info.AutoSize = true;
+            this.labelDay2Info.Location = new System.Drawing.Point(266, 38);
+            this.labelDay2Info.Name = "labelDay2Info";
+            this.labelDay2Info.Size = new System.Drawing.Size(0, 15);
+            this.labelDay2Info.TabIndex = 11;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.labelDay2Info);
+            this.Controls.Add(this.labelDay1Info);
             this.Controls.Add(this.buttonPutToBib);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -164,7 +174,6 @@
             this.Controls.Add(this.textBoxStart1);
             this.Controls.Add(this.buttonImportHtml2);
             this.Controls.Add(this.buttonCombine);
-            this.Controls.Add(this.labelTest);
             this.Controls.Add(this.labelRaceIndex);
             this.Controls.Add(this.richTextBoxOut);
             this.Controls.Add(this.buttonImportHtml);
@@ -181,7 +190,6 @@
         private OpenFileDialog openFileDialog1;
         private RichTextBox richTextBoxOut;
         private Label labelRaceIndex;
-        private Label labelTest;
         private Button buttonCombine;
         private Button buttonImportHtml2;
         private TextBox textBoxStart1;
@@ -190,5 +198,7 @@
         private Label label2;
         private Button buttonPutToBib;
         private SaveFileDialog saveFileDialog1;
+        private Label labelDay1Info;
+        private Label labelDay2Info;
     }
 }
