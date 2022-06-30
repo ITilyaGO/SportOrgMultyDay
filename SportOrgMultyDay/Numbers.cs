@@ -2,7 +2,7 @@ using Newtonsoft.Json.Linq;
 
 namespace SportOrgMultyDay
 {
-    public partial class Form1 : Form
+    public partial class Numbers : Form
     {
         const string StartStrJson = "var race = ";
        // string Html;
@@ -13,7 +13,7 @@ namespace SportOrgMultyDay
         string htmlBib = "null";
         JObject jsonBib;
 
-        public Form1()
+        public Numbers()
         {
             InitializeComponent();
         }
@@ -247,6 +247,11 @@ namespace SportOrgMultyDay
         private void buttonExportBibs_Click(object sender, EventArgs e)
         {
             ExportNumbers(richTextBoxOut.Text);
+        }
+
+        private void Numbers_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

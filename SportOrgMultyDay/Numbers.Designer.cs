@@ -1,6 +1,6 @@
 ﻿namespace SportOrgMultyDay
 {
-    partial class Form1
+    partial class Numbers
     {
         /// <summary>
         ///  Required designer variable.
@@ -224,7 +224,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 24);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(448, 244);
+            this.tabPage2.Size = new System.Drawing.Size(448, 264);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Файла соревнований";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -282,7 +282,7 @@
             this.openFileDialogJson.FileName = "openFileDialog1";
             this.openFileDialogJson.Filter = "Json|*.json|All files|*.*";
             // 
-            // Form1
+            // Numbers
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -290,8 +290,9 @@
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.labelRaceIndex);
             this.Controls.Add(this.richTextBoxOut);
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "Numbers";
+            this.Text = "Номера";
+            this.Load += new System.EventHandler(this.Numbers_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
