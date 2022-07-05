@@ -21,11 +21,14 @@ namespace SportOrgMultyDay.Processing
         {
             return $"{person["comment"]}";
         }
-
+        public static string BibName(JToken person)
+        {
+            return $"#{Bib(person)} {Name(person)}";
+        }
 
         public static string BibNameComment(JToken person)
         {
-            return $"Bib:{Bib(person)} Name:{Name(person)} Comment:{Comment(person)}";
+            return $"#{Bib(person)} {Name(person)} {Comment(person)}";
         }
 
 

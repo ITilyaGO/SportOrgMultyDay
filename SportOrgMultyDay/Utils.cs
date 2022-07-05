@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.CheckedListBox;
 
 namespace SportOrgMultyDay
 {
@@ -36,7 +37,7 @@ namespace SportOrgMultyDay
             }
             catch (Exception ex)
             {
-                SendLog($"Ошибка импорта: {ex.Message}");
+                SendLog($"⚠Ошибка импорта: {ex.Message}");
                 return null;
             }
         }
@@ -58,8 +59,9 @@ namespace SportOrgMultyDay
             if (Base == null)
             {
                 labelBaseImport.Text = $"Ошибка";
-                SendLog("Ошибка импорта базы: в данном файле база не найдена");
+                SendLog("⚠Ошибка импорта базы: в данном файле база не найдена");
                 BaseEditButtons(false);
+                return;
             }
             labelBaseImport.Text = $"Найдено дней: {Base["races"].Count()}";
             SendLog("Импорт выполнен");
@@ -90,7 +92,8 @@ namespace SportOrgMultyDay
 
         private void buttonSynchronizeReorders_Click(object sender, EventArgs e)
         {
-
+            string[] syncFields = CheckListBoxItem.ToStringMS(checkedListBoxWithSync.CheckedItems);
+            SendLog( SynchronizeRaces.SynchronizeReservWithCurrentRace(Base,textBoxReservName.Text, syncFields,checkBoxCopyChangedOtherDays.Checked));
         }
 
         private void SendLog(string message)
@@ -102,6 +105,70 @@ namespace SportOrgMultyDay
         private void Utils_Load(object sender, EventArgs e)
         {
             BaseEditButtons(false);
+
+
+            CheckListBoxItem[] checkListBoxItems = {
+                new("Чип","card_number"),
+                new("Комментарий","comment"),
+                new("Группа","group_id"),
+                new("Старт","start_time",false),
+                new("Имя","name"),
+                new("Фамилия","surname"),
+                new("Год рождения","year"),
+                new("Команда","organization_id"),
+                new("Квалификация","qual"),
+                new("в/к","is_out_of_competition"),
+                new("Оплачено","is_paid"),
+                new("Аренда чипа","is_rented_card"),
+                new("Лично","is_personal"),
+                new("Дата рождения","birth_date"),
+                new("Старт группы","start_group",false),
+                new("Номер","bib",false),
+                new("id","id"),
+                new("sex","sex"),
+                new("object","object",false),
+                new("world_code","world_code"),
+                new("national_code","national_code"),
+
+            };
+            foreach (CheckListBoxItem item in checkListBoxItems)
+                checkedListBoxWithSync.Items.Add(item,item.Chacked);
+        }
+
+        private void richTextBoxLog_TextChanged(object sender, EventArgs e)
+        {
+            if (checkBoxLogAutoScroll.Checked)
+            {
+                richTextBoxLog.SelectionStart = richTextBoxLog.Text.Length;
+                richTextBoxLog.ScrollToCaret();
+            }
+        }
+
+        private void buttonClearLog_Click(object sender, EventArgs e)
+        {
+            richTextBoxLog.Clear();
+        }
+    }
+
+    public class CheckListBoxItem
+    {
+        public CheckListBoxItem(string text, string tag, bool chacked = true)
+        {
+            Text = text;
+            Tag = tag;
+            Chacked = chacked;
+        }
+        public string Tag;
+        public string Text;
+        public bool Chacked;
+        public override string ToString() { return Text; }
+        public static string[] ToStringMS(CheckedItemCollection clbi)
+        {
+            List<string> fields = new List<string>();
+            foreach (CheckListBoxItem item in clbi) {
+                fields.Add(item.Tag);
+            }
+            return fields.ToArray();
         }
     }
 }

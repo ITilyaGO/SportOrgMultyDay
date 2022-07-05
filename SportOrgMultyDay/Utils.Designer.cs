@@ -28,11 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.buttonBaseImport = new System.Windows.Forms.Button();
-            this.richTextBoxOut = new System.Windows.Forms.RichTextBox();
             this.richTextBoxLog = new System.Windows.Forms.RichTextBox();
             this.labelBaseImport = new System.Windows.Forms.Label();
             this.buttonRemoveMissingPersons = new System.Windows.Forms.Button();
@@ -40,38 +36,15 @@
             this.buttonSynchronizeReorders = new System.Windows.Forms.Button();
             this.saveFileDialogJson = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialogJson = new System.Windows.Forms.OpenFileDialog();
-            this.tabControl1.SuspendLayout();
+            this.textBoxReservName = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.checkBoxLogAutoScroll = new System.Windows.Forms.CheckBox();
+            this.checkedListBoxWithSync = new System.Windows.Forms.CheckedListBox();
+            this.buttonClearLog = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.checkBoxCopyChangedOtherDays = new System.Windows.Forms.CheckBox();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // tabControl1
-            // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(12, 202);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(400, 138);
-            this.tabControl1.TabIndex = 0;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Location = new System.Drawing.Point(4, 24);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(392, 110);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "tabPage1";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 24);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(392, 110);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // buttonBaseImport
             // 
@@ -83,22 +56,14 @@
             this.buttonBaseImport.UseVisualStyleBackColor = true;
             this.buttonBaseImport.Click += new System.EventHandler(this.buttonBaseImport_Click);
             // 
-            // richTextBoxOut
-            // 
-            this.richTextBoxOut.Location = new System.Drawing.Point(12, 342);
-            this.richTextBoxOut.Name = "richTextBoxOut";
-            this.richTextBoxOut.Size = new System.Drawing.Size(151, 96);
-            this.richTextBoxOut.TabIndex = 1;
-            this.richTextBoxOut.Text = "";
-            // 
             // richTextBoxLog
             // 
             this.richTextBoxLog.Location = new System.Drawing.Point(418, 12);
             this.richTextBoxLog.Name = "richTextBoxLog";
-            this.richTextBoxLog.ReadOnly = true;
-            this.richTextBoxLog.Size = new System.Drawing.Size(620, 426);
+            this.richTextBoxLog.Size = new System.Drawing.Size(967, 469);
             this.richTextBoxLog.TabIndex = 2;
             this.richTextBoxLog.Text = "";
+            this.richTextBoxLog.TextChanged += new System.EventHandler(this.richTextBoxLog_TextChanged);
             // 
             // labelBaseImport
             // 
@@ -148,35 +113,101 @@
             this.openFileDialogJson.FileName = "openFileDialog1";
             this.openFileDialogJson.Filter = "Json|*.json|All files|*.*";
             // 
+            // textBoxReservName
+            // 
+            this.textBoxReservName.Location = new System.Drawing.Point(227, 70);
+            this.textBoxReservName.Name = "textBoxReservName";
+            this.textBoxReservName.Size = new System.Drawing.Size(77, 23);
+            this.textBoxReservName.TabIndex = 7;
+            this.textBoxReservName.Text = "_Резерв";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(307, 73);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(104, 15);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "Фамилия резерва";
+            // 
+            // checkBoxLogAutoScroll
+            // 
+            this.checkBoxLogAutoScroll.AutoSize = true;
+            this.checkBoxLogAutoScroll.Checked = true;
+            this.checkBoxLogAutoScroll.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxLogAutoScroll.Location = new System.Drawing.Point(6, 22);
+            this.checkBoxLogAutoScroll.Name = "checkBoxLogAutoScroll";
+            this.checkBoxLogAutoScroll.Size = new System.Drawing.Size(85, 19);
+            this.checkBoxLogAutoScroll.TabIndex = 9;
+            this.checkBoxLogAutoScroll.Text = "Прокрутка";
+            this.checkBoxLogAutoScroll.UseVisualStyleBackColor = true;
+            // 
+            // checkedListBoxWithSync
+            // 
+            this.checkedListBoxWithSync.FormattingEnabled = true;
+            this.checkedListBoxWithSync.Location = new System.Drawing.Point(12, 99);
+            this.checkedListBoxWithSync.Name = "checkedListBoxWithSync";
+            this.checkedListBoxWithSync.Size = new System.Drawing.Size(209, 382);
+            this.checkedListBoxWithSync.TabIndex = 10;
+            // 
+            // buttonClearLog
+            // 
+            this.buttonClearLog.Location = new System.Drawing.Point(6, 47);
+            this.buttonClearLog.Name = "buttonClearLog";
+            this.buttonClearLog.Size = new System.Drawing.Size(85, 23);
+            this.buttonClearLog.TabIndex = 11;
+            this.buttonClearLog.Text = "Очистить";
+            this.buttonClearLog.UseVisualStyleBackColor = true;
+            this.buttonClearLog.Click += new System.EventHandler(this.buttonClearLog_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.checkBoxLogAutoScroll);
+            this.groupBox1.Controls.Add(this.buttonClearLog);
+            this.groupBox1.Location = new System.Drawing.Point(314, 398);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(98, 78);
+            this.groupBox1.TabIndex = 12;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Логи";
+            // 
+            // checkBoxCopyChangedOtherDays
+            // 
+            this.checkBoxCopyChangedOtherDays.Location = new System.Drawing.Point(227, 99);
+            this.checkBoxCopyChangedOtherDays.Name = "checkBoxCopyChangedOtherDays";
+            this.checkBoxCopyChangedOtherDays.Size = new System.Drawing.Size(169, 37);
+            this.checkBoxCopyChangedOtherDays.TabIndex = 13;
+            this.checkBoxCopyChangedOtherDays.Text = "Копирование при изменении в других днях";
+            this.checkBoxCopyChangedOtherDays.UseVisualStyleBackColor = true;
+            // 
             // Utils
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1050, 450);
+            this.ClientSize = new System.Drawing.Size(1397, 488);
+            this.Controls.Add(this.checkBoxCopyChangedOtherDays);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.checkedListBoxWithSync);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.textBoxReservName);
             this.Controls.Add(this.buttonSynchronizeReorders);
             this.Controls.Add(this.buttonBaseExport);
             this.Controls.Add(this.buttonRemoveMissingPersons);
             this.Controls.Add(this.labelBaseImport);
             this.Controls.Add(this.richTextBoxLog);
-            this.Controls.Add(this.richTextBoxOut);
             this.Controls.Add(this.buttonBaseImport);
-            this.Controls.Add(this.tabControl1);
             this.Name = "Utils";
-            this.Text = "Utils";
+            this.Text = "Утилиты";
             this.Load += new System.EventHandler(this.Utils_Load);
-            this.tabControl1.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private TabControl tabControl1;
-        private TabPage tabPage1;
         private Button buttonBaseImport;
-        private TabPage tabPage2;
-        private RichTextBox richTextBoxOut;
         private RichTextBox richTextBoxLog;
         private Label labelBaseImport;
         private Button buttonRemoveMissingPersons;
@@ -184,5 +215,12 @@
         private Button buttonSynchronizeReorders;
         private SaveFileDialog saveFileDialogJson;
         private OpenFileDialog openFileDialogJson;
+        private TextBox textBoxReservName;
+        private Label label1;
+        private CheckBox checkBoxLogAutoScroll;
+        private CheckedListBox checkedListBoxWithSync;
+        private Button buttonClearLog;
+        private GroupBox groupBox1;
+        private CheckBox checkBoxCopyChangedOtherDays;
     }
 }
