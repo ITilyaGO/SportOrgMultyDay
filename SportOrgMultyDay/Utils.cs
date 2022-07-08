@@ -15,12 +15,13 @@ namespace SportOrgMultyDay
 {
     public partial class Utils : Form
     {
-        public Utils()
+        public Utils(Numbers numbersForm)
         {
+            NumbersForm = numbersForm;
             InitializeComponent();
         }
-
-        JObject Base;
+        public Numbers NumbersForm;
+        public JObject Base;
        
         private JObject ImportJson()
         {
@@ -73,6 +74,7 @@ namespace SportOrgMultyDay
             buttonBaseExport.Enabled = active;
             buttonRemoveMissingPersons.Enabled = active;
             buttonSynchronizeReorders.Enabled = active;
+            buttonCreateNewAdded.Enabled = active;
         }
 
         private void buttonBaseImport_Click(object sender, EventArgs e)
@@ -147,6 +149,16 @@ namespace SportOrgMultyDay
         private void buttonClearLog_Click(object sender, EventArgs e)
         {
             richTextBoxLog.Clear();
+        }
+
+        private void buttonCreateNewAdded_Click(object sender, EventArgs e)
+        {
+            SendLog(SynchronizeRaces.CreateNewPersons(Base));
+        }
+
+        private void buttonCardNumAsNum_Click(object sender, EventArgs e)
+        {
+            SendLog(CardNumberAsBib.Process(Base));
         }
     }
 

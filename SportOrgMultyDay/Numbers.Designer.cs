@@ -44,17 +44,18 @@
             this.labelDay2Info = new System.Windows.Forms.Label();
             this.buttonImportRaceJson = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.buttonBaseFromUtilits = new System.Windows.Forms.Button();
             this.labelBibFinded = new System.Windows.Forms.Label();
             this.buttonImportBib = new System.Windows.Forms.Button();
             this.buttonProcessing = new System.Windows.Forms.Button();
             this.labelRaceFindedDays = new System.Windows.Forms.Label();
             this.buttonExportBibs = new System.Windows.Forms.Button();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
             this.openFileDialogJson = new System.Windows.Forms.OpenFileDialog();
             this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonImportHtml
@@ -79,6 +80,7 @@
             this.richTextBoxOut.Size = new System.Drawing.Size(314, 292);
             this.richTextBoxOut.TabIndex = 1;
             this.richTextBoxOut.Text = "";
+            this.richTextBoxOut.TextChanged += new System.EventHandler(this.richTextBoxOut_TextChanged);
             // 
             // labelRaceIndex
             // 
@@ -185,36 +187,17 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(456, 292);
             this.tabControl1.TabIndex = 13;
             // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.buttonImportHtml);
-            this.tabPage1.Controls.Add(this.labelDay2Info);
-            this.tabPage1.Controls.Add(this.buttonCombine);
-            this.tabPage1.Controls.Add(this.labelDay1Info);
-            this.tabPage1.Controls.Add(this.buttonImportHtml2);
-            this.tabPage1.Controls.Add(this.buttonPutToBib);
-            this.tabPage1.Controls.Add(this.textBoxStart1);
-            this.tabPage1.Controls.Add(this.label2);
-            this.tabPage1.Controls.Add(this.textBoxStart2);
-            this.tabPage1.Location = new System.Drawing.Point(4, 24);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(448, 264);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Комбинирование";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.buttonBaseFromUtilits);
             this.tabPage2.Controls.Add(this.labelBibFinded);
             this.tabPage2.Controls.Add(this.buttonImportBib);
             this.tabPage2.Controls.Add(this.buttonProcessing);
@@ -228,6 +211,16 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Файла соревнований";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // buttonBaseFromUtilits
+            // 
+            this.buttonBaseFromUtilits.Location = new System.Drawing.Point(186, 6);
+            this.buttonBaseFromUtilits.Name = "buttonBaseFromUtilits";
+            this.buttonBaseFromUtilits.Size = new System.Drawing.Size(129, 23);
+            this.buttonBaseFromUtilits.TabIndex = 21;
+            this.buttonBaseFromUtilits.Text = "Взять базу из Утилит";
+            this.buttonBaseFromUtilits.UseVisualStyleBackColor = true;
+            this.buttonBaseFromUtilits.Click += new System.EventHandler(this.buttonBaseFromUtilits_Click);
             // 
             // labelBibFinded
             // 
@@ -261,7 +254,7 @@
             // labelRaceFindedDays
             // 
             this.labelRaceFindedDays.AutoSize = true;
-            this.labelRaceFindedDays.Location = new System.Drawing.Point(191, 10);
+            this.labelRaceFindedDays.Location = new System.Drawing.Point(321, 10);
             this.labelRaceFindedDays.Name = "labelRaceFindedDays";
             this.labelRaceFindedDays.Size = new System.Drawing.Size(36, 15);
             this.labelRaceFindedDays.TabIndex = 16;
@@ -276,6 +269,26 @@
             this.buttonExportBibs.Text = "Экспорт номеров";
             this.buttonExportBibs.UseVisualStyleBackColor = true;
             this.buttonExportBibs.Click += new System.EventHandler(this.buttonExportBibs_Click);
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.label1);
+            this.tabPage1.Controls.Add(this.buttonImportHtml);
+            this.tabPage1.Controls.Add(this.labelDay2Info);
+            this.tabPage1.Controls.Add(this.buttonCombine);
+            this.tabPage1.Controls.Add(this.labelDay1Info);
+            this.tabPage1.Controls.Add(this.buttonImportHtml2);
+            this.tabPage1.Controls.Add(this.buttonPutToBib);
+            this.tabPage1.Controls.Add(this.textBoxStart1);
+            this.tabPage1.Controls.Add(this.label2);
+            this.tabPage1.Controls.Add(this.textBoxStart2);
+            this.tabPage1.Location = new System.Drawing.Point(4, 24);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(448, 264);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Комбинирование";
+            this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // openFileDialogJson
             // 
@@ -294,10 +307,10 @@
             this.Text = "Номера";
             this.Load += new System.EventHandler(this.Numbers_Load);
             this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -329,5 +342,6 @@
         private Button buttonProcessing;
         private Button buttonImportBib;
         private Label labelBibFinded;
+        private Button buttonBaseFromUtilits;
     }
 }

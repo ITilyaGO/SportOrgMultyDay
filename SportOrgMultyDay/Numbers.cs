@@ -12,10 +12,11 @@ namespace SportOrgMultyDay
         string htmlPattern = "null";
         string htmlBib = "null";
         JObject jsonBib;
-
-        public Numbers()
+        public Utils UtilsForm;
+        public Numbers(Utils utilsForm)
         {
             InitializeComponent();
+            UtilsForm = utilsForm;
         }
 
         private void buttonImportHtml_Click(object sender, EventArgs e)
@@ -181,6 +182,11 @@ namespace SportOrgMultyDay
         {
             try
             {
+              if (jobo == null)
+                {
+                    MessageBox.Show("База не найдена");
+                    return 0;
+                }
                 var race = jobo;
                 int days = race["races"].Count();
                 return days;
@@ -188,7 +194,7 @@ namespace SportOrgMultyDay
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Парсинг файла не удался.","Возможно файл соревнований однодневный, попробуйте добавить еще день.\n\n" + ex.Message);
+                MessageBox.Show("Возможно файл соревнований однодневный, попробуйте добавить еще день.\n\n" + ex.Message, "Парсинг файла не удался.");
             }
             return 0;
         }
@@ -250,6 +256,17 @@ namespace SportOrgMultyDay
         }
 
         private void Numbers_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonBaseFromUtilits_Click(object sender, EventArgs e)
+        {
+            jsonRace = UtilsForm.Base;
+            labelRaceFindedDays.Text = "Найдено дней: " + GetRaceDayCount(jsonRace);
+        }
+
+        private void richTextBoxOut_TextChanged(object sender, EventArgs e)
         {
 
         }

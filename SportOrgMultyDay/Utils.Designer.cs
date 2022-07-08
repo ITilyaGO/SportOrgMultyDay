@@ -43,6 +43,8 @@
             this.buttonClearLog = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.checkBoxCopyChangedOtherDays = new System.Windows.Forms.CheckBox();
+            this.buttonCreateNewAdded = new System.Windows.Forms.Button();
+            this.buttonCardNumAsNum = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -60,7 +62,7 @@
             // 
             this.richTextBoxLog.Location = new System.Drawing.Point(418, 12);
             this.richTextBoxLog.Name = "richTextBoxLog";
-            this.richTextBoxLog.Size = new System.Drawing.Size(967, 469);
+            this.richTextBoxLog.Size = new System.Drawing.Size(967, 500);
             this.richTextBoxLog.TabIndex = 2;
             this.richTextBoxLog.Text = "";
             this.richTextBoxLog.TextChanged += new System.EventHandler(this.richTextBoxLog_TextChanged);
@@ -96,7 +98,7 @@
             // 
             // buttonSynchronizeReorders
             // 
-            this.buttonSynchronizeReorders.Location = new System.Drawing.Point(12, 70);
+            this.buttonSynchronizeReorders.Location = new System.Drawing.Point(12, 209);
             this.buttonSynchronizeReorders.Name = "buttonSynchronizeReorders";
             this.buttonSynchronizeReorders.Size = new System.Drawing.Size(209, 23);
             this.buttonSynchronizeReorders.TabIndex = 6;
@@ -115,7 +117,7 @@
             // 
             // textBoxReservName
             // 
-            this.textBoxReservName.Location = new System.Drawing.Point(227, 70);
+            this.textBoxReservName.Location = new System.Drawing.Point(227, 210);
             this.textBoxReservName.Name = "textBoxReservName";
             this.textBoxReservName.Size = new System.Drawing.Size(77, 23);
             this.textBoxReservName.TabIndex = 7;
@@ -124,7 +126,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(307, 73);
+            this.label1.Location = new System.Drawing.Point(310, 213);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(104, 15);
             this.label1.TabIndex = 8;
@@ -145,9 +147,9 @@
             // checkedListBoxWithSync
             // 
             this.checkedListBoxWithSync.FormattingEnabled = true;
-            this.checkedListBoxWithSync.Location = new System.Drawing.Point(12, 99);
+            this.checkedListBoxWithSync.Location = new System.Drawing.Point(12, 238);
             this.checkedListBoxWithSync.Name = "checkedListBoxWithSync";
-            this.checkedListBoxWithSync.Size = new System.Drawing.Size(209, 382);
+            this.checkedListBoxWithSync.Size = new System.Drawing.Size(209, 274);
             this.checkedListBoxWithSync.TabIndex = 10;
             // 
             // buttonClearLog
@@ -164,7 +166,7 @@
             // 
             this.groupBox1.Controls.Add(this.checkBoxLogAutoScroll);
             this.groupBox1.Controls.Add(this.buttonClearLog);
-            this.groupBox1.Location = new System.Drawing.Point(314, 398);
+            this.groupBox1.Location = new System.Drawing.Point(314, 434);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(98, 78);
             this.groupBox1.TabIndex = 12;
@@ -173,18 +175,40 @@
             // 
             // checkBoxCopyChangedOtherDays
             // 
-            this.checkBoxCopyChangedOtherDays.Location = new System.Drawing.Point(227, 99);
+            this.checkBoxCopyChangedOtherDays.Location = new System.Drawing.Point(227, 239);
             this.checkBoxCopyChangedOtherDays.Name = "checkBoxCopyChangedOtherDays";
             this.checkBoxCopyChangedOtherDays.Size = new System.Drawing.Size(169, 37);
             this.checkBoxCopyChangedOtherDays.TabIndex = 13;
             this.checkBoxCopyChangedOtherDays.Text = "Копирование при изменении в других днях";
             this.checkBoxCopyChangedOtherDays.UseVisualStyleBackColor = true;
             // 
+            // buttonCreateNewAdded
+            // 
+            this.buttonCreateNewAdded.Location = new System.Drawing.Point(12, 70);
+            this.buttonCreateNewAdded.Name = "buttonCreateNewAdded";
+            this.buttonCreateNewAdded.Size = new System.Drawing.Size(209, 23);
+            this.buttonCreateNewAdded.TabIndex = 15;
+            this.buttonCreateNewAdded.Text = "Создать дозаявленых в остальных днях";
+            this.buttonCreateNewAdded.UseVisualStyleBackColor = true;
+            this.buttonCreateNewAdded.Click += new System.EventHandler(this.buttonCreateNewAdded_Click);
+            // 
+            // buttonCardNumAsNum
+            // 
+            this.buttonCardNumAsNum.Location = new System.Drawing.Point(12, 99);
+            this.buttonCardNumAsNum.Name = "buttonCardNumAsNum";
+            this.buttonCardNumAsNum.Size = new System.Drawing.Size(209, 23);
+            this.buttonCardNumAsNum.TabIndex = 16;
+            this.buttonCardNumAsNum.Text = "Установить номер чипа = номеру";
+            this.buttonCardNumAsNum.UseVisualStyleBackColor = true;
+            this.buttonCardNumAsNum.Click += new System.EventHandler(this.buttonCardNumAsNum_Click);
+            // 
             // Utils
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1397, 488);
+            this.ClientSize = new System.Drawing.Size(1397, 518);
+            this.Controls.Add(this.buttonCardNumAsNum);
+            this.Controls.Add(this.buttonCreateNewAdded);
             this.Controls.Add(this.checkBoxCopyChangedOtherDays);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.checkedListBoxWithSync);
@@ -222,5 +246,7 @@
         private Button buttonClearLog;
         private GroupBox groupBox1;
         private CheckBox checkBoxCopyChangedOtherDays;
+        private Button buttonCreateNewAdded;
+        private Button buttonCardNumAsNum;
     }
 }

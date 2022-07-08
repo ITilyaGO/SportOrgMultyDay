@@ -56,7 +56,7 @@ namespace SportOrgMultyDay.Processing
 
             string numberBlock = comment.Substring(startCline, (endCline - startCline)+1);
 
-            return numberBlock.Contains((raceInd+1).ToString());
+            return numberBlock.Contains((raceInd + 1).ToString());
 
         }
     }
