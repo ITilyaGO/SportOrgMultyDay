@@ -60,9 +60,9 @@
             // 
             // richTextBoxLog
             // 
-            this.richTextBoxLog.Location = new System.Drawing.Point(418, 12);
+            this.richTextBoxLog.Location = new System.Drawing.Point(426, 12);
             this.richTextBoxLog.Name = "richTextBoxLog";
-            this.richTextBoxLog.Size = new System.Drawing.Size(967, 500);
+            this.richTextBoxLog.Size = new System.Drawing.Size(959, 500);
             this.richTextBoxLog.TabIndex = 2;
             this.richTextBoxLog.Text = "";
             this.richTextBoxLog.TextChanged += new System.EventHandler(this.richTextBoxLog_TextChanged);
@@ -80,7 +80,7 @@
             // 
             this.buttonRemoveMissingPersons.Location = new System.Drawing.Point(12, 41);
             this.buttonRemoveMissingPersons.Name = "buttonRemoveMissingPersons";
-            this.buttonRemoveMissingPersons.Size = new System.Drawing.Size(209, 23);
+            this.buttonRemoveMissingPersons.Size = new System.Drawing.Size(231, 23);
             this.buttonRemoveMissingPersons.TabIndex = 4;
             this.buttonRemoveMissingPersons.Text = "Удалить отсутствующих по дням";
             this.buttonRemoveMissingPersons.UseVisualStyleBackColor = true;
@@ -88,7 +88,7 @@
             // 
             // buttonBaseExport
             // 
-            this.buttonBaseExport.Location = new System.Drawing.Point(307, 12);
+            this.buttonBaseExport.Location = new System.Drawing.Point(315, 12);
             this.buttonBaseExport.Name = "buttonBaseExport";
             this.buttonBaseExport.Size = new System.Drawing.Size(105, 23);
             this.buttonBaseExport.TabIndex = 5;
@@ -98,9 +98,9 @@
             // 
             // buttonSynchronizeReorders
             // 
-            this.buttonSynchronizeReorders.Location = new System.Drawing.Point(12, 209);
+            this.buttonSynchronizeReorders.Location = new System.Drawing.Point(12, 128);
             this.buttonSynchronizeReorders.Name = "buttonSynchronizeReorders";
-            this.buttonSynchronizeReorders.Size = new System.Drawing.Size(209, 23);
+            this.buttonSynchronizeReorders.Size = new System.Drawing.Size(231, 23);
             this.buttonSynchronizeReorders.TabIndex = 6;
             this.buttonSynchronizeReorders.Text = "Синхронизировать дозаявки";
             this.buttonSynchronizeReorders.UseVisualStyleBackColor = true;
@@ -117,16 +117,16 @@
             // 
             // textBoxReservName
             // 
-            this.textBoxReservName.Location = new System.Drawing.Point(227, 210);
+            this.textBoxReservName.Location = new System.Drawing.Point(249, 129);
             this.textBoxReservName.Name = "textBoxReservName";
-            this.textBoxReservName.Size = new System.Drawing.Size(77, 23);
+            this.textBoxReservName.Size = new System.Drawing.Size(59, 23);
             this.textBoxReservName.TabIndex = 7;
             this.textBoxReservName.Text = "_Резерв";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(310, 213);
+            this.label1.Location = new System.Drawing.Point(308, 132);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(104, 15);
             this.label1.TabIndex = 8;
@@ -137,7 +137,7 @@
             this.checkBoxLogAutoScroll.AutoSize = true;
             this.checkBoxLogAutoScroll.Checked = true;
             this.checkBoxLogAutoScroll.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxLogAutoScroll.Location = new System.Drawing.Point(6, 22);
+            this.checkBoxLogAutoScroll.Location = new System.Drawing.Point(7, 22);
             this.checkBoxLogAutoScroll.Name = "checkBoxLogAutoScroll";
             this.checkBoxLogAutoScroll.Size = new System.Drawing.Size(85, 19);
             this.checkBoxLogAutoScroll.TabIndex = 9;
@@ -147,9 +147,9 @@
             // checkedListBoxWithSync
             // 
             this.checkedListBoxWithSync.FormattingEnabled = true;
-            this.checkedListBoxWithSync.Location = new System.Drawing.Point(12, 238);
+            this.checkedListBoxWithSync.Location = new System.Drawing.Point(12, 157);
             this.checkedListBoxWithSync.Name = "checkedListBoxWithSync";
-            this.checkedListBoxWithSync.Size = new System.Drawing.Size(209, 274);
+            this.checkedListBoxWithSync.Size = new System.Drawing.Size(231, 346);
             this.checkedListBoxWithSync.TabIndex = 10;
             // 
             // buttonClearLog
@@ -166,7 +166,7 @@
             // 
             this.groupBox1.Controls.Add(this.checkBoxLogAutoScroll);
             this.groupBox1.Controls.Add(this.buttonClearLog);
-            this.groupBox1.Location = new System.Drawing.Point(314, 434);
+            this.groupBox1.Location = new System.Drawing.Point(322, 434);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(98, 78);
             this.groupBox1.TabIndex = 12;
@@ -175,9 +175,9 @@
             // 
             // checkBoxCopyChangedOtherDays
             // 
-            this.checkBoxCopyChangedOtherDays.Location = new System.Drawing.Point(227, 239);
+            this.checkBoxCopyChangedOtherDays.Location = new System.Drawing.Point(249, 158);
             this.checkBoxCopyChangedOtherDays.Name = "checkBoxCopyChangedOtherDays";
-            this.checkBoxCopyChangedOtherDays.Size = new System.Drawing.Size(169, 37);
+            this.checkBoxCopyChangedOtherDays.Size = new System.Drawing.Size(171, 37);
             this.checkBoxCopyChangedOtherDays.TabIndex = 13;
             this.checkBoxCopyChangedOtherDays.Text = "Копирование при изменении в других днях";
             this.checkBoxCopyChangedOtherDays.UseVisualStyleBackColor = true;
@@ -186,7 +186,7 @@
             // 
             this.buttonCreateNewAdded.Location = new System.Drawing.Point(12, 70);
             this.buttonCreateNewAdded.Name = "buttonCreateNewAdded";
-            this.buttonCreateNewAdded.Size = new System.Drawing.Size(209, 23);
+            this.buttonCreateNewAdded.Size = new System.Drawing.Size(231, 23);
             this.buttonCreateNewAdded.TabIndex = 15;
             this.buttonCreateNewAdded.Text = "Создать дозаявленых в остальных днях";
             this.buttonCreateNewAdded.UseVisualStyleBackColor = true;
@@ -196,7 +196,7 @@
             // 
             this.buttonCardNumAsNum.Location = new System.Drawing.Point(12, 99);
             this.buttonCardNumAsNum.Name = "buttonCardNumAsNum";
-            this.buttonCardNumAsNum.Size = new System.Drawing.Size(209, 23);
+            this.buttonCardNumAsNum.Size = new System.Drawing.Size(231, 23);
             this.buttonCardNumAsNum.TabIndex = 16;
             this.buttonCardNumAsNum.Text = "Установить номер чипа = номеру";
             this.buttonCardNumAsNum.UseVisualStyleBackColor = true;

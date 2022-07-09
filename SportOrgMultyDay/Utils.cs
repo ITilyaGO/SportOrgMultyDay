@@ -75,6 +75,7 @@ namespace SportOrgMultyDay
             buttonRemoveMissingPersons.Enabled = active;
             buttonSynchronizeReorders.Enabled = active;
             buttonCreateNewAdded.Enabled = active;
+            buttonCardNumAsNum.Enabled = active;
         }
 
         private void buttonBaseImport_Click(object sender, EventArgs e)

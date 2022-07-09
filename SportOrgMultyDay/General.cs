@@ -25,7 +25,7 @@ namespace SportOrgMultyDay
             numbers = new Numbers((Utils)utils);
             utils = new Utils((Numbers)numbers);
             
-            utils.Show();
+            //utils.Show();
         }
         private void buttonOpenNumbers_Click(object sender, EventArgs e)
         {
