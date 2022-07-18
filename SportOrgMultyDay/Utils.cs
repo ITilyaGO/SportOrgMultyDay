@@ -76,6 +76,8 @@ namespace SportOrgMultyDay
             buttonSynchronizeReorders.Enabled = active;
             buttonCreateNewAdded.Enabled = active;
             buttonCardNumAsNum.Enabled = active;
+            buttonFindAddWithComment.Enabled = active;
+            buttonCopyPersonByNumber.Enabled = active;
         }
 
         private void buttonBaseImport_Click(object sender, EventArgs e)
@@ -160,6 +162,30 @@ namespace SportOrgMultyDay
         private void buttonCardNumAsNum_Click(object sender, EventArgs e)
         {
             SendLog(CardNumberAsBib.Process(Base));
+        }
+
+        private void buttonCopyPersonByNumber_Click(object sender, EventArgs e)
+        {
+            string bibList = textBoxPersonsFromCopy.Text;
+            string[] bibs = bibList.Split(",",StringSplitOptions.RemoveEmptyEntries);
+
+            List<int> ints = new();
+            foreach (string bib in bibs)
+            {
+                ints.Add(Convert.ToInt32(bib));
+            }
+            string[] syncFields = CheckListBoxItem.ToStringMS(checkedListBoxWithSync.CheckedItems);
+            SendLog( SynchronizeRaces.CopyPersonsByNumberList(Base, ints.ToArray(), syncFields));
+        }
+
+        private void buttonCombineAllBase_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonFindAddWithComment_Click(object sender, EventArgs e)
+        {
+            textBoxPersonsFromCopy.Text = SynchronizeRaces.FindAddWithComment(Base, textBoxStringFindComment.Text);
         }
     }
 

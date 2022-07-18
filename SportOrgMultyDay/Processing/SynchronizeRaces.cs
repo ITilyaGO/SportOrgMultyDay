@@ -102,6 +102,48 @@ namespace SportOrgMultyDay.Processing
             return msgLog;
         }
 
+        //public static string CombineAllPersonsFromDays(JToken jBase)
+        //{
+        //    int createCount = 0;
+        //    string msgLog = "Сasdda...\n";
+        //    int currentRaceI = (int)jBase["current_race"];
+        //    msgLog += $"Текущий день: {currentRaceI + 1}\n";
+        //    JArray races = (JArray)jBase["races"];
+
+        //    for (int r = 0; r < races.Count; r++)
+        //    {
+        //        if (r == currentRaceI) continue;
+                
+        //        JArray persons = (JArray)race["persons"];
+        //        JToken personClone = copyPerson.Person.DeepClone();
+        //        personClone["is_personal"] = false;
+        //        persons.Add(personClone);
+        //        msglog += $"Д:{r + 1},";
+        //    }
+
+        //}
+        public static string FindAddWithComment(JToken jBase, string findStr)
+        {
+            string ostr = "";
+            int createCount = 0;
+            int currentRaceI = (int)jBase["current_race"];
+            JArray races = (JArray)jBase["races"];
+            JToken curRace = races[currentRaceI];
+            JArray persons = (JArray)curRace["persons"];
+
+            for (int i = 0; i < persons.Count; i++)
+            {
+                JToken person = persons[i];
+                string comment = (string)person["comment"];
+                if (comment.Contains(findStr))
+                {
+                    ostr += person["bib"] + ",";
+                }
+            }
+
+            return ostr;
+        }
+
         public static string CreateNewPerson(JArray races,PersonCopies copyPerson)
         {
             string msglog = "";
@@ -150,7 +192,22 @@ namespace SportOrgMultyDay.Processing
             return false;
         }
 
-
+        public static string CopyPersonsByNumberList(JToken jBase , int[] bibToCopy, string[] syncFields,string removePartFromComment = "")
+        {
+            int createCount = 0;
+            string msgLog = "Синхронизация участников по номерам...\n";
+            int currentRaceI = (int)jBase["current_race"];
+            msgLog += $"Текущий день: {currentRaceI + 1}\n";
+            JArray races = (JArray)jBase["races"];
+            JToken curRace = races[currentRaceI];
+            JArray persons = (JArray)curRace["persons"];
+            for (int i = 0; i < bibToCopy.Length; i++)
+            {
+                PersonCopies[] pc = GetPersonTockensByBib(races, bibToCopy[i]);
+                msgLog += PersonCopiesCopy(pc, currentRaceI, syncFields);
+            }
+            return msgLog;
+        }
         public static int ReservCountByPersonCopies(PersonCopies[] personCopies,string reservSurname)
         {
             int count = 0;
@@ -184,6 +241,7 @@ namespace SportOrgMultyDay.Processing
         public static bool DifferentPerson(JToken personA,JToken peosonB)
         {
             string[] fields = { "surname", "name", "year" };
+            if (personA is null || peosonB is null) return false;
             foreach (string field in fields)
             {
                 string a = (string)personA[field];
