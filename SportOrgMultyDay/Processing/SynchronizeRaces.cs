@@ -5,6 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using static SportOrgMultyDay.Processing.Parsing.ParseBase;
+using static SportOrgMultyDay.Processing.Parsing.ParsePerson;
+
 namespace SportOrgMultyDay.Processing
 {
     public class PersonCopies
@@ -37,17 +40,14 @@ namespace SportOrgMultyDay.Processing
         public static string SynchronizeReservWithCurrentRace(JToken jBase,string reservSurname,string[] syncFields,bool ignoreChangeOtherDay = false,bool copyAdded = false)
         {
             int copyCount = 0;
-            string msgLog = "Синхронизация...\n";
-            int currentRaceI = (int)jBase["current_race"];
-            msgLog += $"Текущий день: {currentRaceI+1}\n";
-            JArray races = (JArray)jBase["races"];
-            JToken curRace = races[currentRaceI];
-            JArray persons = (JArray)curRace["persons"];
+            int currentRaceI = CurrentRaceID(jBase);
+            string msgLog = $"Синхронизация...\nТекущий день: {currentRaceI+1}\n";
+            JArray races = Races(jBase);
+            JArray persons = Persons(CurrentRace(races, currentRaceI));
 
             for (int i = 0; i < persons.Count; i++)
             {
-                JToken person = persons[i];
-                int bib = (int)person["bib"];
+                int bib = PPBib(persons[i]);
                 if (copyAdded)
                 {
                     
@@ -84,17 +84,15 @@ namespace SportOrgMultyDay.Processing
         public static string CreateNewPersons(JToken jBase)
         {
             int createCount = 0;
-            string msgLog = "Создание новых дозаявленых...\n";
-            int currentRaceI = (int)jBase["current_race"];
-            msgLog += $"Текущий день: {currentRaceI + 1}\n";
-            JArray races = (JArray)jBase["races"];
-            JToken curRace = races[currentRaceI];
-            JArray persons = (JArray)curRace["persons"];
+            int currentRaceI = CurrentRaceID(jBase);
+            string msgLog = $"Создание новых дозаявленых...\nТекущий день: {currentRaceI + 1}\n";
 
+            JArray races = Races(jBase);
+            JArray persons = Persons(CurrentRace(races, currentRaceI));
             for (int i = 0; i < persons.Count; i++)
             {
                 JToken person = persons[i];
-                if (!(bool)person["is_personal"]) continue;
+                if (!PPIsPersonal(person)) continue;
                 msgLog += $" {CreateNewPerson(races, new PersonCopies(person, currentRaceI))}\n";
                 createCount++;
             }
@@ -125,19 +123,15 @@ namespace SportOrgMultyDay.Processing
         public static string FindAddWithComment(JToken jBase, string findStr)
         {
             string ostr = "";
-            int createCount = 0;
-            int currentRaceI = (int)jBase["current_race"];
-            JArray races = (JArray)jBase["races"];
-            JToken curRace = races[currentRaceI];
-            JArray persons = (JArray)curRace["persons"];
+            JArray persons = PersonsCurRace(jBase);
 
             for (int i = 0; i < persons.Count; i++)
             {
                 JToken person = persons[i];
-                string comment = (string)person["comment"];
+                string comment = PPComment(person);
                 if (comment.Contains(findStr))
                 {
-                    ostr += person["bib"] + ",";
+                    ostr += PPBib(person) + ",";
                 }
             }
 
@@ -147,21 +141,20 @@ namespace SportOrgMultyDay.Processing
         public static string CreateNewPerson(JArray races,PersonCopies copyPerson)
         {
             string msglog = "";
-            int bibCP = (int)copyPerson.Person["bib"];
+            int bibCP = PPBib(copyPerson.Person);
 
             if (PersonExitsInRaceByBib(races, copyPerson))
             {
                 PersonCopies[] pc = GetPersonTockensByBib(races, bibCP);
                 return $"⚠Номер {bibCP} не уникален. {PersonCopies.ToString(pc)}";
             }
-            PersonCopies[] persC = GetPersonTockensByBib(races, bibCP);
 
             msglog += "Создание - ";
             for (int r = 0; r < races.Count; r++)
             {
                 if (r == copyPerson.RaceIndex) continue;
                 JToken race = races[r];
-                JArray persons = (JArray)race["persons"];
+                JArray persons = Persons(race);
                 JToken personClone = copyPerson.Person.DeepClone();
                 personClone["is_personal"] = false;
                 persons.Add(personClone);
@@ -174,15 +167,14 @@ namespace SportOrgMultyDay.Processing
 
         public static bool PersonExitsInRaceByBib(JArray races, PersonCopies copyPerson)
         {
-            int bibCP = (int)copyPerson.Person["bib"];
             for (int r = 0; r < races.Count; r++)
             {
                 if (r == copyPerson.RaceIndex) continue;
-                JArray persons = (JArray)races[r]["persons"];
-                int findBib = (int)copyPerson.Person["bib"];
+                JArray persons = Persons(races[r]);
+                int findBib = PPBib(copyPerson.Person);
                 for (int i = 0; i < persons.Count; i++)
                 {
-                    int bib = (int)persons[i]["bib"];
+                    int bib = PPBib(persons[i]);
                     if (bib == findBib)
                     {
                         return true;
@@ -196,11 +188,9 @@ namespace SportOrgMultyDay.Processing
         {
             int createCount = 0;
             string msgLog = "Синхронизация участников по номерам...\n";
-            int currentRaceI = (int)jBase["current_race"];
+            int currentRaceI = CurrentRaceID(jBase);
             msgLog += $"Текущий день: {currentRaceI + 1}\n";
-            JArray races = (JArray)jBase["races"];
-            JToken curRace = races[currentRaceI];
-            JArray persons = (JArray)curRace["persons"];
+            JArray races = Races(jBase);
             for (int i = 0; i < bibToCopy.Length; i++)
             {
                 PersonCopies[] pc = GetPersonTockensByBib(races, bibToCopy[i]);
@@ -214,7 +204,7 @@ namespace SportOrgMultyDay.Processing
             for (int i = 0; i < personCopies.Length; i++)
             {
                 if (personCopies[i].Person is null) continue;
-                if ((string)personCopies[i].Person["surname"] == reservSurname)
+                if (PPSurname(personCopies[i].Person) == reservSurname)
                 {
                     count++;
                 }
@@ -310,10 +300,10 @@ namespace SportOrgMultyDay.Processing
 
         private static JToken GetPersonByBib(JToken race, int bib)
         {
-            var persons = race["persons"];
-            for (int i = 0; i < persons.Count(); i++)
+            JArray persons = Persons(race);
+            for (int i = 0; i < persons.Count; i++)
             {
-                int pbib = (int)persons[i]["bib"]; 
+                int pbib = PPBib(persons[i]); 
                 if(pbib == bib)
                     return persons[i];
             }

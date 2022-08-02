@@ -5,21 +5,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using static SportOrgMultyDay.Processing.Parsing.ParsePerson;
+
 namespace SportOrgMultyDay.Processing
 {
-    public class PersonToString
+    public static class PersonToString
     {
         public static string Name(JToken person)
         {
-            return $"{person["surname"]} {person["name"]}";
+            return $"{PPSurname(person)} {PPName(person)}";
         }
         public static string Bib(JToken person)
         {
-            return $"{person["bib"]}";
+            return $"{PPBib(person)}";
         }
         public static string Comment(JToken person)
         {
-            return $"{person["comment"]}";
+            return $"{PPComment(person)}";
         }
         public static string BibName(JToken person)
         {

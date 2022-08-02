@@ -5,24 +5,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using static SportOrgMultyDay.Processing.Parsing.ParseBase;
+using static SportOrgMultyDay.Processing.Parsing.ParsePerson;
+
 namespace SportOrgMultyDay.Processing
 {
-    public class CardNumberAsBib
+    public static class CardNumberAsBib
     {
         public static string Process(JToken jBase)
         {
             string msgLog = "Копирование номера в номер чипа...\n";
-            JArray races = (JArray)jBase["races"];
+            JArray races = Races(jBase);
             for (int r = 0; r < races.Count; r++)
             {
                 msgLog += $"День:{r}\n";
-                JToken race = races[r];
-                JArray persons = (JArray)race["persons"];
+                JArray persons = Persons(races[r]);
                 for (int i = 0; i < persons.Count; i++)
                 {
                     JToken person = persons[i];
-                    msgLog += $"{person["bib"]},";
-                    person["card_number"] = person["bib"];
+                    msgLog += $"{PPBib(person)},";
+                    person["card_number"] = PPBib(person);
                 }
                 msgLog += $"\n";
             }

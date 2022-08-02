@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.CheckedListBox;
+using static SportOrgMultyDay.Processing.Parsing.ParseBase;
 
 namespace SportOrgMultyDay
 {
@@ -22,7 +23,7 @@ namespace SportOrgMultyDay
         }
         public Numbers NumbersForm;
         public JObject Base;
-       
+        int raceCount = 0;
         private JObject ImportJson()
         {
             if (openFileDialogJson.ShowDialog() != DialogResult.OK)
@@ -64,7 +65,14 @@ namespace SportOrgMultyDay
                 BaseEditButtons(false);
                 return;
             }
-            labelBaseImport.Text = $"Найдено дней: {Base["races"].Count()}";
+            raceCount = Base["races"].Count();
+            labelBaseImport.Text = $"День:";
+            comboBoxDays.Items.Clear();
+            for (int i = 0; i < Base["races"].Count(); i++)
+            {
+                comboBoxDays.Items.Add(i+1);
+            }
+            comboBoxDays.SelectedIndex = CurrentRaceID(Base);
             SendLog("Импорт выполнен");
             BaseEditButtons(true);
         }
@@ -78,6 +86,9 @@ namespace SportOrgMultyDay
             buttonCardNumAsNum.Enabled = active;
             buttonFindAddWithComment.Enabled = active;
             buttonCopyPersonByNumber.Enabled = active;
+            buttonExportStartTimes.Enabled = active;
+            buttonCopyGroupSettings.Enabled = active;
+            comboBoxDays.Enabled = active;
         }
 
         private void buttonBaseImport_Click(object sender, EventArgs e)
@@ -186,6 +197,29 @@ namespace SportOrgMultyDay
         private void buttonFindAddWithComment_Click(object sender, EventArgs e)
         {
             textBoxPersonsFromCopy.Text = SynchronizeRaces.FindAddWithComment(Base, textBoxStringFindComment.Text);
+        }
+
+        private void buttonCopyGroupSettings_Click(object sender, EventArgs e)
+        {
+            SendLog(SyncGroups.SyncByFields(Base));
+        }
+
+        private void buttonExportStartTimes_Click(object sender, EventArgs e)
+        {
+            if (saveFileDialogSfrst.ShowDialog() != DialogResult.OK) return;
+            string sftStartTxt = ExportStartTimes.ToSFRSmartTerminal(Base);
+            File.WriteAllText(saveFileDialogSfrst.FileName, sftStartTxt, new UTF8Encoding(true));
+            SendLog($"Экспорт стартового файла SFT Smart Terminal...\nСохранено в файл: {saveFileDialogSfrst.FileName}\n==========================\n{sftStartTxt}\n==========================");
+        }
+
+        private void comboBoxDays_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!int.TryParse(comboBoxDays.Text.ToString(), out int day)) return;
+            day--;
+            if (day < raceCount && day >= 0)
+                Base["current_race"] = day;
+            else
+                comboBoxDays.Text = "Err";
         }
     }
 

@@ -5,25 +5,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using static SportOrgMultyDay.Processing.Parsing.ParseBase;
+using static SportOrgMultyDay.Processing.Parsing.ParsePerson;
+
 namespace SportOrgMultyDay.Processing
 {
     public class RemoveExtraPersons
     {
         public static string Remove(JObject jbase)
         {
-            string log = "Удление отсутствующих по дням... \n";
-            var races = jbase["races"];
+            string msgLog = "Удление отсутствующих по дням... \n";
+            var races = Races(jbase);
             for (int i = 0; i < races.Count(); i++)
             {
-                log += $"День:{i + 1}\n{TryRemovePersonsFromDay(races[i],i)}\n";
+                msgLog += $"День:{i + 1}\n{TryRemovePersonsFromDay(races[i],i)}\n";
             }
-            return log;
+            return msgLog;
         }
 
         private static string TryRemovePersonsFromDay(JToken race, int raceInd)
         {
             string logMsg = "";
-            var persons = race["persons"];
+            var persons = Persons(race);
             for (int i = persons.Count()-1; i >= 0; i--)
             {
                 if (!RunPersonInDay(persons[i], raceInd))
@@ -39,7 +42,7 @@ namespace SportOrgMultyDay.Processing
         private static bool RunPersonInDay(JToken person,int raceInd)
         {
             string stringOfEntry = "C:";
-            string comment = (string)person["comment"];
+            string comment = PPComment(person);
             int cIndex = comment.IndexOf(stringOfEntry);
             
             if (cIndex == -1)
