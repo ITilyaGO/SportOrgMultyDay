@@ -39,6 +39,16 @@ namespace SportOrgMultyDay.Processing.Parsing
             catch (Exception ex) { LogError("ius6fcv32c", ex); }
             return null;
         }
+        
+        public static string PPGroupId(JToken person)
+        {
+            try
+            {
+                return (string)person["group_id"];
+            }
+            catch (Exception ex) { LogError("7fsaiufdw", ex); }
+            return null;
+        }
         public static string PPSurname(JToken person)
         {
             try
@@ -55,6 +65,15 @@ namespace SportOrgMultyDay.Processing.Parsing
                 return (string)person["name"];
             }
             catch (Exception ex) { LogError("pfi87v3da", ex); }
+            return null;
+        }
+        public static string PPOrganizationId(JToken person)
+        {
+            try
+            {
+                return (string)person["organization_id"];
+            }
+            catch (Exception ex) { LogError("g26felqxwq", ex); }
             return null;
         }
         public static int PPYear(JToken person)

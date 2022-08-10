@@ -35,7 +35,13 @@ namespace SportOrgMultyDay.Processing.Parsing
             {
                 return (string)group["id"];
             }
-            catch (Exception ex) { LogError(";03297vcr", ex); }
+            catch (Exception ex) { LogError("a03297vcr", ex); }
+            return null;
+        }
+        public static JToken FGById(string id, JArray groups)
+        {
+            for (int i = 0; i < groups.Count; i++)
+                if (id == PGId(groups[i])) return groups[i];
             return null;
         }
     }

@@ -24,6 +24,7 @@ namespace SportOrgMultyDay
         public Numbers NumbersForm;
         public JObject Base;
         int raceCount = 0;
+        AutoResize autoResize;
         private JObject ImportJson()
         {
             if (openFileDialogJson.ShowDialog() != DialogResult.OK)
@@ -149,6 +150,10 @@ namespace SportOrgMultyDay
             };
             foreach (CheckListBoxItem item in checkListBoxItems)
                 checkedListBoxWithSync.Items.Add(item,item.Chacked);
+
+            autoResize = new(this);
+            autoResize.Add(richTextBoxLog);
+            autoResize.Add(tabControl1);
         }
 
         private void richTextBoxLog_TextChanged(object sender, EventArgs e)
@@ -220,6 +225,11 @@ namespace SportOrgMultyDay
                 Base["current_race"] = day;
             else
                 comboBoxDays.Text = "Err";
+        }
+       
+        private void Utils_SizeChanged(object sender, EventArgs e)
+        {
+            autoResize.Update();
         }
     }
 

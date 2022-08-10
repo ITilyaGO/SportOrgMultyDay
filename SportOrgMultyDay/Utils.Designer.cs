@@ -62,6 +62,11 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.saveFileDialogSfrst = new System.Windows.Forms.SaveFileDialog();
+            this.buttonImportSFRStartLog = new System.Windows.Forms.Button();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tabControl2 = new System.Windows.Forms.TabControl();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
             this.comboBoxDays = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -71,6 +76,9 @@
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            this.tabControl2.SuspendLayout();
+            this.tabPage4.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonBaseImport
@@ -114,7 +122,7 @@
             // 
             // buttonBaseExport
             // 
-            this.buttonBaseExport.Location = new System.Drawing.Point(417, 12);
+            this.buttonBaseExport.Location = new System.Drawing.Point(443, 8);
             this.buttonBaseExport.Name = "buttonBaseExport";
             this.buttonBaseExport.Size = new System.Drawing.Size(105, 23);
             this.buttonBaseExport.TabIndex = 5;
@@ -173,7 +181,7 @@
             // checkedListBoxWithSync
             // 
             this.checkedListBoxWithSync.FormattingEnabled = true;
-            this.checkedListBoxWithSync.Location = new System.Drawing.Point(18, 193);
+            this.checkedListBoxWithSync.Location = new System.Drawing.Point(15, 158);
             this.checkedListBoxWithSync.Name = "checkedListBoxWithSync";
             this.checkedListBoxWithSync.Size = new System.Drawing.Size(231, 310);
             this.checkedListBoxWithSync.TabIndex = 10;
@@ -288,7 +296,7 @@
             this.groupBox2.Controls.Add(this.buttonRemoveMissingPersons);
             this.groupBox2.Controls.Add(this.buttonCreateNewAdded);
             this.groupBox2.Controls.Add(this.buttonCardNumAsNum);
-            this.groupBox2.Location = new System.Drawing.Point(12, 41);
+            this.groupBox2.Location = new System.Drawing.Point(9, 6);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(244, 128);
             this.groupBox2.TabIndex = 23;
@@ -299,7 +307,7 @@
             // 
             this.groupBox3.Controls.Add(this.buttonCopyGroupSettings);
             this.groupBox3.Controls.Add(this.groupBox5);
-            this.groupBox3.Location = new System.Drawing.Point(262, 41);
+            this.groupBox3.Location = new System.Drawing.Point(259, 6);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(260, 181);
             this.groupBox3.TabIndex = 24;
@@ -336,7 +344,7 @@
             this.groupBox4.Controls.Add(this.textBoxPersonsFromCopy);
             this.groupBox4.Controls.Add(this.textBoxStringFindComment);
             this.groupBox4.Controls.Add(this.label2);
-            this.groupBox4.Location = new System.Drawing.Point(262, 228);
+            this.groupBox4.Location = new System.Drawing.Point(259, 193);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(260, 143);
             this.groupBox4.TabIndex = 25;
@@ -346,7 +354,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(18, 172);
+            this.label3.Location = new System.Drawing.Point(15, 137);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(225, 15);
             this.label3.TabIndex = 26;
@@ -366,7 +374,8 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(528, 12);
+            this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Location = new System.Drawing.Point(557, 41);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(877, 514);
@@ -398,6 +407,60 @@
             // 
             this.saveFileDialogSfrst.Filter = "Sfrst|*.sfrst|All files|*.*";
             // 
+            // buttonImportSFRStartLog
+            // 
+            this.buttonImportSFRStartLog.Location = new System.Drawing.Point(3, 5);
+            this.buttonImportSFRStartLog.Name = "buttonImportSFRStartLog";
+            this.buttonImportSFRStartLog.Size = new System.Drawing.Size(197, 23);
+            this.buttonImportSFRStartLog.TabIndex = 28;
+            this.buttonImportSFRStartLog.Text = "Импортировать стартовый лог";
+            this.buttonImportSFRStartLog.UseVisualStyleBackColor = true;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.buttonImportSFRStartLog);
+            this.tabPage3.Location = new System.Drawing.Point(4, 24);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(869, 486);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "SFR Smart terminal";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // tabControl2
+            // 
+            this.tabControl2.Controls.Add(this.tabPage4);
+            this.tabControl2.Controls.Add(this.tabPage5);
+            this.tabControl2.Location = new System.Drawing.Point(12, 41);
+            this.tabControl2.Name = "tabControl2";
+            this.tabControl2.SelectedIndex = 0;
+            this.tabControl2.Size = new System.Drawing.Size(543, 481);
+            this.tabControl2.TabIndex = 30;
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabPage4.Controls.Add(this.groupBox2);
+            this.tabPage4.Controls.Add(this.checkedListBoxWithSync);
+            this.tabPage4.Controls.Add(this.groupBox3);
+            this.tabPage4.Controls.Add(this.label3);
+            this.tabPage4.Controls.Add(this.groupBox4);
+            this.tabPage4.Location = new System.Drawing.Point(4, 24);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(535, 453);
+            this.tabPage4.TabIndex = 0;
+            this.tabPage4.Text = "База";
+            // 
+            // tabPage5
+            // 
+            this.tabPage5.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabPage5.Location = new System.Drawing.Point(4, 24);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(192, 72);
+            this.tabPage5.TabIndex = 1;
+            this.tabPage5.Text = "SFR Smart Terminal";
+            // 
             // comboBoxDays
             // 
             this.comboBoxDays.FormattingEnabled = true;
@@ -411,22 +474,20 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1410, 530);
+            this.ClientSize = new System.Drawing.Size(1410, 533);
+            this.Controls.Add(this.tabControl2);
             this.Controls.Add(this.comboBoxDays);
             this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.buttonCombineAllBase);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.checkedListBoxWithSync);
             this.Controls.Add(this.buttonBaseExport);
             this.Controls.Add(this.labelBaseImport);
             this.Controls.Add(this.buttonBaseImport);
+            this.MinimumSize = new System.Drawing.Size(600, 400);
             this.Name = "Utils";
             this.Text = "Утилиты";
             this.Load += new System.EventHandler(this.Utils_Load);
+            this.SizeChanged += new System.EventHandler(this.Utils_SizeChanged);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -438,6 +499,10 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
+            this.tabControl2.ResumeLayout(false);
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -478,6 +543,11 @@
         private TabPage tabPage1;
         private TabPage tabPage2;
         private SaveFileDialog saveFileDialogSfrst;
+        private TabPage tabPage3;
+        private Button buttonImportSFRStartLog;
+        private TabControl tabControl2;
+        private TabPage tabPage4;
+        private TabPage tabPage5;
         private ComboBox comboBoxDays;
     }
 }

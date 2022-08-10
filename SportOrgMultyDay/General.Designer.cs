@@ -58,7 +58,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(188, 100);
+            this.ClientSize = new System.Drawing.Size(184, 100);
             this.Controls.Add(this.buttonOpenUtils);
             this.Controls.Add(this.buttonOpenNumbers);
             this.Name = "General";

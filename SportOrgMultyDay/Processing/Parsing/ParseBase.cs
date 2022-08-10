@@ -37,7 +37,7 @@ namespace SportOrgMultyDay.Processing.Parsing
             catch (Exception ex) { LogError("sa86dv3g", ex); }
             return null;
         }
-        public static JToken CurrentRaceBase(JToken jBase)
+        public static JToken CurrentRaceFromBase(JToken jBase)
         {
             try
             {
@@ -60,7 +60,7 @@ namespace SportOrgMultyDay.Processing.Parsing
         {
             try
             {
-                JToken race = CurrentRaceBase(jBase);
+                JToken race = CurrentRaceFromBase(jBase);
                 return (JArray)race["persons"];
             }
             catch (Exception ex) { LogError("976dvc2", ex); }
@@ -73,6 +73,24 @@ namespace SportOrgMultyDay.Processing.Parsing
                 return (JArray)race["groups"];
             }
             catch (Exception ex) { LogError("d7gv33vad", ex); }
+            return null;
+        }
+        public static JArray Organizations(JToken race)
+        {
+            try
+            {
+                return (JArray)race["organizations"];
+            }
+            catch (Exception ex) { LogError("oo86vsds8gc", ex); }
+            return null;
+        }
+        public static JToken Data(JToken race)
+        {
+            try
+            {
+                return race["data"];
+            }
+            catch (Exception ex) { LogError("l3iusv6clgf", ex); }
             return null;
         }
     }
