@@ -11,7 +11,7 @@ using static SportOrgMultyDay.Processing.Parsing.ParseGroup;
 using static SportOrgMultyDay.Processing.Parsing.ParseOrganization;
 using static SportOrgMultyDay.Processing.Parsing.ParseData;
 
-namespace SportOrgMultyDay.Processing
+namespace SportOrgMultyDay.Processing.SFRSmartTerminal
 {
     public static class ExportStartTimes
     {
@@ -30,7 +30,7 @@ namespace SportOrgMultyDay.Processing
             for (int p = 0; p < persons.Count; p++)
             {
                 JToken person = persons[p];
-               
+
 
                 outStr += GetPersonLine(p, person, groups, organizations);
             }
@@ -51,7 +51,7 @@ namespace SportOrgMultyDay.Processing
             return outStr;
         }
 
-        private static string GetPersonLine(int lineId,JToken person, JArray groups, JArray organizations)
+        private static string GetPersonLine(int lineId, JToken person, JArray groups, JArray organizations)
         {
             string groupName = "none";
             string organizationName = "none";

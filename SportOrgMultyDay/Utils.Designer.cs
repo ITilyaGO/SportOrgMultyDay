@@ -28,57 +28,68 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.buttonBaseImport = new System.Windows.Forms.Button();
-            this.richTextBoxLog = new System.Windows.Forms.RichTextBox();
+            this.contextMenuStripLog = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.ScrollLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ClearLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.labelBaseImport = new System.Windows.Forms.Label();
-            this.buttonRemoveMissingPersons = new System.Windows.Forms.Button();
             this.buttonBaseExport = new System.Windows.Forms.Button();
-            this.buttonSynchronizeReorders = new System.Windows.Forms.Button();
             this.saveFileDialogJson = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialogJson = new System.Windows.Forms.OpenFileDialog();
-            this.textBoxReservName = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.checkBoxLogAutoScroll = new System.Windows.Forms.CheckBox();
-            this.checkedListBoxWithSync = new System.Windows.Forms.CheckedListBox();
-            this.buttonClearLog = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.checkBoxCopyChangedOtherDays = new System.Windows.Forms.CheckBox();
+            this.buttonCombineAllBase = new System.Windows.Forms.Button();
+            this.saveFileDialogSfrst = new System.Windows.Forms.SaveFileDialog();
+            this.comboBoxDays = new System.Windows.Forms.ComboBox();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.groupBoxStartLogProcessing = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.richTextBoxChecklessFinished = new System.Windows.Forms.RichTextBox();
+            this.buttonSFRStartLogDNSCopy = new System.Windows.Forms.Button();
+            this.labelSFRStartLogDNS = new System.Windows.Forms.Label();
+            this.richTextBoxSFRStartLogDNS = new System.Windows.Forms.RichTextBox();
+            this.labelSFRStartLogDupl = new System.Windows.Forms.Label();
+            this.richTextBoxSFRStartLogDupl = new System.Windows.Forms.RichTextBox();
+            this.labelSFRStartLogCount = new System.Windows.Forms.Label();
+            this.buttonImportSFRStartLog = new System.Windows.Forms.Button();
+            this.buttonExportStartTimes = new System.Windows.Forms.Button();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.buttonRemoveMissingPersons = new System.Windows.Forms.Button();
             this.buttonCreateNewAdded = new System.Windows.Forms.Button();
             this.buttonCardNumAsNum = new System.Windows.Forms.Button();
-            this.buttonCopyPersonByNumber = new System.Windows.Forms.Button();
-            this.textBoxPersonsFromCopy = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.buttonCombineAllBase = new System.Windows.Forms.Button();
-            this.buttonFindAddWithComment = new System.Windows.Forms.Button();
-            this.textBoxStringFindComment = new System.Windows.Forms.TextBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.checkedListBoxWithSync = new System.Windows.Forms.CheckedListBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.buttonCopyGroupSettings = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.textBoxReservName = new System.Windows.Forms.TextBox();
+            this.buttonSynchronizeReorders = new System.Windows.Forms.Button();
+            this.checkBoxCopyChangedOtherDays = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.buttonExportStartTimes = new System.Windows.Forms.Button();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.saveFileDialogSfrst = new System.Windows.Forms.SaveFileDialog();
-            this.buttonImportSFRStartLog = new System.Windows.Forms.Button();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.buttonFindAddWithComment = new System.Windows.Forms.Button();
+            this.buttonCopyPersonByNumber = new System.Windows.Forms.Button();
+            this.textBoxPersonsFromCopy = new System.Windows.Forms.TextBox();
+            this.textBoxStringFindComment = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.tabControl2 = new System.Windows.Forms.TabControl();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.comboBoxDays = new System.Windows.Forms.ComboBox();
-            this.groupBox1.SuspendLayout();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.richTextBoxLog = new System.Windows.Forms.RichTextBox();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.openFileDialogStartLog = new System.Windows.Forms.OpenFileDialog();
+            this.contextMenuStripLog.SuspendLayout();
+            this.tabPage5.SuspendLayout();
+            this.groupBoxStartLogProcessing.SuspendLayout();
+            this.tabPage4.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
-            this.tabPage3.SuspendLayout();
             this.tabControl2.SuspendLayout();
-            this.tabPage4.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabControl1.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonBaseImport
@@ -91,15 +102,29 @@
             this.buttonBaseImport.UseVisualStyleBackColor = true;
             this.buttonBaseImport.Click += new System.EventHandler(this.buttonBaseImport_Click);
             // 
-            // richTextBoxLog
+            // contextMenuStripLog
             // 
-            this.richTextBoxLog.Location = new System.Drawing.Point(6, 6);
-            this.richTextBoxLog.Name = "richTextBoxLog";
-            this.richTextBoxLog.Size = new System.Drawing.Size(857, 474);
-            this.richTextBoxLog.TabIndex = 2;
-            this.richTextBoxLog.Text = "";
-            this.richTextBoxLog.WordWrap = false;
-            this.richTextBoxLog.TextChanged += new System.EventHandler(this.richTextBoxLog_TextChanged);
+            this.contextMenuStripLog.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ScrollLogToolStripMenuItem,
+            this.ClearLogToolStripMenuItem});
+            this.contextMenuStripLog.Name = "contextMenuStrip1";
+            this.contextMenuStripLog.Size = new System.Drawing.Size(134, 48);
+            // 
+            // ScrollLogToolStripMenuItem
+            // 
+            this.ScrollLogToolStripMenuItem.Checked = true;
+            this.ScrollLogToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ScrollLogToolStripMenuItem.Name = "ScrollLogToolStripMenuItem";
+            this.ScrollLogToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.ScrollLogToolStripMenuItem.Text = "Прокрутка";
+            this.ScrollLogToolStripMenuItem.Click += new System.EventHandler(this.ScrollLogToolStripMenuItem_Click);
+            // 
+            // ClearLogToolStripMenuItem
+            // 
+            this.ClearLogToolStripMenuItem.Name = "ClearLogToolStripMenuItem";
+            this.ClearLogToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.ClearLogToolStripMenuItem.Text = "Очистить";
+            this.ClearLogToolStripMenuItem.Click += new System.EventHandler(this.ClearLogToolStripMenuItem_Click);
             // 
             // labelBaseImport
             // 
@@ -110,35 +135,15 @@
             this.labelBaseImport.TabIndex = 3;
             this.labelBaseImport.Text = "День:";
             // 
-            // buttonRemoveMissingPersons
-            // 
-            this.buttonRemoveMissingPersons.Location = new System.Drawing.Point(6, 22);
-            this.buttonRemoveMissingPersons.Name = "buttonRemoveMissingPersons";
-            this.buttonRemoveMissingPersons.Size = new System.Drawing.Size(231, 23);
-            this.buttonRemoveMissingPersons.TabIndex = 4;
-            this.buttonRemoveMissingPersons.Text = "Удалить отсутствующих по дням";
-            this.buttonRemoveMissingPersons.UseVisualStyleBackColor = true;
-            this.buttonRemoveMissingPersons.Click += new System.EventHandler(this.buttonRemoveMissingPersons_Click);
-            // 
             // buttonBaseExport
             // 
-            this.buttonBaseExport.Location = new System.Drawing.Point(443, 8);
+            this.buttonBaseExport.Location = new System.Drawing.Point(446, 13);
             this.buttonBaseExport.Name = "buttonBaseExport";
             this.buttonBaseExport.Size = new System.Drawing.Size(105, 23);
             this.buttonBaseExport.TabIndex = 5;
             this.buttonBaseExport.Text = "Сохранить базу";
             this.buttonBaseExport.UseVisualStyleBackColor = true;
             this.buttonBaseExport.Click += new System.EventHandler(this.buttonBaseExport_Click);
-            // 
-            // buttonSynchronizeReorders
-            // 
-            this.buttonSynchronizeReorders.Location = new System.Drawing.Point(6, 94);
-            this.buttonSynchronizeReorders.Name = "buttonSynchronizeReorders";
-            this.buttonSynchronizeReorders.Size = new System.Drawing.Size(231, 23);
-            this.buttonSynchronizeReorders.TabIndex = 6;
-            this.buttonSynchronizeReorders.Text = "Синхронизировать дозаявки";
-            this.buttonSynchronizeReorders.UseVisualStyleBackColor = true;
-            this.buttonSynchronizeReorders.Click += new System.EventHandler(this.buttonSynchronizeReorders_Click);
             // 
             // saveFileDialogJson
             // 
@@ -149,72 +154,187 @@
             this.openFileDialogJson.FileName = "openFileDialog1";
             this.openFileDialogJson.Filter = "Json|*.json|All files|*.*";
             // 
-            // textBoxReservName
+            // buttonCombineAllBase
             // 
-            this.textBoxReservName.Location = new System.Drawing.Point(6, 22);
-            this.textBoxReservName.Name = "textBoxReservName";
-            this.textBoxReservName.Size = new System.Drawing.Size(59, 23);
-            this.textBoxReservName.TabIndex = 7;
-            this.textBoxReservName.Text = "_Резерв";
+            this.buttonCombineAllBase.Enabled = false;
+            this.buttonCombineAllBase.Location = new System.Drawing.Point(1391, 16);
+            this.buttonCombineAllBase.Name = "buttonCombineAllBase";
+            this.buttonCombineAllBase.Size = new System.Drawing.Size(115, 23);
+            this.buttonCombineAllBase.TabIndex = 20;
+            this.buttonCombineAllBase.Text = "Всех в одну базу";
+            this.buttonCombineAllBase.UseVisualStyleBackColor = true;
+            this.buttonCombineAllBase.Visible = false;
+            this.buttonCombineAllBase.Click += new System.EventHandler(this.buttonCombineAllBase_Click);
             // 
-            // label1
+            // saveFileDialogSfrst
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(71, 25);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(104, 15);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "Фамилия резерва";
+            this.saveFileDialogSfrst.Filter = "Sfrst|*.sfrst|All files|*.*";
             // 
-            // checkBoxLogAutoScroll
+            // comboBoxDays
             // 
-            this.checkBoxLogAutoScroll.AutoSize = true;
-            this.checkBoxLogAutoScroll.Checked = true;
-            this.checkBoxLogAutoScroll.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxLogAutoScroll.Location = new System.Drawing.Point(7, 22);
-            this.checkBoxLogAutoScroll.Name = "checkBoxLogAutoScroll";
-            this.checkBoxLogAutoScroll.Size = new System.Drawing.Size(85, 19);
-            this.checkBoxLogAutoScroll.TabIndex = 9;
-            this.checkBoxLogAutoScroll.Text = "Прокрутка";
-            this.checkBoxLogAutoScroll.UseVisualStyleBackColor = true;
+            this.comboBoxDays.FormattingEnabled = true;
+            this.comboBoxDays.Location = new System.Drawing.Point(170, 13);
+            this.comboBoxDays.Name = "comboBoxDays";
+            this.comboBoxDays.Size = new System.Drawing.Size(79, 23);
+            this.comboBoxDays.TabIndex = 29;
+            this.comboBoxDays.SelectedIndexChanged += new System.EventHandler(this.comboBoxDays_SelectedIndexChanged);
             // 
-            // checkedListBoxWithSync
+            // tabPage5
             // 
-            this.checkedListBoxWithSync.FormattingEnabled = true;
-            this.checkedListBoxWithSync.Location = new System.Drawing.Point(15, 158);
-            this.checkedListBoxWithSync.Name = "checkedListBoxWithSync";
-            this.checkedListBoxWithSync.Size = new System.Drawing.Size(231, 310);
-            this.checkedListBoxWithSync.TabIndex = 10;
+            this.tabPage5.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabPage5.Controls.Add(this.groupBoxStartLogProcessing);
+            this.tabPage5.Controls.Add(this.buttonExportStartTimes);
+            this.tabPage5.Location = new System.Drawing.Point(4, 24);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(535, 485);
+            this.tabPage5.TabIndex = 1;
+            this.tabPage5.Text = "SFR Smart Terminal";
             // 
-            // buttonClearLog
+            // groupBoxStartLogProcessing
             // 
-            this.buttonClearLog.Location = new System.Drawing.Point(6, 47);
-            this.buttonClearLog.Name = "buttonClearLog";
-            this.buttonClearLog.Size = new System.Drawing.Size(85, 23);
-            this.buttonClearLog.TabIndex = 11;
-            this.buttonClearLog.Text = "Очистить";
-            this.buttonClearLog.UseVisualStyleBackColor = true;
-            this.buttonClearLog.Click += new System.EventHandler(this.buttonClearLog_Click);
+            this.groupBoxStartLogProcessing.Controls.Add(this.label4);
+            this.groupBoxStartLogProcessing.Controls.Add(this.richTextBoxChecklessFinished);
+            this.groupBoxStartLogProcessing.Controls.Add(this.buttonSFRStartLogDNSCopy);
+            this.groupBoxStartLogProcessing.Controls.Add(this.labelSFRStartLogDNS);
+            this.groupBoxStartLogProcessing.Controls.Add(this.richTextBoxSFRStartLogDNS);
+            this.groupBoxStartLogProcessing.Controls.Add(this.labelSFRStartLogDupl);
+            this.groupBoxStartLogProcessing.Controls.Add(this.richTextBoxSFRStartLogDupl);
+            this.groupBoxStartLogProcessing.Controls.Add(this.labelSFRStartLogCount);
+            this.groupBoxStartLogProcessing.Controls.Add(this.buttonImportSFRStartLog);
+            this.groupBoxStartLogProcessing.Location = new System.Drawing.Point(6, 6);
+            this.groupBoxStartLogProcessing.Name = "groupBoxStartLogProcessing";
+            this.groupBoxStartLogProcessing.Size = new System.Drawing.Size(320, 416);
+            this.groupBoxStartLogProcessing.TabIndex = 29;
+            this.groupBoxStartLogProcessing.TabStop = false;
+            this.groupBoxStartLogProcessing.Text = "Обработка стартовых логов";
             // 
-            // groupBox1
+            // label4
             // 
-            this.groupBox1.Controls.Add(this.checkBoxLogAutoScroll);
-            this.groupBox1.Controls.Add(this.buttonClearLog);
-            this.groupBox1.Location = new System.Drawing.Point(428, 448);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(98, 78);
-            this.groupBox1.TabIndex = 12;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Логи";
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 161);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(261, 15);
+            this.label4.TabIndex = 38;
+            this.label4.Text = "Не отмеченные финишировавшие участники";
             // 
-            // checkBoxCopyChangedOtherDays
+            // richTextBoxChecklessFinished
             // 
-            this.checkBoxCopyChangedOtherDays.Location = new System.Drawing.Point(6, 51);
-            this.checkBoxCopyChangedOtherDays.Name = "checkBoxCopyChangedOtherDays";
-            this.checkBoxCopyChangedOtherDays.Size = new System.Drawing.Size(171, 37);
-            this.checkBoxCopyChangedOtherDays.TabIndex = 13;
-            this.checkBoxCopyChangedOtherDays.Text = "Копирование при изменении в других днях";
-            this.checkBoxCopyChangedOtherDays.UseVisualStyleBackColor = true;
+            this.richTextBoxChecklessFinished.Location = new System.Drawing.Point(6, 179);
+            this.richTextBoxChecklessFinished.Name = "richTextBoxChecklessFinished";
+            this.richTextBoxChecklessFinished.Size = new System.Drawing.Size(261, 92);
+            this.richTextBoxChecklessFinished.TabIndex = 37;
+            this.richTextBoxChecklessFinished.Text = "";
+            // 
+            // buttonSFRStartLogDNSCopy
+            // 
+            this.buttonSFRStartLogDNSCopy.Location = new System.Drawing.Point(42, 277);
+            this.buttonSFRStartLogDNSCopy.Name = "buttonSFRStartLogDNSCopy";
+            this.buttonSFRStartLogDNSCopy.Size = new System.Drawing.Size(136, 23);
+            this.buttonSFRStartLogDNSCopy.TabIndex = 34;
+            this.buttonSFRStartLogDNSCopy.Text = "Копировать";
+            this.buttonSFRStartLogDNSCopy.UseVisualStyleBackColor = true;
+            this.buttonSFRStartLogDNSCopy.Click += new System.EventHandler(this.buttonSFRStartLogDNSCopy_Click);
+            // 
+            // labelSFRStartLogDNS
+            // 
+            this.labelSFRStartLogDNS.AutoSize = true;
+            this.labelSFRStartLogDNS.Location = new System.Drawing.Point(6, 281);
+            this.labelSFRStartLogDNS.Name = "labelSFRStartLogDNS";
+            this.labelSFRStartLogDNS.Size = new System.Drawing.Size(30, 15);
+            this.labelSFRStartLogDNS.TabIndex = 33;
+            this.labelSFRStartLogDNS.Text = "DNS";
+            // 
+            // richTextBoxSFRStartLogDNS
+            // 
+            this.richTextBoxSFRStartLogDNS.Location = new System.Drawing.Point(6, 303);
+            this.richTextBoxSFRStartLogDNS.Name = "richTextBoxSFRStartLogDNS";
+            this.richTextBoxSFRStartLogDNS.Size = new System.Drawing.Size(261, 92);
+            this.richTextBoxSFRStartLogDNS.TabIndex = 32;
+            this.richTextBoxSFRStartLogDNS.Text = "";
+            // 
+            // labelSFRStartLogDupl
+            // 
+            this.labelSFRStartLogDupl.AutoSize = true;
+            this.labelSFRStartLogDupl.Location = new System.Drawing.Point(6, 48);
+            this.labelSFRStartLogDupl.Name = "labelSFRStartLogDupl";
+            this.labelSFRStartLogDupl.Size = new System.Drawing.Size(68, 15);
+            this.labelSFRStartLogDupl.TabIndex = 31;
+            this.labelSFRStartLogDupl.Text = "Дубликаты";
+            // 
+            // richTextBoxSFRStartLogDupl
+            // 
+            this.richTextBoxSFRStartLogDupl.Location = new System.Drawing.Point(6, 66);
+            this.richTextBoxSFRStartLogDupl.Name = "richTextBoxSFRStartLogDupl";
+            this.richTextBoxSFRStartLogDupl.Size = new System.Drawing.Size(261, 92);
+            this.richTextBoxSFRStartLogDupl.TabIndex = 30;
+            this.richTextBoxSFRStartLogDupl.Text = "";
+            // 
+            // labelSFRStartLogCount
+            // 
+            this.labelSFRStartLogCount.AutoSize = true;
+            this.labelSFRStartLogCount.Location = new System.Drawing.Point(209, 26);
+            this.labelSFRStartLogCount.Name = "labelSFRStartLogCount";
+            this.labelSFRStartLogCount.Size = new System.Drawing.Size(74, 15);
+            this.labelSFRStartLogCount.TabIndex = 30;
+            this.labelSFRStartLogCount.Text = "Стартовало:";
+            // 
+            // buttonImportSFRStartLog
+            // 
+            this.buttonImportSFRStartLog.Location = new System.Drawing.Point(6, 22);
+            this.buttonImportSFRStartLog.Name = "buttonImportSFRStartLog";
+            this.buttonImportSFRStartLog.Size = new System.Drawing.Size(197, 23);
+            this.buttonImportSFRStartLog.TabIndex = 28;
+            this.buttonImportSFRStartLog.Text = "Импортировать стартовый лог";
+            this.buttonImportSFRStartLog.UseVisualStyleBackColor = true;
+            this.buttonImportSFRStartLog.Click += new System.EventHandler(this.buttonImportSFRStartLog_Click);
+            // 
+            // buttonExportStartTimes
+            // 
+            this.buttonExportStartTimes.Location = new System.Drawing.Point(332, 6);
+            this.buttonExportStartTimes.Name = "buttonExportStartTimes";
+            this.buttonExportStartTimes.Size = new System.Drawing.Size(197, 44);
+            this.buttonExportStartTimes.TabIndex = 27;
+            this.buttonExportStartTimes.Text = "Экспоритровать стартовые минуты для SFT Smart Terminal";
+            this.buttonExportStartTimes.UseVisualStyleBackColor = true;
+            this.buttonExportStartTimes.Click += new System.EventHandler(this.buttonExportStartTimes_Click);
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabPage4.Controls.Add(this.groupBox2);
+            this.tabPage4.Controls.Add(this.checkedListBoxWithSync);
+            this.tabPage4.Controls.Add(this.groupBox3);
+            this.tabPage4.Controls.Add(this.label3);
+            this.tabPage4.Controls.Add(this.groupBox4);
+            this.tabPage4.Location = new System.Drawing.Point(4, 24);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(535, 485);
+            this.tabPage4.TabIndex = 0;
+            this.tabPage4.Text = "База";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.buttonRemoveMissingPersons);
+            this.groupBox2.Controls.Add(this.buttonCreateNewAdded);
+            this.groupBox2.Controls.Add(this.buttonCardNumAsNum);
+            this.groupBox2.Location = new System.Drawing.Point(9, 6);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(244, 128);
+            this.groupBox2.TabIndex = 23;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Остальное";
+            // 
+            // buttonRemoveMissingPersons
+            // 
+            this.buttonRemoveMissingPersons.Location = new System.Drawing.Point(6, 22);
+            this.buttonRemoveMissingPersons.Name = "buttonRemoveMissingPersons";
+            this.buttonRemoveMissingPersons.Size = new System.Drawing.Size(231, 23);
+            this.buttonRemoveMissingPersons.TabIndex = 4;
+            this.buttonRemoveMissingPersons.Text = "Удалить отсутствующих по дням";
+            this.buttonRemoveMissingPersons.UseVisualStyleBackColor = true;
+            this.buttonRemoveMissingPersons.Click += new System.EventHandler(this.buttonRemoveMissingPersons_Click);
             // 
             // buttonCreateNewAdded
             // 
@@ -236,72 +356,13 @@
             this.buttonCardNumAsNum.UseVisualStyleBackColor = true;
             this.buttonCardNumAsNum.Click += new System.EventHandler(this.buttonCardNumAsNum_Click);
             // 
-            // buttonCopyPersonByNumber
+            // checkedListBoxWithSync
             // 
-            this.buttonCopyPersonByNumber.Location = new System.Drawing.Point(6, 113);
-            this.buttonCopyPersonByNumber.Name = "buttonCopyPersonByNumber";
-            this.buttonCopyPersonByNumber.Size = new System.Drawing.Size(248, 23);
-            this.buttonCopyPersonByNumber.TabIndex = 17;
-            this.buttonCopyPersonByNumber.Text = "Копирвоать участников";
-            this.buttonCopyPersonByNumber.UseVisualStyleBackColor = true;
-            this.buttonCopyPersonByNumber.Click += new System.EventHandler(this.buttonCopyPersonByNumber_Click);
-            // 
-            // textBoxPersonsFromCopy
-            // 
-            this.textBoxPersonsFromCopy.Location = new System.Drawing.Point(6, 84);
-            this.textBoxPersonsFromCopy.Name = "textBoxPersonsFromCopy";
-            this.textBoxPersonsFromCopy.Size = new System.Drawing.Size(248, 23);
-            this.textBoxPersonsFromCopy.TabIndex = 18;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(68, 66);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(117, 15);
-            this.label2.TabIndex = 19;
-            this.label2.Text = "Номера участников";
-            // 
-            // buttonCombineAllBase
-            // 
-            this.buttonCombineAllBase.Enabled = false;
-            this.buttonCombineAllBase.Location = new System.Drawing.Point(1391, 16);
-            this.buttonCombineAllBase.Name = "buttonCombineAllBase";
-            this.buttonCombineAllBase.Size = new System.Drawing.Size(115, 23);
-            this.buttonCombineAllBase.TabIndex = 20;
-            this.buttonCombineAllBase.Text = "Всех в одну базу";
-            this.buttonCombineAllBase.UseVisualStyleBackColor = true;
-            this.buttonCombineAllBase.Visible = false;
-            this.buttonCombineAllBase.Click += new System.EventHandler(this.buttonCombineAllBase_Click);
-            // 
-            // buttonFindAddWithComment
-            // 
-            this.buttonFindAddWithComment.Location = new System.Drawing.Point(6, 22);
-            this.buttonFindAddWithComment.Name = "buttonFindAddWithComment";
-            this.buttonFindAddWithComment.Size = new System.Drawing.Size(132, 38);
-            this.buttonFindAddWithComment.TabIndex = 21;
-            this.buttonFindAddWithComment.Text = "Найти всех с текстм в комментарии";
-            this.buttonFindAddWithComment.UseVisualStyleBackColor = true;
-            this.buttonFindAddWithComment.Click += new System.EventHandler(this.buttonFindAddWithComment_Click);
-            // 
-            // textBoxStringFindComment
-            // 
-            this.textBoxStringFindComment.Location = new System.Drawing.Point(144, 29);
-            this.textBoxStringFindComment.Name = "textBoxStringFindComment";
-            this.textBoxStringFindComment.Size = new System.Drawing.Size(110, 23);
-            this.textBoxStringFindComment.TabIndex = 22;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.buttonRemoveMissingPersons);
-            this.groupBox2.Controls.Add(this.buttonCreateNewAdded);
-            this.groupBox2.Controls.Add(this.buttonCardNumAsNum);
-            this.groupBox2.Location = new System.Drawing.Point(9, 6);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(244, 128);
-            this.groupBox2.TabIndex = 23;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Остальное";
+            this.checkedListBoxWithSync.FormattingEnabled = true;
+            this.checkedListBoxWithSync.Location = new System.Drawing.Point(15, 158);
+            this.checkedListBoxWithSync.Name = "checkedListBoxWithSync";
+            this.checkedListBoxWithSync.Size = new System.Drawing.Size(231, 310);
+            this.checkedListBoxWithSync.TabIndex = 10;
             // 
             // groupBox3
             // 
@@ -337,6 +398,51 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Дозаявки";
             // 
+            // textBoxReservName
+            // 
+            this.textBoxReservName.Location = new System.Drawing.Point(6, 22);
+            this.textBoxReservName.Name = "textBoxReservName";
+            this.textBoxReservName.Size = new System.Drawing.Size(59, 23);
+            this.textBoxReservName.TabIndex = 7;
+            this.textBoxReservName.Text = "_Резерв";
+            // 
+            // buttonSynchronizeReorders
+            // 
+            this.buttonSynchronizeReorders.Location = new System.Drawing.Point(6, 94);
+            this.buttonSynchronizeReorders.Name = "buttonSynchronizeReorders";
+            this.buttonSynchronizeReorders.Size = new System.Drawing.Size(231, 23);
+            this.buttonSynchronizeReorders.TabIndex = 6;
+            this.buttonSynchronizeReorders.Text = "Синхронизировать дозаявки";
+            this.buttonSynchronizeReorders.UseVisualStyleBackColor = true;
+            this.buttonSynchronizeReorders.Click += new System.EventHandler(this.buttonSynchronizeReorders_Click);
+            // 
+            // checkBoxCopyChangedOtherDays
+            // 
+            this.checkBoxCopyChangedOtherDays.Location = new System.Drawing.Point(6, 51);
+            this.checkBoxCopyChangedOtherDays.Name = "checkBoxCopyChangedOtherDays";
+            this.checkBoxCopyChangedOtherDays.Size = new System.Drawing.Size(171, 37);
+            this.checkBoxCopyChangedOtherDays.TabIndex = 13;
+            this.checkBoxCopyChangedOtherDays.Text = "Копирование при изменении в других днях";
+            this.checkBoxCopyChangedOtherDays.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(71, 25);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(104, 15);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "Фамилия резерва";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(15, 137);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(225, 15);
+            this.label3.TabIndex = 26;
+            this.label3.Text = "Поля для копирования/синхронизации";
+            // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.buttonFindAddWithComment);
@@ -351,35 +457,77 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Копирование";
             // 
-            // label3
+            // buttonFindAddWithComment
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(15, 137);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(225, 15);
-            this.label3.TabIndex = 26;
-            this.label3.Text = "Поля для копирования/синхронизации";
+            this.buttonFindAddWithComment.Location = new System.Drawing.Point(6, 22);
+            this.buttonFindAddWithComment.Name = "buttonFindAddWithComment";
+            this.buttonFindAddWithComment.Size = new System.Drawing.Size(132, 38);
+            this.buttonFindAddWithComment.TabIndex = 21;
+            this.buttonFindAddWithComment.Text = "Найти всех с текстм в комментарии";
+            this.buttonFindAddWithComment.UseVisualStyleBackColor = true;
+            this.buttonFindAddWithComment.Click += new System.EventHandler(this.buttonFindAddWithComment_Click);
             // 
-            // buttonExportStartTimes
+            // buttonCopyPersonByNumber
             // 
-            this.buttonExportStartTimes.Location = new System.Drawing.Point(6, 6);
-            this.buttonExportStartTimes.Name = "buttonExportStartTimes";
-            this.buttonExportStartTimes.Size = new System.Drawing.Size(197, 44);
-            this.buttonExportStartTimes.TabIndex = 27;
-            this.buttonExportStartTimes.Text = "Экспоритровать стартовые минуты для SFT Smart Terminal";
-            this.buttonExportStartTimes.UseVisualStyleBackColor = true;
-            this.buttonExportStartTimes.Click += new System.EventHandler(this.buttonExportStartTimes_Click);
+            this.buttonCopyPersonByNumber.Location = new System.Drawing.Point(6, 113);
+            this.buttonCopyPersonByNumber.Name = "buttonCopyPersonByNumber";
+            this.buttonCopyPersonByNumber.Size = new System.Drawing.Size(248, 23);
+            this.buttonCopyPersonByNumber.TabIndex = 17;
+            this.buttonCopyPersonByNumber.Text = "Копирвоать участников";
+            this.buttonCopyPersonByNumber.UseVisualStyleBackColor = true;
+            this.buttonCopyPersonByNumber.Click += new System.EventHandler(this.buttonCopyPersonByNumber_Click);
             // 
-            // tabControl1
+            // textBoxPersonsFromCopy
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Location = new System.Drawing.Point(557, 41);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(877, 514);
-            this.tabControl1.TabIndex = 28;
+            this.textBoxPersonsFromCopy.Location = new System.Drawing.Point(6, 84);
+            this.textBoxPersonsFromCopy.Name = "textBoxPersonsFromCopy";
+            this.textBoxPersonsFromCopy.Size = new System.Drawing.Size(248, 23);
+            this.textBoxPersonsFromCopy.TabIndex = 18;
+            // 
+            // textBoxStringFindComment
+            // 
+            this.textBoxStringFindComment.Location = new System.Drawing.Point(144, 29);
+            this.textBoxStringFindComment.Name = "textBoxStringFindComment";
+            this.textBoxStringFindComment.Size = new System.Drawing.Size(110, 23);
+            this.textBoxStringFindComment.TabIndex = 22;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(68, 66);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(117, 15);
+            this.label2.TabIndex = 19;
+            this.label2.Text = "Номера участников";
+            // 
+            // tabControl2
+            // 
+            this.tabControl2.Controls.Add(this.tabPage4);
+            this.tabControl2.Controls.Add(this.tabPage5);
+            this.tabControl2.Location = new System.Drawing.Point(12, 42);
+            this.tabControl2.Name = "tabControl2";
+            this.tabControl2.SelectedIndex = 0;
+            this.tabControl2.Size = new System.Drawing.Size(543, 513);
+            this.tabControl2.TabIndex = 30;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Location = new System.Drawing.Point(4, 24);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(833, 514);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "SFR Smart terminal";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Location = new System.Drawing.Point(4, 24);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(833, 514);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Стартовые минуты ";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // tabPage1
             // 
@@ -387,122 +535,70 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(869, 486);
+            this.tabPage1.Size = new System.Drawing.Size(833, 514);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Логи";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
+            // richTextBoxLog
             // 
-            this.tabPage2.Controls.Add(this.buttonExportStartTimes);
-            this.tabPage2.Location = new System.Drawing.Point(4, 24);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(869, 486);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Стартовые минуты ";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.richTextBoxLog.ContextMenuStrip = this.contextMenuStripLog;
+            this.richTextBoxLog.Location = new System.Drawing.Point(6, 6);
+            this.richTextBoxLog.Name = "richTextBoxLog";
+            this.richTextBoxLog.Size = new System.Drawing.Size(821, 502);
+            this.richTextBoxLog.TabIndex = 2;
+            this.richTextBoxLog.Text = "";
+            this.richTextBoxLog.WordWrap = false;
+            this.richTextBoxLog.TextChanged += new System.EventHandler(this.richTextBoxLog_TextChanged);
             // 
-            // saveFileDialogSfrst
+            // tabControl1
             // 
-            this.saveFileDialogSfrst.Filter = "Sfrst|*.sfrst|All files|*.*";
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Location = new System.Drawing.Point(557, 13);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(841, 542);
+            this.tabControl1.TabIndex = 28;
             // 
-            // buttonImportSFRStartLog
+            // openFileDialogStartLog
             // 
-            this.buttonImportSFRStartLog.Location = new System.Drawing.Point(3, 5);
-            this.buttonImportSFRStartLog.Name = "buttonImportSFRStartLog";
-            this.buttonImportSFRStartLog.Size = new System.Drawing.Size(197, 23);
-            this.buttonImportSFRStartLog.TabIndex = 28;
-            this.buttonImportSFRStartLog.Text = "Импортировать стартовый лог";
-            this.buttonImportSFRStartLog.UseVisualStyleBackColor = true;
-            // 
-            // tabPage3
-            // 
-            this.tabPage3.Controls.Add(this.buttonImportSFRStartLog);
-            this.tabPage3.Location = new System.Drawing.Point(4, 24);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(869, 486);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "SFR Smart terminal";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // tabControl2
-            // 
-            this.tabControl2.Controls.Add(this.tabPage4);
-            this.tabControl2.Controls.Add(this.tabPage5);
-            this.tabControl2.Location = new System.Drawing.Point(12, 41);
-            this.tabControl2.Name = "tabControl2";
-            this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(543, 481);
-            this.tabControl2.TabIndex = 30;
-            // 
-            // tabPage4
-            // 
-            this.tabPage4.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.tabPage4.Controls.Add(this.groupBox2);
-            this.tabPage4.Controls.Add(this.checkedListBoxWithSync);
-            this.tabPage4.Controls.Add(this.groupBox3);
-            this.tabPage4.Controls.Add(this.label3);
-            this.tabPage4.Controls.Add(this.groupBox4);
-            this.tabPage4.Location = new System.Drawing.Point(4, 24);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(535, 453);
-            this.tabPage4.TabIndex = 0;
-            this.tabPage4.Text = "База";
-            // 
-            // tabPage5
-            // 
-            this.tabPage5.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.tabPage5.Location = new System.Drawing.Point(4, 24);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(192, 72);
-            this.tabPage5.TabIndex = 1;
-            this.tabPage5.Text = "SFR Smart Terminal";
-            // 
-            // comboBoxDays
-            // 
-            this.comboBoxDays.FormattingEnabled = true;
-            this.comboBoxDays.Location = new System.Drawing.Point(170, 13);
-            this.comboBoxDays.Name = "comboBoxDays";
-            this.comboBoxDays.Size = new System.Drawing.Size(79, 23);
-            this.comboBoxDays.TabIndex = 29;
-            this.comboBoxDays.SelectedIndexChanged += new System.EventHandler(this.comboBoxDays_SelectedIndexChanged);
+            this.openFileDialogStartLog.FileName = "StartLog";
+            this.openFileDialogStartLog.Filter = "StartLog|StartLog.txt|Txt|*.txt|All files|*.*";
             // 
             // Utils
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1410, 533);
+            this.ClientSize = new System.Drawing.Size(1408, 565);
             this.Controls.Add(this.tabControl2);
             this.Controls.Add(this.comboBoxDays);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.buttonCombineAllBase);
-            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.buttonBaseExport);
             this.Controls.Add(this.labelBaseImport);
             this.Controls.Add(this.buttonBaseImport);
-            this.MinimumSize = new System.Drawing.Size(600, 400);
+            this.MinimumSize = new System.Drawing.Size(900, 470);
             this.Name = "Utils";
             this.Text = "Утилиты";
             this.Load += new System.EventHandler(this.Utils_Load);
             this.SizeChanged += new System.EventHandler(this.Utils_SizeChanged);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.contextMenuStripLog.ResumeLayout(false);
+            this.tabPage5.ResumeLayout(false);
+            this.groupBoxStartLogProcessing.ResumeLayout(false);
+            this.groupBoxStartLogProcessing.PerformLayout();
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage3.ResumeLayout(false);
             this.tabControl2.ResumeLayout(false);
-            this.tabPage4.ResumeLayout(false);
-            this.tabPage4.PerformLayout();
+            this.tabPage1.ResumeLayout(false);
+            this.tabControl1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -510,44 +606,54 @@
 
         #endregion
         private Button buttonBaseImport;
-        private RichTextBox richTextBoxLog;
         private Label labelBaseImport;
-        private Button buttonRemoveMissingPersons;
         private Button buttonBaseExport;
-        private Button buttonSynchronizeReorders;
         private SaveFileDialog saveFileDialogJson;
         private OpenFileDialog openFileDialogJson;
-        private TextBox textBoxReservName;
-        private Label label1;
-        private CheckBox checkBoxLogAutoScroll;
-        private CheckedListBox checkedListBoxWithSync;
-        private Button buttonClearLog;
-        private GroupBox groupBox1;
-        private CheckBox checkBoxCopyChangedOtherDays;
+        private Button buttonCombineAllBase;
+        private SaveFileDialog saveFileDialogSfrst;
+        private ComboBox comboBoxDays;
+        private ContextMenuStrip contextMenuStripLog;
+        private ToolStripMenuItem ScrollLogToolStripMenuItem;
+        private ToolStripMenuItem ClearLogToolStripMenuItem;
+        private TabPage tabPage5;
+        private TabPage tabPage4;
+        private GroupBox groupBox2;
+        private Button buttonRemoveMissingPersons;
         private Button buttonCreateNewAdded;
         private Button buttonCardNumAsNum;
-        private Button buttonCopyPersonByNumber;
-        private TextBox textBoxPersonsFromCopy;
-        private Label label2;
-        private Button buttonCombineAllBase;
-        private Button buttonFindAddWithComment;
-        private TextBox textBoxStringFindComment;
-        private GroupBox groupBox2;
+        private CheckedListBox checkedListBoxWithSync;
         private GroupBox groupBox3;
-        private GroupBox groupBox4;
-        private Label label3;
         private Button buttonCopyGroupSettings;
         private GroupBox groupBox5;
-        private Button buttonExportStartTimes;
-        private TabControl tabControl1;
-        private TabPage tabPage1;
-        private TabPage tabPage2;
-        private SaveFileDialog saveFileDialogSfrst;
+        private TextBox textBoxReservName;
+        private Button buttonSynchronizeReorders;
+        private CheckBox checkBoxCopyChangedOtherDays;
+        private Label label1;
+        private Label label3;
+        private GroupBox groupBox4;
+        private Button buttonFindAddWithComment;
+        private Button buttonCopyPersonByNumber;
+        private TextBox textBoxPersonsFromCopy;
+        private TextBox textBoxStringFindComment;
+        private Label label2;
+        private TabControl tabControl2;
         private TabPage tabPage3;
         private Button buttonImportSFRStartLog;
-        private TabControl tabControl2;
-        private TabPage tabPage4;
-        private TabPage tabPage5;
-        private ComboBox comboBoxDays;
+        private TabPage tabPage2;
+        private Button buttonExportStartTimes;
+        private TabPage tabPage1;
+        private RichTextBox richTextBoxLog;
+        private TabControl tabControl1;
+        private GroupBox groupBoxStartLogProcessing;
+        private Label labelSFRStartLogCount;
+        private RichTextBox richTextBoxSFRStartLogDupl;
+        private Label labelSFRStartLogDupl;
+        private Label labelSFRStartLogDNS;
+        private RichTextBox richTextBoxSFRStartLogDNS;
+        private Label label4;
+        private RichTextBox richTextBoxChecklessFinished;
+        private Button buttonSFRStartLogDNSCopy;
+        private OpenFileDialog openFileDialogStartLog;
     }
 }

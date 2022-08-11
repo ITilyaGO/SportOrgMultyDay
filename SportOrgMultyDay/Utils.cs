@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.CheckedListBox;
 using static SportOrgMultyDay.Processing.Parsing.ParseBase;
+using SportOrgMultyDay.Processing.SFRSmartTerminal;
 
 namespace SportOrgMultyDay
 {
@@ -25,6 +26,7 @@ namespace SportOrgMultyDay
         public JObject Base;
         int raceCount = 0;
         AutoResize autoResize;
+        List<int> SFRStartLog = new();
         private JObject ImportJson()
         {
             if (openFileDialogJson.ShowDialog() != DialogResult.OK)
@@ -154,20 +156,18 @@ namespace SportOrgMultyDay
             autoResize = new(this);
             autoResize.Add(richTextBoxLog);
             autoResize.Add(tabControl1);
+            autoResize.Add(tabControl2,false,true);
+            autoResize.Add(checkedListBoxWithSync,false,true);
+
         }
 
         private void richTextBoxLog_TextChanged(object sender, EventArgs e)
         {
-            if (checkBoxLogAutoScroll.Checked)
+            if (ScrollLogToolStripMenuItem.Checked)
             {
                 richTextBoxLog.SelectionStart = richTextBoxLog.Text.Length;
                 richTextBoxLog.ScrollToCaret();
             }
-        }
-
-        private void buttonClearLog_Click(object sender, EventArgs e)
-        {
-            richTextBoxLog.Clear();
         }
 
         private void buttonCreateNewAdded_Click(object sender, EventArgs e)
@@ -230,6 +230,32 @@ namespace SportOrgMultyDay
         private void Utils_SizeChanged(object sender, EventArgs e)
         {
             autoResize.Update();
+        }
+
+        private void ScrollLogToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ScrollLogToolStripMenuItem.Checked = !ScrollLogToolStripMenuItem.Checked;
+        }
+
+        private void ClearLogToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            richTextBoxLog.Clear();
+        }
+
+        private void buttonImportSFRStartLog_Click(object sender, EventArgs e)
+        {
+            if (openFileDialogStartLog.ShowDialog() != DialogResult.OK) return;
+            string startLog = File.ReadAllText(openFileDialogStartLog.FileName);
+            StartLogProcessing slp = new(Base, startLog);
+            richTextBoxSFRStartLogDupl.Text = slp.Duplicates;
+            richTextBoxSFRStartLogDNS.Text = slp.DNS;
+            richTextBoxChecklessFinished.Text = slp.ChecklessFinished;
+            SendLog(slp.GetLog());
+        }
+
+        private void buttonSFRStartLogDNSCopy_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(richTextBoxSFRStartLogDNS.Text);
         }
     }
 

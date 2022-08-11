@@ -101,7 +101,7 @@ namespace SportOrgMultyDay.Processing.Parsing
             {
                 return (int)person["card_number"];
             }
-            catch (Exception ex) { LogError("o8sd6vcla", ex); }
+            catch (Exception ex) { LogError("78gkajvydc", ex); }
             return -1;
         }
     }
