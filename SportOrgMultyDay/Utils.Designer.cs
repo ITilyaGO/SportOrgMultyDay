@@ -73,7 +73,6 @@
             this.textBoxStringFindComment = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.tabControl2 = new System.Windows.Forms.TabControl();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.richTextBoxLog = new System.Windows.Forms.RichTextBox();
@@ -510,15 +509,6 @@
             this.tabControl2.Size = new System.Drawing.Size(543, 513);
             this.tabControl2.TabIndex = 30;
             // 
-            // tabPage3
-            // 
-            this.tabPage3.Location = new System.Drawing.Point(4, 24);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(833, 514);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "SFR Smart terminal";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
             // tabPage2
             // 
             this.tabPage2.Location = new System.Drawing.Point(4, 24);
@@ -555,7 +545,6 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Location = new System.Drawing.Point(557, 13);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -638,7 +627,6 @@
         private TextBox textBoxStringFindComment;
         private Label label2;
         private TabControl tabControl2;
-        private TabPage tabPage3;
         private Button buttonImportSFRStartLog;
         private TabPage tabPage2;
         private Button buttonExportStartTimes;

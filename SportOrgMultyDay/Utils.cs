@@ -92,6 +92,7 @@ namespace SportOrgMultyDay
             buttonExportStartTimes.Enabled = active;
             buttonCopyGroupSettings.Enabled = active;
             comboBoxDays.Enabled = active;
+            buttonImportSFRStartLog.Enabled = active;
         }
 
         private void buttonBaseImport_Click(object sender, EventArgs e)
@@ -250,6 +251,7 @@ namespace SportOrgMultyDay
             richTextBoxSFRStartLogDupl.Text = slp.Duplicates;
             richTextBoxSFRStartLogDNS.Text = slp.DNS;
             richTextBoxChecklessFinished.Text = slp.ChecklessFinished;
+            labelSFRStartLogCount.Text = $"Стартовало: {slp.StartedPersons}";
             SendLog(slp.GetLog());
         }
 

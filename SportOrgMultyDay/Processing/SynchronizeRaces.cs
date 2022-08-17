@@ -123,7 +123,7 @@ namespace SportOrgMultyDay.Processing
         public static string FindAddWithComment(JToken jBase, string findStr)
         {
             string ostr = "";
-            JArray persons = PersonsCurRace(jBase);
+            JArray persons = PersonsFromBase(jBase);
 
             for (int i = 0; i < persons.Count; i++)
             {

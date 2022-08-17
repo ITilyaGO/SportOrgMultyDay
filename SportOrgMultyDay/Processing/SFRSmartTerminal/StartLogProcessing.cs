@@ -3,16 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 using static SportOrgMultyDay.Processing.Parsing.ParseBase;
 using static SportOrgMultyDay.Processing.Parsing.ParsePerson;
 using static SportOrgMultyDay.Processing.Parsing.ParseGroup;
 using static SportOrgMultyDay.Processing.Parsing.ParseOrganization;
 using static SportOrgMultyDay.Processing.Parsing.ParseData;
+using static SportOrgMultyDay.Processing.Parsing.ParseResult;
 using static SportOrgMultyDay.Processing.Logger;
-using Newtonsoft.Json.Linq;
-using System.Xml.Linq;
-using Microsoft.VisualBasic.Logging;
 
 namespace SportOrgMultyDay.Processing.SFRSmartTerminal
 {
@@ -56,12 +55,17 @@ namespace SportOrgMultyDay.Processing.SFRSmartTerminal
 
         private void Process()
         {
-            List<int> allBibs = AllPersonsBibs(jBase, ref Log);
+            List<int> allBibs = GetPersonsBibs(jBase, ref Log);
             List<StartCell> startCells = StartLogParse(StartLog, ref Log);
-            List<int> StartedBibs = StartCellsToInt(startCells).Distinct().ToList();
+            List<int> startedBibsNoDupl = StartCellsToInt(startCells).Distinct().ToList();
+            List<int> dnsIncludeFinished = GetDNSList(allBibs, startedBibsNoDupl);
+            List<int> finished = GetFinished(jBase, ref Log);
+            List<int> checklessFinished = dnsIncludeFinished.Intersect(finished).ToList();
+            List<int> dns = dnsIncludeFinished.Except(finished).ToList();
+            StartedPersons = startedBibsNoDupl.Count;
+            ChecklessFinished = String.Join ("\n", checklessFinished.OrderBy(x => x));
             Duplicates = String.Join("\n",SearchDuplicates(startCells, ref Log));
-            List<int> dns = GetDNSList(allBibs, StartedBibs);
-            DNS = String.Join("\n", dns);
+            DNS = String.Join("\n", dns.OrderBy(x => x));
 
         }
 
@@ -132,13 +136,13 @@ namespace SportOrgMultyDay.Processing.SFRSmartTerminal
             return new List<StartCell>();
         }
 
-        private static List<int> AllPersonsBibs(JToken jBase,ref string Log)
+        private static List<int> GetPersonsBibs(JToken jBase,ref string Log)
         {
             try
             {
                 Log += $" Получение всех номеров из дня {CurrentRaceID(jBase)}\n";
                 List<int> allPersonsBibs = new List<int>();
-                JArray persons = PersonsCurRace(jBase);
+                JArray persons = PersonsFromBase(jBase);
                 foreach (JToken person in persons)
                 {
                     int bib = PPBib(person);
@@ -149,13 +153,9 @@ namespace SportOrgMultyDay.Processing.SFRSmartTerminal
                     }
                     allPersonsBibs.Add(bib);
                 }
-                IEnumerable<int> duplicates = allPersonsBibs.GroupBy(x => x).Where(g => g.Count() > 1).Select(x => x.Key);
-                if (duplicates.Any())
-                    foreach (int i in duplicates)
-                        Log += $"  Повторяется номер {i}\n";
-
+                string dupls = CheckDuplicates(allPersonsBibs);
+                if (dupls != "") Log += $"  Повторяется номера: {dupls}\n";
                 Log += $" Получено {allPersonsBibs.Count} номеров\n";
-
                 return allPersonsBibs;
 
             }
@@ -165,6 +165,41 @@ namespace SportOrgMultyDay.Processing.SFRSmartTerminal
                 LogError("h0d9nbtfs", ex);
             }
             return new List<int>();
+        }
+
+        private static List<int> GetFinished(JToken jBase, ref string Log) 
+        {
+            try
+            {
+                Log += $" Получение всех номеров финишировавших из результатов\n";
+                JArray results = ResultsFromBase(jBase);
+                JArray persons = PersonsFromBase(jBase);
+                List<int> bibs = new();
+                foreach (JToken result in results)
+                {
+                    try
+                    {
+                        bibs.Add(PPBib(FPById(PRPersonId(result), persons)));
+                    }
+                    catch (Exception ex){ Log += $"  Ошибка обработки рузультата: {PRId(result)}\n"; }
+                }
+                string dupls = CheckDuplicates(bibs);
+                if (dupls != "") Log += $"  Повторяется номера: {dupls}\n";
+                return bibs.Distinct().ToList();
+            }
+            catch (Exception ex)
+            {
+                Log += "\nERROR AllFinished() вызвало ошибку\n";
+                LogError("632ls9fh3", ex);
+            }
+            return new List<int>();
+        }
+        private static string CheckDuplicates(List<int> bibs)
+        {
+            IEnumerable<int> duplicates = bibs.GroupBy(x => x).Where(g => g.Count() > 1).Select(x => x.Key);
+            if (duplicates.Any())
+                return String.Join(",", duplicates);
+            return "";
         }
 
         private static List<int> StartCellsToInt(List<StartCell> startCells)

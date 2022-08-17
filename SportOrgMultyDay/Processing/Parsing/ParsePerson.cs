@@ -12,6 +12,15 @@ namespace SportOrgMultyDay.Processing.Parsing
 {
     public static class ParsePerson
     {
+        public static string PPId(JToken person)
+        {
+            try
+            {
+                return (string)person["id"];
+            }
+            catch (Exception ex) { LogError("yh377lal", ex); }
+            return null;
+        }
         public static int PPBib(JToken person)
         {
             try
@@ -103,6 +112,12 @@ namespace SportOrgMultyDay.Processing.Parsing
             }
             catch (Exception ex) { LogError("78gkajvydc", ex); }
             return -1;
+        }
+        public static JToken FPById(string id, JArray persons)
+        {
+            for (int i = 0; i < persons.Count; i++)
+                if (id == PPId(persons[i])) return persons[i];
+            return null;
         }
     }
 }
