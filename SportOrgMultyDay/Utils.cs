@@ -230,6 +230,7 @@ namespace SportOrgMultyDay
        
         private void Utils_SizeChanged(object sender, EventArgs e)
         {
+            if (autoResize is null) return;
             autoResize.Update();
         }
 
