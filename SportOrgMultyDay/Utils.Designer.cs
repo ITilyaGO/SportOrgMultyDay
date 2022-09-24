@@ -78,6 +78,11 @@
             this.richTextBoxLog = new System.Windows.Forms.RichTextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.openFileDialogStartLog = new System.Windows.Forms.OpenFileDialog();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.buttonStartFeeCalculate = new System.Windows.Forms.Button();
+            this.textBoxStartFeeWithCardSymbol = new System.Windows.Forms.TextBox();
+            this.groupBoxStartFee = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.contextMenuStripLog.SuspendLayout();
             this.tabPage5.SuspendLayout();
             this.groupBoxStartLogProcessing.SuspendLayout();
@@ -89,6 +94,8 @@
             this.tabControl2.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabControl1.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            this.groupBoxStartFee.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonBaseImport
@@ -502,6 +509,7 @@
             // tabControl2
             // 
             this.tabControl2.Controls.Add(this.tabPage4);
+            this.tabControl2.Controls.Add(this.tabPage3);
             this.tabControl2.Controls.Add(this.tabPage5);
             this.tabControl2.Location = new System.Drawing.Point(12, 42);
             this.tabControl2.Name = "tabControl2";
@@ -556,6 +564,56 @@
             this.openFileDialogStartLog.FileName = "StartLog";
             this.openFileDialogStartLog.Filter = "StartLog|StartLog.txt|Txt|*.txt|All files|*.*";
             // 
+            // tabPage3
+            // 
+            this.tabPage3.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabPage3.Controls.Add(this.groupBoxStartFee);
+            this.tabPage3.Location = new System.Drawing.Point(4, 24);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(535, 485);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Подсчет";
+            // 
+            // buttonStartFeeCalculate
+            // 
+            this.buttonStartFeeCalculate.Location = new System.Drawing.Point(6, 51);
+            this.buttonStartFeeCalculate.Name = "buttonStartFeeCalculate";
+            this.buttonStartFeeCalculate.Size = new System.Drawing.Size(93, 23);
+            this.buttonStartFeeCalculate.TabIndex = 0;
+            this.buttonStartFeeCalculate.Text = "Подсчитать";
+            this.buttonStartFeeCalculate.UseVisualStyleBackColor = true;
+            this.buttonStartFeeCalculate.Click += new System.EventHandler(this.buttonStartFeeCalculate_Click);
+            // 
+            // textBoxStartFeeWithCardSymbol
+            // 
+            this.textBoxStartFeeWithCardSymbol.Location = new System.Drawing.Point(6, 22);
+            this.textBoxStartFeeWithCardSymbol.Name = "textBoxStartFeeWithCardSymbol";
+            this.textBoxStartFeeWithCardSymbol.Size = new System.Drawing.Size(42, 23);
+            this.textBoxStartFeeWithCardSymbol.TabIndex = 1;
+            this.textBoxStartFeeWithCardSymbol.Text = "*";
+            // 
+            // groupBoxStartFee
+            // 
+            this.groupBoxStartFee.Controls.Add(this.label5);
+            this.groupBoxStartFee.Controls.Add(this.textBoxStartFeeWithCardSymbol);
+            this.groupBoxStartFee.Controls.Add(this.buttonStartFeeCalculate);
+            this.groupBoxStartFee.Location = new System.Drawing.Point(6, 6);
+            this.groupBoxStartFee.Name = "groupBoxStartFee";
+            this.groupBoxStartFee.Size = new System.Drawing.Size(422, 256);
+            this.groupBoxStartFee.TabIndex = 2;
+            this.groupBoxStartFee.TabStop = false;
+            this.groupBoxStartFee.Text = "Стартовый взнос ";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(54, 25);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(145, 15);
+            this.label5.TabIndex = 3;
+            this.label5.Text = "Символ оплаты по карте";
+            // 
             // Utils
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -588,6 +646,9 @@
             this.tabControl2.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
+            this.groupBoxStartFee.ResumeLayout(false);
+            this.groupBoxStartFee.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -643,5 +704,10 @@
         private RichTextBox richTextBoxChecklessFinished;
         private Button buttonSFRStartLogDNSCopy;
         private OpenFileDialog openFileDialogStartLog;
+        private TabPage tabPage3;
+        private GroupBox groupBoxStartFee;
+        private Label label5;
+        private TextBox textBoxStartFeeWithCardSymbol;
+        private Button buttonStartFeeCalculate;
     }
 }

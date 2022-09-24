@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using static System.Windows.Forms.CheckedListBox;
 using static SportOrgMultyDay.Processing.Parsing.ParseBase;
 using SportOrgMultyDay.Processing.SFRSmartTerminal;
+using SportOrgMultyDay.Helpers;
 
 namespace SportOrgMultyDay
 {
@@ -260,27 +261,12 @@ namespace SportOrgMultyDay
         {
             Clipboard.SetText(richTextBoxSFRStartLogDNS.Text);
         }
+
+        private void buttonStartFeeCalculate_Click(object sender, EventArgs e)
+        {
+            SendLog(StartFeeCalculate.GetStatistic(Base, textBoxStartFeeWithCardSymbol.Text));
+        }
     }
 
-    public class CheckListBoxItem
-    {
-        public CheckListBoxItem(string text, string tag, bool chacked = true)
-        {
-            Text = text;
-            Tag = tag;
-            Chacked = chacked;
-        }
-        public string Tag;
-        public string Text;
-        public bool Chacked;
-        public override string ToString() { return Text; }
-        public static string[] ToStringMS(CheckedItemCollection clbi)
-        {
-            List<string> fields = new List<string>();
-            foreach (CheckListBoxItem item in clbi) {
-                fields.Add(item.Tag);
-            }
-            return fields.ToArray();
-        }
-    }
+ 
 }
