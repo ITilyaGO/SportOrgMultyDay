@@ -28,5 +28,23 @@ namespace SportOrgMultyDay.Processing.Parsing
             catch (Exception ex) { LogError("h767ry44h", ex); }
             return null;
         }
+        public static int PRResultMsec(JToken result)
+        {
+            try
+            {
+                return (int)result["result_msec"];
+            }
+            catch (Exception ex) { LogError("ajksdh2pdf", ex); }
+            return -1;
+        }
+        public static int PRBib(JToken result)
+        {
+            try
+            {
+                return (int)result["bib"];
+            }
+            catch (Exception ex) { LogError("hgdudj3b76h", ex); }
+            return -1;
+        }
     }
 }

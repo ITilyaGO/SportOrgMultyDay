@@ -158,7 +158,7 @@ namespace SportOrgMultyDay
             autoResize = new(this);
             autoResize.Add(richTextBoxLog);
             autoResize.Add(tabControl1);
-            autoResize.Add(tabControl2,false,true);
+            autoResize.Add(tabControlFunc,false,true);
             autoResize.Add(checkedListBoxWithSync,false,true);
 
         }
@@ -265,6 +265,11 @@ namespace SportOrgMultyDay
         private void buttonStartFeeCalculate_Click(object sender, EventArgs e)
         {
             SendLog(StartFeeCalculate.GetStatistic(Base, textBoxStartFeeWithCardSymbol.Text));
+        }
+
+        private void buttonRemvoeWorstResult_Click(object sender, EventArgs e)
+        {
+            SendLog(RemoveWorstResults.Remove(Base));
         }
     }
 
