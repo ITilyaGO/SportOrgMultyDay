@@ -93,7 +93,7 @@ namespace SportOrgMultyDay
             buttonExportStartTimes.Enabled = active;
             buttonCopyGroupSettings.Enabled = active;
             comboBoxDays.Enabled = active;
-            buttonImportSFRStartLog.Enabled = active;
+            buttonImportStartLog.Enabled = active;
             buttonStartFeeCalculate.Enabled = active;
             buttonRemvoeWorstResult.Enabled = active;
         }
@@ -247,7 +247,7 @@ namespace SportOrgMultyDay
             richTextBoxLog.Clear();
         }
 
-        private void buttonImportSFRStartLog_Click(object sender, EventArgs e)
+        private void buttonImportStartLog_Click(object sender, EventArgs e)
         {
             if (openFileDialogStartLog.ShowDialog() != DialogResult.OK) return;
             string startLog = File.ReadAllText(openFileDialogStartLog.FileName);
@@ -274,6 +274,8 @@ namespace SportOrgMultyDay
         {
             SendLog(RemoveWorstResults.Remove(Base));
         }
+
+       
     }
 
  

@@ -21,11 +21,11 @@ namespace SportOrgMultyDay.Processing.SFRSmartTerminal
             int currentRaceI = CurrentRaceID(jBase);
             string msgLog = "Экспорт стартовых минут...\n";
             msgLog += $"Текущий день: {currentRaceI + 1}\n";
-            JToken race = CurrentRaceFromBase(jBase);
-            JArray persons = Persons(race);
-            JArray groups = Groups(race);
-            JToken data = Data(race);
-            JArray organizations = Organizations(race);
+            JToken race = PBCurrentRaceFromBase(jBase);
+            JArray persons = PBPersons(race);
+            JArray groups = PBGroups(race);
+            JToken data = PBData(race);
+            JArray organizations = PBOrganizations(race);
             string outStr = GetHead(data);
             for (int p = 0; p < persons.Count; p++)
             {

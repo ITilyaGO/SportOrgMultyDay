@@ -15,7 +15,7 @@ namespace SportOrgMultyDay.Processing
         public static string Remove(JObject jbase)
         {
             string msgLog = "Удление отсутствующих по дням... \n";
-            var races = Races(jbase);
+            var races = PBRaces(jbase);
             for (int i = 0; i < races.Count(); i++)
             {
                 msgLog += $"День:{i + 1}\n{TryRemovePersonsFromDay(races[i],i)}\n";
@@ -26,7 +26,7 @@ namespace SportOrgMultyDay.Processing
         private static string TryRemovePersonsFromDay(JToken race, int raceInd)
         {
             string logMsg = "";
-            var persons = Persons(race);
+            var persons = PBPersons(race);
             for (int i = persons.Count()-1; i >= 0; i--)
             {
                 if (!RunPersonInDay(persons[i], raceInd))

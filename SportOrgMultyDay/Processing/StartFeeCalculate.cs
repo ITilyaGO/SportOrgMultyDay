@@ -17,7 +17,7 @@ namespace SportOrgMultyDay.Processing
             string msgLog = "Подсчёт стартовых взносов... \n";
             int cardSum = 0,cardCount = 0;
             int cashSum = 0, cashCount = 0;
-            JArray persons = PersonsFromBase(Base);
+            JArray persons = PBPersonsFromBase(Base);
             foreach (JToken person in persons)
             {
                 string personNC = PersonToString.BibNameComment(person);
@@ -45,7 +45,7 @@ namespace SportOrgMultyDay.Processing
         public static int GetSum(JToken Base)
         {
             int summ = 0;
-            JArray persons = PersonsFromBase(Base);
+            JArray persons = PBPersonsFromBase(Base);
             foreach (JToken person in persons)
             {
                 string comment = PPComment(person);

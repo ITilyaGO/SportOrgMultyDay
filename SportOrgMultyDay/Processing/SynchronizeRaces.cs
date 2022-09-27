@@ -42,8 +42,8 @@ namespace SportOrgMultyDay.Processing
             int copyCount = 0;
             int currentRaceI = CurrentRaceID(jBase);
             string msgLog = $"Синхронизация...\nТекущий день: {currentRaceI+1}\n";
-            JArray races = Races(jBase);
-            JArray persons = Persons(CurrentRace(races, currentRaceI));
+            JArray races = PBRaces(jBase);
+            JArray persons = PBPersons(PBCurrentRace(races, currentRaceI));
 
             for (int i = 0; i < persons.Count; i++)
             {
@@ -87,8 +87,8 @@ namespace SportOrgMultyDay.Processing
             int currentRaceI = CurrentRaceID(jBase);
             string msgLog = $"Создание новых дозаявленых...\nТекущий день: {currentRaceI + 1}\n";
 
-            JArray races = Races(jBase);
-            JArray persons = Persons(CurrentRace(races, currentRaceI));
+            JArray races = PBRaces(jBase);
+            JArray persons = PBPersons(PBCurrentRace(races, currentRaceI));
             for (int i = 0; i < persons.Count; i++)
             {
                 JToken person = persons[i];
@@ -123,7 +123,7 @@ namespace SportOrgMultyDay.Processing
         public static string FindAddWithComment(JToken jBase, string findStr)
         {
             string ostr = "";
-            JArray persons = PersonsFromBase(jBase);
+            JArray persons = PBPersonsFromBase(jBase);
 
             for (int i = 0; i < persons.Count; i++)
             {
@@ -154,7 +154,7 @@ namespace SportOrgMultyDay.Processing
             {
                 if (r == copyPerson.RaceIndex) continue;
                 JToken race = races[r];
-                JArray persons = Persons(race);
+                JArray persons = PBPersons(race);
                 JToken personClone = copyPerson.Person.DeepClone();
                 personClone["is_personal"] = false;
                 persons.Add(personClone);
@@ -170,7 +170,7 @@ namespace SportOrgMultyDay.Processing
             for (int r = 0; r < races.Count; r++)
             {
                 if (r == copyPerson.RaceIndex) continue;
-                JArray persons = Persons(races[r]);
+                JArray persons = PBPersons(races[r]);
                 int findBib = PPBib(copyPerson.Person);
                 for (int i = 0; i < persons.Count; i++)
                 {
@@ -190,7 +190,7 @@ namespace SportOrgMultyDay.Processing
             string msgLog = "Синхронизация участников по номерам...\n";
             int currentRaceI = CurrentRaceID(jBase);
             msgLog += $"Текущий день: {currentRaceI + 1}\n";
-            JArray races = Races(jBase);
+            JArray races = PBRaces(jBase);
             for (int i = 0; i < bibToCopy.Length; i++)
             {
                 PersonCopies[] pc = GetPersonTockensByBib(races, bibToCopy[i]);
@@ -300,7 +300,7 @@ namespace SportOrgMultyDay.Processing
 
         private static JToken GetPersonByBib(JToken race, int bib)
         {
-            JArray persons = Persons(race);
+            JArray persons = PBPersons(race);
             for (int i = 0; i < persons.Count; i++)
             {
                 int pbib = PPBib(persons[i]); 

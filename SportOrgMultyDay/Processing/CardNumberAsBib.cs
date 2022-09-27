@@ -15,11 +15,11 @@ namespace SportOrgMultyDay.Processing
         public static string Process(JToken jBase)
         {
             string msgLog = "Копирование номера в номер чипа...\n";
-            JArray races = Races(jBase);
+            JArray races = PBRaces(jBase);
             for (int r = 0; r < races.Count; r++)
             {
                 msgLog += $"День:{r}\n";
-                JArray persons = Persons(races[r]);
+                JArray persons = PBPersons(races[r]);
                 for (int i = 0; i < persons.Count; i++)
                 {
                     JToken person = persons[i];
