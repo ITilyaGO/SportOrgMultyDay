@@ -94,6 +94,8 @@ namespace SportOrgMultyDay
             buttonCopyGroupSettings.Enabled = active;
             comboBoxDays.Enabled = active;
             buttonImportSFRStartLog.Enabled = active;
+            buttonStartFeeCalculate.Enabled = active;
+            buttonRemvoeWorstResult.Enabled = active;
         }
 
         private void buttonBaseImport_Click(object sender, EventArgs e)
@@ -259,6 +261,7 @@ namespace SportOrgMultyDay
 
         private void buttonSFRStartLogDNSCopy_Click(object sender, EventArgs e)
         {
+            if (richTextBoxSFRStartLogDNS.Text == "") return;
             Clipboard.SetText(richTextBoxSFRStartLogDNS.Text);
         }
 
