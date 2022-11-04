@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
+using SportOrgMultyDay.Data;
 using static SportOrgMultyDay.Processing.Parsing.ParseBase;
 using static SportOrgMultyDay.Processing.Parsing.ParsePerson;
 using static SportOrgMultyDay.Processing.Parsing.ParseGroup;
@@ -13,28 +14,10 @@ using static SportOrgMultyDay.Processing.Parsing.ParseData;
 using static SportOrgMultyDay.Processing.Parsing.ParseResult;
 using static SportOrgMultyDay.Processing.Logger;
 
-namespace SportOrgMultyDay.Processing.SFRSmartTerminal
+namespace SportOrgMultyDay.Processing
 {
-    class StartCell
-    {
-        public int Bib { get; set; }
-        public string Time { get; set; }
-        public StartCell(int bib,string time)
-        {
-            Bib = bib;
-            Time = time;
-        }
-        public override string ToString()
-        {
-            return $"{Bib} {Time}";
-        }
-        public override bool Equals(object? obj)
-        {
-            if (obj is StartCell person) return Bib == person.Bib;
-            return false;
-        }
-        public override int GetHashCode() => Bib.GetHashCode();
-    }
+
+    internal enum StartLogType { None, SFR, SportIdent }
 
     public class StartLogProcessing
     {
@@ -44,10 +27,10 @@ namespace SportOrgMultyDay.Processing.SFRSmartTerminal
         public string DNS { get; private set; }
 
         JToken jBase;
-        string StartLog;
+        readonly string StartLog;
         string Log;
-        public StartLogProcessing(JToken jbase,string startLog)
-        { 
+        public StartLogProcessing(JToken jbase, string startLog)
+        {
             StartLog = startLog;
             jBase = jbase;
             Process();
@@ -56,25 +39,24 @@ namespace SportOrgMultyDay.Processing.SFRSmartTerminal
         private void Process()
         {
             List<int> allBibs = GetPersonsBibs(jBase, ref Log);
-            List<StartCell> startCells = StartLogParse(StartLog, ref Log);
+            List<StartCell> startCells = StartLogParse(jBase,StartLog, ref Log);
             List<int> startedBibsNoDupl = StartCellsToInt(startCells).Distinct().ToList();
             List<int> dnsIncludeFinished = GetDNSList(allBibs, startedBibsNoDupl);
             List<int> finished = GetFinished(jBase, ref Log);
             List<int> checklessFinished = dnsIncludeFinished.Intersect(finished).ToList();
             List<int> dns = dnsIncludeFinished.Except(finished).ToList();
             StartedPersons = startedBibsNoDupl.Count;
-            ChecklessFinished = String.Join ("\n", checklessFinished.OrderBy(x => x));
-            Duplicates = String.Join("\n",SearchDuplicates(startCells, ref Log));
-            DNS = String.Join("\n", dns.OrderBy(x => x));
-
+            ChecklessFinished = string.Join("\n", checklessFinished.OrderBy(x => x));
+            Duplicates = string.Join("\n", SearchDuplicates(startCells, ref Log));
+            DNS = string.Join("\n", dns.OrderBy(x => x));
         }
 
-        private static List<int> GetDNSList(List<int> all, List<int> started )
+        private static List<int> GetDNSList(List<int> all, List<int> started)
         {
             return all.Except(started).ToList();
         }
 
-        private static List<StartCell> SearchDuplicates(List<StartCell> startCells,ref string log)
+        private static List<StartCell> SearchDuplicates(List<StartCell> startCells, ref string log)
         {
             try
             {
@@ -102,13 +84,40 @@ namespace SportOrgMultyDay.Processing.SFRSmartTerminal
             return new List<StartCell>();
         }
 
-        private static List<StartCell> StartLogParse(string startLog,ref string log)
+        private static List<StartCell> StartLogParse(JToken jbase, string startLog, ref string log)
         {
             try
             {
                 log += $" Парсинг стартовых логов\n";
-                List<StartCell> startCells = new();
+                StartLogType logType = GetStartLogType(startLog);
                 string[] logLines = startLog.Split("\n", StringSplitOptions.RemoveEmptyEntries);
+                switch (logType)
+                {
+                    case StartLogType.SportIdent:
+                        return StartLogParseSportIdent(jbase, logLines, ref log);
+                    case StartLogType.SFR:
+                        return StartLogParseSFR(logLines, ref log);
+                    case StartLogType.None:
+                        log += "  Тип лога не определён, процесс прерван!\n";
+                        return new();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                LogError("ggfcf52qw", ex);
+                log += "\nERROR StartLogParse() вызвало ошибку\n";
+            }
+
+            return new List<StartCell>();
+        }
+
+        private static List<StartCell> StartLogParseSFR(string[] logLines, ref string log)
+        {
+            List<StartCell> startCells = new();
+            try
+            {
+                log += $" Тип лога SFR smart terminal\n";
                 foreach (string line in logLines)
                 {
                     try
@@ -121,28 +130,82 @@ namespace SportOrgMultyDay.Processing.SFRSmartTerminal
                     catch (Exception ex)
                     {
                         log += $"  Ошибка парсинга строки:[{line}]\n";
-                        LogError("fueg6o7osd", ex);
+                        LogError("9i32bhisadg", ex);
                     }
                 }
-                return startCells;
 
             }
             catch (Exception ex)
             {
-                LogError("ggfcf52qw", ex);
-                log += "\nERROR StartLogParse() вызвало ошибку\n";
+                LogError("38dhd9gasd", ex);
+                log += "\nERROR StartLogParseSFR() вызвало ошибку\n";
             }
-           
-            return new List<StartCell>();
+            return startCells;
+        }
+        private static List<StartCell> StartLogParseSportIdent(JToken jbase,string[] logLines, ref string log)
+        {
+            List<StartCell> startCells = new();
+            try
+            {
+                log += $" Тип лога станция SportIdent\n";
+
+                Dictionary<int, int> siidBib = new();
+                JArray persons = PBPersonsFromBase(jbase);
+                foreach (JToken person in persons)
+                {
+                    int bib = PPBib(person);
+                    int siid = PPCardNumber(person);
+                    if (bib == 0 || siid == 0 || bib == -1 || siid == -1) continue;
+                    siidBib.Add(siid, bib);
+                }
+
+                for (int i = 1; i < logLines.Length; i++)
+                {
+                    try
+                    {
+                        string[] values = logLines[i].Split(";");
+                        int siid = Convert.ToInt32(values[2]);
+                        if (siidBib.TryGetValue(siid, out int bib))
+                            startCells.Add(new(bib, values[1]));
+                    }
+                    catch (Exception ex)
+                    {
+                        log += $"  Ошибка парсинга строки:[{logLines[i]}]\n";
+                        LogError("sg378ehdfa", ex);
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                LogError("93jdhg31da4u", ex);
+                log += "\nERROR StartLogParseSportIdent() вызвало ошибку\n";
+            }
+            return startCells;
         }
 
-        private static List<int> GetPersonsBibs(JToken jBase,ref string Log)
+        private static StartLogType GetStartLogType(string startLog)
+        {
+            int siStart = startLog.IndexOf("No;Read on;SIID;");
+            if (siStart == 0)
+                return StartLogType.SportIdent;
+            if (siStart == -1)
+            {
+                string firstStr = startLog[..startLog.IndexOf("\n")];
+                string[] values = firstStr.Split("\t");
+                if (int.TryParse(values[0], out _))
+                    return StartLogType.SFR;
+            }
+            return StartLogType.None;
+        }
+
+        private static List<int> GetPersonsBibs(JToken jBase, ref string Log)
         {
             try
             {
                 Log += $" Получение всех номеров из дня {CurrentRaceID(jBase)}\n";
                 List<int> allPersonsBibs = new List<int>();
-                JArray persons = PersonsFromBase(jBase);
+                JArray persons = PBPersonsFromBase(jBase);
                 foreach (JToken person in persons)
                 {
                     int bib = PPBib(person);
@@ -167,13 +230,13 @@ namespace SportOrgMultyDay.Processing.SFRSmartTerminal
             return new List<int>();
         }
 
-        private static List<int> GetFinished(JToken jBase, ref string Log) 
+        private static List<int> GetFinished(JToken jBase, ref string Log)
         {
             try
             {
                 Log += $" Получение всех номеров финишировавших из результатов\n";
-                JArray results = ResultsFromBase(jBase);
-                JArray persons = PersonsFromBase(jBase);
+                JArray results = PBResultsFromBase(jBase);
+                JArray persons = PBPersonsFromBase(jBase);
                 List<int> bibs = new();
                 foreach (JToken result in results)
                 {
@@ -181,7 +244,7 @@ namespace SportOrgMultyDay.Processing.SFRSmartTerminal
                     {
                         bibs.Add(PPBib(FPById(PRPersonId(result), persons)));
                     }
-                    catch (Exception ex){ Log += $"  Ошибка обработки рузультата: {PRId(result)}\n"; }
+                    catch (Exception ex) { Log += $"  Ошибка обработки рузультата: {PRId(result)}\n"; }
                 }
                 string dupls = CheckDuplicates(bibs);
                 if (dupls != "") Log += $"  Повторяется номера: {dupls}\n";
@@ -198,7 +261,7 @@ namespace SportOrgMultyDay.Processing.SFRSmartTerminal
         {
             IEnumerable<int> duplicates = bibs.GroupBy(x => x).Where(g => g.Count() > 1).Select(x => x.Key);
             if (duplicates.Any())
-                return String.Join(",", duplicates);
+                return string.Join(",", duplicates);
             return "";
         }
 
@@ -216,7 +279,7 @@ namespace SportOrgMultyDay.Processing.SFRSmartTerminal
             Log = "";
             return log;
         }
-        
+
 
 
 

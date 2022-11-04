@@ -17,7 +17,7 @@ namespace SportOrgMultyDay.Processing
         {
             string msgLog = "Удаление худших повторяющихся результатов... \n";
 
-            JArray results = ResultsFromBase(Base);
+            JArray results = PBResultsFromBase(Base);
             List<JToken> toRemove = new();
             for (int i = 0; i < results.Count; i++)
             {

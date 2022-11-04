@@ -16,9 +16,9 @@ namespace SportOrgMultyDay.Processing
             int currentRaceI = CurrentRaceID(jBase);
             string msgLog = "Синхронизация групп...";
             msgLog += $"Текущий день: {currentRaceI + 1}\n";
-            JArray races = Races(jBase);
+            JArray races = PBRaces(jBase);
 
-            JArray groupsCurr = Groups(races[currentRaceI]);
+            JArray groupsCurr = PBGroups(races[currentRaceI]);
             for (int g = 0; g < groupsCurr.Count; g++) //Перечисляем группы текущего дня
             {
                 JToken rankingThis = PGRanking(groupsCurr[g]); 
@@ -29,7 +29,7 @@ namespace SportOrgMultyDay.Processing
                     if (r == currentRaceI) continue; //Пропускаем race из которого копируем
                     JToken race = races[r];
                     
-                    JArray groups = Groups(race);
+                    JArray groups = PBGroups(race);
                     for (int g2 = 0; g2 < groups.Count; g2++) //Группы другого дня
                     {
                         string g2ToID = PGId(groups[g2]);

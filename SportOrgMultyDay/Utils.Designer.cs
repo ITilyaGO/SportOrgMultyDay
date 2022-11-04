@@ -50,7 +50,7 @@
             this.labelSFRStartLogDupl = new System.Windows.Forms.Label();
             this.richTextBoxSFRStartLogDupl = new System.Windows.Forms.RichTextBox();
             this.labelSFRStartLogCount = new System.Windows.Forms.Label();
-            this.buttonImportSFRStartLog = new System.Windows.Forms.Button();
+            this.buttonImportStartLog = new System.Windows.Forms.Button();
             this.buttonExportStartTimes = new System.Windows.Forms.Button();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -198,7 +198,7 @@
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage5.Size = new System.Drawing.Size(535, 485);
             this.tabPage5.TabIndex = 1;
-            this.tabPage5.Text = "SFR Smart Terminal";
+            this.tabPage5.Text = "Шахматка";
             // 
             // groupBoxStartLogProcessing
             // 
@@ -210,7 +210,7 @@
             this.groupBoxStartLogProcessing.Controls.Add(this.labelSFRStartLogDupl);
             this.groupBoxStartLogProcessing.Controls.Add(this.richTextBoxSFRStartLogDupl);
             this.groupBoxStartLogProcessing.Controls.Add(this.labelSFRStartLogCount);
-            this.groupBoxStartLogProcessing.Controls.Add(this.buttonImportSFRStartLog);
+            this.groupBoxStartLogProcessing.Controls.Add(this.buttonImportStartLog);
             this.groupBoxStartLogProcessing.Location = new System.Drawing.Point(6, 6);
             this.groupBoxStartLogProcessing.Name = "groupBoxStartLogProcessing";
             this.groupBoxStartLogProcessing.Size = new System.Drawing.Size(320, 416);
@@ -288,15 +288,15 @@
             this.labelSFRStartLogCount.TabIndex = 30;
             this.labelSFRStartLogCount.Text = "Стартовало:";
             // 
-            // buttonImportSFRStartLog
+            // buttonImportStartLog
             // 
-            this.buttonImportSFRStartLog.Location = new System.Drawing.Point(6, 22);
-            this.buttonImportSFRStartLog.Name = "buttonImportSFRStartLog";
-            this.buttonImportSFRStartLog.Size = new System.Drawing.Size(197, 23);
-            this.buttonImportSFRStartLog.TabIndex = 28;
-            this.buttonImportSFRStartLog.Text = "Импортировать стартовый лог";
-            this.buttonImportSFRStartLog.UseVisualStyleBackColor = true;
-            this.buttonImportSFRStartLog.Click += new System.EventHandler(this.buttonImportSFRStartLog_Click);
+            this.buttonImportStartLog.Location = new System.Drawing.Point(6, 22);
+            this.buttonImportStartLog.Name = "buttonImportStartLog";
+            this.buttonImportStartLog.Size = new System.Drawing.Size(197, 23);
+            this.buttonImportStartLog.TabIndex = 28;
+            this.buttonImportStartLog.Text = "Импортировать стартовый лог";
+            this.buttonImportStartLog.UseVisualStyleBackColor = true;
+            this.buttonImportStartLog.Click += new System.EventHandler(this.buttonImportStartLog_Click);
             // 
             // buttonExportStartTimes
             // 
@@ -637,7 +637,7 @@
             // openFileDialogStartLog
             // 
             this.openFileDialogStartLog.FileName = "StartLog";
-            this.openFileDialogStartLog.Filter = "StartLog|StartLog.txt|Txt|*.txt|All files|*.*";
+            this.openFileDialogStartLog.Filter = "StartLog|StartLog.txt|Sportident|*.csv|Txt|*.txt|All files|*.*";
             // 
             // Utils
             // 
@@ -714,7 +714,7 @@
         private TextBox textBoxStringFindComment;
         private Label label2;
         private TabControl tabControlFunc;
-        private Button buttonImportSFRStartLog;
+        private Button buttonImportStartLog;
         private TabPage tabPage2;
         private Button buttonExportStartTimes;
         private TabPage tabPage1;
