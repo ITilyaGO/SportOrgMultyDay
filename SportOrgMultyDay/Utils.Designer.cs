@@ -42,15 +42,18 @@
             this.comboBoxDays = new System.Windows.Forms.ComboBox();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.groupBoxStartLogProcessing = new System.Windows.Forms.GroupBox();
+            this.comboBoxStartLogOutFieldsSplitter = new System.Windows.Forms.ComboBox();
+            this.buttonImportStartLogClipboard = new System.Windows.Forms.Button();
+            this.comboBoxLogType = new System.Windows.Forms.ComboBox();
+            this.buttonImportStartLogFile = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.richTextBoxChecklessFinished = new System.Windows.Forms.RichTextBox();
             this.buttonSFRStartLogDNSCopy = new System.Windows.Forms.Button();
             this.labelSFRStartLogDNS = new System.Windows.Forms.Label();
-            this.richTextBoxSFRStartLogDNS = new System.Windows.Forms.RichTextBox();
+            this.richTextBoxStartLogDNS = new System.Windows.Forms.RichTextBox();
             this.labelSFRStartLogDupl = new System.Windows.Forms.Label();
-            this.richTextBoxSFRStartLogDupl = new System.Windows.Forms.RichTextBox();
+            this.richTextBoxStartLogDupl = new System.Windows.Forms.RichTextBox();
             this.labelSFRStartLogCount = new System.Windows.Forms.Label();
-            this.buttonImportStartLog = new System.Windows.Forms.Button();
             this.buttonExportStartTimes = new System.Windows.Forms.Button();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -85,6 +88,7 @@
             this.richTextBoxLog = new System.Windows.Forms.RichTextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.openFileDialogStartLog = new System.Windows.Forms.OpenFileDialog();
+            this.toolTipGeneral = new System.Windows.Forms.ToolTip(this.components);
             this.contextMenuStripLog.SuspendLayout();
             this.tabPage5.SuspendLayout();
             this.groupBoxStartLogProcessing.SuspendLayout();
@@ -202,26 +206,69 @@
             // 
             // groupBoxStartLogProcessing
             // 
+            this.groupBoxStartLogProcessing.Controls.Add(this.comboBoxStartLogOutFieldsSplitter);
+            this.groupBoxStartLogProcessing.Controls.Add(this.buttonImportStartLogClipboard);
+            this.groupBoxStartLogProcessing.Controls.Add(this.comboBoxLogType);
+            this.groupBoxStartLogProcessing.Controls.Add(this.buttonImportStartLogFile);
             this.groupBoxStartLogProcessing.Controls.Add(this.label4);
             this.groupBoxStartLogProcessing.Controls.Add(this.richTextBoxChecklessFinished);
             this.groupBoxStartLogProcessing.Controls.Add(this.buttonSFRStartLogDNSCopy);
             this.groupBoxStartLogProcessing.Controls.Add(this.labelSFRStartLogDNS);
-            this.groupBoxStartLogProcessing.Controls.Add(this.richTextBoxSFRStartLogDNS);
+            this.groupBoxStartLogProcessing.Controls.Add(this.richTextBoxStartLogDNS);
             this.groupBoxStartLogProcessing.Controls.Add(this.labelSFRStartLogDupl);
-            this.groupBoxStartLogProcessing.Controls.Add(this.richTextBoxSFRStartLogDupl);
+            this.groupBoxStartLogProcessing.Controls.Add(this.richTextBoxStartLogDupl);
             this.groupBoxStartLogProcessing.Controls.Add(this.labelSFRStartLogCount);
-            this.groupBoxStartLogProcessing.Controls.Add(this.buttonImportStartLog);
             this.groupBoxStartLogProcessing.Location = new System.Drawing.Point(6, 6);
             this.groupBoxStartLogProcessing.Name = "groupBoxStartLogProcessing";
-            this.groupBoxStartLogProcessing.Size = new System.Drawing.Size(320, 416);
+            this.groupBoxStartLogProcessing.Size = new System.Drawing.Size(290, 417);
             this.groupBoxStartLogProcessing.TabIndex = 29;
             this.groupBoxStartLogProcessing.TabStop = false;
             this.groupBoxStartLogProcessing.Text = "Обработка стартовых логов";
             // 
+            // comboBoxStartLogOutFieldsSplitter
+            // 
+            this.comboBoxStartLogOutFieldsSplitter.FormattingEnabled = true;
+            this.comboBoxStartLogOutFieldsSplitter.Location = new System.Drawing.Point(114, 23);
+            this.comboBoxStartLogOutFieldsSplitter.Name = "comboBoxStartLogOutFieldsSplitter";
+            this.comboBoxStartLogOutFieldsSplitter.Size = new System.Drawing.Size(59, 23);
+            this.comboBoxStartLogOutFieldsSplitter.TabIndex = 41;
+            this.toolTipGeneral.SetToolTip(this.comboBoxStartLogOutFieldsSplitter, "Символ разделения номеров при выводе");
+            // 
+            // buttonImportStartLogClipboard
+            // 
+            this.buttonImportStartLogClipboard.Image = global::SportOrgMultyDay.Properties.Resources.paste_48;
+            this.buttonImportStartLogClipboard.Location = new System.Drawing.Point(233, 23);
+            this.buttonImportStartLogClipboard.Name = "buttonImportStartLogClipboard";
+            this.buttonImportStartLogClipboard.Size = new System.Drawing.Size(48, 48);
+            this.buttonImportStartLogClipboard.TabIndex = 40;
+            this.toolTipGeneral.SetToolTip(this.buttonImportStartLogClipboard, "Импори стартового лога из буфера объмена");
+            this.buttonImportStartLogClipboard.UseVisualStyleBackColor = true;
+            this.buttonImportStartLogClipboard.Click += new System.EventHandler(this.buttonImportStartLogClipboard_Click);
+            // 
+            // comboBoxLogType
+            // 
+            this.comboBoxLogType.FormattingEnabled = true;
+            this.comboBoxLogType.Location = new System.Drawing.Point(6, 23);
+            this.comboBoxLogType.Name = "comboBoxLogType";
+            this.comboBoxLogType.Size = new System.Drawing.Size(102, 23);
+            this.comboBoxLogType.TabIndex = 39;
+            // 
+            // buttonImportStartLogFile
+            // 
+            this.buttonImportStartLogFile.BackColor = System.Drawing.Color.Gainsboro;
+            this.buttonImportStartLogFile.Image = global::SportOrgMultyDay.Properties.Resources.file_import_48;
+            this.buttonImportStartLogFile.Location = new System.Drawing.Point(179, 23);
+            this.buttonImportStartLogFile.Name = "buttonImportStartLogFile";
+            this.buttonImportStartLogFile.Size = new System.Drawing.Size(48, 48);
+            this.buttonImportStartLogFile.TabIndex = 28;
+            this.toolTipGeneral.SetToolTip(this.buttonImportStartLogFile, "Импорт стартового лога из файла");
+            this.buttonImportStartLogFile.UseVisualStyleBackColor = false;
+            this.buttonImportStartLogFile.Click += new System.EventHandler(this.buttonImportStartLogFile_Click);
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 161);
+            this.label4.Location = new System.Drawing.Point(6, 175);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(261, 15);
             this.label4.TabIndex = 38;
@@ -229,15 +276,15 @@
             // 
             // richTextBoxChecklessFinished
             // 
-            this.richTextBoxChecklessFinished.Location = new System.Drawing.Point(6, 179);
+            this.richTextBoxChecklessFinished.Location = new System.Drawing.Point(6, 193);
             this.richTextBoxChecklessFinished.Name = "richTextBoxChecklessFinished";
-            this.richTextBoxChecklessFinished.Size = new System.Drawing.Size(261, 92);
+            this.richTextBoxChecklessFinished.Size = new System.Drawing.Size(275, 92);
             this.richTextBoxChecklessFinished.TabIndex = 37;
             this.richTextBoxChecklessFinished.Text = "";
             // 
             // buttonSFRStartLogDNSCopy
             // 
-            this.buttonSFRStartLogDNSCopy.Location = new System.Drawing.Point(42, 277);
+            this.buttonSFRStartLogDNSCopy.Location = new System.Drawing.Point(42, 291);
             this.buttonSFRStartLogDNSCopy.Name = "buttonSFRStartLogDNSCopy";
             this.buttonSFRStartLogDNSCopy.Size = new System.Drawing.Size(136, 23);
             this.buttonSFRStartLogDNSCopy.TabIndex = 34;
@@ -248,61 +295,51 @@
             // labelSFRStartLogDNS
             // 
             this.labelSFRStartLogDNS.AutoSize = true;
-            this.labelSFRStartLogDNS.Location = new System.Drawing.Point(6, 281);
+            this.labelSFRStartLogDNS.Location = new System.Drawing.Point(6, 299);
             this.labelSFRStartLogDNS.Name = "labelSFRStartLogDNS";
             this.labelSFRStartLogDNS.Size = new System.Drawing.Size(30, 15);
             this.labelSFRStartLogDNS.TabIndex = 33;
             this.labelSFRStartLogDNS.Text = "DNS";
             // 
-            // richTextBoxSFRStartLogDNS
+            // richTextBoxStartLogDNS
             // 
-            this.richTextBoxSFRStartLogDNS.Location = new System.Drawing.Point(6, 303);
-            this.richTextBoxSFRStartLogDNS.Name = "richTextBoxSFRStartLogDNS";
-            this.richTextBoxSFRStartLogDNS.Size = new System.Drawing.Size(261, 92);
-            this.richTextBoxSFRStartLogDNS.TabIndex = 32;
-            this.richTextBoxSFRStartLogDNS.Text = "";
+            this.richTextBoxStartLogDNS.Location = new System.Drawing.Point(6, 317);
+            this.richTextBoxStartLogDNS.Name = "richTextBoxStartLogDNS";
+            this.richTextBoxStartLogDNS.Size = new System.Drawing.Size(275, 92);
+            this.richTextBoxStartLogDNS.TabIndex = 32;
+            this.richTextBoxStartLogDNS.Text = "";
             // 
             // labelSFRStartLogDupl
             // 
             this.labelSFRStartLogDupl.AutoSize = true;
-            this.labelSFRStartLogDupl.Location = new System.Drawing.Point(6, 48);
+            this.labelSFRStartLogDupl.Location = new System.Drawing.Point(6, 62);
             this.labelSFRStartLogDupl.Name = "labelSFRStartLogDupl";
             this.labelSFRStartLogDupl.Size = new System.Drawing.Size(68, 15);
             this.labelSFRStartLogDupl.TabIndex = 31;
             this.labelSFRStartLogDupl.Text = "Дубликаты";
             // 
-            // richTextBoxSFRStartLogDupl
+            // richTextBoxStartLogDupl
             // 
-            this.richTextBoxSFRStartLogDupl.Location = new System.Drawing.Point(6, 66);
-            this.richTextBoxSFRStartLogDupl.Name = "richTextBoxSFRStartLogDupl";
-            this.richTextBoxSFRStartLogDupl.Size = new System.Drawing.Size(261, 92);
-            this.richTextBoxSFRStartLogDupl.TabIndex = 30;
-            this.richTextBoxSFRStartLogDupl.Text = "";
+            this.richTextBoxStartLogDupl.Location = new System.Drawing.Point(6, 80);
+            this.richTextBoxStartLogDupl.Name = "richTextBoxStartLogDupl";
+            this.richTextBoxStartLogDupl.Size = new System.Drawing.Size(275, 92);
+            this.richTextBoxStartLogDupl.TabIndex = 30;
+            this.richTextBoxStartLogDupl.Text = "";
             // 
             // labelSFRStartLogCount
             // 
             this.labelSFRStartLogCount.AutoSize = true;
-            this.labelSFRStartLogCount.Location = new System.Drawing.Point(209, 26);
+            this.labelSFRStartLogCount.Location = new System.Drawing.Point(6, 47);
             this.labelSFRStartLogCount.Name = "labelSFRStartLogCount";
             this.labelSFRStartLogCount.Size = new System.Drawing.Size(74, 15);
             this.labelSFRStartLogCount.TabIndex = 30;
             this.labelSFRStartLogCount.Text = "Стартовало:";
             // 
-            // buttonImportStartLog
-            // 
-            this.buttonImportStartLog.Location = new System.Drawing.Point(6, 22);
-            this.buttonImportStartLog.Name = "buttonImportStartLog";
-            this.buttonImportStartLog.Size = new System.Drawing.Size(197, 23);
-            this.buttonImportStartLog.TabIndex = 28;
-            this.buttonImportStartLog.Text = "Импортировать стартовый лог";
-            this.buttonImportStartLog.UseVisualStyleBackColor = true;
-            this.buttonImportStartLog.Click += new System.EventHandler(this.buttonImportStartLog_Click);
-            // 
             // buttonExportStartTimes
             // 
-            this.buttonExportStartTimes.Location = new System.Drawing.Point(332, 6);
+            this.buttonExportStartTimes.Location = new System.Drawing.Point(408, 6);
             this.buttonExportStartTimes.Name = "buttonExportStartTimes";
-            this.buttonExportStartTimes.Size = new System.Drawing.Size(197, 44);
+            this.buttonExportStartTimes.Size = new System.Drawing.Size(121, 74);
             this.buttonExportStartTimes.TabIndex = 27;
             this.buttonExportStartTimes.Text = "Экспоритровать стартовые минуты для SFT Smart Terminal";
             this.buttonExportStartTimes.UseVisualStyleBackColor = true;
@@ -714,7 +751,7 @@
         private TextBox textBoxStringFindComment;
         private Label label2;
         private TabControl tabControlFunc;
-        private Button buttonImportStartLog;
+        private Button buttonImportStartLogFile;
         private TabPage tabPage2;
         private Button buttonExportStartTimes;
         private TabPage tabPage1;
@@ -722,10 +759,10 @@
         private TabControl tabControl1;
         private GroupBox groupBoxStartLogProcessing;
         private Label labelSFRStartLogCount;
-        private RichTextBox richTextBoxSFRStartLogDupl;
+        private RichTextBox richTextBoxStartLogDupl;
         private Label labelSFRStartLogDupl;
         private Label labelSFRStartLogDNS;
-        private RichTextBox richTextBoxSFRStartLogDNS;
+        private RichTextBox richTextBoxStartLogDNS;
         private Label label4;
         private RichTextBox richTextBoxChecklessFinished;
         private Button buttonSFRStartLogDNSCopy;
@@ -737,5 +774,9 @@
         private Button buttonStartFeeCalculate;
         private TabPage tabPage6;
         private Button buttonRemvoeWorstResult;
+        private ComboBox comboBoxLogType;
+        private Button buttonImportStartLogClipboard;
+        private ToolTip toolTipGeneral;
+        private ComboBox comboBoxStartLogOutFieldsSplitter;
     }
 }

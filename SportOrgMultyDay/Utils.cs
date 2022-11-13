@@ -13,6 +13,7 @@ using static System.Windows.Forms.CheckedListBox;
 using static SportOrgMultyDay.Processing.Parsing.ParseBase;
 using SportOrgMultyDay.Processing.SFRSmartTerminal;
 using SportOrgMultyDay.Helpers;
+using SportOrgMultyDay.Data;
 
 namespace SportOrgMultyDay
 {
@@ -28,6 +29,16 @@ namespace SportOrgMultyDay
         int raceCount = 0;
         AutoResize autoResize;
         List<int> SFRStartLog = new();
+
+        Dictionary<string, char> splitterStartLog = new()
+        {
+            { "space",' ' },
+            { "\\n",'\n' },
+            { ";",'\n' }
+        };
+
+
+
         private JObject ImportJson()
         {
             if (openFileDialogJson.ShowDialog() != DialogResult.OK)
@@ -93,9 +104,10 @@ namespace SportOrgMultyDay
             buttonExportStartTimes.Enabled = active;
             buttonCopyGroupSettings.Enabled = active;
             comboBoxDays.Enabled = active;
-            buttonImportStartLog.Enabled = active;
+            buttonImportStartLogFile.Enabled = active;
             buttonStartFeeCalculate.Enabled = active;
             buttonRemvoeWorstResult.Enabled = active;
+            buttonImportStartLogClipboard.Enabled = active;
         }
 
         private void buttonBaseImport_Click(object sender, EventArgs e)
@@ -129,6 +141,12 @@ namespace SportOrgMultyDay
         {
             BaseEditButtons(false);
 
+            for (int i = 1; i <= 4; i++)
+                comboBoxLogType.Items.Add((EStartLogType)i);
+            comboBoxLogType.SelectedIndex = 0;
+            foreach (string s in splitterStartLog.Keys)
+                comboBoxStartLogOutFieldsSplitter.Items.Add(s);
+            comboBoxStartLogOutFieldsSplitter.SelectedIndex = 0;
 
             CheckListBoxItem[] checkListBoxItems = {
                 new("Чип","card_number"),
@@ -247,13 +265,30 @@ namespace SportOrgMultyDay
             richTextBoxLog.Clear();
         }
 
-        private void buttonImportStartLog_Click(object sender, EventArgs e)
+        private void buttonImportStartLogFile_Click(object sender, EventArgs e)
         {
             if (openFileDialogStartLog.ShowDialog() != DialogResult.OK) return;
-            string startLog = File.ReadAllText(openFileDialogStartLog.FileName);
-            StartLogProcessing slp = new(Base, startLog);
-            richTextBoxSFRStartLogDupl.Text = slp.Duplicates;
-            richTextBoxSFRStartLogDNS.Text = slp.DNS;
+            StartLogProcess(File.ReadAllText(openFileDialogStartLog.FileName));
+        }
+
+        private void buttonImportStartLogClipboard_Click(object sender, EventArgs e)
+        {
+            if (!Clipboard.ContainsText())
+            {
+                SendLog("Буфер объмена не содержит текст");
+                return;
+            }
+            StartLogProcess(Clipboard.GetText());
+        }
+
+        private void StartLogProcess(string startLog)
+        {
+            StartLogProcessing slp = new(Base,startLog,(EStartLogType)comboBoxLogType.SelectedItem,
+                splitterStartLog.TryGetValue(comboBoxStartLogOutFieldsSplitter.Text, out char val) ?
+                val : (comboBoxStartLogOutFieldsSplitter.Text.Length == 1 ?
+                comboBoxStartLogOutFieldsSplitter.Text[0] : '\n'));
+            richTextBoxStartLogDupl.Text = slp.Duplicates;
+            richTextBoxStartLogDNS.Text = slp.DNS;
             richTextBoxChecklessFinished.Text = slp.ChecklessFinished;
             labelSFRStartLogCount.Text = $"Стартовало: {slp.StartedPersons}";
             SendLog(slp.GetLog());
@@ -261,8 +296,8 @@ namespace SportOrgMultyDay
 
         private void buttonSFRStartLogDNSCopy_Click(object sender, EventArgs e)
         {
-            if (richTextBoxSFRStartLogDNS.Text == "") return;
-            Clipboard.SetText(richTextBoxSFRStartLogDNS.Text);
+            if (richTextBoxStartLogDNS.Text == "") return;
+            Clipboard.SetText(richTextBoxStartLogDNS.Text);
         }
 
         private void buttonStartFeeCalculate_Click(object sender, EventArgs e)

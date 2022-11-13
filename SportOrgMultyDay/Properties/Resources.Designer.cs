@@ -61,6 +61,16 @@ namespace SportOrgMultyDay.Properties {
         }
         
         /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap file_import_48 {
+            get {
+                object obj = ResourceManager.GetObject("file_import_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на &lt;!DOCTYPE html&gt;
         ///&lt;html lang=&quot;en&quot;&gt;
         ///&lt;head&gt;
@@ -90,12 +100,31 @@ namespace SportOrgMultyDay.Properties {
         ///        }
         ///
         ///        hr {
-        ///            height: 0;
-        ///            margin: 1 [остаток строки не уместился]&quot;;.
+        ///            hei [остаток строки не уместился]&quot;;.
         /// </summary>
         internal static string HtmlNumbers {
             get {
                 return ResourceManager.GetString("HtmlNumbers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap paste_48 {
+            get {
+                object obj = ResourceManager.GetObject("paste_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap paste_64 {
+            get {
+                object obj = ResourceManager.GetObject("paste_64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }
