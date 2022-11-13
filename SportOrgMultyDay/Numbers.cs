@@ -13,10 +13,13 @@ namespace SportOrgMultyDay
         string htmlBib = "null";
         JObject jsonBib;
         public Utils UtilsForm;
-        public Numbers(Utils utilsForm)
+        public General GeneralForm;
+
+        public Numbers(Utils utilsForm, General generalForm)
         {
             InitializeComponent();
             UtilsForm = utilsForm;
+            GeneralForm = generalForm;
         }
 
         private void buttonImportHtml_Click(object sender, EventArgs e)
@@ -24,6 +27,7 @@ namespace SportOrgMultyDay
             string inHtml = ImportHtml();
             if (inHtml == "null") return;
             jsonSource1 = FindJson(inHtml);
+            if (jsonSource1 is null || jsonSource1 == "null") return;
             var data1 = JObject.Parse(jsonSource1);
             //var data1pers = data1["persons"];
             labelDay1Info.Text = "Участники:" + data1["persons"].Count();
@@ -60,6 +64,11 @@ namespace SportOrgMultyDay
 
         private string CombineJson(string start1,string start2)
         {
+            if (start1 is null || start2 is null)
+            {
+                MessageBox.Show("Вероятно файлы не загружены");
+                return "";
+            }
             var data1 = JObject.Parse(start1);
             var data2 = JObject.Parse(start2);
             var data1pers = data1["persons"];
@@ -90,6 +99,11 @@ namespace SportOrgMultyDay
 
         private string ProcessJson(JObject jbib, JObject joRace)
         {
+            if (jbib is null || joRace is null)
+            {
+                MessageBox.Show("База или номера не загружены");
+                return "";
+            }
             var races = joRace["races"];
             var bibPersons = jbib["persons"];
             var jOut = jbib.DeepClone();
@@ -153,6 +167,12 @@ namespace SportOrgMultyDay
 
         private string FindJson(string html)
         {
+            if (html == "null") return "null";
+            if (html is null)
+            {
+                MessageBox.Show("FindJson: Html is null");
+                return "null";
+            }
             int jsonStart = html.IndexOf(StartStrJson) + StartStrJson.Length;
             int jsonEnd = html.IndexOf("\n", jsonStart);
             labelRaceIndex.Text = "S:"+jsonStart.ToString() + "E:" +jsonEnd.ToString();
@@ -172,7 +192,7 @@ namespace SportOrgMultyDay
 
         private JObject ImportJson()
         {
-            openFileDialogJson.ShowDialog();
+            if (openFileDialogJson.ShowDialog() != DialogResult.OK) return null;
             string json = File.ReadAllText(openFileDialogJson.FileName);
             JObject jobj = JObject.Parse(json);
             return jobj;
@@ -206,6 +226,7 @@ namespace SportOrgMultyDay
         private void buttonImportHtml2_Click(object sender, EventArgs e)
         {
             jsonSource2 = FindJson(ImportHtml());
+            if (jsonSource1 == null || jsonSource1 == "null") return;
             var data2 = JObject.Parse(jsonSource1);
             labelDay2Info.Text = "Участники:" + data2["persons"].Count();
             // richTextBoxOut.Text = jsonSource2;
@@ -269,6 +290,13 @@ namespace SportOrgMultyDay
         private void richTextBoxOut_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void Numbers_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+            GeneralForm.ShowIfAllClosed(hideNumbers: true);
+            this.Hide();
         }
     }
 }

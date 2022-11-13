@@ -47,7 +47,7 @@
             // buttonOpenUtils
             // 
             this.buttonOpenUtils.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.buttonOpenUtils.Location = new System.Drawing.Point(116, 12);
+            this.buttonOpenUtils.Location = new System.Drawing.Point(118, 12);
             this.buttonOpenUtils.Name = "buttonOpenUtils";
             this.buttonOpenUtils.Size = new System.Drawing.Size(100, 100);
             this.buttonOpenUtils.TabIndex = 1;
@@ -59,7 +59,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(230, 122);
+            this.ClientSize = new System.Drawing.Size(228, 120);
             this.Controls.Add(this.buttonOpenUtils);
             this.Controls.Add(this.buttonOpenNumbers);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

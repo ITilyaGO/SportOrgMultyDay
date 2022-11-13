@@ -305,6 +305,7 @@
             this.Controls.Add(this.richTextBoxOut);
             this.Name = "Numbers";
             this.Text = "Номера";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Numbers_FormClosing);
             this.Load += new System.EventHandler(this.Numbers_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);

@@ -30,28 +30,46 @@ namespace SportOrgMultyDay.Processing
         readonly string startLog;
         string log;
         EStartLogType startLogType;
-        public StartLogProcessing(JToken jBase, string startLog, EStartLogType type,char outFieldsSplitter)
+        public StartLogProcessing(JToken jBase, string startLog, EStartLogType type,string outFieldsSplitter)
         {
             this.startLog = startLog;
             this.jBase = jBase;
             startLogType = type;
+            ChecklessFinished = string.Empty;
+            Duplicates = string.Empty;
+            DNS = string.Empty;
             Process(outFieldsSplitter);
         }
 
-        private void Process(char splitter)
+        private void Process(string splitter)
         {
-            log += "Запущена обработка стартовых логов...\n";
-            List<int> allBibs = GetPersonsBibs();
-            List<StartCell> startCells = StartLogParse();
-            List<int> startedBibsNoDupl = StartCellsToInt(startCells).Distinct().ToList();
-            List<int> dnsIncludeFinished = GetDNSList(allBibs, startedBibsNoDupl);
-            List<int> finished = GetFinished(jBase, ref log);
-            List<int> checklessFinished = dnsIncludeFinished.Intersect(finished).ToList();
-            List<int> dns = dnsIncludeFinished.Except(finished).ToList();
-            StartedPersons = startedBibsNoDupl.Count;
-            ChecklessFinished = string.Join(splitter, checklessFinished.OrderBy(x => x));
-            Duplicates = string.Join('\n', SearchDuplicates(startCells, ref log));
-            DNS = string.Join(splitter, dns.OrderBy(x => x));
+            try
+            {
+                log += "Запущена обработка стартовых логов...\n";
+                if (jBase is null)
+                {
+                    log += "    База не найдена, процесс прерван!";
+                    return;
+                }
+                List<int> allBibs = GetPersonsBibs();
+                List<StartCell> startCells = StartLogParse();
+                if (startCells is null) return;
+                List<int> startedBibsNoDupl = StartCellsToInt(startCells).Distinct().ToList();
+                List<int> dnsIncludeFinished = GetDNSList(allBibs, startedBibsNoDupl);
+                List<int> finished = GetFinished(jBase, ref log);
+                List<int> checklessFinished = dnsIncludeFinished.Intersect(finished).ToList();
+                List<int> dns = dnsIncludeFinished.Except(finished).ToList();
+                StartedPersons = startedBibsNoDupl.Count;
+                ChecklessFinished = string.Join(splitter, checklessFinished.OrderBy(x => x));
+                Duplicates = string.Join('\n', SearchDuplicates(startCells, ref log));
+                DNS = string.Join(splitter, dns.OrderBy(x => x));
+            }
+            catch (Exception ex)
+            {
+                LogError("dk032vhuid", ex);
+                log += "\nERROR Process() вызвало ошибку\n";
+            }
+            
         }
 
         private static List<int> GetDNSList(List<int> all, List<int> started)
@@ -93,7 +111,6 @@ namespace SportOrgMultyDay.Processing
             {
                 log += $"  Парсинг стартовых логов...\n";
                 EStartLogType logType = startLogType == EStartLogType.Auto ? GetStartLogType(startLog) : startLogType;
-
                 string[] logLines = startLog.Split("\n", StringSplitOptions.RemoveEmptyEntries);
                 switch (logType)
                 {
@@ -104,9 +121,9 @@ namespace SportOrgMultyDay.Processing
                     case EStartLogType.Sportiduino:
                         return StartLogParseSportiduino(jBase,logLines, ref log);
                         
-                    case EStartLogType.None:
+                    default:
                         log += "    Тип лога не определён, процесс прерван!\n";
-                        return new();
+                        return null;
                 }
 
             }
@@ -253,7 +270,9 @@ namespace SportOrgMultyDay.Processing
             int siStart = startLog.IndexOf("No;Read on;SIID;");
             if (siStart == 0)
                 return EStartLogType.Sportident;
-            string firstStr = startLog[..startLog.IndexOf('\n')];
+            int ns = startLog.IndexOf('\n');
+            if (ns <= -1) return EStartLogType.None;
+            string firstStr = startLog[..ns];
             if (firstStr.Contains('\t'))
             {
                 string[] values = firstStr.Split('\t');

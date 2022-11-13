@@ -83,6 +83,7 @@
             this.textBoxStartFeeWithCardSymbol = new System.Windows.Forms.TextBox();
             this.buttonStartFeeCalculate = new System.Windows.Forms.Button();
             this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.buttonOpenNumbersForm = new System.Windows.Forms.Button();
             this.buttonRemvoeWorstResult = new System.Windows.Forms.Button();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -338,11 +339,11 @@
             // 
             // buttonExportStartTimes
             // 
-            this.buttonExportStartTimes.Location = new System.Drawing.Point(408, 6);
+            this.buttonExportStartTimes.Location = new System.Drawing.Point(326, 6);
             this.buttonExportStartTimes.Name = "buttonExportStartTimes";
-            this.buttonExportStartTimes.Size = new System.Drawing.Size(121, 74);
+            this.buttonExportStartTimes.Size = new System.Drawing.Size(203, 46);
             this.buttonExportStartTimes.TabIndex = 27;
-            this.buttonExportStartTimes.Text = "Экспоритровать стартовые минуты для SFT Smart Terminal";
+            this.buttonExportStartTimes.Text = "Экспортировать стартовые минуты для SFR Smart Terminal";
             this.buttonExportStartTimes.UseVisualStyleBackColor = true;
             this.buttonExportStartTimes.Click += new System.EventHandler(this.buttonExportStartTimes_Click);
             // 
@@ -568,7 +569,7 @@
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage3.Size = new System.Drawing.Size(535, 485);
             this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Подсчет";
+            this.tabPage3.Text = "Подсчёт";
             // 
             // groupBoxStartFee
             // 
@@ -612,6 +613,7 @@
             // tabPage6
             // 
             this.tabPage6.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.tabPage6.Controls.Add(this.buttonOpenNumbersForm);
             this.tabPage6.Controls.Add(this.buttonRemvoeWorstResult);
             this.tabPage6.Location = new System.Drawing.Point(4, 24);
             this.tabPage6.Name = "tabPage6";
@@ -619,6 +621,16 @@
             this.tabPage6.Size = new System.Drawing.Size(535, 485);
             this.tabPage6.TabIndex = 3;
             this.tabPage6.Text = "Остальное";
+            // 
+            // buttonOpenNumbersForm
+            // 
+            this.buttonOpenNumbersForm.Location = new System.Drawing.Point(441, 6);
+            this.buttonOpenNumbersForm.Name = "buttonOpenNumbersForm";
+            this.buttonOpenNumbersForm.Size = new System.Drawing.Size(88, 41);
+            this.buttonOpenNumbersForm.TabIndex = 1;
+            this.buttonOpenNumbersForm.Text = "Номера";
+            this.buttonOpenNumbersForm.UseVisualStyleBackColor = true;
+            this.buttonOpenNumbersForm.Click += new System.EventHandler(this.buttonOpenNumbersForm_Click);
             // 
             // buttonRemvoeWorstResult
             // 
@@ -692,7 +704,8 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(900, 470);
             this.Name = "Utils";
-            this.Text = "Утилиты v0.16.1";
+            this.Text = "Утилиты v0.16.2";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Utils_FormClosing);
             this.Load += new System.EventHandler(this.Utils_Load);
             this.SizeChanged += new System.EventHandler(this.Utils_SizeChanged);
             this.contextMenuStripLog.ResumeLayout(false);
@@ -780,5 +793,6 @@
         private Button buttonImportStartLogClipboard;
         private ToolTip toolTipGeneral;
         private ComboBox comboBoxStartLogOutFieldsSplitter;
+        private Button buttonOpenNumbersForm;
     }
 }

@@ -19,31 +19,35 @@ namespace SportOrgMultyDay
 {
     public partial class Utils : Form
     {
-        public Utils(Numbers numbersForm)
+        public Utils(Numbers numbersForm, General generalForm)
         {
             NumbersForm = numbersForm;
+            GeneralForm = generalForm;
             InitializeComponent();
         }
         public Numbers NumbersForm;
+        public General GeneralForm;
         public JObject Base;
         int raceCount = 0;
         AutoResize autoResize;
         List<int> SFRStartLog = new();
 
-        Dictionary<string, char> splitterStartLog = new()
+        Dictionary<string, string> splitterStartLog = new()
         {
-            { "space",' ' },
-            { "\\n",'\n' },
-            { ";",'\n' }
+            { "space"," " },
+            { "\\n","\n" },
+            { ";",";" }
         };
 
 
 
-        private JObject ImportJson()
+        private JObject ImportJson(out bool cancle)
         {
+            cancle = false;
             if (openFileDialogJson.ShowDialog() != DialogResult.OK)
             {
                 SendLog("Импорт отменен");
+                cancle = true;
                 return null;
             }
             try
@@ -72,7 +76,8 @@ namespace SportOrgMultyDay
 
         private void ImportBase()
         {
-            Base = ImportJson();
+            Base = ImportJson(out bool cancle);
+            if (cancle) return;
             if (Base == null)
             {
                 labelBaseImport.Text = $"Ошибка";
@@ -108,6 +113,7 @@ namespace SportOrgMultyDay
             buttonStartFeeCalculate.Enabled = active;
             buttonRemvoeWorstResult.Enabled = active;
             buttonImportStartLogClipboard.Enabled = active;
+            buttonOpenNumbersForm.Enabled = active;
         }
 
         private void buttonBaseImport_Click(object sender, EventArgs e)
@@ -284,9 +290,7 @@ namespace SportOrgMultyDay
         private void StartLogProcess(string startLog)
         {
             StartLogProcessing slp = new(Base,startLog,(EStartLogType)comboBoxLogType.SelectedItem,
-                splitterStartLog.TryGetValue(comboBoxStartLogOutFieldsSplitter.Text, out char val) ?
-                val : (comboBoxStartLogOutFieldsSplitter.Text.Length == 1 ?
-                comboBoxStartLogOutFieldsSplitter.Text[0] : '\n'));
+                splitterStartLog.TryGetValue(comboBoxStartLogOutFieldsSplitter.Text, out string val) ? val : comboBoxStartLogOutFieldsSplitter.Text);
             richTextBoxStartLogDupl.Text = slp.Duplicates;
             richTextBoxStartLogDNS.Text = slp.DNS;
             richTextBoxChecklessFinished.Text = slp.ChecklessFinished;
@@ -310,7 +314,18 @@ namespace SportOrgMultyDay
             SendLog(RemoveWorstResults.Remove(Base));
         }
 
-       
+
+        private void buttonOpenNumbersForm_Click(object sender, EventArgs e)
+        {
+            GeneralForm.showNumbers();
+        }
+
+        private void Utils_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+            GeneralForm.ShowIfAllClosed(hideUtils: true);
+            this.Hide();
+        }
     }
 
  
