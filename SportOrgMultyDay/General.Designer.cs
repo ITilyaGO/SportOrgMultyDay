@@ -28,16 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(General));
             this.buttonOpenNumbers = new System.Windows.Forms.Button();
             this.buttonOpenUtils = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // buttonOpenNumbers
             // 
-            this.buttonOpenNumbers.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.buttonOpenNumbers.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.buttonOpenNumbers.Location = new System.Drawing.Point(12, 12);
             this.buttonOpenNumbers.Name = "buttonOpenNumbers";
-            this.buttonOpenNumbers.Size = new System.Drawing.Size(80, 80);
+            this.buttonOpenNumbers.Size = new System.Drawing.Size(100, 100);
             this.buttonOpenNumbers.TabIndex = 0;
             this.buttonOpenNumbers.Text = "Номера";
             this.buttonOpenNumbers.UseVisualStyleBackColor = true;
@@ -45,10 +46,10 @@
             // 
             // buttonOpenUtils
             // 
-            this.buttonOpenUtils.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.buttonOpenUtils.Location = new System.Drawing.Point(98, 12);
+            this.buttonOpenUtils.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.buttonOpenUtils.Location = new System.Drawing.Point(116, 12);
             this.buttonOpenUtils.Name = "buttonOpenUtils";
-            this.buttonOpenUtils.Size = new System.Drawing.Size(80, 80);
+            this.buttonOpenUtils.Size = new System.Drawing.Size(100, 100);
             this.buttonOpenUtils.TabIndex = 1;
             this.buttonOpenUtils.Text = "Утилиты";
             this.buttonOpenUtils.UseVisualStyleBackColor = true;
@@ -58,11 +59,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(184, 100);
+            this.ClientSize = new System.Drawing.Size(230, 122);
             this.Controls.Add(this.buttonOpenUtils);
             this.Controls.Add(this.buttonOpenNumbers);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "General";
-            this.Text = "General";
+            this.Text = "SportOrg Helper";
             this.Load += new System.EventHandler(this.General_Load);
             this.ResumeLayout(false);
 

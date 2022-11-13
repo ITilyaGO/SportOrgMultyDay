@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Utils));
             this.buttonBaseImport = new System.Windows.Forms.Button();
             this.contextMenuStripLog = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ScrollLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -688,9 +689,10 @@
             this.Controls.Add(this.buttonBaseExport);
             this.Controls.Add(this.labelBaseImport);
             this.Controls.Add(this.buttonBaseImport);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(900, 470);
             this.Name = "Utils";
-            this.Text = "Утилиты";
+            this.Text = "Утилиты v0.16.1";
             this.Load += new System.EventHandler(this.Utils_Load);
             this.SizeChanged += new System.EventHandler(this.Utils_SizeChanged);
             this.contextMenuStripLog.ResumeLayout(false);
