@@ -19,5 +19,9 @@ namespace SportOrgMultyDay.Processing
         {
             Log($"Error MessageID: {id} \n {ex.Message}\n,{ex.Source}");
         }
+        public static void LogError(string id, string message)
+        {
+            Log($"Error MessageID: {id} \n {message}");
+        }
     }
 }

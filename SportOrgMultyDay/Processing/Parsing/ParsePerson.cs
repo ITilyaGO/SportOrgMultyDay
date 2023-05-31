@@ -19,7 +19,7 @@ namespace SportOrgMultyDay.Processing.Parsing
                 return (string)person["id"];
             }
             catch (Exception ex) { LogError("yh377lal", ex); }
-            return null;
+            return String.Empty;
         }
         public static int PPBib(JToken person)
         {
@@ -56,7 +56,7 @@ namespace SportOrgMultyDay.Processing.Parsing
                 return (string)person["group_id"];
             }
             catch (Exception ex) { LogError("7fsaiufdw", ex); }
-            return null;
+            return String.Empty;
         }
         public static string PPSurname(JToken person)
         {
@@ -102,6 +102,16 @@ namespace SportOrgMultyDay.Processing.Parsing
             }
             catch (Exception ex) { LogError("o8sd6vcla", ex); }
             return -1;
+        }
+
+        public static string PPToString(JToken person)
+        {
+            try
+            {
+                return $"ID: {PPId(person)} Номер: {PPBib(person)} Имя: {PPSurname(person)} {PPName(person)}";
+            }
+            catch (Exception ex) { LogError("9edyug13od", ex); }
+            return String.Empty;
         }
 
         public static int PPCardNumber(JToken person)

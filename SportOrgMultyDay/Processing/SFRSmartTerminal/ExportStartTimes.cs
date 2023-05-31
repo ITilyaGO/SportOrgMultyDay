@@ -40,6 +40,8 @@ namespace SportOrgMultyDay.Processing.SFRSmartTerminal
         private static string StartTimeToString(int startTime)
         {
             TimeSpan dt = TimeSpan.FromMilliseconds(startTime);
+            if (dt.Days >= 1)
+                dt -= TimeSpan.FromDays(dt.Days);
             return dt.ToString();
         }
 
@@ -76,7 +78,7 @@ namespace SportOrgMultyDay.Processing.SFRSmartTerminal
             line += groupName + Tabs(1); //Имя группы
             line += PPSurname(person) + " " + PPName(person) + Tabs(2);// ФИ участника
             //  line += person["organization_id"] + Tabs(1);
-            line += organizationName;//Команда
+            line += organizationName + Tabs(1);//Команда
             line += "" + Tabs(1); //Должны быть первые две буквы коменды, но мне лень
             line += PPYear(person) + Tabs(3); //Год рождения
             line += 0 + Tabs(7); //Стартовый взнос?

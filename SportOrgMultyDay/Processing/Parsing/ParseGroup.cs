@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -40,9 +41,34 @@ namespace SportOrgMultyDay.Processing.Parsing
         }
         public static JToken FGById(string id, JArray groups)
         {
-            for (int i = 0; i < groups.Count; i++)
-                if (id == PGId(groups[i])) return groups[i];
+            try
+            {
+                for (int i = 0; i < groups.Count; i++)
+                    if (id == PGId(groups[i])) return groups[i];
+            }
+            catch (Exception ex) { LogError("8v264bn5ahu", ex); }
             return null;
+        }
+        public static JToken FGByName(string name, JArray groups)
+        {
+            try
+            {
+                for (int i = 0; i < groups.Count; i++)
+                    if (name == PGName(groups[i])) return groups[i];
+            }
+            catch (Exception ex) { LogError("43b6fgm9yu3df", ex); }
+            return null;
+        }
+        public static Dictionary<string, JToken> DictGIdGroup(JArray groups)
+        {
+            Dictionary<string, JToken> groupDict = new();
+            try
+            {
+                foreach (JToken group in groups)
+                    groupDict.Add(PGId(group), group);
+            }
+            catch (Exception ex) { LogError("dh37asdl83h", ex); }
+            return groupDict;
         }
     }
 }

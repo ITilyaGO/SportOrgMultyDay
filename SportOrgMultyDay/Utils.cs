@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.CheckedListBox;
 using static SportOrgMultyDay.Processing.Parsing.ParseBase;
+using static SportOrgMultyDay.Processing.Parsing.ParseGroup;
 using SportOrgMultyDay.Processing.SFRSmartTerminal;
 using SportOrgMultyDay.Helpers;
 using SportOrgMultyDay.Data;
@@ -70,8 +71,8 @@ namespace SportOrgMultyDay
 
             string ojson = savingBase.ToString();
             string saveJ = ResaveToJsonUnicode.Convert(ojson);
-            File.WriteAllText(saveFileDialogJson.FileName,saveJ);
-           
+            File.WriteAllText(saveFileDialogJson.FileName, saveJ);
+
         }
 
         private void ImportBase()
@@ -89,10 +90,13 @@ namespace SportOrgMultyDay
             labelBaseImport.Text = $"День:";
             comboBoxDays.Items.Clear();
             for (int i = 0; i < Base["races"].Count(); i++)
-            {
-                comboBoxDays.Items.Add(i+1);
-            }
+                comboBoxDays.Items.Add(i + 1);
             comboBoxDays.SelectedIndex = CurrentRaceID(Base);
+
+            comboBoxSourceRankGroupName.Items.Clear();
+            foreach (JToken group in PBGroups(PBCurrentRaceFromBase(Base)))
+                comboBoxSourceRankGroupName.Items.Add(new ComboBoxItemId(PGId(group), PGName(group)));
+
             SendLog("Импорт выполнен");
             BaseEditButtons(true);
         }
@@ -114,6 +118,7 @@ namespace SportOrgMultyDay
             buttonRemvoeWorstResult.Enabled = active;
             buttonImportStartLogClipboard.Enabled = active;
             buttonOpenNumbersForm.Enabled = active;
+            buttonCalculateRanks.Enabled = active;
         }
 
         private void buttonBaseImport_Click(object sender, EventArgs e)
@@ -134,7 +139,7 @@ namespace SportOrgMultyDay
         private void buttonSynchronizeReorders_Click(object sender, EventArgs e)
         {
             string[] syncFields = CheckListBoxItem.ToStringMS(checkedListBoxWithSync.CheckedItems);
-            SendLog( SynchronizeRaces.SynchronizeReservWithCurrentRace(Base,textBoxReservName.Text, syncFields,checkBoxCopyChangedOtherDays.Checked));
+            SendLog(SynchronizeRaces.SynchronizeReservWithCurrentRace(Base, textBoxReservName.Text, syncFields, checkBoxCopyChangedOtherDays.Checked));
         }
 
         private void SendLog(string message)
@@ -179,13 +184,13 @@ namespace SportOrgMultyDay
 
             };
             foreach (CheckListBoxItem item in checkListBoxItems)
-                checkedListBoxWithSync.Items.Add(item,item.Chacked);
+                checkedListBoxWithSync.Items.Add(item, item.Chacked);
 
             autoResize = new(this);
             autoResize.Add(richTextBoxLog);
             autoResize.Add(tabControl1);
-            autoResize.Add(tabControlFunc,false,true);
-            autoResize.Add(checkedListBoxWithSync,false,true);
+            autoResize.Add(tabControlFunc, false, true);
+            autoResize.Add(checkedListBoxWithSync, false, true);
 
         }
 
@@ -211,7 +216,7 @@ namespace SportOrgMultyDay
         private void buttonCopyPersonByNumber_Click(object sender, EventArgs e)
         {
             string bibList = textBoxPersonsFromCopy.Text;
-            string[] bibs = bibList.Split(",",StringSplitOptions.RemoveEmptyEntries);
+            string[] bibs = bibList.Split(",", StringSplitOptions.RemoveEmptyEntries);
 
             List<int> ints = new();
             foreach (string bib in bibs)
@@ -219,7 +224,7 @@ namespace SportOrgMultyDay
                 ints.Add(Convert.ToInt32(bib));
             }
             string[] syncFields = CheckListBoxItem.ToStringMS(checkedListBoxWithSync.CheckedItems);
-            SendLog( SynchronizeRaces.CopyPersonsByNumberList(Base, ints.ToArray(), syncFields));
+            SendLog(SynchronizeRaces.CopyPersonsByNumberList(Base, ints.ToArray(), syncFields));
         }
 
         private void buttonCombineAllBase_Click(object sender, EventArgs e)
@@ -254,7 +259,7 @@ namespace SportOrgMultyDay
             else
                 comboBoxDays.Text = "Err";
         }
-       
+
         private void Utils_SizeChanged(object sender, EventArgs e)
         {
             if (autoResize is null) return;
@@ -289,7 +294,7 @@ namespace SportOrgMultyDay
 
         private void StartLogProcess(string startLog)
         {
-            StartLogProcessing slp = new(Base,startLog,(EStartLogType)comboBoxLogType.SelectedItem,
+            StartLogProcessing slp = new(Base, startLog, (EStartLogType)comboBoxLogType.SelectedItem,
                 splitterStartLog.TryGetValue(comboBoxStartLogOutFieldsSplitter.Text, out string val) ? val : comboBoxStartLogOutFieldsSplitter.Text);
             richTextBoxStartLogDupl.Text = slp.Duplicates;
             richTextBoxStartLogDNS.Text = slp.DNS;
@@ -326,7 +331,14 @@ namespace SportOrgMultyDay
             GeneralForm.ShowIfAllClosed(hideUtils: true);
             this.Hide();
         }
+
+        private void buttonCalculateRanks_Click(object sender, EventArgs e)
+        {
+            int rankComplete = (int)numericUpDownGroupResultsCountToCompleteRank.Value;
+
+            SendLog(CalculateGroupsRank.ProcessCurrentRace(Base, ((ComboBoxItemId)comboBoxSourceRankGroupName.SelectedItem).Id));
+        }
     }
 
- 
+
 }

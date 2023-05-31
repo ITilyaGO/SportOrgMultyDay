@@ -46,5 +46,40 @@ namespace SportOrgMultyDay.Processing.Parsing
             catch (Exception ex) { LogError("hgdudj3b76h", ex); }
             return -1;
         }
+        public static int PRPlace(JToken result)
+        {
+            try
+            {
+                return (int)result["place"];
+            }
+            catch (Exception ex) { LogError("843gu89diuq", ex); }
+            return -1;
+        }
+        public static Dictionary<string, JToken> DictRIdPerson(JArray results, out List<string> duplicates)
+        {
+            duplicates = new();
+            Dictionary<string, JToken> resultDict = new();
+            try
+            {
+                foreach (JToken result in results)
+                {
+                    string personId = PRPersonId(result);
+                    if (resultDict.ContainsKey(personId))
+                    {
+                        int placeNew = PRPlace(result);
+                        int placeOld = PRPlace(resultDict[personId]);
+                        if (placeNew != -1 && placeNew < placeOld)
+                            resultDict[personId] = result;
+                        duplicates.Add(personId);
+                    }
+                    else
+                    {
+                        resultDict.Add(personId, result);
+                    }
+                }
+            }
+            catch (Exception ex) { LogError("8238gaigfdq", ex); }
+            return resultDict;
+        }
     }
 }
