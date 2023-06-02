@@ -12,9 +12,11 @@ using System.Windows.Forms;
 using static System.Windows.Forms.CheckedListBox;
 using static SportOrgMultyDay.Processing.Parsing.ParseBase;
 using static SportOrgMultyDay.Processing.Parsing.ParseGroup;
+using static SportOrgMultyDay.Processing.Logger;
 using SportOrgMultyDay.Processing.SFRSmartTerminal;
 using SportOrgMultyDay.Helpers;
 using SportOrgMultyDay.Data;
+using Microsoft.VisualBasic.Logging;
 
 namespace SportOrgMultyDay
 {
@@ -119,6 +121,9 @@ namespace SportOrgMultyDay
             buttonImportStartLogClipboard.Enabled = active;
             buttonOpenNumbersForm.Enabled = active;
             buttonCalculateRanks.Enabled = active;
+            buttonSetAutoOrderStartTimes.Enabled = active;
+            buttonSetStartMinutes.Enabled = active;
+            buttonImportFromYarfso.Enabled = active;
         }
 
         private void buttonBaseImport_Click(object sender, EventArgs e)
@@ -258,6 +263,7 @@ namespace SportOrgMultyDay
                 Base["current_race"] = day;
             else
                 comboBoxDays.Text = "Err";
+
         }
 
         private void Utils_SizeChanged(object sender, EventArgs e)
@@ -337,6 +343,43 @@ namespace SportOrgMultyDay
             int rankComplete = (int)numericUpDownGroupResultsCountToCompleteRank.Value;
 
             SendLog(CalculateGroupsRank.ProcessCurrentRace(Base, ((ComboBoxItemId)comboBoxSourceRankGroupName.SelectedItem).Id));
+        }
+
+        private void buttonImportFromYarfso_Click(object sender, EventArgs e)
+        {
+            if (openFileDialogYarfso.ShowDialog() != DialogResult.OK) return;
+            try
+            {
+                string file = File.ReadAllText(openFileDialogYarfso.FileName);
+                SendLog(YarfsoParser.SetQualFromYarfso(Base, file, checkBoxPayAmountToComment.Checked));
+            }
+            catch (Exception ex)
+            {
+                LogError("d9283hdvak", ex);
+                SendLog("ERROR buttonImportFromYarfso_Click() вызвало ошибку");
+            }
+        }
+
+        private void buttonSetStartMinutes_Click(object sender, EventArgs e)
+        {
+            buttonSetStartMinutes.Text = dateTimePickerStartTime.Value.TimeOfDay.ToString();
+            if (richTextBoxGroupStartOrder.Text.Length == 0)
+                SendLog(StartTimeManager.SetStartTimes(PBCurrentRaceFromBase(Base),
+                    dateTimePickerStartTime.Value.TimeOfDay,
+                    dateTimePickerStartInterval.Value.TimeOfDay,
+                    checkBoxStartTimesPersonShuffle.Checked));
+            else
+                SendLog(StartTimeManager.OrderedSetStartTimes(PBCurrentRaceFromBase(Base),
+                    dateTimePickerStartTime.Value.TimeOfDay,
+                    dateTimePickerStartInterval.Value.TimeOfDay,
+                    richTextBoxGroupStartOrder.Text,
+                    checkBoxStartTimesPersonShuffle.Checked));
+
+        }
+
+        private void buttonSetAutoOrderStartTimes_Click(object sender, EventArgs e)
+        {
+            richTextBoxGroupStartOrder.Text = StartTimeManager.AutoGroupOrder(PBCurrentRaceFromBase(Base));
         }
     }
 

@@ -39,6 +39,25 @@ namespace SportOrgMultyDay.Processing.Parsing
             catch (Exception ex) { LogError("a03297vcr", ex); }
             return null;
         }
+        public static int PGStartCorridor(JToken group)
+        {
+            try
+            {
+                return (int)group["start_corridor"];
+            }
+            catch (Exception ex) { LogError("82ihyfduiydf", ex); }
+            return -1;
+        }
+        public static int PGRelayLegs(JToken group)
+        {
+            try
+            {
+                return (int)group["relay_legs"];
+            }
+            catch (Exception ex) { LogError("iyfrci87vio", ex); }
+            return -1;
+        }
+        
         public static JToken FGById(string id, JArray groups)
         {
             try
@@ -59,6 +78,7 @@ namespace SportOrgMultyDay.Processing.Parsing
             catch (Exception ex) { LogError("43b6fgm9yu3df", ex); }
             return null;
         }
+
         public static Dictionary<string, JToken> DictGIdGroup(JArray groups)
         {
             Dictionary<string, JToken> groupDict = new();
@@ -68,6 +88,17 @@ namespace SportOrgMultyDay.Processing.Parsing
                     groupDict.Add(PGId(group), group);
             }
             catch (Exception ex) { LogError("dh37asdl83h", ex); }
+            return groupDict;
+        }
+        public static Dictionary<string, JToken> DictGNameGroup(JArray groups)
+        {
+            Dictionary<string, JToken> groupDict = new();
+            try
+            {
+                foreach (JToken group in groups)
+                    groupDict.Add(PGName(group), group);
+            }
+            catch (Exception ex) { LogError("23i7tv6rcoac", ex); }
             return groupDict;
         }
     }

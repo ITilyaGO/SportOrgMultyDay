@@ -10,6 +10,7 @@ using static SportOrgMultyDay.Processing.Parsing.ParsePerson;
 using static SportOrgMultyDay.Processing.Parsing.ParseGroup;
 using static SportOrgMultyDay.Processing.Parsing.ParseOrganization;
 using static SportOrgMultyDay.Processing.Parsing.ParseData;
+using static SportOrgMultyDay.Processing.Parsing.Things.ParseStartTime;
 
 namespace SportOrgMultyDay.Processing.SFRSmartTerminal
 {
@@ -35,14 +36,6 @@ namespace SportOrgMultyDay.Processing.SFRSmartTerminal
                 outStr += GetPersonLine(p, person, groups, organizations);
             }
             return outStr;
-        }
-
-        private static string StartTimeToString(int startTime)
-        {
-            TimeSpan dt = TimeSpan.FromMilliseconds(startTime);
-            if (dt.Days >= 1)
-                dt -= TimeSpan.FromDays(dt.Days);
-            return dt.ToString();
         }
 
         private static string GetHead(JToken data)

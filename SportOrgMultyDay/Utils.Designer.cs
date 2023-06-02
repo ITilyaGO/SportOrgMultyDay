@@ -62,9 +62,7 @@
             buttonCreateNewAdded = new Button();
             buttonCardNumAsNum = new Button();
             checkedListBoxWithSync = new CheckedListBox();
-            textBoxSourceRankGroupName = new TextBox();
             groupBox3 = new GroupBox();
-            buttonCopyGroupSettings = new Button();
             groupBox5 = new GroupBox();
             textBoxReservName = new TextBox();
             buttonSynchronizeReorders = new Button();
@@ -77,9 +75,20 @@
             textBoxPersonsFromCopy = new TextBox();
             textBoxStringFindComment = new TextBox();
             label2 = new Label();
+            groupBoxStartTime = new GroupBox();
+            checkBoxStartTimesPersonShuffle = new CheckBox();
+            label11 = new Label();
+            label10 = new Label();
+            dateTimePickerStartInterval = new DateTimePicker();
+            buttonSetAutoOrderStartTimes = new Button();
+            buttonSetStartMinutes = new Button();
+            richTextBoxGroupStartOrder = new RichTextBox();
+            dateTimePickerStartTime = new DateTimePicker();
+            buttonCopyGroupSettings = new Button();
             comboBoxSourceRankGroupName = new ComboBox();
             buttonCalculateRanks = new Button();
             tabControlFunc = new TabControl();
+            tabPageStartTimes = new TabPage();
             tabPageCalculate = new TabPage();
             groupBoxStartFee = new GroupBox();
             label5 = new Label();
@@ -88,12 +97,13 @@
             tabPageGroups = new TabPage();
             groupBoxGroupRanks = new GroupBox();
             label9 = new Label();
-            label8 = new Label();
-            numericUpDownGroupResultsCountToCompleteRank = new NumericUpDown();
-            label7 = new Label();
             label6 = new Label();
+            label8 = new Label();
+            label7 = new Label();
+            numericUpDownGroupResultsCountToCompleteRank = new NumericUpDown();
             checkedListBox1 = new CheckedListBox();
             tabPageOther = new TabPage();
+            buttonImportFromYarfso = new Button();
             buttonOpenNumbersForm = new Button();
             buttonRemvoeWorstResult = new Button();
             tabPage2 = new TabPage();
@@ -103,6 +113,8 @@
             openFileDialogStartLog = new OpenFileDialog();
             toolTipGeneral = new ToolTip(components);
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            openFileDialogYarfso = new OpenFileDialog();
+            checkBoxPayAmountToComment = new CheckBox();
             contextMenuStripLog.SuspendLayout();
             tabPageShahmatka.SuspendLayout();
             groupBoxStartLogProcessing.SuspendLayout();
@@ -111,7 +123,9 @@
             groupBox3.SuspendLayout();
             groupBox5.SuspendLayout();
             groupBox4.SuspendLayout();
+            groupBoxStartTime.SuspendLayout();
             tabControlFunc.SuspendLayout();
+            tabPageStartTimes.SuspendLayout();
             tabPageCalculate.SuspendLayout();
             groupBoxStartFee.SuspendLayout();
             tabPageGroups.SuspendLayout();
@@ -365,7 +379,6 @@
             tabPageBase.BackColor = Color.WhiteSmoke;
             tabPageBase.Controls.Add(groupBox2);
             tabPageBase.Controls.Add(checkedListBoxWithSync);
-            tabPageBase.Controls.Add(textBoxSourceRankGroupName);
             tabPageBase.Controls.Add(groupBox3);
             tabPageBase.Controls.Add(label3);
             tabPageBase.Controls.Add(groupBox4);
@@ -426,32 +439,15 @@
             checkedListBoxWithSync.Size = new Size(231, 292);
             checkedListBoxWithSync.TabIndex = 10;
             // 
-            // textBoxSourceRankGroupName
-            // 
-            textBoxSourceRankGroupName.Location = new Point(317, 425);
-            textBoxSourceRankGroupName.Name = "textBoxSourceRankGroupName";
-            textBoxSourceRankGroupName.Size = new Size(80, 23);
-            textBoxSourceRankGroupName.TabIndex = 22;
-            // 
             // groupBox3
             // 
             groupBox3.Controls.Add(groupBox5);
             groupBox3.Location = new Point(259, 6);
             groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(260, 181);
+            groupBox3.Size = new Size(260, 155);
             groupBox3.TabIndex = 24;
             groupBox3.TabStop = false;
             groupBox3.Text = "Синхронизация";
-            // 
-            // buttonCopyGroupSettings
-            // 
-            buttonCopyGroupSettings.Location = new Point(356, 11);
-            buttonCopyGroupSettings.Name = "buttonCopyGroupSettings";
-            buttonCopyGroupSettings.Size = new Size(173, 43);
-            buttonCopyGroupSettings.TabIndex = 27;
-            buttonCopyGroupSettings.Text = "Синхронизировать ранги в группах между днями";
-            buttonCopyGroupSettings.UseVisualStyleBackColor = true;
-            buttonCopyGroupSettings.Click += buttonCopyGroupSettings_Click;
             // 
             // groupBox5
             // 
@@ -518,7 +514,7 @@
             groupBox4.Controls.Add(textBoxPersonsFromCopy);
             groupBox4.Controls.Add(textBoxStringFindComment);
             groupBox4.Controls.Add(label2);
-            groupBox4.Location = new Point(259, 193);
+            groupBox4.Location = new Point(259, 167);
             groupBox4.Name = "groupBox4";
             groupBox4.Size = new Size(260, 143);
             groupBox4.TabIndex = 25;
@@ -568,6 +564,111 @@
             label2.TabIndex = 19;
             label2.Text = "Номера участников";
             // 
+            // groupBoxStartTime
+            // 
+            groupBoxStartTime.Controls.Add(checkBoxStartTimesPersonShuffle);
+            groupBoxStartTime.Controls.Add(label11);
+            groupBoxStartTime.Controls.Add(label10);
+            groupBoxStartTime.Controls.Add(dateTimePickerStartInterval);
+            groupBoxStartTime.Controls.Add(buttonSetAutoOrderStartTimes);
+            groupBoxStartTime.Controls.Add(buttonSetStartMinutes);
+            groupBoxStartTime.Controls.Add(richTextBoxGroupStartOrder);
+            groupBoxStartTime.Controls.Add(dateTimePickerStartTime);
+            groupBoxStartTime.Location = new Point(6, 6);
+            groupBoxStartTime.Name = "groupBoxStartTime";
+            groupBoxStartTime.Size = new Size(523, 473);
+            groupBoxStartTime.TabIndex = 27;
+            groupBoxStartTime.TabStop = false;
+            groupBoxStartTime.Text = "Стартовые минуты";
+            // 
+            // checkBoxStartTimesPersonShuffle
+            // 
+            checkBoxStartTimesPersonShuffle.AutoSize = true;
+            checkBoxStartTimesPersonShuffle.Checked = true;
+            checkBoxStartTimesPersonShuffle.CheckState = CheckState.Checked;
+            checkBoxStartTimesPersonShuffle.Location = new Point(224, 80);
+            checkBoxStartTimesPersonShuffle.Name = "checkBoxStartTimesPersonShuffle";
+            checkBoxStartTimesPersonShuffle.Size = new Size(226, 19);
+            checkBoxStartTimesPersonShuffle.TabIndex = 7;
+            checkBoxStartTimesPersonShuffle.Text = "Перемешивать участников в группе";
+            checkBoxStartTimesPersonShuffle.UseVisualStyleBackColor = true;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(313, 53);
+            label11.Name = "label11";
+            label11.Size = new Size(60, 15);
+            label11.TabIndex = 6;
+            label11.Text = "Интервал";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(313, 27);
+            label10.Name = "label10";
+            label10.Size = new Size(80, 15);
+            label10.TabIndex = 5;
+            label10.Text = "Время старта";
+            // 
+            // dateTimePickerStartInterval
+            // 
+            dateTimePickerStartInterval.Format = DateTimePickerFormat.Time;
+            dateTimePickerStartInterval.Location = new Point(224, 51);
+            dateTimePickerStartInterval.MaxDate = new DateTime(1753, 1, 2, 0, 0, 0, 0);
+            dateTimePickerStartInterval.Name = "dateTimePickerStartInterval";
+            dateTimePickerStartInterval.Size = new Size(83, 23);
+            dateTimePickerStartInterval.TabIndex = 4;
+            dateTimePickerStartInterval.Value = new DateTime(1753, 1, 1, 0, 1, 0, 0);
+            // 
+            // buttonSetAutoOrderStartTimes
+            // 
+            buttonSetAutoOrderStartTimes.Location = new Point(6, 440);
+            buttonSetAutoOrderStartTimes.Name = "buttonSetAutoOrderStartTimes";
+            buttonSetAutoOrderStartTimes.Size = new Size(212, 27);
+            buttonSetAutoOrderStartTimes.TabIndex = 3;
+            buttonSetAutoOrderStartTimes.Text = "Создать список автоматически";
+            buttonSetAutoOrderStartTimes.UseVisualStyleBackColor = true;
+            buttonSetAutoOrderStartTimes.Click += buttonSetAutoOrderStartTimes_Click;
+            // 
+            // buttonSetStartMinutes
+            // 
+            buttonSetStartMinutes.Location = new Point(325, 440);
+            buttonSetStartMinutes.Name = "buttonSetStartMinutes";
+            buttonSetStartMinutes.Size = new Size(192, 27);
+            buttonSetStartMinutes.TabIndex = 1;
+            buttonSetStartMinutes.Text = "Установить стартовые минуты";
+            buttonSetStartMinutes.UseVisualStyleBackColor = true;
+            buttonSetStartMinutes.Click += buttonSetStartMinutes_Click;
+            // 
+            // richTextBoxGroupStartOrder
+            // 
+            richTextBoxGroupStartOrder.Location = new Point(6, 22);
+            richTextBoxGroupStartOrder.Name = "richTextBoxGroupStartOrder";
+            richTextBoxGroupStartOrder.Size = new Size(212, 412);
+            richTextBoxGroupStartOrder.TabIndex = 2;
+            richTextBoxGroupStartOrder.Text = "";
+            // 
+            // dateTimePickerStartTime
+            // 
+            dateTimePickerStartTime.Format = DateTimePickerFormat.Time;
+            dateTimePickerStartTime.Location = new Point(224, 22);
+            dateTimePickerStartTime.MaxDate = new DateTime(1753, 1, 2, 0, 0, 0, 0);
+            dateTimePickerStartTime.Name = "dateTimePickerStartTime";
+            dateTimePickerStartTime.Size = new Size(83, 23);
+            dateTimePickerStartTime.TabIndex = 0;
+            dateTimePickerStartTime.Value = new DateTime(1753, 1, 1, 0, 0, 0, 0);
+            // 
+            // buttonCopyGroupSettings
+            // 
+            buttonCopyGroupSettings.Location = new Point(356, 11);
+            buttonCopyGroupSettings.Name = "buttonCopyGroupSettings";
+            buttonCopyGroupSettings.Size = new Size(173, 43);
+            buttonCopyGroupSettings.TabIndex = 27;
+            buttonCopyGroupSettings.Text = "Синхронизировать ранги в группах между днями";
+            buttonCopyGroupSettings.UseVisualStyleBackColor = true;
+            buttonCopyGroupSettings.Click += buttonCopyGroupSettings_Click;
+            // 
             // comboBoxSourceRankGroupName
             // 
             comboBoxSourceRankGroupName.FormattingEnabled = true;
@@ -589,6 +690,7 @@
             // tabControlFunc
             // 
             tabControlFunc.Controls.Add(tabPageBase);
+            tabControlFunc.Controls.Add(tabPageStartTimes);
             tabControlFunc.Controls.Add(tabPageCalculate);
             tabControlFunc.Controls.Add(tabPageShahmatka);
             tabControlFunc.Controls.Add(tabPageGroups);
@@ -598,6 +700,17 @@
             tabControlFunc.SelectedIndex = 0;
             tabControlFunc.Size = new Size(543, 513);
             tabControlFunc.TabIndex = 30;
+            // 
+            // tabPageStartTimes
+            // 
+            tabPageStartTimes.Controls.Add(groupBoxStartTime);
+            tabPageStartTimes.Location = new Point(4, 24);
+            tabPageStartTimes.Name = "tabPageStartTimes";
+            tabPageStartTimes.Padding = new Padding(3);
+            tabPageStartTimes.Size = new Size(535, 485);
+            tabPageStartTimes.TabIndex = 5;
+            tabPageStartTimes.Text = "Стартовые минуты";
+            tabPageStartTimes.UseVisualStyleBackColor = true;
             // 
             // tabPageCalculate
             // 
@@ -688,6 +801,15 @@
             label9.Text = "результатов";
             label9.Visible = false;
             // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(6, 19);
+            label6.Name = "label6";
+            label6.Size = new Size(149, 15);
+            label6.TabIndex = 29;
+            label6.Text = "Источник настроек групп";
+            // 
             // label8
             // 
             label8.AutoSize = true;
@@ -697,14 +819,6 @@
             label8.TabIndex = 32;
             label8.Text = "В группе должно быть";
             label8.Visible = false;
-            // 
-            // numericUpDownGroupResultsCountToCompleteRank
-            // 
-            numericUpDownGroupResultsCountToCompleteRank.Location = new Point(147, 405);
-            numericUpDownGroupResultsCountToCompleteRank.Name = "numericUpDownGroupResultsCountToCompleteRank";
-            numericUpDownGroupResultsCountToCompleteRank.Size = new Size(52, 23);
-            numericUpDownGroupResultsCountToCompleteRank.TabIndex = 31;
-            numericUpDownGroupResultsCountToCompleteRank.Visible = false;
             // 
             // label7
             // 
@@ -716,14 +830,13 @@
             label7.Text = "Группы в которые применить настройки";
             label7.Visible = false;
             // 
-            // label6
+            // numericUpDownGroupResultsCountToCompleteRank
             // 
-            label6.AutoSize = true;
-            label6.Location = new Point(6, 19);
-            label6.Name = "label6";
-            label6.Size = new Size(149, 15);
-            label6.TabIndex = 29;
-            label6.Text = "Источник настроек групп";
+            numericUpDownGroupResultsCountToCompleteRank.Location = new Point(147, 405);
+            numericUpDownGroupResultsCountToCompleteRank.Name = "numericUpDownGroupResultsCountToCompleteRank";
+            numericUpDownGroupResultsCountToCompleteRank.Size = new Size(52, 23);
+            numericUpDownGroupResultsCountToCompleteRank.TabIndex = 31;
+            numericUpDownGroupResultsCountToCompleteRank.Visible = false;
             // 
             // checkedListBox1
             // 
@@ -737,6 +850,8 @@
             // tabPageOther
             // 
             tabPageOther.BackColor = Color.WhiteSmoke;
+            tabPageOther.Controls.Add(checkBoxPayAmountToComment);
+            tabPageOther.Controls.Add(buttonImportFromYarfso);
             tabPageOther.Controls.Add(buttonOpenNumbersForm);
             tabPageOther.Controls.Add(buttonRemvoeWorstResult);
             tabPageOther.Location = new Point(4, 24);
@@ -745,6 +860,16 @@
             tabPageOther.Size = new Size(535, 485);
             tabPageOther.TabIndex = 3;
             tabPageOther.Text = "Остальное";
+            // 
+            // buttonImportFromYarfso
+            // 
+            buttonImportFromYarfso.Location = new Point(6, 103);
+            buttonImportFromYarfso.Name = "buttonImportFromYarfso";
+            buttonImportFromYarfso.Size = new Size(201, 40);
+            buttonImportFromYarfso.TabIndex = 2;
+            buttonImportFromYarfso.Text = "Импорт разрядов и статусов оплачено с сайта yarfso";
+            buttonImportFromYarfso.UseVisualStyleBackColor = true;
+            buttonImportFromYarfso.Click += buttonImportFromYarfso_Click;
             // 
             // buttonOpenNumbersForm
             // 
@@ -773,7 +898,7 @@
             tabPage2.Padding = new Padding(3);
             tabPage2.Size = new Size(833, 514);
             tabPage2.TabIndex = 1;
-            tabPage2.Text = "Стартовые минуты ";
+            tabPage2.Text = "Стартовые минуты (WIP)";
             tabPage2.UseVisualStyleBackColor = true;
             // 
             // tabPage1
@@ -813,6 +938,21 @@
             openFileDialogStartLog.FileName = "StartLog";
             openFileDialogStartLog.Filter = "StartLog|StartLog.txt|Sportident|*.csv|Txt|*.txt|All files|*.*";
             // 
+            // openFileDialogYarfso
+            // 
+            openFileDialogYarfso.FileName = "Yarfso";
+            openFileDialogYarfso.Filter = "Yarfso|*.csv|All files|*.*";
+            // 
+            // checkBoxPayAmountToComment
+            // 
+            checkBoxPayAmountToComment.AutoSize = true;
+            checkBoxPayAmountToComment.Location = new Point(6, 78);
+            checkBoxPayAmountToComment.Name = "checkBoxPayAmountToComment";
+            checkBoxPayAmountToComment.Size = new Size(196, 19);
+            checkBoxPayAmountToComment.TabIndex = 3;
+            checkBoxPayAmountToComment.Text = "Сумма оплаты в комментарий";
+            checkBoxPayAmountToComment.UseVisualStyleBackColor = true;
+            // 
             // Utils
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -828,7 +968,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             MinimumSize = new Size(900, 470);
             Name = "Utils";
-            Text = "Утилиты v0.16.3";
+            Text = "Утилиты v0.17.0";
             FormClosing += Utils_FormClosing;
             Load += Utils_Load;
             SizeChanged += Utils_SizeChanged;
@@ -844,7 +984,10 @@
             groupBox5.PerformLayout();
             groupBox4.ResumeLayout(false);
             groupBox4.PerformLayout();
+            groupBoxStartTime.ResumeLayout(false);
+            groupBoxStartTime.PerformLayout();
             tabControlFunc.ResumeLayout(false);
+            tabPageStartTimes.ResumeLayout(false);
             tabPageCalculate.ResumeLayout(false);
             groupBoxStartFee.ResumeLayout(false);
             groupBoxStartFee.PerformLayout();
@@ -853,6 +996,7 @@
             groupBoxGroupRanks.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDownGroupResultsCountToCompleteRank).EndInit();
             tabPageOther.ResumeLayout(false);
+            tabPageOther.PerformLayout();
             tabPage1.ResumeLayout(false);
             tabControl1.ResumeLayout(false);
             ResumeLayout(false);
@@ -922,7 +1066,6 @@
         private ComboBox comboBoxStartLogOutFieldsSplitter;
         private Button buttonOpenNumbersForm;
         private Button buttonCalculateRanks;
-        private TextBox textBoxSourceRankGroupName;
         private ComboBox comboBoxSourceRankGroupName;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private TabPage tabPageGroups;
@@ -933,5 +1076,18 @@
         private Label label7;
         private Label label6;
         private CheckedListBox checkedListBox1;
+        private Button buttonImportFromYarfso;
+        private OpenFileDialog openFileDialogYarfso;
+        private GroupBox groupBoxStartTime;
+        private DateTimePicker dateTimePickerStartTime;
+        private Button buttonSetStartMinutes;
+        private RichTextBox richTextBoxGroupStartOrder;
+        private Button buttonSetAutoOrderStartTimes;
+        private CheckBox checkBoxStartTimesPersonShuffle;
+        private Label label11;
+        private Label label10;
+        private DateTimePicker dateTimePickerStartInterval;
+        private TabPage tabPageStartTimes;
+        private CheckBox checkBoxPayAmountToComment;
     }
 }

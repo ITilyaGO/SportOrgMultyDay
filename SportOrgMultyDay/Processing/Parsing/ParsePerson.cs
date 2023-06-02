@@ -123,6 +123,15 @@ namespace SportOrgMultyDay.Processing.Parsing
             catch (Exception ex) { LogError("78gkajvydc", ex); }
             return -1;
         }
+        public static List<JToken> FPAllByGroup(string groupId, JArray persons)
+        {
+            try
+            {
+                return persons.Where(p => PPGroupId(p) == groupId).ToList();
+            }
+            catch (Exception ex) { LogError("78gkajvydc", ex); }
+            return null;
+        }
         public static JToken FPById(string id, JArray persons)
         {
             for (int i = 0; i < persons.Count; i++)
