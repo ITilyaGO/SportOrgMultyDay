@@ -283,7 +283,7 @@ namespace SportOrgMultyDay
 
         private void buttonBaseFromUtilits_Click(object sender, EventArgs e)
         {
-            jsonRace = UtilsForm.Base;
+            jsonRace = UtilsForm.JBase;
             labelRaceFindedDays.Text = "Найдено дней: " + GetRaceDayCount(jsonRace);
         }
 

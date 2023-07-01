@@ -55,6 +55,15 @@ namespace SportOrgMultyDay.Processing.Parsing
             catch (Exception ex) { LogError("843gu89diuq", ex); }
             return -1;
         }
+        public static int PRStatus(JToken result)
+        {
+            try
+            {
+                return (int)result["status"];
+            }
+            catch (Exception ex) { LogError("iew7vdcadjqw", ex); }
+            return -1;
+        }
         public static Dictionary<string, JToken> DictRIdPerson(JArray results, out List<string> duplicates)
         {
             duplicates = new();

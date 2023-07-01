@@ -43,6 +43,8 @@
             comboBoxDays = new ComboBox();
             tabPageShahmatka = new TabPage();
             groupBoxStartLogProcessing = new GroupBox();
+            label12 = new Label();
+            dateTimePickerExportStartLog = new DateTimePicker();
             comboBoxStartLogOutFieldsSplitter = new ComboBox();
             buttonImportStartLogClipboard = new Button();
             comboBoxLogType = new ComboBox();
@@ -103,6 +105,7 @@
             numericUpDownGroupResultsCountToCompleteRank = new NumericUpDown();
             checkedListBox1 = new CheckedListBox();
             tabPageOther = new TabPage();
+            checkBoxPayAmountToComment = new CheckBox();
             buttonImportFromYarfso = new Button();
             buttonOpenNumbersForm = new Button();
             buttonRemvoeWorstResult = new Button();
@@ -114,7 +117,6 @@
             toolTipGeneral = new ToolTip(components);
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             openFileDialogYarfso = new OpenFileDialog();
-            checkBoxPayAmountToComment = new CheckBox();
             contextMenuStripLog.SuspendLayout();
             tabPageShahmatka.SuspendLayout();
             groupBoxStartLogProcessing.SuspendLayout();
@@ -235,6 +237,8 @@
             // 
             // groupBoxStartLogProcessing
             // 
+            groupBoxStartLogProcessing.Controls.Add(label12);
+            groupBoxStartLogProcessing.Controls.Add(dateTimePickerExportStartLog);
             groupBoxStartLogProcessing.Controls.Add(comboBoxStartLogOutFieldsSplitter);
             groupBoxStartLogProcessing.Controls.Add(buttonImportStartLogClipboard);
             groupBoxStartLogProcessing.Controls.Add(comboBoxLogType);
@@ -249,15 +253,34 @@
             groupBoxStartLogProcessing.Controls.Add(labelSFRStartLogCount);
             groupBoxStartLogProcessing.Location = new Point(6, 6);
             groupBoxStartLogProcessing.Name = "groupBoxStartLogProcessing";
-            groupBoxStartLogProcessing.Size = new Size(290, 417);
+            groupBoxStartLogProcessing.Size = new Size(290, 437);
             groupBoxStartLogProcessing.TabIndex = 29;
             groupBoxStartLogProcessing.TabStop = false;
             groupBoxStartLogProcessing.Text = "Обработка стартовых логов";
             // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(6, 16);
+            label12.Name = "label12";
+            label12.Size = new Size(187, 15);
+            label12.TabIndex = 42;
+            label12.Text = "Время экспорта стартового лога";
+            // 
+            // dateTimePickerExportStartLog
+            // 
+            dateTimePickerExportStartLog.Format = DateTimePickerFormat.Time;
+            dateTimePickerExportStartLog.Location = new Point(199, 13);
+            dateTimePickerExportStartLog.MaxDate = new DateTime(1753, 1, 2, 0, 0, 0, 0);
+            dateTimePickerExportStartLog.Name = "dateTimePickerExportStartLog";
+            dateTimePickerExportStartLog.Size = new Size(82, 23);
+            dateTimePickerExportStartLog.TabIndex = 30;
+            dateTimePickerExportStartLog.Value = new DateTime(1753, 1, 1, 0, 0, 0, 0);
+            // 
             // comboBoxStartLogOutFieldsSplitter
             // 
             comboBoxStartLogOutFieldsSplitter.FormattingEnabled = true;
-            comboBoxStartLogOutFieldsSplitter.Location = new Point(114, 23);
+            comboBoxStartLogOutFieldsSplitter.Location = new Point(114, 42);
             comboBoxStartLogOutFieldsSplitter.Name = "comboBoxStartLogOutFieldsSplitter";
             comboBoxStartLogOutFieldsSplitter.Size = new Size(59, 23);
             comboBoxStartLogOutFieldsSplitter.TabIndex = 41;
@@ -266,7 +289,7 @@
             // buttonImportStartLogClipboard
             // 
             buttonImportStartLogClipboard.Image = Properties.Resources.paste_48;
-            buttonImportStartLogClipboard.Location = new Point(233, 23);
+            buttonImportStartLogClipboard.Location = new Point(233, 42);
             buttonImportStartLogClipboard.Name = "buttonImportStartLogClipboard";
             buttonImportStartLogClipboard.Size = new Size(48, 48);
             buttonImportStartLogClipboard.TabIndex = 40;
@@ -277,16 +300,17 @@
             // comboBoxLogType
             // 
             comboBoxLogType.FormattingEnabled = true;
-            comboBoxLogType.Location = new Point(6, 23);
+            comboBoxLogType.Location = new Point(6, 42);
             comboBoxLogType.Name = "comboBoxLogType";
             comboBoxLogType.Size = new Size(102, 23);
             comboBoxLogType.TabIndex = 39;
+            comboBoxLogType.SelectedIndexChanged += comboBoxLogType_SelectedIndexChanged;
             // 
             // buttonImportStartLogFile
             // 
             buttonImportStartLogFile.BackColor = Color.Gainsboro;
             buttonImportStartLogFile.Image = Properties.Resources.file_import_48;
-            buttonImportStartLogFile.Location = new Point(179, 23);
+            buttonImportStartLogFile.Location = new Point(179, 42);
             buttonImportStartLogFile.Name = "buttonImportStartLogFile";
             buttonImportStartLogFile.Size = new Size(48, 48);
             buttonImportStartLogFile.TabIndex = 28;
@@ -297,7 +321,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(6, 175);
+            label4.Location = new Point(6, 194);
             label4.Name = "label4";
             label4.Size = new Size(261, 15);
             label4.TabIndex = 38;
@@ -305,7 +329,7 @@
             // 
             // richTextBoxChecklessFinished
             // 
-            richTextBoxChecklessFinished.Location = new Point(6, 193);
+            richTextBoxChecklessFinished.Location = new Point(6, 212);
             richTextBoxChecklessFinished.Name = "richTextBoxChecklessFinished";
             richTextBoxChecklessFinished.Size = new Size(275, 92);
             richTextBoxChecklessFinished.TabIndex = 37;
@@ -313,7 +337,7 @@
             // 
             // buttonSFRStartLogDNSCopy
             // 
-            buttonSFRStartLogDNSCopy.Location = new Point(42, 291);
+            buttonSFRStartLogDNSCopy.Location = new Point(42, 310);
             buttonSFRStartLogDNSCopy.Name = "buttonSFRStartLogDNSCopy";
             buttonSFRStartLogDNSCopy.Size = new Size(136, 23);
             buttonSFRStartLogDNSCopy.TabIndex = 34;
@@ -324,7 +348,7 @@
             // labelSFRStartLogDNS
             // 
             labelSFRStartLogDNS.AutoSize = true;
-            labelSFRStartLogDNS.Location = new Point(6, 299);
+            labelSFRStartLogDNS.Location = new Point(6, 318);
             labelSFRStartLogDNS.Name = "labelSFRStartLogDNS";
             labelSFRStartLogDNS.Size = new Size(30, 15);
             labelSFRStartLogDNS.TabIndex = 33;
@@ -332,7 +356,7 @@
             // 
             // richTextBoxStartLogDNS
             // 
-            richTextBoxStartLogDNS.Location = new Point(6, 317);
+            richTextBoxStartLogDNS.Location = new Point(6, 336);
             richTextBoxStartLogDNS.Name = "richTextBoxStartLogDNS";
             richTextBoxStartLogDNS.Size = new Size(275, 92);
             richTextBoxStartLogDNS.TabIndex = 32;
@@ -341,7 +365,7 @@
             // labelSFRStartLogDupl
             // 
             labelSFRStartLogDupl.AutoSize = true;
-            labelSFRStartLogDupl.Location = new Point(6, 62);
+            labelSFRStartLogDupl.Location = new Point(6, 81);
             labelSFRStartLogDupl.Name = "labelSFRStartLogDupl";
             labelSFRStartLogDupl.Size = new Size(68, 15);
             labelSFRStartLogDupl.TabIndex = 31;
@@ -349,7 +373,7 @@
             // 
             // richTextBoxStartLogDupl
             // 
-            richTextBoxStartLogDupl.Location = new Point(6, 80);
+            richTextBoxStartLogDupl.Location = new Point(6, 99);
             richTextBoxStartLogDupl.Name = "richTextBoxStartLogDupl";
             richTextBoxStartLogDupl.Size = new Size(275, 92);
             richTextBoxStartLogDupl.TabIndex = 30;
@@ -358,7 +382,7 @@
             // labelSFRStartLogCount
             // 
             labelSFRStartLogCount.AutoSize = true;
-            labelSFRStartLogCount.Location = new Point(6, 47);
+            labelSFRStartLogCount.Location = new Point(6, 66);
             labelSFRStartLogCount.Name = "labelSFRStartLogCount";
             labelSFRStartLogCount.Size = new Size(74, 15);
             labelSFRStartLogCount.TabIndex = 30;
@@ -861,6 +885,16 @@
             tabPageOther.TabIndex = 3;
             tabPageOther.Text = "Остальное";
             // 
+            // checkBoxPayAmountToComment
+            // 
+            checkBoxPayAmountToComment.AutoSize = true;
+            checkBoxPayAmountToComment.Location = new Point(6, 78);
+            checkBoxPayAmountToComment.Name = "checkBoxPayAmountToComment";
+            checkBoxPayAmountToComment.Size = new Size(196, 19);
+            checkBoxPayAmountToComment.TabIndex = 3;
+            checkBoxPayAmountToComment.Text = "Сумма оплаты в комментарий";
+            checkBoxPayAmountToComment.UseVisualStyleBackColor = true;
+            // 
             // buttonImportFromYarfso
             // 
             buttonImportFromYarfso.Location = new Point(6, 103);
@@ -943,16 +977,6 @@
             openFileDialogYarfso.FileName = "Yarfso";
             openFileDialogYarfso.Filter = "Yarfso|*.csv|All files|*.*";
             // 
-            // checkBoxPayAmountToComment
-            // 
-            checkBoxPayAmountToComment.AutoSize = true;
-            checkBoxPayAmountToComment.Location = new Point(6, 78);
-            checkBoxPayAmountToComment.Name = "checkBoxPayAmountToComment";
-            checkBoxPayAmountToComment.Size = new Size(196, 19);
-            checkBoxPayAmountToComment.TabIndex = 3;
-            checkBoxPayAmountToComment.Text = "Сумма оплаты в комментарий";
-            checkBoxPayAmountToComment.UseVisualStyleBackColor = true;
-            // 
             // Utils
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -968,7 +992,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             MinimumSize = new Size(900, 470);
             Name = "Utils";
-            Text = "Утилиты v0.17.0";
+            Text = "Утилиты v0.17.1";
             FormClosing += Utils_FormClosing;
             Load += Utils_Load;
             SizeChanged += Utils_SizeChanged;
@@ -1089,5 +1113,7 @@
         private DateTimePicker dateTimePickerStartInterval;
         private TabPage tabPageStartTimes;
         private CheckBox checkBoxPayAmountToComment;
+        private Label label12;
+        private DateTimePicker dateTimePickerExportStartLog;
     }
 }

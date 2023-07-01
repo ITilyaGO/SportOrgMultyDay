@@ -17,6 +17,7 @@ using SportOrgMultyDay.Processing.SFRSmartTerminal;
 using SportOrgMultyDay.Helpers;
 using SportOrgMultyDay.Data;
 using Microsoft.VisualBasic.Logging;
+using SportOrgMultyDay.Data.SportOrg;
 
 namespace SportOrgMultyDay
 {
@@ -30,7 +31,8 @@ namespace SportOrgMultyDay
         }
         public Numbers NumbersForm;
         public General GeneralForm;
-        public JObject Base;
+        public JObject JBase;
+        public JBase SportOrgBase;
         int raceCount = 0;
         AutoResize autoResize;
         List<int> SFRStartLog = new();
@@ -79,24 +81,27 @@ namespace SportOrgMultyDay
 
         private void ImportBase()
         {
-            Base = ImportJson(out bool cancle);
+            JBase = ImportJson(out bool cancle);
+            SportOrgBase = new JBase(JBase);
+
+            //SportOrgBase.Races
             if (cancle) return;
-            if (Base == null)
+            if (JBase == null)
             {
                 labelBaseImport.Text = $"Ошибка";
                 SendLog("⚠Ошибка импорта базы: в данном файле база не найдена");
                 BaseEditButtons(false);
                 return;
             }
-            raceCount = Base["races"].Count();
+            raceCount = JBase["races"].Count();
             labelBaseImport.Text = $"День:";
             comboBoxDays.Items.Clear();
-            for (int i = 0; i < Base["races"].Count(); i++)
+            for (int i = 0; i < JBase["races"].Count(); i++)
                 comboBoxDays.Items.Add(i + 1);
-            comboBoxDays.SelectedIndex = CurrentRaceID(Base);
+            comboBoxDays.SelectedIndex = CurrentRaceID(JBase);
 
             comboBoxSourceRankGroupName.Items.Clear();
-            foreach (JToken group in PBGroups(PBCurrentRaceFromBase(Base)))
+            foreach (JToken group in PBGroups(PBCurrentRaceFromBase(JBase)))
                 comboBoxSourceRankGroupName.Items.Add(new ComboBoxItemId(PGId(group), PGName(group)));
 
             SendLog("Импорт выполнен");
@@ -133,18 +138,18 @@ namespace SportOrgMultyDay
         }
         private void buttonBaseExport_Click(object sender, EventArgs e)
         {
-            ExportJson(Base);
+            ExportJson(JBase);
         }
         private void buttonRemoveMissingPersons_Click(object sender, EventArgs e)
         {
-            SendLog(RemoveExtraPersons.Remove(Base));
+            SendLog(RemoveExtraPersons.Remove(JBase));
 
         }
 
         private void buttonSynchronizeReorders_Click(object sender, EventArgs e)
         {
             string[] syncFields = CheckListBoxItem.ToStringMS(checkedListBoxWithSync.CheckedItems);
-            SendLog(SynchronizeRaces.SynchronizeReservWithCurrentRace(Base, textBoxReservName.Text, syncFields, checkBoxCopyChangedOtherDays.Checked));
+            SendLog(SynchronizeRaces.SynchronizeReservWithCurrentRace(JBase, textBoxReservName.Text, syncFields, checkBoxCopyChangedOtherDays.Checked));
         }
 
         private void SendLog(string message)
@@ -210,12 +215,12 @@ namespace SportOrgMultyDay
 
         private void buttonCreateNewAdded_Click(object sender, EventArgs e)
         {
-            SendLog(SynchronizeRaces.CreateNewPersons(Base));
+            SendLog(SynchronizeRaces.CreateNewPersons(JBase));
         }
 
         private void buttonCardNumAsNum_Click(object sender, EventArgs e)
         {
-            SendLog(CardNumberAsBib.Process(Base));
+            SendLog(CardNumberAsBib.Process(JBase));
         }
 
         private void buttonCopyPersonByNumber_Click(object sender, EventArgs e)
@@ -229,7 +234,7 @@ namespace SportOrgMultyDay
                 ints.Add(Convert.ToInt32(bib));
             }
             string[] syncFields = CheckListBoxItem.ToStringMS(checkedListBoxWithSync.CheckedItems);
-            SendLog(SynchronizeRaces.CopyPersonsByNumberList(Base, ints.ToArray(), syncFields));
+            SendLog(SynchronizeRaces.CopyPersonsByNumberList(JBase, ints.ToArray(), syncFields));
         }
 
         private void buttonCombineAllBase_Click(object sender, EventArgs e)
@@ -239,18 +244,18 @@ namespace SportOrgMultyDay
 
         private void buttonFindAddWithComment_Click(object sender, EventArgs e)
         {
-            textBoxPersonsFromCopy.Text = SynchronizeRaces.FindAddWithComment(Base, textBoxStringFindComment.Text);
+            textBoxPersonsFromCopy.Text = SynchronizeRaces.FindAddWithComment(JBase, textBoxStringFindComment.Text);
         }
 
         private void buttonCopyGroupSettings_Click(object sender, EventArgs e)
         {
-            SendLog(SyncGroups.SyncByFields(Base));
+            SendLog(SyncGroups.SyncByFields(JBase));
         }
 
         private void buttonExportStartTimes_Click(object sender, EventArgs e)
         {
             if (saveFileDialogSfrst.ShowDialog() != DialogResult.OK) return;
-            string sftStartTxt = ExportStartTimes.ToSFRSmartTerminal(Base);
+            string sftStartTxt = ExportStartTimes.ToSFRSmartTerminal(JBase);
             File.WriteAllText(saveFileDialogSfrst.FileName, sftStartTxt, new UTF8Encoding(true));
             SendLog($"Экспорт стартового файла SFT Smart Terminal...\nСохранено в файл: {saveFileDialogSfrst.FileName}\n==========================\n{sftStartTxt}\n==========================");
         }
@@ -260,7 +265,7 @@ namespace SportOrgMultyDay
             if (!int.TryParse(comboBoxDays.Text.ToString(), out int day)) return;
             day--;
             if (day < raceCount && day >= 0)
-                Base["current_race"] = day;
+                JBase["current_race"] = day;
             else
                 comboBoxDays.Text = "Err";
 
@@ -300,7 +305,7 @@ namespace SportOrgMultyDay
 
         private void StartLogProcess(string startLog)
         {
-            StartLogProcessing slp = new(Base, startLog, (EStartLogType)comboBoxLogType.SelectedItem,
+            StartLogProcessing slp = new(JBase, startLog, dateTimePickerExportStartLog.Value.TimeOfDay, (EStartLogType)comboBoxLogType.SelectedItem,
                 splitterStartLog.TryGetValue(comboBoxStartLogOutFieldsSplitter.Text, out string val) ? val : comboBoxStartLogOutFieldsSplitter.Text);
             richTextBoxStartLogDupl.Text = slp.Duplicates;
             richTextBoxStartLogDNS.Text = slp.DNS;
@@ -317,12 +322,12 @@ namespace SportOrgMultyDay
 
         private void buttonStartFeeCalculate_Click(object sender, EventArgs e)
         {
-            SendLog(StartFeeCalculate.GetStatistic(Base, textBoxStartFeeWithCardSymbol.Text));
+            SendLog(StartFeeCalculate.GetStatistic(JBase, textBoxStartFeeWithCardSymbol.Text));
         }
 
         private void buttonRemvoeWorstResult_Click(object sender, EventArgs e)
         {
-            SendLog(RemoveWorstResults.Remove(Base));
+            SendLog(RemoveWorstResults.Remove(JBase));
         }
 
 
@@ -342,7 +347,7 @@ namespace SportOrgMultyDay
         {
             int rankComplete = (int)numericUpDownGroupResultsCountToCompleteRank.Value;
 
-            SendLog(CalculateGroupsRank.ProcessCurrentRace(Base, ((ComboBoxItemId)comboBoxSourceRankGroupName.SelectedItem).Id));
+            SendLog(CalculateGroupsRank.ProcessCurrentRace(JBase, ((ComboBoxItemId)comboBoxSourceRankGroupName.SelectedItem).Id));
         }
 
         private void buttonImportFromYarfso_Click(object sender, EventArgs e)
@@ -351,7 +356,7 @@ namespace SportOrgMultyDay
             try
             {
                 string file = File.ReadAllText(openFileDialogYarfso.FileName);
-                SendLog(YarfsoParser.SetQualFromYarfso(Base, file, checkBoxPayAmountToComment.Checked));
+                SendLog(YarfsoParser.SetQualFromYarfso(JBase, file, checkBoxPayAmountToComment.Checked));
             }
             catch (Exception ex)
             {
@@ -364,12 +369,12 @@ namespace SportOrgMultyDay
         {
             buttonSetStartMinutes.Text = dateTimePickerStartTime.Value.TimeOfDay.ToString();
             if (richTextBoxGroupStartOrder.Text.Length == 0)
-                SendLog(StartTimeManager.SetStartTimes(PBCurrentRaceFromBase(Base),
+                SendLog(StartTimeManager.SetStartTimes(PBCurrentRaceFromBase(JBase),
                     dateTimePickerStartTime.Value.TimeOfDay,
                     dateTimePickerStartInterval.Value.TimeOfDay,
                     checkBoxStartTimesPersonShuffle.Checked));
             else
-                SendLog(StartTimeManager.OrderedSetStartTimes(PBCurrentRaceFromBase(Base),
+                SendLog(StartTimeManager.OrderedSetStartTimes(PBCurrentRaceFromBase(JBase),
                     dateTimePickerStartTime.Value.TimeOfDay,
                     dateTimePickerStartInterval.Value.TimeOfDay,
                     richTextBoxGroupStartOrder.Text,
@@ -379,7 +384,12 @@ namespace SportOrgMultyDay
 
         private void buttonSetAutoOrderStartTimes_Click(object sender, EventArgs e)
         {
-            richTextBoxGroupStartOrder.Text = StartTimeManager.AutoGroupOrder(PBCurrentRaceFromBase(Base));
+            richTextBoxGroupStartOrder.Text = StartTimeManager.AutoGroupOrder(PBCurrentRaceFromBase(JBase));
+        }
+
+        private void comboBoxLogType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 

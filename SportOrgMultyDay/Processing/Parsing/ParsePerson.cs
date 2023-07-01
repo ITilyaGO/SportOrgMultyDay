@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using SportOrgMultyDay.Processing.Parsing.Things;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -102,6 +103,16 @@ namespace SportOrgMultyDay.Processing.Parsing
             }
             catch (Exception ex) { LogError("o8sd6vcla", ex); }
             return -1;
+        }
+
+        public static TimeSpan? PPStartTimeTS(JToken person)
+        {
+            try
+            {
+                return ParseStartTime.StartTimeToTimeSpan((int)person["start_time"]);
+            }
+            catch (Exception ex) { LogError("o8sd6vcla", ex); }
+            return null;
         }
 
         public static string PPToString(JToken person)

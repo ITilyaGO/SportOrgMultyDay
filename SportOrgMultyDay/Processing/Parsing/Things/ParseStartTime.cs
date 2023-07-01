@@ -8,6 +8,10 @@ namespace SportOrgMultyDay.Processing.Parsing.Things
 {
     public static class ParseStartTime
     {
+        public static TimeSpan StartTimeToTimeSpan(int startTime)
+        {
+            return TimeSpan.FromMilliseconds(startTime);
+        }
         public static string StartTimeToString(int startTime)
         {
             TimeSpan dt = TimeSpan.FromMilliseconds(startTime);

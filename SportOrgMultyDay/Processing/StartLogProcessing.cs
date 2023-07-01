@@ -12,13 +12,12 @@ using static SportOrgMultyDay.Processing.Parsing.ParseGroup;
 using static SportOrgMultyDay.Processing.Parsing.ParseOrganization;
 using static SportOrgMultyDay.Processing.Parsing.ParseData;
 using static SportOrgMultyDay.Processing.Parsing.ParseResult;
+using static SportOrgMultyDay.Processing.Parsing.Things.ParseStartTime;
 using static SportOrgMultyDay.Processing.Logger;
+using SportOrgMultyDay.Processing.Parsing.Things;
 
 namespace SportOrgMultyDay.Processing
 {
-
-    
-
     public class StartLogProcessing
     {
         public int StartedPersons { get; private set; }
@@ -30,7 +29,7 @@ namespace SportOrgMultyDay.Processing
         readonly string startLog;
         string log;
         EStartLogType startLogType;
-        public StartLogProcessing(JToken jBase, string startLog, EStartLogType type,string outFieldsSplitter)
+        public StartLogProcessing(JToken jBase, string startLog, TimeSpan logExportTime, EStartLogType type, string outFieldsSplitter)
         {
             this.startLog = startLog;
             this.jBase = jBase;
@@ -38,10 +37,10 @@ namespace SportOrgMultyDay.Processing
             ChecklessFinished = string.Empty;
             Duplicates = string.Empty;
             DNS = string.Empty;
-            Process(outFieldsSplitter);
+            Process(logExportTime, outFieldsSplitter);
         }
 
-        private void Process(string splitter)
+        private void Process(TimeSpan logExportTime, string outFieldsSplitter)
         {
             try
             {
@@ -51,18 +50,18 @@ namespace SportOrgMultyDay.Processing
                     log += "    База не найдена, процесс прерван!";
                     return;
                 }
-                List<int> allBibs = GetPersonsBibs();
+                List<int> allBibs = GetPersonsBibsStartBefor(logExportTime);
                 List<StartCell> startCells = StartLogParse();
                 if (startCells is null) return;
-                List<int> startedBibsNoDupl = StartCellsToInt(startCells).Distinct().ToList();
-                List<int> dnsIncludeFinished = GetDNSList(allBibs, startedBibsNoDupl);
-                List<int> finished = GetFinished(jBase, ref log);
-                List<int> checklessFinished = dnsIncludeFinished.Intersect(finished).ToList();
-                List<int> dns = dnsIncludeFinished.Except(finished).ToList();
+                List<int> startedBibsNoDupl = StartCellsToInt(startCells).Distinct().ToList(); // Стартовавшие
+                List<int> dnsIncludeFinished = GetDNSList(allBibs, startedBibsNoDupl); // Не стартовавшие включающие финишировавших
+                List<int> finished = GetFinished(jBase, ref log); // Финишировавшие
+                List<int> checklessFinished = dnsIncludeFinished.Intersect(finished).ToList(); // Не отмеченные на старте финишировавшие
+                List<int> dns = dnsIncludeFinished.Except(finished).ToList(); // Исключаем финишировавших из списка стартовавших
                 StartedPersons = startedBibsNoDupl.Count;
-                ChecklessFinished = string.Join(splitter, checklessFinished.OrderBy(x => x));
+                ChecklessFinished = string.Join(outFieldsSplitter, checklessFinished.OrderBy(x => x));
                 Duplicates = string.Join('\n', SearchDuplicates(startCells, ref log));
-                DNS = string.Join(splitter, dns.OrderBy(x => x));
+                DNS = string.Join(outFieldsSplitter, dns.OrderBy(x => x));
             }
             catch (Exception ex)
             {
@@ -288,7 +287,7 @@ namespace SportOrgMultyDay.Processing
             return EStartLogType.None;
         }
 
-        private List<int> GetPersonsBibs()
+        private List<int> GetPersonsBibsStartBefor(TimeSpan time)
         {
             try
             {
@@ -301,6 +300,20 @@ namespace SportOrgMultyDay.Processing
                     if (bib == -1)
                     {
                         log += $"   Номер отсутствует: {PersonToString.Name(person)}\n";
+                        continue;
+                    }
+                    
+                    TimeSpan? personStartNull = PPStartTimeTS(person);
+                    if (personStartNull == null)
+                    {
+                        log += $"   Стартовая минута не распознана: {PersonToString.Name(person)}\n";
+                        continue;
+                    }
+                    
+                    TimeSpan personStart = (TimeSpan)personStartNull;
+                    if(time < personStart)
+                    {
+                        log += $"   Стартует позже: {StartTimeToString(personStart)} {PersonToString.Name(person)}\n";
                         continue;
                     }
                     allPersonsBibs.Add(bib);
@@ -331,7 +344,9 @@ namespace SportOrgMultyDay.Processing
                 {
                     try
                     {
-                        bibs.Add(PPBib(FPById(PRPersonId(result), persons)));
+                        //if (PRStatus(result) == 13) continue;
+                        JToken person = FPById(PRPersonId(result), persons);
+                        bibs.Add(PPBib(person));
                     }
                     catch (Exception ex) { Log += $"    Ошибка обработки рузультата: {PRId(result)}\n"; }
                 }
