@@ -91,12 +91,17 @@
             buttonCalculateRanks = new Button();
             tabControlFunc = new TabControl();
             tabPageStartTimes = new TabPage();
+            tabPageBibs = new TabPage();
             tabPageCalculate = new TabPage();
             groupBoxStartFee = new GroupBox();
             label5 = new Label();
             textBoxStartFeeWithCardSymbol = new TextBox();
             buttonStartFeeCalculate = new Button();
             tabPageGroups = new TabPage();
+            groupBoxBibs = new GroupBox();
+            buttonGroupSetNumbersByGroups = new Button();
+            richTextBoxBibsNumbering = new RichTextBox();
+            buttonBibsAutoCreateListNumbering = new Button();
             groupBoxGroupRanks = new GroupBox();
             label9 = new Label();
             label6 = new Label();
@@ -117,6 +122,7 @@
             toolTipGeneral = new ToolTip(components);
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             openFileDialogYarfso = new OpenFileDialog();
+            checkBoxSetNumbersByGroupsDebug = new CheckBox();
             contextMenuStripLog.SuspendLayout();
             tabPageShahmatka.SuspendLayout();
             groupBoxStartLogProcessing.SuspendLayout();
@@ -131,6 +137,7 @@
             tabPageCalculate.SuspendLayout();
             groupBoxStartFee.SuspendLayout();
             tabPageGroups.SuspendLayout();
+            groupBoxBibs.SuspendLayout();
             groupBoxGroupRanks.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDownGroupResultsCountToCompleteRank).BeginInit();
             tabPageOther.SuspendLayout();
@@ -439,15 +446,15 @@
             // 
             buttonCreateNewAdded.Location = new Point(6, 51);
             buttonCreateNewAdded.Name = "buttonCreateNewAdded";
-            buttonCreateNewAdded.Size = new Size(231, 23);
+            buttonCreateNewAdded.Size = new Size(231, 41);
             buttonCreateNewAdded.TabIndex = 15;
-            buttonCreateNewAdded.Text = "Создать дозаявленых в остальных днях";
+            buttonCreateNewAdded.Text = "Создать дозаявленых с тегом Лично в остальных днях";
             buttonCreateNewAdded.UseVisualStyleBackColor = true;
             buttonCreateNewAdded.Click += buttonCreateNewAdded_Click;
             // 
             // buttonCardNumAsNum
             // 
-            buttonCardNumAsNum.Location = new Point(6, 80);
+            buttonCardNumAsNum.Location = new Point(6, 98);
             buttonCardNumAsNum.Name = "buttonCardNumAsNum";
             buttonCardNumAsNum.Size = new Size(231, 23);
             buttonCardNumAsNum.TabIndex = 16;
@@ -715,6 +722,7 @@
             // 
             tabControlFunc.Controls.Add(tabPageBase);
             tabControlFunc.Controls.Add(tabPageStartTimes);
+            tabControlFunc.Controls.Add(tabPageBibs);
             tabControlFunc.Controls.Add(tabPageCalculate);
             tabControlFunc.Controls.Add(tabPageShahmatka);
             tabControlFunc.Controls.Add(tabPageGroups);
@@ -735,6 +743,16 @@
             tabPageStartTimes.TabIndex = 5;
             tabPageStartTimes.Text = "Стартовые минуты";
             tabPageStartTimes.UseVisualStyleBackColor = true;
+            // 
+            // tabPageBibs
+            // 
+            tabPageBibs.Location = new Point(4, 24);
+            tabPageBibs.Name = "tabPageBibs";
+            tabPageBibs.Padding = new Padding(3);
+            tabPageBibs.Size = new Size(535, 485);
+            tabPageBibs.TabIndex = 6;
+            tabPageBibs.Text = "Номера";
+            tabPageBibs.UseVisualStyleBackColor = true;
             // 
             // tabPageCalculate
             // 
@@ -789,6 +807,7 @@
             // tabPageGroups
             // 
             tabPageGroups.BackColor = Color.WhiteSmoke;
+            tabPageGroups.Controls.Add(groupBoxBibs);
             tabPageGroups.Controls.Add(buttonCopyGroupSettings);
             tabPageGroups.Controls.Add(groupBoxGroupRanks);
             tabPageGroups.Location = new Point(4, 24);
@@ -797,6 +816,48 @@
             tabPageGroups.Size = new Size(535, 485);
             tabPageGroups.TabIndex = 4;
             tabPageGroups.Text = "Группы";
+            // 
+            // groupBoxBibs
+            // 
+            groupBoxBibs.Controls.Add(checkBoxSetNumbersByGroupsDebug);
+            groupBoxBibs.Controls.Add(buttonGroupSetNumbersByGroups);
+            groupBoxBibs.Controls.Add(richTextBoxBibsNumbering);
+            groupBoxBibs.Controls.Add(buttonBibsAutoCreateListNumbering);
+            groupBoxBibs.Location = new Point(6, 99);
+            groupBoxBibs.Name = "groupBoxBibs";
+            groupBoxBibs.Size = new Size(421, 380);
+            groupBoxBibs.TabIndex = 6;
+            groupBoxBibs.TabStop = false;
+            groupBoxBibs.Text = "Номера";
+            // 
+            // buttonGroupSetNumbersByGroups
+            // 
+            buttonGroupSetNumbersByGroups.Location = new Point(224, 22);
+            buttonGroupSetNumbersByGroups.Name = "buttonGroupSetNumbersByGroups";
+            buttonGroupSetNumbersByGroups.Size = new Size(191, 27);
+            buttonGroupSetNumbersByGroups.TabIndex = 6;
+            buttonGroupSetNumbersByGroups.Text = "Установить номера по группам";
+            buttonGroupSetNumbersByGroups.UseVisualStyleBackColor = true;
+            buttonGroupSetNumbersByGroups.Click += buttonGroupSetNumbersByGroups_Click;
+            // 
+            // richTextBoxBibsNumbering
+            // 
+            richTextBoxBibsNumbering.Location = new Point(6, 22);
+            richTextBoxBibsNumbering.Name = "richTextBoxBibsNumbering";
+            richTextBoxBibsNumbering.Size = new Size(212, 319);
+            richTextBoxBibsNumbering.TabIndex = 4;
+            richTextBoxBibsNumbering.Text = "";
+            // 
+            // buttonBibsAutoCreateListNumbering
+            // 
+            buttonBibsAutoCreateListNumbering.Enabled = false;
+            buttonBibsAutoCreateListNumbering.Location = new Point(6, 347);
+            buttonBibsAutoCreateListNumbering.Name = "buttonBibsAutoCreateListNumbering";
+            buttonBibsAutoCreateListNumbering.Size = new Size(212, 27);
+            buttonBibsAutoCreateListNumbering.TabIndex = 5;
+            buttonBibsAutoCreateListNumbering.Text = "Создать список автоматически";
+            buttonBibsAutoCreateListNumbering.UseVisualStyleBackColor = true;
+            buttonBibsAutoCreateListNumbering.Click += buttonBibsAutoCreateListNumbering_Click;
             // 
             // groupBoxGroupRanks
             // 
@@ -977,6 +1038,16 @@
             openFileDialogYarfso.FileName = "Yarfso";
             openFileDialogYarfso.Filter = "Yarfso|*.csv|All files|*.*";
             // 
+            // checkBoxSetNumbersByGroupsDebug
+            // 
+            checkBoxSetNumbersByGroupsDebug.AutoSize = true;
+            checkBoxSetNumbersByGroupsDebug.Location = new Point(224, 55);
+            checkBoxSetNumbersByGroupsDebug.Name = "checkBoxSetNumbersByGroupsDebug";
+            checkBoxSetNumbersByGroupsDebug.Size = new Size(134, 19);
+            checkBoxSetNumbersByGroupsDebug.TabIndex = 7;
+            checkBoxSetNumbersByGroupsDebug.Text = "Расширенные логи";
+            checkBoxSetNumbersByGroupsDebug.UseVisualStyleBackColor = true;
+            // 
             // Utils
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1016,6 +1087,8 @@
             groupBoxStartFee.ResumeLayout(false);
             groupBoxStartFee.PerformLayout();
             tabPageGroups.ResumeLayout(false);
+            groupBoxBibs.ResumeLayout(false);
+            groupBoxBibs.PerformLayout();
             groupBoxGroupRanks.ResumeLayout(false);
             groupBoxGroupRanks.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDownGroupResultsCountToCompleteRank).EndInit();
@@ -1115,5 +1188,11 @@
         private CheckBox checkBoxPayAmountToComment;
         private Label label12;
         private DateTimePicker dateTimePickerExportStartLog;
+        private TabPage tabPageBibs;
+        private GroupBox groupBoxBibs;
+        private RichTextBox richTextBoxBibsNumbering;
+        private Button buttonBibsAutoCreateListNumbering;
+        private Button buttonGroupSetNumbersByGroups;
+        private CheckBox checkBoxSetNumbersByGroupsDebug;
     }
 }

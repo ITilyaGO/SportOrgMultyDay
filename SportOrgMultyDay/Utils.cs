@@ -129,6 +129,7 @@ namespace SportOrgMultyDay
             buttonSetAutoOrderStartTimes.Enabled = active;
             buttonSetStartMinutes.Enabled = active;
             buttonImportFromYarfso.Enabled = active;
+            buttonGroupSetNumbersByGroups.Enabled = active;
         }
 
         private void buttonBaseImport_Click(object sender, EventArgs e)
@@ -265,7 +266,10 @@ namespace SportOrgMultyDay
             if (!int.TryParse(comboBoxDays.Text.ToString(), out int day)) return;
             day--;
             if (day < raceCount && day >= 0)
+            {
                 JBase["current_race"] = day;
+                SendLog($"Текущий день: {JBase["current_race"]}");
+            }
             else
                 comboBoxDays.Text = "Err";
 
@@ -391,7 +395,15 @@ namespace SportOrgMultyDay
         {
 
         }
+
+        private void buttonBibsAutoCreateListNumbering_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonGroupSetNumbersByGroups_Click(object sender, EventArgs e)
+        {
+            SendLog(BibsNumbering.SetNumbers(PBCurrentRaceFromBase(JBase), richTextBoxBibsNumbering.Text, checkBoxSetNumbersByGroupsDebug.Checked));
+        }
     }
-
-
 }

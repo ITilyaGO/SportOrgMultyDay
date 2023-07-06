@@ -252,7 +252,7 @@ namespace SportOrgMultyDay.Processing
                 if (indexFromCopy == i) continue;
                 if (personCopies[i].Person == null)
                 {
-                    msgLog += $"⚠Участник в {i + 1} дне не найден {PersonToString.BibNameComment(person)}";
+                    msgLog += $"[Д:{i + 1} ⚠Участник в {i + 1} дне не найден {PersonToString.BibNameComment(person)}]";
                     continue;
                 }
                 msgLog += $"[Д:{personCopies[i].RaceIndex+1} { PersonToString.BibName(personCopies[i].Person)}]";

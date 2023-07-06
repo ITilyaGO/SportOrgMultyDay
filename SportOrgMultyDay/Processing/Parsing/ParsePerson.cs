@@ -149,5 +149,11 @@ namespace SportOrgMultyDay.Processing.Parsing
                 if (id == PPId(persons[i])) return persons[i];
             return null;
         }
+        public static JToken FPByBib(int bib, JArray persons)
+        {
+            for (int i = 0; i < persons.Count; i++)
+                if (bib == PPBib(persons[i])) return persons[i];
+            return null;
+        }
     }
 }
