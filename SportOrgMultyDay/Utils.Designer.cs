@@ -99,6 +99,7 @@
             buttonStartFeeCalculate = new Button();
             tabPageGroups = new TabPage();
             groupBoxBibs = new GroupBox();
+            checkBoxSetNumbersByGroupsDebug = new CheckBox();
             buttonGroupSetNumbersByGroups = new Button();
             richTextBoxBibsNumbering = new RichTextBox();
             buttonBibsAutoCreateListNumbering = new Button();
@@ -122,7 +123,6 @@
             toolTipGeneral = new ToolTip(components);
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             openFileDialogYarfso = new OpenFileDialog();
-            checkBoxSetNumbersByGroupsDebug = new CheckBox();
             contextMenuStripLog.SuspendLayout();
             tabPageShahmatka.SuspendLayout();
             groupBoxStartLogProcessing.SuspendLayout();
@@ -830,6 +830,16 @@
             groupBoxBibs.TabStop = false;
             groupBoxBibs.Text = "Номера";
             // 
+            // checkBoxSetNumbersByGroupsDebug
+            // 
+            checkBoxSetNumbersByGroupsDebug.AutoSize = true;
+            checkBoxSetNumbersByGroupsDebug.Location = new Point(224, 55);
+            checkBoxSetNumbersByGroupsDebug.Name = "checkBoxSetNumbersByGroupsDebug";
+            checkBoxSetNumbersByGroupsDebug.Size = new Size(134, 19);
+            checkBoxSetNumbersByGroupsDebug.TabIndex = 7;
+            checkBoxSetNumbersByGroupsDebug.Text = "Расширенные логи";
+            checkBoxSetNumbersByGroupsDebug.UseVisualStyleBackColor = true;
+            // 
             // buttonGroupSetNumbersByGroups
             // 
             buttonGroupSetNumbersByGroups.Location = new Point(224, 22);
@@ -1038,16 +1048,6 @@
             openFileDialogYarfso.FileName = "Yarfso";
             openFileDialogYarfso.Filter = "Yarfso|*.csv|All files|*.*";
             // 
-            // checkBoxSetNumbersByGroupsDebug
-            // 
-            checkBoxSetNumbersByGroupsDebug.AutoSize = true;
-            checkBoxSetNumbersByGroupsDebug.Location = new Point(224, 55);
-            checkBoxSetNumbersByGroupsDebug.Name = "checkBoxSetNumbersByGroupsDebug";
-            checkBoxSetNumbersByGroupsDebug.Size = new Size(134, 19);
-            checkBoxSetNumbersByGroupsDebug.TabIndex = 7;
-            checkBoxSetNumbersByGroupsDebug.Text = "Расширенные логи";
-            checkBoxSetNumbersByGroupsDebug.UseVisualStyleBackColor = true;
-            // 
             // Utils
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1063,7 +1063,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             MinimumSize = new Size(900, 470);
             Name = "Utils";
-            Text = "Утилиты v0.17.1";
+            Text = "Утилиты v0.17.3";
             FormClosing += Utils_FormClosing;
             Load += Utils_Load;
             SizeChanged += Utils_SizeChanged;
