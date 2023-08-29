@@ -34,7 +34,7 @@ namespace SportOrgMultyDay.Processing.Combine
                 JToken person = persons[i];
                 string personId = PPId(person);
                 string groupId = PPGroupId(person);
-                if (personId != null && dictPersonIdResults.TryGetValue(personId,out JToken result))
+                if (personId != null && dictPersonIdResults.TryGetValue(personId, out JToken result))
                     if (groupId != null && dictGroupIdGroup.TryGetValue(groupId, out JToken group))
                         personGroupResults.Add(new(person, group, result));
                     else

@@ -65,6 +65,7 @@
             buttonCardNumAsNum = new Button();
             checkedListBoxWithSync = new CheckedListBox();
             groupBox3 = new GroupBox();
+            buttonSyncOrganizations = new Button();
             groupBox5 = new GroupBox();
             textBoxReservName = new TextBox();
             buttonSynchronizeReorders = new Button();
@@ -78,9 +79,12 @@
             textBoxStringFindComment = new TextBox();
             label2 = new Label();
             groupBoxStartTime = new GroupBox();
+            checkBoxUseShortStartTimeAlg = new CheckBox();
             checkBoxStartTimesPersonShuffle = new CheckBox();
+            label13 = new Label();
             label11 = new Label();
             label10 = new Label();
+            dateTimePickerMinColumnStartInterval = new DateTimePicker();
             dateTimePickerStartInterval = new DateTimePicker();
             buttonSetAutoOrderStartTimes = new Button();
             buttonSetStartMinutes = new Button();
@@ -472,13 +476,24 @@
             // 
             // groupBox3
             // 
+            groupBox3.Controls.Add(buttonSyncOrganizations);
             groupBox3.Controls.Add(groupBox5);
             groupBox3.Location = new Point(259, 6);
             groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(260, 155);
+            groupBox3.Size = new Size(260, 191);
             groupBox3.TabIndex = 24;
             groupBox3.TabStop = false;
             groupBox3.Text = "Синхронизация";
+            // 
+            // buttonSyncOrganizations
+            // 
+            buttonSyncOrganizations.Location = new Point(15, 152);
+            buttonSyncOrganizations.Name = "buttonSyncOrganizations";
+            buttonSyncOrganizations.Size = new Size(231, 23);
+            buttonSyncOrganizations.TabIndex = 15;
+            buttonSyncOrganizations.Text = "Синхронизация коллективов";
+            buttonSyncOrganizations.UseVisualStyleBackColor = true;
+            buttonSyncOrganizations.Click += buttonSyncOrganizations_Click;
             // 
             // groupBox5
             // 
@@ -545,7 +560,7 @@
             groupBox4.Controls.Add(textBoxPersonsFromCopy);
             groupBox4.Controls.Add(textBoxStringFindComment);
             groupBox4.Controls.Add(label2);
-            groupBox4.Location = new Point(259, 167);
+            groupBox4.Location = new Point(259, 203);
             groupBox4.Name = "groupBox4";
             groupBox4.Size = new Size(260, 143);
             groupBox4.TabIndex = 25;
@@ -597,9 +612,12 @@
             // 
             // groupBoxStartTime
             // 
+            groupBoxStartTime.Controls.Add(checkBoxUseShortStartTimeAlg);
             groupBoxStartTime.Controls.Add(checkBoxStartTimesPersonShuffle);
+            groupBoxStartTime.Controls.Add(label13);
             groupBoxStartTime.Controls.Add(label11);
             groupBoxStartTime.Controls.Add(label10);
+            groupBoxStartTime.Controls.Add(dateTimePickerMinColumnStartInterval);
             groupBoxStartTime.Controls.Add(dateTimePickerStartInterval);
             groupBoxStartTime.Controls.Add(buttonSetAutoOrderStartTimes);
             groupBoxStartTime.Controls.Add(buttonSetStartMinutes);
@@ -612,22 +630,43 @@
             groupBoxStartTime.TabStop = false;
             groupBoxStartTime.Text = "Стартовые минуты";
             // 
+            // checkBoxUseShortStartTimeAlg
+            // 
+            checkBoxUseShortStartTimeAlg.AutoSize = true;
+            checkBoxUseShortStartTimeAlg.Checked = true;
+            checkBoxUseShortStartTimeAlg.CheckState = CheckState.Checked;
+            checkBoxUseShortStartTimeAlg.Location = new Point(224, 133);
+            checkBoxUseShortStartTimeAlg.Name = "checkBoxUseShortStartTimeAlg";
+            checkBoxUseShortStartTimeAlg.Size = new Size(214, 19);
+            checkBoxUseShortStartTimeAlg.TabIndex = 7;
+            checkBoxUseShortStartTimeAlg.Text = "Сжимать конец старта в колонках";
+            checkBoxUseShortStartTimeAlg.UseVisualStyleBackColor = true;
+            // 
             // checkBoxStartTimesPersonShuffle
             // 
             checkBoxStartTimesPersonShuffle.AutoSize = true;
             checkBoxStartTimesPersonShuffle.Checked = true;
             checkBoxStartTimesPersonShuffle.CheckState = CheckState.Checked;
-            checkBoxStartTimesPersonShuffle.Location = new Point(224, 80);
+            checkBoxStartTimesPersonShuffle.Location = new Point(224, 108);
             checkBoxStartTimesPersonShuffle.Name = "checkBoxStartTimesPersonShuffle";
             checkBoxStartTimesPersonShuffle.Size = new Size(226, 19);
             checkBoxStartTimesPersonShuffle.TabIndex = 7;
             checkBoxStartTimesPersonShuffle.Text = "Перемешивать участников в группе";
             checkBoxStartTimesPersonShuffle.UseVisualStyleBackColor = true;
             // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Location = new Point(313, 83);
+            label13.Name = "label13";
+            label13.Size = new Size(202, 15);
+            label13.TabIndex = 6;
+            label13.Text = "Минимальный интервал в колонке";
+            // 
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new Point(313, 53);
+            label11.Location = new Point(313, 55);
             label11.Name = "label11";
             label11.Size = new Size(60, 15);
             label11.TabIndex = 6;
@@ -641,6 +680,16 @@
             label10.Size = new Size(80, 15);
             label10.TabIndex = 5;
             label10.Text = "Время старта";
+            // 
+            // dateTimePickerMinColumnStartInterval
+            // 
+            dateTimePickerMinColumnStartInterval.Format = DateTimePickerFormat.Time;
+            dateTimePickerMinColumnStartInterval.Location = new Point(224, 79);
+            dateTimePickerMinColumnStartInterval.MaxDate = new DateTime(1753, 1, 2, 0, 0, 0, 0);
+            dateTimePickerMinColumnStartInterval.Name = "dateTimePickerMinColumnStartInterval";
+            dateTimePickerMinColumnStartInterval.Size = new Size(83, 23);
+            dateTimePickerMinColumnStartInterval.TabIndex = 4;
+            dateTimePickerMinColumnStartInterval.Value = new DateTime(1753, 1, 1, 0, 2, 0, 0);
             // 
             // dateTimePickerStartInterval
             // 
@@ -664,7 +713,7 @@
             // 
             // buttonSetStartMinutes
             // 
-            buttonSetStartMinutes.Location = new Point(325, 440);
+            buttonSetStartMinutes.Location = new Point(323, 440);
             buttonSetStartMinutes.Name = "buttonSetStartMinutes";
             buttonSetStartMinutes.Size = new Size(192, 27);
             buttonSetStartMinutes.TabIndex = 1;
@@ -1063,7 +1112,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             MinimumSize = new Size(900, 470);
             Name = "Utils";
-            Text = "Утилиты v0.17.3";
+            Text = "Утилиты v0.17.4";
             FormClosing += Utils_FormClosing;
             Load += Utils_Load;
             SizeChanged += Utils_SizeChanged;
@@ -1194,5 +1243,9 @@
         private Button buttonBibsAutoCreateListNumbering;
         private Button buttonGroupSetNumbersByGroups;
         private CheckBox checkBoxSetNumbersByGroupsDebug;
+        private Button buttonSyncOrganizations;
+        private Label label13;
+        private DateTimePicker dateTimePickerMinColumnStartInterval;
+        private CheckBox checkBoxUseShortStartTimeAlg;
     }
 }

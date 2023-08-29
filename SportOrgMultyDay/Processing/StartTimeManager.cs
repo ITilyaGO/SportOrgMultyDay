@@ -111,6 +111,52 @@ namespace SportOrgMultyDay.Processing
             return msgLog;
         }
 
+        public static string ShortOrderedSetStartTimes(JToken race, TimeSpan timeOfStart, TimeSpan startInterval, TimeSpan minColumnStartInterval, string rawOrder, bool shuffle)
+        {
+            string msgLog = "Установка стартовых минут по заданному порядку...\n";
+            JArray groups = PBGroups(race);
+            JArray persons = PBPersons(race);
+            List<Corridor> corridors = ParseRawOrder(persons, groups, rawOrder, ref msgLog, shuffle);
+
+            corridors.ForEach(cor => cor.SetTime(timeOfStart));
+            foreach (Corridor corridor in corridors)
+            {
+                int emptyColumns = 0;
+                while (emptyColumns < corridor.CorridorColumns.Count)
+                {
+                    emptyColumns = 0;
+                    int minIntervalColumns = 0;
+                    foreach (CorridorColumn currentCol in corridor.CorridorColumns)
+                    {
+
+                        TimeSpan newTime = corridor.CurrentStart.Add(startInterval);
+                        if (currentCol.LastStart != null && (newTime - currentCol.LastStart) < minColumnStartInterval)
+                        {
+                            minIntervalColumns++;
+                            continue;
+                        }
+
+                        JToken person = currentCol.Pop();
+                        if (person == null)
+                        {
+                            emptyColumns++;
+                            continue;
+                        }
+
+                        person["start_time"] = newTime.TotalMilliseconds;
+                        corridor.CurrentStart = newTime;
+                        currentCol.LastStart = newTime;
+                        msgLog += $"        - Старт: {StartTimeToString(PPStartTime(person))} Участник: {PPToString(person)}\n";
+
+                    }
+                    if (minIntervalColumns >= corridor.CorridorColumns.Count - emptyColumns)
+                        corridor.CurrentStart += startInterval;
+                }
+            }
+
+            return msgLog;
+        }
+
         internal static List<Corridor> ParseRawOrder(JArray persons, JArray groups, string rawOrder, ref string log, bool shuffle)
         {
             log += "  Парсинг порядка групп...\n";
@@ -182,14 +228,26 @@ namespace SportOrgMultyDay.Processing
     class Corridor
     { 
         public List<CorridorColumn> CorridorColumns { get; private set; }
+        public TimeSpan CurrentStart { get; set; }
         public Corridor()
         {
             CorridorColumns = new List<CorridorColumn>();
         }
 
-        public void Add(CorridorColumn column)
+        public void SetTime(TimeSpan timeSpan)
         {
-            CorridorColumns.Add(column);
+            CurrentStart = timeSpan;
+        }
+
+        public void Add(CorridorColumn column) => CorridorColumns.Add(column);
+        public void Remove(CorridorColumn column) => CorridorColumns.Remove(column);
+        public CorridorColumn Pop()
+        {
+            if (CorridorColumns.Count == 0)
+                return null;
+            CorridorColumn column = CorridorColumns.First();
+            CorridorColumns.Remove(column);
+            return column;
         }
     }
 
@@ -200,15 +258,18 @@ namespace SportOrgMultyDay.Processing
         {
             Persons = new List<JToken>();
         }
+        public TimeSpan? LastStart { get; set; } = null;
 
-        public void Add(JToken person)
+        public void Add(JToken person) => Persons.Add(person);
+        public void Remove(JToken person) => Persons.Remove(person);
+        public void AddRange(List<JToken> persons) => Persons.AddRange(persons);
+        public JToken Pop()
         {
-            Persons.Add(person);
-        }
-
-        public void AddRange(List<JToken> persons)
-        {
-            Persons.AddRange(persons);
+            if (Persons.Count == 0)
+                return null;
+            JToken person = Persons.First();
+            Persons.Remove(person);
+            return person;
         }
     }
 }

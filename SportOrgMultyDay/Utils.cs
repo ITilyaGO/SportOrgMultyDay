@@ -130,6 +130,7 @@ namespace SportOrgMultyDay
             buttonSetStartMinutes.Enabled = active;
             buttonImportFromYarfso.Enabled = active;
             buttonGroupSetNumbersByGroups.Enabled = active;
+            buttonSyncOrganizations.Enabled = active;
         }
 
         private void buttonBaseImport_Click(object sender, EventArgs e)
@@ -378,11 +379,22 @@ namespace SportOrgMultyDay
                     dateTimePickerStartInterval.Value.TimeOfDay,
                     checkBoxStartTimesPersonShuffle.Checked));
             else
-                SendLog(StartTimeManager.OrderedSetStartTimes(PBCurrentRaceFromBase(JBase),
-                    dateTimePickerStartTime.Value.TimeOfDay,
-                    dateTimePickerStartInterval.Value.TimeOfDay,
-                    richTextBoxGroupStartOrder.Text,
-                    checkBoxStartTimesPersonShuffle.Checked));
+            {
+                if (checkBoxUseShortStartTimeAlg.Checked)
+                    SendLog(StartTimeManager.ShortOrderedSetStartTimes(PBCurrentRaceFromBase(JBase),
+                        dateTimePickerStartTime.Value.TimeOfDay,
+                        dateTimePickerStartInterval.Value.TimeOfDay,
+                        dateTimePickerMinColumnStartInterval.Value.TimeOfDay,
+                        richTextBoxGroupStartOrder.Text,
+                        checkBoxStartTimesPersonShuffle.Checked));
+                else
+                    SendLog(StartTimeManager.OrderedSetStartTimes(PBCurrentRaceFromBase(JBase),
+                        dateTimePickerStartTime.Value.TimeOfDay,
+                        dateTimePickerStartInterval.Value.TimeOfDay,
+                        richTextBoxGroupStartOrder.Text,
+                        checkBoxStartTimesPersonShuffle.Checked));
+
+            }
 
         }
 
@@ -404,6 +416,11 @@ namespace SportOrgMultyDay
         private void buttonGroupSetNumbersByGroups_Click(object sender, EventArgs e)
         {
             SendLog(BibsNumbering.SetNumbers(PBCurrentRaceFromBase(JBase), richTextBoxBibsNumbering.Text, checkBoxSetNumbersByGroupsDebug.Checked));
+        }
+
+        private void buttonSyncOrganizations_Click(object sender, EventArgs e)
+        {
+            SendLog(SyncOrganizations.SyncNames(JBase));
         }
     }
 }
