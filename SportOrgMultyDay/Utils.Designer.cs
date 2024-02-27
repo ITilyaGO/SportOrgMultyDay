@@ -96,11 +96,6 @@
             tabControlFunc = new TabControl();
             tabPageStartTimes = new TabPage();
             tabPageBibs = new TabPage();
-            tabPageCalculate = new TabPage();
-            groupBoxStartFee = new GroupBox();
-            label5 = new Label();
-            textBoxStartFeeWithCardSymbol = new TextBox();
-            buttonStartFeeCalculate = new Button();
             tabPageGroups = new TabPage();
             groupBoxBibs = new GroupBox();
             checkBoxSetNumbersByGroupsDebug = new CheckBox();
@@ -114,7 +109,29 @@
             label7 = new Label();
             numericUpDownGroupResultsCountToCompleteRank = new NumericUpDown();
             checkedListBox1 = new CheckedListBox();
+            tabPageOrganizations = new TabPage();
+            labelClearOrganozationCity = new Label();
+            labelClearOrganizationNewName = new Label();
+            buttonOrganizationRename = new Button();
+            comboBoxOrganizationCity = new ComboBox();
+            comboBoxOrganizationName = new ComboBox();
+            buttonOrganizationTweaksSave = new Button();
+            buttonOrganizationTweaksLoadLast = new Button();
+            buttonOrganizationTweaksLoad = new Button();
+            labelOrganizationNameToNewName = new Label();
+            checkBoxOrganizationIsShowCity = new CheckBox();
+            checkBoxOrganizationIsRemoving = new CheckBox();
+            label15 = new Label();
+            label16 = new Label();
+            label14 = new Label();
+            listBoxCityOrganizationTweaks = new ListBox();
+            textBoxOrganizationNewName = new TextBox();
+            buttonAddOrganizationTweakItem = new Button();
             tabPageOther = new TabPage();
+            groupBoxStartFee = new GroupBox();
+            label5 = new Label();
+            textBoxStartFeeWithCardSymbol = new TextBox();
+            buttonStartFeeCalculate = new Button();
             checkBoxPayAmountToComment = new CheckBox();
             buttonImportFromYarfso = new Button();
             buttonOpenNumbersForm = new Button();
@@ -138,13 +155,13 @@
             groupBoxStartTime.SuspendLayout();
             tabControlFunc.SuspendLayout();
             tabPageStartTimes.SuspendLayout();
-            tabPageCalculate.SuspendLayout();
-            groupBoxStartFee.SuspendLayout();
             tabPageGroups.SuspendLayout();
             groupBoxBibs.SuspendLayout();
             groupBoxGroupRanks.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDownGroupResultsCountToCompleteRank).BeginInit();
+            tabPageOrganizations.SuspendLayout();
             tabPageOther.SuspendLayout();
+            groupBoxStartFee.SuspendLayout();
             tabPage1.SuspendLayout();
             tabControl1.SuspendLayout();
             SuspendLayout();
@@ -772,9 +789,9 @@
             tabControlFunc.Controls.Add(tabPageBase);
             tabControlFunc.Controls.Add(tabPageStartTimes);
             tabControlFunc.Controls.Add(tabPageBibs);
-            tabControlFunc.Controls.Add(tabPageCalculate);
             tabControlFunc.Controls.Add(tabPageShahmatka);
             tabControlFunc.Controls.Add(tabPageGroups);
+            tabControlFunc.Controls.Add(tabPageOrganizations);
             tabControlFunc.Controls.Add(tabPageOther);
             tabControlFunc.Location = new Point(12, 42);
             tabControlFunc.Name = "tabControlFunc";
@@ -802,56 +819,6 @@
             tabPageBibs.TabIndex = 6;
             tabPageBibs.Text = "Номера";
             tabPageBibs.UseVisualStyleBackColor = true;
-            // 
-            // tabPageCalculate
-            // 
-            tabPageCalculate.BackColor = Color.WhiteSmoke;
-            tabPageCalculate.Controls.Add(groupBoxStartFee);
-            tabPageCalculate.Location = new Point(4, 24);
-            tabPageCalculate.Name = "tabPageCalculate";
-            tabPageCalculate.Padding = new Padding(3);
-            tabPageCalculate.Size = new Size(535, 485);
-            tabPageCalculate.TabIndex = 2;
-            tabPageCalculate.Text = "Подсчёт";
-            // 
-            // groupBoxStartFee
-            // 
-            groupBoxStartFee.Controls.Add(label5);
-            groupBoxStartFee.Controls.Add(textBoxStartFeeWithCardSymbol);
-            groupBoxStartFee.Controls.Add(buttonStartFeeCalculate);
-            groupBoxStartFee.Location = new Point(6, 6);
-            groupBoxStartFee.Name = "groupBoxStartFee";
-            groupBoxStartFee.Size = new Size(422, 256);
-            groupBoxStartFee.TabIndex = 2;
-            groupBoxStartFee.TabStop = false;
-            groupBoxStartFee.Text = "Стартовый взнос ";
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(54, 25);
-            label5.Name = "label5";
-            label5.Size = new Size(145, 15);
-            label5.TabIndex = 3;
-            label5.Text = "Символ оплаты по карте";
-            // 
-            // textBoxStartFeeWithCardSymbol
-            // 
-            textBoxStartFeeWithCardSymbol.Location = new Point(6, 22);
-            textBoxStartFeeWithCardSymbol.Name = "textBoxStartFeeWithCardSymbol";
-            textBoxStartFeeWithCardSymbol.Size = new Size(42, 23);
-            textBoxStartFeeWithCardSymbol.TabIndex = 1;
-            textBoxStartFeeWithCardSymbol.Text = "*";
-            // 
-            // buttonStartFeeCalculate
-            // 
-            buttonStartFeeCalculate.Location = new Point(6, 51);
-            buttonStartFeeCalculate.Name = "buttonStartFeeCalculate";
-            buttonStartFeeCalculate.Size = new Size(93, 23);
-            buttonStartFeeCalculate.TabIndex = 0;
-            buttonStartFeeCalculate.Text = "Подсчитать";
-            buttonStartFeeCalculate.UseVisualStyleBackColor = true;
-            buttonStartFeeCalculate.Click += buttonStartFeeCalculate_Click;
             // 
             // tabPageGroups
             // 
@@ -991,9 +958,200 @@
             checkedListBox1.TabIndex = 28;
             checkedListBox1.Visible = false;
             // 
+            // tabPageOrganizations
+            // 
+            tabPageOrganizations.BackColor = Color.WhiteSmoke;
+            tabPageOrganizations.Controls.Add(labelClearOrganozationCity);
+            tabPageOrganizations.Controls.Add(labelClearOrganizationNewName);
+            tabPageOrganizations.Controls.Add(buttonOrganizationRename);
+            tabPageOrganizations.Controls.Add(comboBoxOrganizationCity);
+            tabPageOrganizations.Controls.Add(comboBoxOrganizationName);
+            tabPageOrganizations.Controls.Add(buttonOrganizationTweaksSave);
+            tabPageOrganizations.Controls.Add(buttonOrganizationTweaksLoadLast);
+            tabPageOrganizations.Controls.Add(buttonOrganizationTweaksLoad);
+            tabPageOrganizations.Controls.Add(labelOrganizationNameToNewName);
+            tabPageOrganizations.Controls.Add(checkBoxOrganizationIsShowCity);
+            tabPageOrganizations.Controls.Add(checkBoxOrganizationIsRemoving);
+            tabPageOrganizations.Controls.Add(label15);
+            tabPageOrganizations.Controls.Add(label16);
+            tabPageOrganizations.Controls.Add(label14);
+            tabPageOrganizations.Controls.Add(listBoxCityOrganizationTweaks);
+            tabPageOrganizations.Controls.Add(textBoxOrganizationNewName);
+            tabPageOrganizations.Controls.Add(buttonAddOrganizationTweakItem);
+            tabPageOrganizations.Location = new Point(4, 24);
+            tabPageOrganizations.Name = "tabPageOrganizations";
+            tabPageOrganizations.Padding = new Padding(3);
+            tabPageOrganizations.Size = new Size(535, 485);
+            tabPageOrganizations.TabIndex = 7;
+            tabPageOrganizations.Text = "Коллективы";
+            // 
+            // labelClearOrganozationCity
+            // 
+            labelClearOrganozationCity.AutoSize = true;
+            labelClearOrganozationCity.Location = new Point(352, 55);
+            labelClearOrganozationCity.Name = "labelClearOrganozationCity";
+            labelClearOrganozationCity.Size = new Size(14, 15);
+            labelClearOrganozationCity.TabIndex = 13;
+            labelClearOrganozationCity.Text = "X";
+            labelClearOrganozationCity.Click += labelClearOrganozationCity_Click;
+            // 
+            // labelClearOrganizationNewName
+            // 
+            labelClearOrganizationNewName.AutoSize = true;
+            labelClearOrganizationNewName.Location = new Point(515, 11);
+            labelClearOrganizationNewName.Name = "labelClearOrganizationNewName";
+            labelClearOrganizationNewName.Size = new Size(14, 15);
+            labelClearOrganizationNewName.TabIndex = 13;
+            labelClearOrganizationNewName.Text = "X";
+            labelClearOrganizationNewName.Click += labelClearOrganizationNewName_Click;
+            // 
+            // buttonOrganizationRename
+            // 
+            buttonOrganizationRename.Location = new Point(416, 432);
+            buttonOrganizationRename.Name = "buttonOrganizationRename";
+            buttonOrganizationRename.Size = new Size(113, 42);
+            buttonOrganizationRename.TabIndex = 12;
+            buttonOrganizationRename.Text = "Переиминовать команды";
+            buttonOrganizationRename.UseVisualStyleBackColor = true;
+            buttonOrganizationRename.Click += buttonOrganizationRename_Click;
+            // 
+            // comboBoxOrganizationCity
+            // 
+            comboBoxOrganizationCity.FormattingEnabled = true;
+            comboBoxOrganizationCity.Location = new Point(236, 72);
+            comboBoxOrganizationCity.Name = "comboBoxOrganizationCity";
+            comboBoxOrganizationCity.Size = new Size(130, 23);
+            comboBoxOrganizationCity.TabIndex = 11;
+            // 
+            // comboBoxOrganizationName
+            // 
+            comboBoxOrganizationName.FormattingEnabled = true;
+            comboBoxOrganizationName.Location = new Point(236, 29);
+            comboBoxOrganizationName.Name = "comboBoxOrganizationName";
+            comboBoxOrganizationName.Size = new Size(130, 23);
+            comboBoxOrganizationName.TabIndex = 11;
+            // 
+            // buttonOrganizationTweaksSave
+            // 
+            buttonOrganizationTweaksSave.Location = new Point(6, 452);
+            buttonOrganizationTweaksSave.Name = "buttonOrganizationTweaksSave";
+            buttonOrganizationTweaksSave.Size = new Size(75, 23);
+            buttonOrganizationTweaksSave.TabIndex = 10;
+            buttonOrganizationTweaksSave.Text = "Сохранить";
+            buttonOrganizationTweaksSave.UseVisualStyleBackColor = true;
+            buttonOrganizationTweaksSave.Click += buttonOrganizationTweaksSave_Click;
+            // 
+            // buttonOrganizationTweaksLoadLast
+            // 
+            buttonOrganizationTweaksLoadLast.Location = new Point(163, 452);
+            buttonOrganizationTweaksLoadLast.Name = "buttonOrganizationTweaksLoadLast";
+            buttonOrganizationTweaksLoadLast.Size = new Size(136, 23);
+            buttonOrganizationTweaksLoadLast.TabIndex = 9;
+            buttonOrganizationTweaksLoadLast.Text = "Загрузить последний";
+            buttonOrganizationTweaksLoadLast.UseVisualStyleBackColor = true;
+            buttonOrganizationTweaksLoadLast.Visible = false;
+            buttonOrganizationTweaksLoadLast.Click += buttonOrganizationTweaksLoadLast_Click;
+            // 
+            // buttonOrganizationTweaksLoad
+            // 
+            buttonOrganizationTweaksLoad.Location = new Point(87, 452);
+            buttonOrganizationTweaksLoad.Name = "buttonOrganizationTweaksLoad";
+            buttonOrganizationTweaksLoad.Size = new Size(70, 23);
+            buttonOrganizationTweaksLoad.TabIndex = 8;
+            buttonOrganizationTweaksLoad.Text = "Загрузить";
+            buttonOrganizationTweaksLoad.UseVisualStyleBackColor = true;
+            buttonOrganizationTweaksLoad.Click += buttonOrganizationTweaksLoad_Click;
+            // 
+            // labelOrganizationNameToNewName
+            // 
+            labelOrganizationNameToNewName.AutoSize = true;
+            labelOrganizationNameToNewName.Location = new Point(370, 32);
+            labelOrganizationNameToNewName.Name = "labelOrganizationNameToNewName";
+            labelOrganizationNameToNewName.Size = new Size(23, 15);
+            labelOrganizationNameToNewName.TabIndex = 7;
+            labelOrganizationNameToNewName.Text = ">>";
+            labelOrganizationNameToNewName.Click += labelOrganizationNameToNewName_Click;
+            // 
+            // checkBoxOrganizationIsShowCity
+            // 
+            checkBoxOrganizationIsShowCity.AutoSize = true;
+            checkBoxOrganizationIsShowCity.Checked = true;
+            checkBoxOrganizationIsShowCity.CheckState = CheckState.Checked;
+            checkBoxOrganizationIsShowCity.Location = new Point(370, 74);
+            checkBoxOrganizationIsShowCity.Name = "checkBoxOrganizationIsShowCity";
+            checkBoxOrganizationIsShowCity.Size = new Size(131, 19);
+            checkBoxOrganizationIsShowCity.TabIndex = 6;
+            checkBoxOrganizationIsShowCity.Text = "Показывать город?";
+            checkBoxOrganizationIsShowCity.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxOrganizationIsRemoving
+            // 
+            checkBoxOrganizationIsRemoving.AutoSize = true;
+            checkBoxOrganizationIsRemoving.Location = new Point(236, 99);
+            checkBoxOrganizationIsRemoving.Name = "checkBoxOrganizationIsRemoving";
+            checkBoxOrganizationIsRemoving.Size = new Size(140, 19);
+            checkBoxOrganizationIsRemoving.TabIndex = 6;
+            checkBoxOrganizationIsRemoving.Text = "Удалять участников?";
+            checkBoxOrganizationIsRemoving.UseVisualStyleBackColor = true;
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Location = new Point(236, 10);
+            label15.Name = "label15";
+            label15.Size = new Size(55, 15);
+            label15.TabIndex = 5;
+            label15.Text = "Команда";
+            // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            label16.Location = new Point(236, 54);
+            label16.Name = "label16";
+            label16.Size = new Size(40, 15);
+            label16.TabIndex = 4;
+            label16.Text = "Город";
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Location = new Point(395, 10);
+            label14.Name = "label14";
+            label14.Size = new Size(95, 15);
+            label14.TabIndex = 4;
+            label14.Text = "Новое название";
+            // 
+            // listBoxCityOrganizationTweaks
+            // 
+            listBoxCityOrganizationTweaks.FormattingEnabled = true;
+            listBoxCityOrganizationTweaks.ItemHeight = 15;
+            listBoxCityOrganizationTweaks.Location = new Point(6, 6);
+            listBoxCityOrganizationTweaks.Name = "listBoxCityOrganizationTweaks";
+            listBoxCityOrganizationTweaks.Size = new Size(224, 439);
+            listBoxCityOrganizationTweaks.TabIndex = 3;
+            listBoxCityOrganizationTweaks.DoubleClick += listBoxCityOrganizationTweaks_DoubleClick;
+            // 
+            // textBoxOrganizationNewName
+            // 
+            textBoxOrganizationNewName.Location = new Point(395, 28);
+            textBoxOrganizationNewName.Name = "textBoxOrganizationNewName";
+            textBoxOrganizationNewName.Size = new Size(134, 23);
+            textBoxOrganizationNewName.TabIndex = 2;
+            // 
+            // buttonAddOrganizationTweakItem
+            // 
+            buttonAddOrganizationTweakItem.Location = new Point(236, 126);
+            buttonAddOrganizationTweakItem.Name = "buttonAddOrganizationTweakItem";
+            buttonAddOrganizationTweakItem.Size = new Size(293, 24);
+            buttonAddOrganizationTweakItem.TabIndex = 0;
+            buttonAddOrganizationTweakItem.Text = "Добавить";
+            buttonAddOrganizationTweakItem.UseVisualStyleBackColor = true;
+            buttonAddOrganizationTweakItem.Click += buttonAddOrganizationTweakItem_Click;
+            // 
             // tabPageOther
             // 
             tabPageOther.BackColor = Color.WhiteSmoke;
+            tabPageOther.Controls.Add(groupBoxStartFee);
             tabPageOther.Controls.Add(checkBoxPayAmountToComment);
             tabPageOther.Controls.Add(buttonImportFromYarfso);
             tabPageOther.Controls.Add(buttonOpenNumbersForm);
@@ -1004,6 +1162,45 @@
             tabPageOther.Size = new Size(535, 485);
             tabPageOther.TabIndex = 3;
             tabPageOther.Text = "Остальное";
+            // 
+            // groupBoxStartFee
+            // 
+            groupBoxStartFee.Controls.Add(label5);
+            groupBoxStartFee.Controls.Add(textBoxStartFeeWithCardSymbol);
+            groupBoxStartFee.Controls.Add(buttonStartFeeCalculate);
+            groupBoxStartFee.Location = new Point(6, 149);
+            groupBoxStartFee.Name = "groupBoxStartFee";
+            groupBoxStartFee.Size = new Size(209, 82);
+            groupBoxStartFee.TabIndex = 2;
+            groupBoxStartFee.TabStop = false;
+            groupBoxStartFee.Text = "Стартовый взнос ";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(54, 25);
+            label5.Name = "label5";
+            label5.Size = new Size(145, 15);
+            label5.TabIndex = 3;
+            label5.Text = "Символ оплаты по карте";
+            // 
+            // textBoxStartFeeWithCardSymbol
+            // 
+            textBoxStartFeeWithCardSymbol.Location = new Point(6, 22);
+            textBoxStartFeeWithCardSymbol.Name = "textBoxStartFeeWithCardSymbol";
+            textBoxStartFeeWithCardSymbol.Size = new Size(42, 23);
+            textBoxStartFeeWithCardSymbol.TabIndex = 1;
+            textBoxStartFeeWithCardSymbol.Text = "*";
+            // 
+            // buttonStartFeeCalculate
+            // 
+            buttonStartFeeCalculate.Location = new Point(6, 51);
+            buttonStartFeeCalculate.Name = "buttonStartFeeCalculate";
+            buttonStartFeeCalculate.Size = new Size(93, 23);
+            buttonStartFeeCalculate.TabIndex = 0;
+            buttonStartFeeCalculate.Text = "Подсчитать";
+            buttonStartFeeCalculate.UseVisualStyleBackColor = true;
+            buttonStartFeeCalculate.Click += buttonStartFeeCalculate_Click;
             // 
             // checkBoxPayAmountToComment
             // 
@@ -1112,7 +1309,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             MinimumSize = new Size(900, 470);
             Name = "Utils";
-            Text = "Утилиты v0.17.4";
+            Text = "Утилиты v0.17.5b";
             FormClosing += Utils_FormClosing;
             Load += Utils_Load;
             SizeChanged += Utils_SizeChanged;
@@ -1132,17 +1329,18 @@
             groupBoxStartTime.PerformLayout();
             tabControlFunc.ResumeLayout(false);
             tabPageStartTimes.ResumeLayout(false);
-            tabPageCalculate.ResumeLayout(false);
-            groupBoxStartFee.ResumeLayout(false);
-            groupBoxStartFee.PerformLayout();
             tabPageGroups.ResumeLayout(false);
             groupBoxBibs.ResumeLayout(false);
             groupBoxBibs.PerformLayout();
             groupBoxGroupRanks.ResumeLayout(false);
             groupBoxGroupRanks.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDownGroupResultsCountToCompleteRank).EndInit();
+            tabPageOrganizations.ResumeLayout(false);
+            tabPageOrganizations.PerformLayout();
             tabPageOther.ResumeLayout(false);
             tabPageOther.PerformLayout();
+            groupBoxStartFee.ResumeLayout(false);
+            groupBoxStartFee.PerformLayout();
             tabPage1.ResumeLayout(false);
             tabControl1.ResumeLayout(false);
             ResumeLayout(false);
@@ -1199,7 +1397,6 @@
         private RichTextBox richTextBoxChecklessFinished;
         private Button buttonSFRStartLogDNSCopy;
         private OpenFileDialog openFileDialogStartLog;
-        private TabPage tabPageCalculate;
         private GroupBox groupBoxStartFee;
         private Label label5;
         private TextBox textBoxStartFeeWithCardSymbol;
@@ -1237,7 +1434,6 @@
         private CheckBox checkBoxPayAmountToComment;
         private Label label12;
         private DateTimePicker dateTimePickerExportStartLog;
-        private TabPage tabPageBibs;
         private GroupBox groupBoxBibs;
         private RichTextBox richTextBoxBibsNumbering;
         private Button buttonBibsAutoCreateListNumbering;
@@ -1247,5 +1443,24 @@
         private Label label13;
         private DateTimePicker dateTimePickerMinColumnStartInterval;
         private CheckBox checkBoxUseShortStartTimeAlg;
+        private TabPage tabPageBibs;
+        private TabPage tabPageOrganizations;
+        private Label label15;
+        private Label label14;
+        private ListBox listBoxCityOrganizationTweaks;
+        private Button buttonAddOrganizationTweakItem;
+        private TextBox textBoxOrganizationNewName;
+        private Label label16;
+        private CheckBox checkBoxOrganizationIsRemoving;
+        private Label labelOrganizationNameToNewName;
+        private Button buttonOrganizationTweaksSave;
+        private Button buttonOrganizationTweaksLoadLast;
+        private Button buttonOrganizationTweaksLoad;
+        private ComboBox comboBoxOrganizationName;
+        private Button buttonOrganizationRename;
+        private Label labelClearOrganizationNewName;
+        private Label labelClearOrganozationCity;
+        private ComboBox comboBoxOrganizationCity;
+        private CheckBox checkBoxOrganizationIsShowCity;
     }
 }

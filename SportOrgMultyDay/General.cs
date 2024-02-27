@@ -24,20 +24,27 @@ namespace SportOrgMultyDay
         {
             numbers = new Numbers((Utils)utils,this);
             utils = new Utils((Numbers)numbers,this);
-            
+            ShowUtils();
             //utils.Show();
         }
         private void buttonOpenNumbers_Click(object sender, EventArgs e)
         {
-            showNumbers();
+            ShowNumbers();
            // this.WindowState = FormWindowState.Minimized;
         }
 
-        public void showNumbers()
+        public void ShowNumbers()
         {
             if (!numbers.Created)
                 numbers = new Numbers((Utils)utils, this);
             numbers.Show();
+            Hide();
+        }
+        public void ShowUtils()
+        {
+            if (!utils.Created)
+                utils = new Utils((Numbers)numbers, this);
+            utils.Show();
             Hide();
         }
 
@@ -49,10 +56,7 @@ namespace SportOrgMultyDay
 
         private void buttonOpenUtils_Click(object sender, EventArgs e)
         {
-            if (!utils.Created)
-                utils = new Utils((Numbers)numbers,this);
-            utils.Show();
-            Hide();
+            ShowUtils();
             //this.WindowState = FormWindowState.Minimized;
         }
 

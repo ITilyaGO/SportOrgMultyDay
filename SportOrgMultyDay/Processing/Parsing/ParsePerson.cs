@@ -143,6 +143,15 @@ namespace SportOrgMultyDay.Processing.Parsing
             catch (Exception ex) { LogError("78gkajvydc", ex); }
             return null;
         }
+        public static List<JToken> FPAllByOrganization(string organizationId, JArray persons)
+        {
+            try
+            {
+                return persons.Where(p => PPOrganizationId(p) == organizationId).ToList();
+            }
+            catch (Exception ex) { LogError("asd23hf2gs", ex); }
+            return null;
+        }
         public static JToken FPById(string id, JArray persons)
         {
             for (int i = 0; i < persons.Count; i++)

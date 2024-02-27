@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using static System.Windows.Forms.CheckedListBox;
 using static SportOrgMultyDay.Processing.Parsing.ParseBase;
 using static SportOrgMultyDay.Processing.Parsing.ParseGroup;
+using static SportOrgMultyDay.Processing.Parsing.ParseOrganization;
 using static SportOrgMultyDay.Processing.Logger;
 using SportOrgMultyDay.Processing.SFRSmartTerminal;
 using SportOrgMultyDay.Helpers;
@@ -36,6 +37,8 @@ namespace SportOrgMultyDay
         int raceCount = 0;
         AutoResize autoResize;
         List<int> SFRStartLog = new();
+        OrganizationItemsController organizationItemsController = new();
+
 
         Dictionary<string, string> splitterStartLog = new()
         {
@@ -96,16 +99,45 @@ namespace SportOrgMultyDay
             raceCount = JBase["races"].Count();
             labelBaseImport.Text = $"День:";
             comboBoxDays.Items.Clear();
-            for (int i = 0; i < JBase["races"].Count(); i++)
+            for (int i = 0; i < raceCount; i++)
                 comboBoxDays.Items.Add(i + 1);
             comboBoxDays.SelectedIndex = CurrentRaceID(JBase);
 
-            comboBoxSourceRankGroupName.Items.Clear();
-            foreach (JToken group in PBGroups(PBCurrentRaceFromBase(JBase)))
-                comboBoxSourceRankGroupName.Items.Add(new ComboBoxItemId(PGId(group), PGName(group)));
+            BaseDayChange();
 
             SendLog("Импорт выполнен");
+
+            LoadOrganizationItems();
+
             BaseEditButtons(true);
+        }
+
+        private void BaseDayChange()
+        {
+            JToken currRace = PBCurrentRaceFromBase(JBase);
+
+            ReloadOrganizationNameListInCombobox(currRace);
+
+            comboBoxSourceRankGroupName.Items.Clear();
+            foreach (JToken group in PBGroups(currRace))
+                comboBoxSourceRankGroupName.Items.Add(new ComboBoxItemId(PGId(group), PGName(group)));
+        }
+
+        private void ReloadOrganizationNameListInCombobox(JToken currRace = null)
+        {
+            currRace ??= PBCurrentRaceFromBase(JBase);
+
+            List<string> orgNames = new();
+            foreach (JToken org in PBOrganizations(currRace))
+            {
+                string orgName = POName(org);
+                if (!organizationItemsController.OrganizationItems.ContainsKey(orgName))
+                    orgNames.Add(orgName);
+            }
+            orgNames.Sort();
+
+            comboBoxOrganizationName.Items.Clear();
+            orgNames.ForEach(n => comboBoxOrganizationName.Items.Add(n));
         }
 
         private void BaseEditButtons(bool active)
@@ -131,6 +163,30 @@ namespace SportOrgMultyDay
             buttonImportFromYarfso.Enabled = active;
             buttonGroupSetNumbersByGroups.Enabled = active;
             buttonSyncOrganizations.Enabled = active;
+            buttonOrganizationTweaksLoad.Enabled = active;
+            buttonOrganizationTweaksSave.Enabled = active;
+            buttonAddOrganizationTweakItem.Enabled = active;
+            buttonOrganizationRename.Enabled = active;
+        }
+
+        private void ReloadOrganizationRenameList()
+        {
+            listBoxCityOrganizationTweaks.Items.Clear();
+
+            List<OrganizationItem> orgItems = organizationItemsController.OrganizationItems.Values.ToList();
+            orgItems.Sort((x, y) => String.Compare(x.Name, y.Name));
+            foreach (OrganizationItem orgIntem in orgItems)
+                listBoxCityOrganizationTweaks.Items.Add(orgIntem);
+
+            HashSet<string> citys = new();
+            orgItems.ForEach(x => citys.Add(x.City));
+            comboBoxOrganizationCity.Items.Clear();
+            List<string> strtedUniqCitys = citys.ToList();
+            strtedUniqCitys.Sort();
+            strtedUniqCitys.ForEach(x => comboBoxOrganizationCity.Items.Add(x));
+
+
+            ReloadOrganizationNameListInCombobox();
         }
 
         private void buttonBaseImport_Click(object sender, EventArgs e)
@@ -206,6 +262,13 @@ namespace SportOrgMultyDay
 
         }
 
+        private void LoadOrganizationItems()
+        {
+            organizationItemsController = OrganizationItemsController.Load(out string log);
+            ReloadOrganizationRenameList();
+            SendLog(log);
+        }
+
         private void richTextBoxLog_TextChanged(object sender, EventArgs e)
         {
             if (ScrollLogToolStripMenuItem.Checked)
@@ -266,9 +329,11 @@ namespace SportOrgMultyDay
         {
             if (!int.TryParse(comboBoxDays.Text.ToString(), out int day)) return;
             day--;
+
             if (day < raceCount && day >= 0)
             {
                 JBase["current_race"] = day;
+                BaseDayChange();
                 SendLog($"Текущий день: {JBase["current_race"]}");
             }
             else
@@ -338,7 +403,7 @@ namespace SportOrgMultyDay
 
         private void buttonOpenNumbersForm_Click(object sender, EventArgs e)
         {
-            GeneralForm.showNumbers();
+            GeneralForm.ShowNumbers();
         }
 
         private void Utils_FormClosing(object sender, FormClosingEventArgs e)
@@ -421,6 +486,68 @@ namespace SportOrgMultyDay
         private void buttonSyncOrganizations_Click(object sender, EventArgs e)
         {
             SendLog(SyncOrganizations.SyncNames(JBase));
+        }
+
+        private void buttonOrganizationTweaksSave_Click(object sender, EventArgs e)
+        {
+            organizationItemsController.Save(out string log);
+            SendLog(log);
+        }
+
+        private void buttonOrganizationTweaksLoad_Click(object sender, EventArgs e)
+        {
+            LoadOrganizationItems();
+        }
+
+        private void buttonOrganizationTweaksLoadLast_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonAddOrganizationTweakItem_Click(object sender, EventArgs e)
+        {
+            if (organizationItemsController == null)
+                organizationItemsController = new();
+            SendLog(organizationItemsController.Add(comboBoxOrganizationName.Text, textBoxOrganizationNewName.Text.Trim(), comboBoxOrganizationCity.Text.Trim(), checkBoxOrganizationIsRemoving.Checked, checkBoxOrganizationIsShowCity.Checked));
+            ReloadOrganizationRenameList();
+            organizationItemsController.Save(out string log);
+            SendLog(log);
+        }
+
+        private void labelOrganizationNameToNewName_Click(object sender, EventArgs e)
+        {
+            textBoxOrganizationNewName.Text = comboBoxOrganizationName.Text;
+        }
+
+        private void buttonOrganizationRename_Click(object sender, EventArgs e)
+        {
+            SendLog(OrganizationTweaker.RenameOrganizations(organizationItemsController, PBCurrentRaceFromBase(JBase)));
+        }
+
+        private void listBoxCityOrganizationTweaks_DoubleClick(object sender, EventArgs e)
+        {
+            OrganizationItem orgItem = listBoxCityOrganizationTweaks.SelectedItem as OrganizationItem;
+            if (orgItem == null)
+            {
+                SendLog("Не удалось получить элемент переиминования");
+                return;
+            }
+            comboBoxOrganizationName.Text = orgItem.Name;
+            textBoxOrganizationNewName.Text = orgItem.NewNameRaw;
+            comboBoxOrganizationCity.Text = orgItem.City;
+            checkBoxOrganizationIsRemoving.Checked = orgItem.IsRemoveable;
+            checkBoxOrganizationIsShowCity.Checked = orgItem.IsShowCity;
+        }
+
+        private void labelClearOrganizationNewName_Click(object sender, EventArgs e)
+        {
+            textBoxOrganizationNewName.Text = string.Empty;
+        }
+
+        private void labelClearOrganozationCity_Click(object sender, EventArgs e)
+        {
+
+            comboBoxOrganizationCity.Text = string.Empty;
         }
     }
 }
