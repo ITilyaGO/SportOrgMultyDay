@@ -1,15 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using SportOrgMultyDay.Processing;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static System.Windows.Forms.CheckedListBox;
 using static SportOrgMultyDay.Processing.Parsing.ParseBase;
 using static SportOrgMultyDay.Processing.Parsing.ParseGroup;
 using static SportOrgMultyDay.Processing.Parsing.ParseOrganization;
@@ -17,8 +8,7 @@ using static SportOrgMultyDay.Processing.Logger;
 using SportOrgMultyDay.Processing.SFRSmartTerminal;
 using SportOrgMultyDay.Helpers;
 using SportOrgMultyDay.Data;
-using Microsoft.VisualBasic.Logging;
-using SportOrgMultyDay.Data.SportOrg;
+using SportOrgMultyDay.Processing.Parsing.Things;
 
 namespace SportOrgMultyDay
 {
@@ -33,7 +23,7 @@ namespace SportOrgMultyDay
         public Numbers NumbersForm;
         public General GeneralForm;
         public JObject JBase;
-        public JBase SportOrgBase;
+        //public JBase SportOrgBase;
         int raceCount = 0;
         AutoResize autoResize;
         List<int> SFRStartLog = new();
@@ -47,21 +37,11 @@ namespace SportOrgMultyDay
             { ";",";" }
         };
 
-
-
-        private JObject ImportJson(out bool cancle)
+        private JObject ParseJson(string rawJsonBase)
         {
-            cancle = false;
-            if (openFileDialogJson.ShowDialog() != DialogResult.OK)
-            {
-                SendLog("Импорт отменен");
-                cancle = true;
-                return null;
-            }
             try
             {
-                string json = File.ReadAllText(openFileDialogJson.FileName);
-                JObject jobj = JObject.Parse(json);
+                JObject jobj = JObject.Parse(rawJsonBase);
                 return jobj;
             }
             catch (Exception ex)
@@ -84,32 +64,96 @@ namespace SportOrgMultyDay
 
         private void ImportBase()
         {
-            JBase = ImportJson(out bool cancle);
-            SportOrgBase = new JBase(JBase);
-
-            //SportOrgBase.Races
-            if (cancle) return;
-            if (JBase == null)
+            try
             {
-                labelBaseImport.Text = $"Ошибка";
-                SendLog("⚠Ошибка импорта базы: в данном файле база не найдена");
-                BaseEditButtons(false);
-                return;
+                if (openFileDialogJson.ShowDialog() != DialogResult.OK)
+                {
+                    SendLog("Импорт отменен");
+                    return;
+                }
+                string json = File.ReadAllText(openFileDialogJson.FileName);
+                ImportBase(json);
             }
-            raceCount = JBase["races"].Count();
-            labelBaseImport.Text = $"День:";
-            comboBoxDays.Items.Clear();
-            for (int i = 0; i < raceCount; i++)
-                comboBoxDays.Items.Add(i + 1);
-            comboBoxDays.SelectedIndex = CurrentRaceID(JBase);
+            catch (Exception ex)
+            {
+                SendLog($"⚠Ошибка импорта базы: {ex.Message}");
+                LogError("sdhd9ds9d", ex);
+            }
+        }
 
-            BaseDayChange();
+        private void ImportBase(string rawBaseJson)
+        {
+            try
+            {
+                JObject rawJBase = ParseJson(rawBaseJson);
 
-            SendLog("Импорт выполнен");
+                if (rawJBase == null)
+                {
+                    labelBaseImport.Text = $"Ошибка";
+                    SendLog("⚠Ошибка импорта базы: в данном файле база не найдена");
+                    BaseEditButtons(false);
+                    return;
+                }
+                if (rawJBase.ContainsKey("version"))
+                {
+                    string ver = rawJBase["version"].ToString();
+                    SendLog($"Версия базы {ver}");
+                }
+                else
+                {
+                    SendLog($"Версия базы не распознана");
+                    string msgLog = "Проверка структуры...\n";
+                    try
+                    {
+                        msgLog += rawJBase.ContainsKey("data") ? $"  Название: {rawJBase["data"]["title"]} \n  Дата: {rawJBase["data"]["start_datetime"]}\n" : throw new BaseParseException("data");
+                        msgLog += rawJBase.ContainsKey("groups") ? $"  Группы: {rawJBase["groups"].Count()}\n" : throw new BaseParseException("groups");
+                        msgLog += rawJBase.ContainsKey("persons") ? $"  Участники: {rawJBase["persons"].Count()}\n" : throw new BaseParseException("persons");
+                        msgLog += rawJBase.ContainsKey("results") ? $"  Результаты: {rawJBase["results"].Count()}\n" : throw new BaseParseException("results");
+                    }
+                    catch (BaseParseException e)
+                    {
+                        SendLog($"Неизвестная структура базы. Не найден ключ [{e.Message}]. Импорт прерван.");
+                        return;
+                    }
+                    catch (Exception e)
+                    {
+                        LogError("qweiu6gf23d", e);
+                        SendLog($"ERROR - {e.Message}");
+                        return;
+                    }
+                    SendLog(msgLog);
 
-            LoadOrganizationItems();
+                    JObject newJbase = new();
+                    JArray jArrayRaces = new();
+                    newJbase.Add("current_race", 0);
+                    newJbase.Add("version", "1.6.0.0");
 
-            BaseEditButtons(true);
+                    jArrayRaces.Add(rawJBase);
+                    newJbase.Add("races", jArrayRaces);
+
+                    JBase = newJbase;
+                }
+
+                raceCount = JBase["races"].Count();
+                labelBaseImport.Text = $"День:";
+                comboBoxDays.Items.Clear();
+                for (int i = 0; i < raceCount; i++)
+                    comboBoxDays.Items.Add(i + 1);
+                comboBoxDays.SelectedIndex = CurrentRaceID(JBase);
+
+                BaseDayChange();
+
+                SendLog("Импорт выполнен");
+
+                LoadOrganizationItems();
+
+                BaseEditButtons(true);
+            }
+            catch (Exception ex)
+            {
+                SendLog($"⚠Ошибка импорта базы: {ex.Message}");
+                LogError("d13fewa", ex);
+            }
         }
 
         private void BaseDayChange()
@@ -192,7 +236,6 @@ namespace SportOrgMultyDay
         private void buttonBaseImport_Click(object sender, EventArgs e)
         {
             ImportBase();
-
         }
         private void buttonBaseExport_Click(object sender, EventArgs e)
         {
@@ -548,6 +591,38 @@ namespace SportOrgMultyDay
         {
 
             comboBoxOrganizationCity.Text = string.Empty;
+        }
+
+        private void buttonBaseImportFromUrl_Click(object sender, EventArgs e)
+        {
+            if (!Clipboard.ContainsText() || !Uri.TryCreate(Clipboard.GetText(), UriKind.Absolute, out Uri uriResult) || !(uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps))
+            {
+                SendLog("Буфер обмена не содержит корректную ссылку");
+                return;
+            }
+
+            string rawBase = ProtocolParser.GetBaseFromProtocolUrl(uriResult.ToString(), out string log);
+            SendLog(log);
+            ImportBase(rawBase);
+        }
+
+        private void buttonBaseImportFromProtocol_Click(object sender, EventArgs e)
+        {
+            if (openFileDialogBaseFromProtocol.ShowDialog() != DialogResult.OK)
+            {
+                SendLog("Импорт отменен");
+                return;
+            }
+            string json = File.ReadAllText(openFileDialogBaseFromProtocol.FileName);
+            string msgLog = "Импорт базы из файла протакола...";
+            string rawBase = ProtocolParser.ParseRawProtocol(json, ref msgLog);
+            SendLog(msgLog);
+            ImportBase(rawBase);
+        }
+
+        private void tabPageGroups_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

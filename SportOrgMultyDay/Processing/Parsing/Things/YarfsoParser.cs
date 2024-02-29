@@ -15,7 +15,7 @@ using static SportOrgMultyDay.Processing.Logger;
 using SportOrgMultyDay.Data;
 using Microsoft.VisualBasic.Logging;
 
-namespace SportOrgMultyDay.Processing
+namespace SportOrgMultyDay.Processing.Parsing.Things
 {
     public static class YarfsoParser
     {
@@ -36,7 +36,7 @@ namespace SportOrgMultyDay.Processing
 
                     msgLog += $"  Обработка дня: {i}\n";
                     JArray persons = PBPersons(race);
-                        int okCount = 0, errCount = 0;
+                    int okCount = 0, errCount = 0;
                     foreach (JToken person in persons)
                     {
                         string fullName = $"{PPSurname(person)} {PPName(person)} {PPYear(person)}";
@@ -157,7 +157,7 @@ namespace SportOrgMultyDay.Processing
         }
         public static string PrepareString(string str)
         {
-            return str.ToLower().Replace('ё','е').Replace(" ", "");
+            return str.ToLower().Replace('ё', 'е').Replace(" ", "");
         }
     }
 }

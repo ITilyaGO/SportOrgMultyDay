@@ -23,5 +23,14 @@ namespace SportOrgMultyDay.Processing
         {
             Log($"Error MessageID: {id} \n {message}");
         }
+        public static Exception LogError(string id, string message, bool throwException = false)
+        {
+            LogError(id, message);
+            var e = new Exception(message);
+            if (throwException)
+                throw e;
+            else 
+                return e;
+        }
     }
 }

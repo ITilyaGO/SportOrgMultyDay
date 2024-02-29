@@ -128,12 +128,15 @@
             textBoxOrganizationNewName = new TextBox();
             buttonAddOrganizationTweakItem = new Button();
             tabPageOther = new TabPage();
+            groupBoxImport = new GroupBox();
+            buttonBaseImportFromUrl = new Button();
+            buttonBaseImportFromProtocol = new Button();
+            checkBoxPayAmountToComment = new CheckBox();
+            buttonImportFromYarfso = new Button();
             groupBoxStartFee = new GroupBox();
             label5 = new Label();
             textBoxStartFeeWithCardSymbol = new TextBox();
             buttonStartFeeCalculate = new Button();
-            checkBoxPayAmountToComment = new CheckBox();
-            buttonImportFromYarfso = new Button();
             buttonOpenNumbersForm = new Button();
             buttonRemvoeWorstResult = new Button();
             tabPage2 = new TabPage();
@@ -144,6 +147,7 @@
             toolTipGeneral = new ToolTip(components);
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             openFileDialogYarfso = new OpenFileDialog();
+            openFileDialogBaseFromProtocol = new OpenFileDialog();
             contextMenuStripLog.SuspendLayout();
             tabPageShahmatka.SuspendLayout();
             groupBoxStartLogProcessing.SuspendLayout();
@@ -161,6 +165,7 @@
             ((System.ComponentModel.ISupportInitialize)numericUpDownGroupResultsCountToCompleteRank).BeginInit();
             tabPageOrganizations.SuspendLayout();
             tabPageOther.SuspendLayout();
+            groupBoxImport.SuspendLayout();
             groupBoxStartFee.SuspendLayout();
             tabPage1.SuspendLayout();
             tabControl1.SuspendLayout();
@@ -1151,9 +1156,8 @@
             // tabPageOther
             // 
             tabPageOther.BackColor = Color.WhiteSmoke;
+            tabPageOther.Controls.Add(groupBoxImport);
             tabPageOther.Controls.Add(groupBoxStartFee);
-            tabPageOther.Controls.Add(checkBoxPayAmountToComment);
-            tabPageOther.Controls.Add(buttonImportFromYarfso);
             tabPageOther.Controls.Add(buttonOpenNumbersForm);
             tabPageOther.Controls.Add(buttonRemvoeWorstResult);
             tabPageOther.Location = new Point(4, 24);
@@ -1163,12 +1167,65 @@
             tabPageOther.TabIndex = 3;
             tabPageOther.Text = "Остальное";
             // 
+            // groupBoxImport
+            // 
+            groupBoxImport.Controls.Add(buttonBaseImportFromUrl);
+            groupBoxImport.Controls.Add(buttonBaseImportFromProtocol);
+            groupBoxImport.Controls.Add(checkBoxPayAmountToComment);
+            groupBoxImport.Controls.Add(buttonImportFromYarfso);
+            groupBoxImport.Location = new Point(6, 6);
+            groupBoxImport.Name = "groupBoxImport";
+            groupBoxImport.Size = new Size(243, 310);
+            groupBoxImport.TabIndex = 4;
+            groupBoxImport.TabStop = false;
+            groupBoxImport.Text = "Импорт";
+            // 
+            // buttonBaseImportFromUrl
+            // 
+            buttonBaseImportFromUrl.Location = new Point(6, 51);
+            buttonBaseImportFromUrl.Name = "buttonBaseImportFromUrl";
+            buttonBaseImportFromUrl.Size = new Size(230, 23);
+            buttonBaseImportFromUrl.TabIndex = 5;
+            buttonBaseImportFromUrl.Text = "Импорт базы из протокола по ссылке";
+            buttonBaseImportFromUrl.UseVisualStyleBackColor = true;
+            buttonBaseImportFromUrl.Click += buttonBaseImportFromUrl_Click;
+            // 
+            // buttonBaseImportFromProtocol
+            // 
+            buttonBaseImportFromProtocol.Location = new Point(6, 22);
+            buttonBaseImportFromProtocol.Name = "buttonBaseImportFromProtocol";
+            buttonBaseImportFromProtocol.Size = new Size(230, 23);
+            buttonBaseImportFromProtocol.TabIndex = 5;
+            buttonBaseImportFromProtocol.Text = "Импорт базы из протокола";
+            buttonBaseImportFromProtocol.UseVisualStyleBackColor = true;
+            buttonBaseImportFromProtocol.Click += buttonBaseImportFromProtocol_Click;
+            // 
+            // checkBoxPayAmountToComment
+            // 
+            checkBoxPayAmountToComment.AutoSize = true;
+            checkBoxPayAmountToComment.Location = new Point(6, 239);
+            checkBoxPayAmountToComment.Name = "checkBoxPayAmountToComment";
+            checkBoxPayAmountToComment.Size = new Size(196, 19);
+            checkBoxPayAmountToComment.TabIndex = 3;
+            checkBoxPayAmountToComment.Text = "Сумма оплаты в комментарий";
+            checkBoxPayAmountToComment.UseVisualStyleBackColor = true;
+            // 
+            // buttonImportFromYarfso
+            // 
+            buttonImportFromYarfso.Location = new Point(6, 264);
+            buttonImportFromYarfso.Name = "buttonImportFromYarfso";
+            buttonImportFromYarfso.Size = new Size(201, 40);
+            buttonImportFromYarfso.TabIndex = 2;
+            buttonImportFromYarfso.Text = "Импорт разрядов и статусов оплачено с сайта yarfso";
+            buttonImportFromYarfso.UseVisualStyleBackColor = true;
+            buttonImportFromYarfso.Click += buttonImportFromYarfso_Click;
+            // 
             // groupBoxStartFee
             // 
             groupBoxStartFee.Controls.Add(label5);
             groupBoxStartFee.Controls.Add(textBoxStartFeeWithCardSymbol);
             groupBoxStartFee.Controls.Add(buttonStartFeeCalculate);
-            groupBoxStartFee.Location = new Point(6, 149);
+            groupBoxStartFee.Location = new Point(320, 6);
             groupBoxStartFee.Name = "groupBoxStartFee";
             groupBoxStartFee.Size = new Size(209, 82);
             groupBoxStartFee.TabIndex = 2;
@@ -1202,29 +1259,9 @@
             buttonStartFeeCalculate.UseVisualStyleBackColor = true;
             buttonStartFeeCalculate.Click += buttonStartFeeCalculate_Click;
             // 
-            // checkBoxPayAmountToComment
-            // 
-            checkBoxPayAmountToComment.AutoSize = true;
-            checkBoxPayAmountToComment.Location = new Point(6, 78);
-            checkBoxPayAmountToComment.Name = "checkBoxPayAmountToComment";
-            checkBoxPayAmountToComment.Size = new Size(196, 19);
-            checkBoxPayAmountToComment.TabIndex = 3;
-            checkBoxPayAmountToComment.Text = "Сумма оплаты в комментарий";
-            checkBoxPayAmountToComment.UseVisualStyleBackColor = true;
-            // 
-            // buttonImportFromYarfso
-            // 
-            buttonImportFromYarfso.Location = new Point(6, 103);
-            buttonImportFromYarfso.Name = "buttonImportFromYarfso";
-            buttonImportFromYarfso.Size = new Size(201, 40);
-            buttonImportFromYarfso.TabIndex = 2;
-            buttonImportFromYarfso.Text = "Импорт разрядов и статусов оплачено с сайта yarfso";
-            buttonImportFromYarfso.UseVisualStyleBackColor = true;
-            buttonImportFromYarfso.Click += buttonImportFromYarfso_Click;
-            // 
             // buttonOpenNumbersForm
             // 
-            buttonOpenNumbersForm.Location = new Point(441, 6);
+            buttonOpenNumbersForm.Location = new Point(441, 438);
             buttonOpenNumbersForm.Name = "buttonOpenNumbersForm";
             buttonOpenNumbersForm.Size = new Size(88, 41);
             buttonOpenNumbersForm.TabIndex = 1;
@@ -1234,9 +1271,9 @@
             // 
             // buttonRemvoeWorstResult
             // 
-            buttonRemvoeWorstResult.Location = new Point(6, 6);
+            buttonRemvoeWorstResult.Location = new Point(6, 438);
             buttonRemvoeWorstResult.Name = "buttonRemvoeWorstResult";
-            buttonRemvoeWorstResult.Size = new Size(201, 41);
+            buttonRemvoeWorstResult.Size = new Size(209, 41);
             buttonRemvoeWorstResult.TabIndex = 0;
             buttonRemvoeWorstResult.Text = "Удалить худшие повторяющиеся результаты одного участника";
             buttonRemvoeWorstResult.UseVisualStyleBackColor = true;
@@ -1294,6 +1331,11 @@
             openFileDialogYarfso.FileName = "Yarfso";
             openFileDialogYarfso.Filter = "Yarfso|*.csv|All files|*.*";
             // 
+            // openFileDialogBaseFromProtocol
+            // 
+            openFileDialogBaseFromProtocol.FileName = "Импорт из протокола";
+            openFileDialogBaseFromProtocol.Filter = "html|*.html|All files|*.*";
+            // 
             // Utils
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1338,7 +1380,8 @@
             tabPageOrganizations.ResumeLayout(false);
             tabPageOrganizations.PerformLayout();
             tabPageOther.ResumeLayout(false);
-            tabPageOther.PerformLayout();
+            groupBoxImport.ResumeLayout(false);
+            groupBoxImport.PerformLayout();
             groupBoxStartFee.ResumeLayout(false);
             groupBoxStartFee.PerformLayout();
             tabPage1.ResumeLayout(false);
@@ -1462,5 +1505,9 @@
         private Label labelClearOrganozationCity;
         private ComboBox comboBoxOrganizationCity;
         private CheckBox checkBoxOrganizationIsShowCity;
+        private GroupBox groupBoxImport;
+        private Button buttonBaseImportFromUrl;
+        private Button buttonBaseImportFromProtocol;
+        private OpenFileDialog openFileDialogBaseFromProtocol;
     }
 }
