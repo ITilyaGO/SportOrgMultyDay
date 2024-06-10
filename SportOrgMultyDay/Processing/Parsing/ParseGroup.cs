@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
+using static SportOrgMultyDay.Processing.Parsing.ParsePerson;
 using static SportOrgMultyDay.Processing.Logger;
 
 namespace SportOrgMultyDay.Processing.Parsing
@@ -57,7 +58,17 @@ namespace SportOrgMultyDay.Processing.Parsing
             catch (Exception ex) { LogError("iyfrci87vio", ex); }
             return -1;
         }
-        
+
+        public static string PGCourseId(JToken group)
+        {
+            try
+            {
+                return (string)group["course_id"];
+            }
+            catch (Exception ex) { LogError("qwdugdsa", ex); }
+            return "";
+        }
+
         public static JToken FGById(string id, JArray groups)
         {
             try
@@ -100,6 +111,18 @@ namespace SportOrgMultyDay.Processing.Parsing
             }
             catch (Exception ex) { LogError("23i7tv6rcoac", ex); }
             return groupDict;
+        }
+        public static Dictionary<string, int> DictGIdPersonsCount(JArray groups, JArray persons)
+        {
+            Dictionary<string, int> gIdPersonCount = new();
+            List<IGrouping<string, JToken>> groupedPersons = GPByGroupId(persons);
+            foreach (var groupIdpersons in groupedPersons)
+            {
+                string groupId = groupIdpersons.Key;
+                int countInGroup = groupIdpersons.Count();
+                gIdPersonCount.Add(groupId, countInGroup);
+            }
+            return gIdPersonCount;
         }
     }
 }

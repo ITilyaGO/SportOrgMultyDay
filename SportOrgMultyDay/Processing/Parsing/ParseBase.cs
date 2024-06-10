@@ -111,5 +111,15 @@ namespace SportOrgMultyDay.Processing.Parsing
             catch (Exception ex) { LogError("l3iusv6clgf", ex); }
             return null;
         }
+
+        public static JArray PBCourses(JToken race)
+        {
+            try
+            {
+                return (JArray)race["courses"];
+            }
+            catch (Exception ex) { LogError("aslkhd2dd", ex); }
+            return null;
+        }
     }
 }

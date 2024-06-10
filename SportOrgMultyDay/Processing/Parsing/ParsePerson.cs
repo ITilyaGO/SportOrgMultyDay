@@ -49,7 +49,7 @@ namespace SportOrgMultyDay.Processing.Parsing
             catch (Exception ex) { LogError("ius6fcv32c", ex); }
             return null;
         }
-        
+
         public static string PPGroupId(JToken person)
         {
             try
@@ -76,6 +76,11 @@ namespace SportOrgMultyDay.Processing.Parsing
             }
             catch (Exception ex) { LogError("pfi87v3da", ex); }
             return null;
+        }
+
+        public static string PPSurnameName(JToken person)
+        {
+            return PPSurname(person) + " " + PPName(person);
         }
         public static string PPOrganizationId(JToken person)
         {
@@ -104,7 +109,15 @@ namespace SportOrgMultyDay.Processing.Parsing
             catch (Exception ex) { LogError("o8sd6vcla", ex); }
             return -1;
         }
-
+        public static int PPQual(JToken person)
+        {
+            try
+            {
+                return (int)person["qual"];
+            }
+            catch (Exception ex) { LogError("dqwf34g3d", ex); }
+            return -1;
+        }
         public static TimeSpan? PPStartTimeTS(JToken person)
         {
             try
@@ -143,6 +156,15 @@ namespace SportOrgMultyDay.Processing.Parsing
             catch (Exception ex) { LogError("78gkajvydc", ex); }
             return null;
         }
+        public static List<JToken> FPAllByGroup(string groupId, List<JToken> persons)
+        {
+            try
+            {
+                return persons.Where(p => PPGroupId(p) == groupId).ToList();
+            }
+            catch (Exception ex) { LogError("78gkajvydc", ex); }
+            return null;
+        }
         public static List<JToken> FPAllByOrganization(string organizationId, JArray persons)
         {
             try
@@ -163,6 +185,12 @@ namespace SportOrgMultyDay.Processing.Parsing
             for (int i = 0; i < persons.Count; i++)
                 if (bib == PPBib(persons[i])) return persons[i];
             return null;
+        }
+
+        public static List<IGrouping<string, JToken>> GPByGroupId(JArray persons)
+        {
+            var groupIdPersons = persons.GroupBy(p => PPGroupId(p)).ToList();
+            return groupIdPersons;
         }
     }
 }

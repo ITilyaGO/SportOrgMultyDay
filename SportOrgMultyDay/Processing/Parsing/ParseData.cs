@@ -38,5 +38,14 @@ namespace SportOrgMultyDay.Processing.Parsing
             catch (Exception ex) { LogError("d63bf53hgh", ex); }
             return null;
         }
+        public static string PDStartDatetime(JToken data)
+        {
+            try
+            {
+                return (string)data["start_datetime"];
+            }
+            catch (Exception ex) { LogError("4gszhj56fs", ex); }
+            return null;
+        }
     }
 }

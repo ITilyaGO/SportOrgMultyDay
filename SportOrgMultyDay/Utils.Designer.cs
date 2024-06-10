@@ -79,6 +79,7 @@
             textBoxStringFindComment = new TextBox();
             label2 = new Label();
             groupBoxStartTime = new GroupBox();
+            checkBoxSetStartTimeOnlyCurrentDayPersons = new CheckBox();
             checkBoxUseShortStartTimeAlg = new CheckBox();
             checkBoxStartTimesPersonShuffle = new CheckBox();
             label13 = new Label();
@@ -96,12 +97,12 @@
             tabControlFunc = new TabControl();
             tabPageStartTimes = new TabPage();
             tabPageBibs = new TabPage();
-            tabPageGroups = new TabPage();
             groupBoxBibs = new GroupBox();
             checkBoxSetNumbersByGroupsDebug = new CheckBox();
             buttonGroupSetNumbersByGroups = new Button();
             richTextBoxBibsNumbering = new RichTextBox();
             buttonBibsAutoCreateListNumbering = new Button();
+            tabPageGroups = new TabPage();
             groupBoxGroupRanks = new GroupBox();
             label9 = new Label();
             label6 = new Label();
@@ -128,9 +129,20 @@
             textBoxOrganizationNewName = new TextBox();
             buttonAddOrganizationTweakItem = new Button();
             tabPageOther = new TabPage();
+            groupBoxMapCountCalculate = new GroupBox();
+            checkBoxMapCountCalculateReserv = new CheckBox();
+            checkBoxMapCountCalculateOnlyInDay = new CheckBox();
+            buttonMapCountCalculateAll = new Button();
+            buttonMapCountCalculateCurrent = new Button();
+            checkBoxCombineCourse = new CheckBox();
+            buttonGroupCourseNamesFormat = new Button();
             groupBoxImport = new GroupBox();
+            buttonImportKodRegionsFromCsv = new Button();
             buttonBaseImportFromUrl = new Button();
             buttonBaseImportFromProtocol = new Button();
+            checkBoxYarfsoParserWriteOldQual = new CheckBox();
+            checkBoxYarfsoParserPayAmountToWorldCode = new CheckBox();
+            checkBoxYarfsoParserReplaceQual = new CheckBox();
             checkBoxPayAmountToComment = new CheckBox();
             buttonImportFromYarfso = new Button();
             groupBoxStartFee = new GroupBox();
@@ -140,6 +152,10 @@
             buttonOpenNumbersForm = new Button();
             buttonRemvoeWorstResult = new Button();
             tabPage2 = new TabPage();
+            labelStartMinutesSelectedPerson = new Label();
+            comboBoxStartMinutesGroupSelect = new ComboBox();
+            dataGridViewPersonMinutes = new DataGridView();
+            personStartMinuteBindingSource = new BindingSource(components);
             tabPage1 = new TabPage();
             richTextBoxLog = new RichTextBox();
             tabControl1 = new TabControl();
@@ -148,6 +164,7 @@
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             openFileDialogYarfso = new OpenFileDialog();
             openFileDialogBaseFromProtocol = new OpenFileDialog();
+            openFileDialogCsvUTF8 = new OpenFileDialog();
             contextMenuStripLog.SuspendLayout();
             tabPageShahmatka.SuspendLayout();
             groupBoxStartLogProcessing.SuspendLayout();
@@ -159,14 +176,19 @@
             groupBoxStartTime.SuspendLayout();
             tabControlFunc.SuspendLayout();
             tabPageStartTimes.SuspendLayout();
-            tabPageGroups.SuspendLayout();
+            tabPageBibs.SuspendLayout();
             groupBoxBibs.SuspendLayout();
+            tabPageGroups.SuspendLayout();
             groupBoxGroupRanks.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDownGroupResultsCountToCompleteRank).BeginInit();
             tabPageOrganizations.SuspendLayout();
             tabPageOther.SuspendLayout();
+            groupBoxMapCountCalculate.SuspendLayout();
             groupBoxImport.SuspendLayout();
             groupBoxStartFee.SuspendLayout();
+            tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewPersonMinutes).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)personStartMinuteBindingSource).BeginInit();
             tabPage1.SuspendLayout();
             tabControl1.SuspendLayout();
             SuspendLayout();
@@ -634,6 +656,7 @@
             // 
             // groupBoxStartTime
             // 
+            groupBoxStartTime.Controls.Add(checkBoxSetStartTimeOnlyCurrentDayPersons);
             groupBoxStartTime.Controls.Add(checkBoxUseShortStartTimeAlg);
             groupBoxStartTime.Controls.Add(checkBoxStartTimesPersonShuffle);
             groupBoxStartTime.Controls.Add(label13);
@@ -651,6 +674,16 @@
             groupBoxStartTime.TabIndex = 27;
             groupBoxStartTime.TabStop = false;
             groupBoxStartTime.Text = "Стартовые минуты";
+            // 
+            // checkBoxSetStartTimeOnlyCurrentDayPersons
+            // 
+            checkBoxSetStartTimeOnlyCurrentDayPersons.AutoSize = true;
+            checkBoxSetStartTimeOnlyCurrentDayPersons.Location = new Point(224, 158);
+            checkBoxSetStartTimeOnlyCurrentDayPersons.Name = "checkBoxSetStartTimeOnlyCurrentDayPersons";
+            checkBoxSetStartTimeOnlyCurrentDayPersons.Size = new Size(310, 19);
+            checkBoxSetStartTimeOnlyCurrentDayPersons.TabIndex = 8;
+            checkBoxSetStartTimeOnlyCurrentDayPersons.Text = "Выдавать минуты только участником текущего дня";
+            checkBoxSetStartTimeOnlyCurrentDayPersons.UseVisualStyleBackColor = true;
             // 
             // checkBoxUseShortStartTimeAlg
             // 
@@ -817,26 +850,14 @@
             // 
             // tabPageBibs
             // 
+            tabPageBibs.BackColor = Color.WhiteSmoke;
+            tabPageBibs.Controls.Add(groupBoxBibs);
             tabPageBibs.Location = new Point(4, 24);
             tabPageBibs.Name = "tabPageBibs";
             tabPageBibs.Padding = new Padding(3);
             tabPageBibs.Size = new Size(535, 485);
             tabPageBibs.TabIndex = 6;
             tabPageBibs.Text = "Номера";
-            tabPageBibs.UseVisualStyleBackColor = true;
-            // 
-            // tabPageGroups
-            // 
-            tabPageGroups.BackColor = Color.WhiteSmoke;
-            tabPageGroups.Controls.Add(groupBoxBibs);
-            tabPageGroups.Controls.Add(buttonCopyGroupSettings);
-            tabPageGroups.Controls.Add(groupBoxGroupRanks);
-            tabPageGroups.Location = new Point(4, 24);
-            tabPageGroups.Name = "tabPageGroups";
-            tabPageGroups.Padding = new Padding(3);
-            tabPageGroups.Size = new Size(535, 485);
-            tabPageGroups.TabIndex = 4;
-            tabPageGroups.Text = "Группы";
             // 
             // groupBoxBibs
             // 
@@ -844,9 +865,9 @@
             groupBoxBibs.Controls.Add(buttonGroupSetNumbersByGroups);
             groupBoxBibs.Controls.Add(richTextBoxBibsNumbering);
             groupBoxBibs.Controls.Add(buttonBibsAutoCreateListNumbering);
-            groupBoxBibs.Location = new Point(6, 99);
+            groupBoxBibs.Location = new Point(6, 6);
             groupBoxBibs.Name = "groupBoxBibs";
-            groupBoxBibs.Size = new Size(421, 380);
+            groupBoxBibs.Size = new Size(523, 473);
             groupBoxBibs.TabIndex = 6;
             groupBoxBibs.TabStop = false;
             groupBoxBibs.Text = "Номера";
@@ -875,20 +896,32 @@
             // 
             richTextBoxBibsNumbering.Location = new Point(6, 22);
             richTextBoxBibsNumbering.Name = "richTextBoxBibsNumbering";
-            richTextBoxBibsNumbering.Size = new Size(212, 319);
+            richTextBoxBibsNumbering.Size = new Size(212, 418);
             richTextBoxBibsNumbering.TabIndex = 4;
             richTextBoxBibsNumbering.Text = "";
             // 
             // buttonBibsAutoCreateListNumbering
             // 
             buttonBibsAutoCreateListNumbering.Enabled = false;
-            buttonBibsAutoCreateListNumbering.Location = new Point(6, 347);
+            buttonBibsAutoCreateListNumbering.Location = new Point(6, 446);
             buttonBibsAutoCreateListNumbering.Name = "buttonBibsAutoCreateListNumbering";
             buttonBibsAutoCreateListNumbering.Size = new Size(212, 27);
             buttonBibsAutoCreateListNumbering.TabIndex = 5;
             buttonBibsAutoCreateListNumbering.Text = "Создать список автоматически";
             buttonBibsAutoCreateListNumbering.UseVisualStyleBackColor = true;
             buttonBibsAutoCreateListNumbering.Click += buttonBibsAutoCreateListNumbering_Click;
+            // 
+            // tabPageGroups
+            // 
+            tabPageGroups.BackColor = Color.WhiteSmoke;
+            tabPageGroups.Controls.Add(buttonCopyGroupSettings);
+            tabPageGroups.Controls.Add(groupBoxGroupRanks);
+            tabPageGroups.Location = new Point(4, 24);
+            tabPageGroups.Name = "tabPageGroups";
+            tabPageGroups.Padding = new Padding(3);
+            tabPageGroups.Size = new Size(535, 485);
+            tabPageGroups.TabIndex = 4;
+            tabPageGroups.Text = "Группы";
             // 
             // groupBoxGroupRanks
             // 
@@ -900,9 +933,9 @@
             groupBoxGroupRanks.Controls.Add(label7);
             groupBoxGroupRanks.Controls.Add(numericUpDownGroupResultsCountToCompleteRank);
             groupBoxGroupRanks.Controls.Add(checkedListBox1);
-            groupBoxGroupRanks.Location = new Point(6, 6);
+            groupBoxGroupRanks.Location = new Point(6, 11);
             groupBoxGroupRanks.Name = "groupBoxGroupRanks";
-            groupBoxGroupRanks.Size = new Size(291, 87);
+            groupBoxGroupRanks.Size = new Size(291, 80);
             groupBoxGroupRanks.TabIndex = 29;
             groupBoxGroupRanks.TabStop = false;
             groupBoxGroupRanks.Text = "Ранги";
@@ -1156,6 +1189,9 @@
             // tabPageOther
             // 
             tabPageOther.BackColor = Color.WhiteSmoke;
+            tabPageOther.Controls.Add(groupBoxMapCountCalculate);
+            tabPageOther.Controls.Add(checkBoxCombineCourse);
+            tabPageOther.Controls.Add(buttonGroupCourseNamesFormat);
             tabPageOther.Controls.Add(groupBoxImport);
             tabPageOther.Controls.Add(groupBoxStartFee);
             tabPageOther.Controls.Add(buttonOpenNumbersForm);
@@ -1167,10 +1203,91 @@
             tabPageOther.TabIndex = 3;
             tabPageOther.Text = "Остальное";
             // 
+            // groupBoxMapCountCalculate
+            // 
+            groupBoxMapCountCalculate.Controls.Add(checkBoxMapCountCalculateReserv);
+            groupBoxMapCountCalculate.Controls.Add(checkBoxMapCountCalculateOnlyInDay);
+            groupBoxMapCountCalculate.Controls.Add(buttonMapCountCalculateAll);
+            groupBoxMapCountCalculate.Controls.Add(buttonMapCountCalculateCurrent);
+            groupBoxMapCountCalculate.Location = new Point(308, 94);
+            groupBoxMapCountCalculate.Name = "groupBoxMapCountCalculate";
+            groupBoxMapCountCalculate.Size = new Size(221, 101);
+            groupBoxMapCountCalculate.TabIndex = 8;
+            groupBoxMapCountCalculate.TabStop = false;
+            groupBoxMapCountCalculate.Text = "Подсчет кол-ва карт";
+            // 
+            // checkBoxMapCountCalculateReserv
+            // 
+            checkBoxMapCountCalculateReserv.AutoSize = true;
+            checkBoxMapCountCalculateReserv.Checked = true;
+            checkBoxMapCountCalculateReserv.CheckState = CheckState.Checked;
+            checkBoxMapCountCalculateReserv.Location = new Point(6, 76);
+            checkBoxMapCountCalculateReserv.Name = "checkBoxMapCountCalculateReserv";
+            checkBoxMapCountCalculateReserv.Size = new Size(119, 19);
+            checkBoxMapCountCalculateReserv.TabIndex = 9;
+            checkBoxMapCountCalculateReserv.Text = "Считать резервы";
+            checkBoxMapCountCalculateReserv.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxMapCountCalculateOnlyInDay
+            // 
+            checkBoxMapCountCalculateOnlyInDay.AutoSize = true;
+            checkBoxMapCountCalculateOnlyInDay.Checked = true;
+            checkBoxMapCountCalculateOnlyInDay.CheckState = CheckState.Checked;
+            checkBoxMapCountCalculateOnlyInDay.Location = new Point(6, 54);
+            checkBoxMapCountCalculateOnlyInDay.Name = "checkBoxMapCountCalculateOnlyInDay";
+            checkBoxMapCountCalculateOnlyInDay.Size = new Size(199, 19);
+            checkBoxMapCountCalculateOnlyInDay.TabIndex = 9;
+            checkBoxMapCountCalculateOnlyInDay.Text = "Считать только участников дня";
+            checkBoxMapCountCalculateOnlyInDay.UseVisualStyleBackColor = true;
+            // 
+            // buttonMapCountCalculateAll
+            // 
+            buttonMapCountCalculateAll.Location = new Point(115, 24);
+            buttonMapCountCalculateAll.Name = "buttonMapCountCalculateAll";
+            buttonMapCountCalculateAll.Size = new Size(100, 27);
+            buttonMapCountCalculateAll.TabIndex = 5;
+            buttonMapCountCalculateAll.Text = "Все дни";
+            buttonMapCountCalculateAll.UseVisualStyleBackColor = true;
+            buttonMapCountCalculateAll.Click += buttonMapCountCalculateAll_Click;
+            // 
+            // buttonMapCountCalculateCurrent
+            // 
+            buttonMapCountCalculateCurrent.Location = new Point(6, 24);
+            buttonMapCountCalculateCurrent.Name = "buttonMapCountCalculateCurrent";
+            buttonMapCountCalculateCurrent.Size = new Size(100, 27);
+            buttonMapCountCalculateCurrent.TabIndex = 5;
+            buttonMapCountCalculateCurrent.Text = "Этот день";
+            buttonMapCountCalculateCurrent.UseVisualStyleBackColor = true;
+            buttonMapCountCalculateCurrent.Click += buttonMapCountCalculateCurrent_Click;
+            // 
+            // checkBoxCombineCourse
+            // 
+            checkBoxCombineCourse.AutoSize = true;
+            checkBoxCombineCourse.Location = new Point(308, 270);
+            checkBoxCombineCourse.Name = "checkBoxCombineCourse";
+            checkBoxCombineCourse.Size = new Size(161, 19);
+            checkBoxCombineCourse.TabIndex = 7;
+            checkBoxCombineCourse.Text = "Объеденение дистанций";
+            checkBoxCombineCourse.UseVisualStyleBackColor = true;
+            // 
+            // buttonGroupCourseNamesFormat
+            // 
+            buttonGroupCourseNamesFormat.Location = new Point(308, 224);
+            buttonGroupCourseNamesFormat.Name = "buttonGroupCourseNamesFormat";
+            buttonGroupCourseNamesFormat.Size = new Size(188, 40);
+            buttonGroupCourseNamesFormat.TabIndex = 6;
+            buttonGroupCourseNamesFormat.Text = "Привести названия групп и дистанций к одному формату";
+            buttonGroupCourseNamesFormat.UseVisualStyleBackColor = true;
+            buttonGroupCourseNamesFormat.Click += buttonGroupCurseNamesFormat_Click;
+            // 
             // groupBoxImport
             // 
+            groupBoxImport.Controls.Add(buttonImportKodRegionsFromCsv);
             groupBoxImport.Controls.Add(buttonBaseImportFromUrl);
             groupBoxImport.Controls.Add(buttonBaseImportFromProtocol);
+            groupBoxImport.Controls.Add(checkBoxYarfsoParserWriteOldQual);
+            groupBoxImport.Controls.Add(checkBoxYarfsoParserPayAmountToWorldCode);
+            groupBoxImport.Controls.Add(checkBoxYarfsoParserReplaceQual);
             groupBoxImport.Controls.Add(checkBoxPayAmountToComment);
             groupBoxImport.Controls.Add(buttonImportFromYarfso);
             groupBoxImport.Location = new Point(6, 6);
@@ -1179,6 +1296,16 @@
             groupBoxImport.TabIndex = 4;
             groupBoxImport.TabStop = false;
             groupBoxImport.Text = "Импорт";
+            // 
+            // buttonImportKodRegionsFromCsv
+            // 
+            buttonImportKodRegionsFromCsv.Location = new Point(6, 114);
+            buttonImportKodRegionsFromCsv.Name = "buttonImportKodRegionsFromCsv";
+            buttonImportKodRegionsFromCsv.Size = new Size(230, 23);
+            buttonImportKodRegionsFromCsv.TabIndex = 5;
+            buttonImportKodRegionsFromCsv.Text = "Импорт кодов региона из CSV";
+            buttonImportKodRegionsFromCsv.UseVisualStyleBackColor = true;
+            buttonImportKodRegionsFromCsv.Click += buttonImportKodRegionsFromCsv_Click;
             // 
             // buttonBaseImportFromUrl
             // 
@@ -1200,6 +1327,38 @@
             buttonBaseImportFromProtocol.UseVisualStyleBackColor = true;
             buttonBaseImportFromProtocol.Click += buttonBaseImportFromProtocol_Click;
             // 
+            // checkBoxYarfsoParserWriteOldQual
+            // 
+            checkBoxYarfsoParserWriteOldQual.AutoSize = true;
+            checkBoxYarfsoParserWriteOldQual.Location = new Point(6, 201);
+            checkBoxYarfsoParserWriteOldQual.Name = "checkBoxYarfsoParserWriteOldQual";
+            checkBoxYarfsoParserWriteOldQual.Size = new Size(217, 19);
+            checkBoxYarfsoParserWriteOldQual.TabIndex = 3;
+            checkBoxYarfsoParserWriteOldQual.Text = "Запомнить старую квалификацию";
+            checkBoxYarfsoParserWriteOldQual.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxYarfsoParserPayAmountToWorldCode
+            // 
+            checkBoxYarfsoParserPayAmountToWorldCode.AutoSize = true;
+            checkBoxYarfsoParserPayAmountToWorldCode.Checked = true;
+            checkBoxYarfsoParserPayAmountToWorldCode.CheckState = CheckState.Checked;
+            checkBoxYarfsoParserPayAmountToWorldCode.Location = new Point(6, 220);
+            checkBoxYarfsoParserPayAmountToWorldCode.Name = "checkBoxYarfsoParserPayAmountToWorldCode";
+            checkBoxYarfsoParserPayAmountToWorldCode.Size = new Size(136, 19);
+            checkBoxYarfsoParserPayAmountToWorldCode.TabIndex = 3;
+            checkBoxYarfsoParserPayAmountToWorldCode.Text = "Оплата в Межд. Код";
+            checkBoxYarfsoParserPayAmountToWorldCode.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxYarfsoParserReplaceQual
+            // 
+            checkBoxYarfsoParserReplaceQual.AutoSize = true;
+            checkBoxYarfsoParserReplaceQual.Location = new Point(6, 182);
+            checkBoxYarfsoParserReplaceQual.Name = "checkBoxYarfsoParserReplaceQual";
+            checkBoxYarfsoParserReplaceQual.Size = new Size(210, 19);
+            checkBoxYarfsoParserReplaceQual.TabIndex = 3;
+            checkBoxYarfsoParserReplaceQual.Text = "Установка квалификации с Yarfso";
+            checkBoxYarfsoParserReplaceQual.UseVisualStyleBackColor = true;
+            // 
             // checkBoxPayAmountToComment
             // 
             checkBoxPayAmountToComment.AutoSize = true;
@@ -1214,7 +1373,7 @@
             // 
             buttonImportFromYarfso.Location = new Point(6, 264);
             buttonImportFromYarfso.Name = "buttonImportFromYarfso";
-            buttonImportFromYarfso.Size = new Size(201, 40);
+            buttonImportFromYarfso.Size = new Size(230, 40);
             buttonImportFromYarfso.TabIndex = 2;
             buttonImportFromYarfso.Text = "Импорт разрядов и статусов оплачено с сайта yarfso";
             buttonImportFromYarfso.UseVisualStyleBackColor = true;
@@ -1225,9 +1384,9 @@
             groupBoxStartFee.Controls.Add(label5);
             groupBoxStartFee.Controls.Add(textBoxStartFeeWithCardSymbol);
             groupBoxStartFee.Controls.Add(buttonStartFeeCalculate);
-            groupBoxStartFee.Location = new Point(320, 6);
+            groupBoxStartFee.Location = new Point(308, 6);
             groupBoxStartFee.Name = "groupBoxStartFee";
-            groupBoxStartFee.Size = new Size(209, 82);
+            groupBoxStartFee.Size = new Size(221, 82);
             groupBoxStartFee.TabIndex = 2;
             groupBoxStartFee.TabStop = false;
             groupBoxStartFee.Text = "Стартовый взнос ";
@@ -1281,6 +1440,9 @@
             // 
             // tabPage2
             // 
+            tabPage2.Controls.Add(labelStartMinutesSelectedPerson);
+            tabPage2.Controls.Add(comboBoxStartMinutesGroupSelect);
+            tabPage2.Controls.Add(dataGridViewPersonMinutes);
             tabPage2.Location = new Point(4, 24);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(3);
@@ -1288,6 +1450,38 @@
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Стартовые минуты (WIP)";
             tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // labelStartMinutesSelectedPerson
+            // 
+            labelStartMinutesSelectedPerson.AutoSize = true;
+            labelStartMinutesSelectedPerson.Location = new Point(133, 9);
+            labelStartMinutesSelectedPerson.Name = "labelStartMinutesSelectedPerson";
+            labelStartMinutesSelectedPerson.Size = new Size(36, 15);
+            labelStartMinutesSelectedPerson.TabIndex = 2;
+            labelStartMinutesSelectedPerson.Text = "None";
+            // 
+            // comboBoxStartMinutesGroupSelect
+            // 
+            comboBoxStartMinutesGroupSelect.FormattingEnabled = true;
+            comboBoxStartMinutesGroupSelect.Location = new Point(6, 6);
+            comboBoxStartMinutesGroupSelect.Name = "comboBoxStartMinutesGroupSelect";
+            comboBoxStartMinutesGroupSelect.Size = new Size(121, 23);
+            comboBoxStartMinutesGroupSelect.TabIndex = 1;
+            comboBoxStartMinutesGroupSelect.SelectedIndexChanged += comboBoxStartMinutesGroupSelect_SelectedIndexChanged;
+            // 
+            // dataGridViewPersonMinutes
+            // 
+            dataGridViewPersonMinutes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewPersonMinutes.Location = new Point(6, 29);
+            dataGridViewPersonMinutes.Name = "dataGridViewPersonMinutes";
+            dataGridViewPersonMinutes.RowTemplate.Height = 25;
+            dataGridViewPersonMinutes.Size = new Size(821, 479);
+            dataGridViewPersonMinutes.TabIndex = 0;
+            dataGridViewPersonMinutes.CellMouseUp += dataGridViewPersonMinutes_CellMouseUp;
+            // 
+            // personStartMinuteBindingSource
+            // 
+            personStartMinuteBindingSource.DataSource = typeof(Data.Combine.PersonStartMinute);
             // 
             // tabPage1
             // 
@@ -1336,6 +1530,11 @@
             openFileDialogBaseFromProtocol.FileName = "Импорт из протокола";
             openFileDialogBaseFromProtocol.Filter = "html|*.html|All files|*.*";
             // 
+            // openFileDialogCsvUTF8
+            // 
+            openFileDialogCsvUTF8.FileName = "Импорт CSV";
+            openFileDialogCsvUTF8.Filter = "csv utf8|*.csv|All files|*.*";
+            // 
             // Utils
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1371,19 +1570,27 @@
             groupBoxStartTime.PerformLayout();
             tabControlFunc.ResumeLayout(false);
             tabPageStartTimes.ResumeLayout(false);
-            tabPageGroups.ResumeLayout(false);
+            tabPageBibs.ResumeLayout(false);
             groupBoxBibs.ResumeLayout(false);
             groupBoxBibs.PerformLayout();
+            tabPageGroups.ResumeLayout(false);
             groupBoxGroupRanks.ResumeLayout(false);
             groupBoxGroupRanks.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDownGroupResultsCountToCompleteRank).EndInit();
             tabPageOrganizations.ResumeLayout(false);
             tabPageOrganizations.PerformLayout();
             tabPageOther.ResumeLayout(false);
+            tabPageOther.PerformLayout();
+            groupBoxMapCountCalculate.ResumeLayout(false);
+            groupBoxMapCountCalculate.PerformLayout();
             groupBoxImport.ResumeLayout(false);
             groupBoxImport.PerformLayout();
             groupBoxStartFee.ResumeLayout(false);
             groupBoxStartFee.PerformLayout();
+            tabPage2.ResumeLayout(false);
+            tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewPersonMinutes).EndInit();
+            ((System.ComponentModel.ISupportInitialize)personStartMinuteBindingSource).EndInit();
             tabPage1.ResumeLayout(false);
             tabControl1.ResumeLayout(false);
             ResumeLayout(false);
@@ -1509,5 +1716,22 @@
         private Button buttonBaseImportFromUrl;
         private Button buttonBaseImportFromProtocol;
         private OpenFileDialog openFileDialogBaseFromProtocol;
+        private Button buttonImportKodRegionsFromCsv;
+        private OpenFileDialog openFileDialogCsvUTF8;
+        private CheckBox checkBoxSetStartTimeOnlyCurrentDayPersons;
+        private Button buttonMapCountCalculateCurrent;
+        private Button buttonGroupCourseNamesFormat;
+        private CheckBox checkBoxCombineCourse;
+        private GroupBox groupBoxMapCountCalculate;
+        private Button buttonMapCountCalculateAll;
+        private CheckBox checkBoxMapCountCalculateOnlyInDay;
+        private CheckBox checkBoxMapCountCalculateReserv;
+        private DataGridView dataGridViewPersonMinutes;
+        private BindingSource personStartMinuteBindingSource;
+        private ComboBox comboBoxStartMinutesGroupSelect;
+        private Label labelStartMinutesSelectedPerson;
+        private CheckBox checkBoxYarfsoParserWriteOldQual;
+        private CheckBox checkBoxYarfsoParserPayAmountToWorldCode;
+        private CheckBox checkBoxYarfsoParserReplaceQual;
     }
 }

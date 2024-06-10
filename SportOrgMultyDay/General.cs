@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,13 @@ namespace SportOrgMultyDay
         public General()
         {
             InitializeComponent();
+            //this.Load += (sender, e) =>
+            //{
+            //    this.BeginInvoke((MethodInvoker)delegate
+            //    {
+            //        this.Hide();
+            //    });
+            //};
         }
 
         public Form numbers;
@@ -22,15 +30,15 @@ namespace SportOrgMultyDay
 
         private void General_Load(object sender, EventArgs e)
         {
-            numbers = new Numbers((Utils)utils,this);
-            utils = new Utils((Numbers)numbers,this);
-            ShowUtils();
+            numbers = new Numbers((Utils)utils, this);
+            utils = new Utils((Numbers)numbers, this);
+
             //utils.Show();
         }
         private void buttonOpenNumbers_Click(object sender, EventArgs e)
         {
             ShowNumbers();
-           // this.WindowState = FormWindowState.Minimized;
+            // this.WindowState = FormWindowState.Minimized;
         }
 
         public void ShowNumbers()
@@ -46,6 +54,7 @@ namespace SportOrgMultyDay
                 utils = new Utils((Numbers)numbers, this);
             utils.Show();
             Hide();
+
         }
 
         public void ShowIfAllClosed(bool hideUtils = false, bool hideNumbers = false)
@@ -60,6 +69,9 @@ namespace SportOrgMultyDay
             //this.WindowState = FormWindowState.Minimized;
         }
 
-      
+        private void General_Shown(object sender, EventArgs e)
+        {
+            ShowUtils();
+        }
     }
 }

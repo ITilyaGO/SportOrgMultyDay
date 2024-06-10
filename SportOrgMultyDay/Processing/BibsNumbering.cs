@@ -133,10 +133,17 @@ namespace SportOrgMultyDay.Processing
             string groupName = parts[0];
             string numbersRange = parts[1];
             string[] rangeParts = numbersRange.Split('-');
-            if (int.TryParse(rangeParts[0], out int startBib) && int.TryParse(rangeParts[1], out int endBib))
-                return new NumbersOfGroup(groupName, startBib, endBib);
+            if (rangeParts.Length == 1)
+            {
+                if (int.TryParse(rangeParts[0], out int startBib))
+                    return new NumbersOfGroup(groupName, startBib, 9999999);
+            }
             else
-                return null;
+            {
+                if (int.TryParse(rangeParts[0], out int startBib) && int.TryParse(rangeParts[1], out int endBib))
+                    return new NumbersOfGroup(groupName, startBib, endBib);
+            }
+            return null;
         }
     }
 

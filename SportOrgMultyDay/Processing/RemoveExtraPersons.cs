@@ -39,7 +39,7 @@ namespace SportOrgMultyDay.Processing
             return logMsg; 
         }
 
-        private static bool RunPersonInDay(JToken person,int raceInd)
+        public static bool RunPersonInDay(JToken person,int raceInd)
         {
             string stringOfEntry = "C:";
             string comment = PPComment(person);

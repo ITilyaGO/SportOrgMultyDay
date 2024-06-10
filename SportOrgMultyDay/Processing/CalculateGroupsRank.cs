@@ -36,8 +36,8 @@ namespace SportOrgMultyDay.Processing
             {
                 JToken group = FGById(keyValue.Key, groups);
                 
-                if (keyValue.Value < 6)
-                    continue;
+                //if (keyValue.Value < 6)
+                //    continue;
                 if (group == null)
                 {
                     msgLog += $"  Группа не найдена ID: {keyValue.Key}";

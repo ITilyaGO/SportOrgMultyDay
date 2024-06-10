@@ -1,14 +1,26 @@
 ﻿using Newtonsoft.Json.Linq;
 using SportOrgMultyDay.Processing;
 using System.Text;
+using static SportOrgMultyDay.Data.QualificationNames;
 using static SportOrgMultyDay.Processing.Parsing.ParseBase;
 using static SportOrgMultyDay.Processing.Parsing.ParseGroup;
 using static SportOrgMultyDay.Processing.Parsing.ParseOrganization;
+using static SportOrgMultyDay.Processing.Parsing.ParsePerson;
+using static SportOrgMultyDay.Processing.Parsing.ParseData;
+using static SportOrgMultyDay.Processing.Parsing.ParseResult;
+using static SportOrgMultyDay.Processing.Parsing.Things.ParseStartTime;
 using static SportOrgMultyDay.Processing.Logger;
 using SportOrgMultyDay.Processing.SFRSmartTerminal;
 using SportOrgMultyDay.Helpers;
 using SportOrgMultyDay.Data;
 using SportOrgMultyDay.Processing.Parsing.Things;
+using System.Reflection.Metadata;
+using SportOrgMultyDay.Data.SportOrg;
+using SportOrgMultyDay.Data.Combine;
+using System.Diagnostics;
+using System.Windows.Forms;
+using System;
+using System.Collections.Generic;
 
 namespace SportOrgMultyDay
 {
@@ -29,6 +41,8 @@ namespace SportOrgMultyDay
         List<int> SFRStartLog = new();
         OrganizationItemsController organizationItemsController = new();
 
+        PersonStartMinute PersonStartMinuteSelected;
+        List<PersonStartMinute> PersonStartMinutes = new List<PersonStartMinute>();
 
         Dictionary<string, string> splitterStartLog = new()
         {
@@ -86,6 +100,7 @@ namespace SportOrgMultyDay
             try
             {
                 JObject rawJBase = ParseJson(rawBaseJson);
+                JObject newJbase = new();
 
                 if (rawJBase == null)
                 {
@@ -98,6 +113,7 @@ namespace SportOrgMultyDay
                 {
                     string ver = rawJBase["version"].ToString();
                     SendLog($"Версия базы {ver}");
+                    newJbase = rawJBase;
                 }
                 else
                 {
@@ -123,7 +139,6 @@ namespace SportOrgMultyDay
                     }
                     SendLog(msgLog);
 
-                    JObject newJbase = new();
                     JArray jArrayRaces = new();
                     newJbase.Add("current_race", 0);
                     newJbase.Add("version", "1.6.0.0");
@@ -131,8 +146,9 @@ namespace SportOrgMultyDay
                     jArrayRaces.Add(rawJBase);
                     newJbase.Add("races", jArrayRaces);
 
-                    JBase = newJbase;
                 }
+
+                JBase = newJbase;
 
                 raceCount = JBase["races"].Count();
                 labelBaseImport.Text = $"День:";
@@ -161,10 +177,15 @@ namespace SportOrgMultyDay
             JToken currRace = PBCurrentRaceFromBase(JBase);
 
             ReloadOrganizationNameListInCombobox(currRace);
-
+            ReloadOrganizationsNameListInComboboxStartMinuters(currRace);
             comboBoxSourceRankGroupName.Items.Clear();
             foreach (JToken group in PBGroups(currRace))
+            {
                 comboBoxSourceRankGroupName.Items.Add(new ComboBoxItemId(PGId(group), PGName(group)));
+            }
+            PersonStartMinuteSelected = null;
+            dataGridViewPersonMinutes.DataSource = null;
+            
         }
 
         private void ReloadOrganizationNameListInCombobox(JToken currRace = null)
@@ -182,6 +203,29 @@ namespace SportOrgMultyDay
 
             comboBoxOrganizationName.Items.Clear();
             orgNames.ForEach(n => comboBoxOrganizationName.Items.Add(n));
+        }
+
+        private void ReloadOrganizationsNameListInComboboxStartMinuters(JToken currRace = null)
+        {
+            currRace ??= PBCurrentRaceFromBase(JBase);
+            JArray persons = PBPersons(currRace);
+            JArray groups = PBGroups(currRace);
+            Dictionary<string, int> groupIdCount = DictGIdPersonsCount(groups, persons);
+
+
+
+            List<ComboBoxItemId> orgNames = new();
+            foreach (JToken group in groups)
+            {
+                string groupId = PGId(group);
+                string countIsValid = groupIdCount.TryGetValue(groupId, out int count) ? "" : "?";
+                orgNames.Add(new(groupId, $"{PGName(group)} - {count}{countIsValid}"));
+            }
+
+            orgNames.Sort((a,b) => a.Name.CompareTo(b.Name));
+
+            comboBoxStartMinutesGroupSelect.Items.Clear();
+            comboBoxStartMinutesGroupSelect.Items.AddRange(orgNames.ToArray());
         }
 
         private void BaseEditButtons(bool active)
@@ -211,6 +255,9 @@ namespace SportOrgMultyDay
             buttonOrganizationTweaksSave.Enabled = active;
             buttonAddOrganizationTweakItem.Enabled = active;
             buttonOrganizationRename.Enabled = active;
+            buttonMapCountCalculateCurrent.Enabled = active;
+            buttonGroupCourseNamesFormat.Enabled = active;
+            comboBoxStartMinutesGroupSelect.Enabled = active;
         }
 
         private void ReloadOrganizationRenameList()
@@ -302,6 +349,7 @@ namespace SportOrgMultyDay
             autoResize.Add(tabControl1);
             autoResize.Add(tabControlFunc, false, true);
             autoResize.Add(checkedListBoxWithSync, false, true);
+            autoResize.Add(dataGridViewPersonMinutes, true, true);
 
         }
 
@@ -377,7 +425,7 @@ namespace SportOrgMultyDay
             {
                 JBase["current_race"] = day;
                 BaseDayChange();
-                SendLog($"Текущий день: {JBase["current_race"]}");
+                SendLog($"Текущий день: {(int)JBase["current_race"] + 1}");
             }
             else
                 comboBoxDays.Text = "Err";
@@ -469,7 +517,12 @@ namespace SportOrgMultyDay
             try
             {
                 string file = File.ReadAllText(openFileDialogYarfso.FileName);
-                SendLog(YarfsoParser.SetQualFromYarfso(JBase, file, checkBoxPayAmountToComment.Checked));
+                SendLog(YarfsoParser.ImportFromYarfso(JBase, file,
+                    checkBoxPayAmountToComment.Checked,
+                    checkBoxYarfsoParserPayAmountToWorldCode.Checked,
+                    checkBoxYarfsoParserReplaceQual.Checked,
+                    checkBoxYarfsoParserWriteOldQual.Checked
+                    ));
             }
             catch (Exception ex)
             {
@@ -481,8 +534,11 @@ namespace SportOrgMultyDay
         private void buttonSetStartMinutes_Click(object sender, EventArgs e)
         {
             buttonSetStartMinutes.Text = dateTimePickerStartTime.Value.TimeOfDay.ToString();
+            int currentRaceId = checkBoxSetStartTimeOnlyCurrentDayPersons.Checked ? CurrentRaceID(JBase) : -1;
+
             if (richTextBoxGroupStartOrder.Text.Length == 0)
                 SendLog(StartTimeManager.SetStartTimes(PBCurrentRaceFromBase(JBase),
+                    currentRaceId,
                     dateTimePickerStartTime.Value.TimeOfDay,
                     dateTimePickerStartInterval.Value.TimeOfDay,
                     checkBoxStartTimesPersonShuffle.Checked));
@@ -490,6 +546,7 @@ namespace SportOrgMultyDay
             {
                 if (checkBoxUseShortStartTimeAlg.Checked)
                     SendLog(StartTimeManager.ShortOrderedSetStartTimes(PBCurrentRaceFromBase(JBase),
+                        currentRaceId,
                         dateTimePickerStartTime.Value.TimeOfDay,
                         dateTimePickerStartInterval.Value.TimeOfDay,
                         dateTimePickerMinColumnStartInterval.Value.TimeOfDay,
@@ -497,6 +554,7 @@ namespace SportOrgMultyDay
                         checkBoxStartTimesPersonShuffle.Checked));
                 else
                     SendLog(StartTimeManager.OrderedSetStartTimes(PBCurrentRaceFromBase(JBase),
+                        currentRaceId,
                         dateTimePickerStartTime.Value.TimeOfDay,
                         dateTimePickerStartInterval.Value.TimeOfDay,
                         richTextBoxGroupStartOrder.Text,
@@ -504,6 +562,7 @@ namespace SportOrgMultyDay
 
             }
 
+            ReloadStartMinutes();
         }
 
         private void buttonSetAutoOrderStartTimes_Click(object sender, EventArgs e)
@@ -622,6 +681,140 @@ namespace SportOrgMultyDay
 
         private void tabPageGroups_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void buttonImportKodRegionsFromCsv_Click(object sender, EventArgs e)
+        {
+            if (openFileDialogCsvUTF8.ShowDialog() != DialogResult.OK)
+            {
+                SendLog("Импорт отменен");
+                return;
+            }
+            string csv = File.ReadAllText(openFileDialogCsvUTF8.FileName);
+            SendLog(OrgeoCsvParser.AddRegionsKodToOrgs(PBCurrentRaceFromBase(JBase), csv));
+        }
+
+        private void buttonMapCountCalculate_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonGroupCurseNamesFormat_Click(object sender, EventArgs e)
+        {
+            SendLog(GroupCourseNameFormater.FormatAll(JBase, checkBoxCombineCourse.Checked));
+
+        }
+
+        private void buttonMapCountCalculateCurrent_Click(object sender, EventArgs e)
+        {
+            SendLog(MapCounter.CalculateCurrentRaceCount(JBase, checkBoxMapCountCalculateOnlyInDay.Checked, checkBoxMapCountCalculateReserv.Checked));
+        }
+
+        private void buttonMapCountCalculateAll_Click(object sender, EventArgs e)
+        {
+            SendLog(MapCounter.CalculateAllRaceCount(JBase, checkBoxMapCountCalculateOnlyInDay.Checked, checkBoxMapCountCalculateReserv.Checked));
+        }
+
+        private void buttonStartMinutesLoad_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void groupBoxStartTime_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBoxStartMinutesGroupSelect_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ReloadStartMinutes();
+        }
+        private void ReloadStartMinutes()
+        {
+            if (comboBoxStartMinutesGroupSelect.SelectedItem == null)
+                return;
+            string selectedGroupId = ((ComboBoxItemId)comboBoxStartMinutesGroupSelect.SelectedItem).Id;
+            JToken race = PBCurrentRaceFromBase(JBase);
+            JArray groups = PBGroups(race);
+            JToken group = FGById(selectedGroupId, groups);
+            ReloadStartMinutes(group);
+        }
+        private void ReloadStartMinutes(JToken group)
+        {
+            PersonStartMinutes = new List<PersonStartMinute>();
+            JToken race = PBCurrentRaceFromBase(JBase);
+            JArray persons = PBPersons(race);
+            JArray orgs = PBOrganizations(race);
+            List<JToken> groupPersons = FPAllByGroup(PGId(group), persons);
+            Dictionary<int, string> qualsDict = QualificationNames.DictIdToString;
+            foreach (JToken groupPerson in groupPersons)
+            {
+                if (PPStartTime(groupPerson) == 0)
+                    continue;
+                string orgId = PPOrganizationId(groupPerson);
+                JToken org = FOById(orgId, orgs);
+                string orgName = POName(org);
+                string qual = qualsDict[PPQual(groupPerson)];
+                PersonStartMinutes.Add(new(groupPerson, orgName, qual));
+            }
+            PersonStartMinutes.Sort((a, b) => a.StartMinute.CompareTo(b.StartMinute));
+            dataGridViewPersonMinutes.DataSource = PersonStartMinutes;
+        }
+
+        private void ReloadSelectedStartMinute()
+        {
+            if (PersonStartMinuteSelected != null)
+            {
+
+                labelStartMinutesSelectedPerson.ForeColor = Color.Black;
+                labelStartMinutesSelectedPerson.Text = $"Выбран: {PersonStartMinuteSelected.FullName} {PersonStartMinuteSelected.StartMinute}";
+            }
+            else
+            {
+                labelStartMinutesSelectedPerson.ForeColor = Color.Gray;
+                labelStartMinutesSelectedPerson.Text = "Выберите первого участника (ПКМ)";
+            }
+        }
+
+        private void dataGridViewPersonMinutes_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right && e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+
+                PersonStartMinute psm = (PersonStartMinute)dataGridViewPersonMinutes.Rows[e.RowIndex].DataBoundItem;
+                if (psm == null)
+                {
+                    SendLog("Не удалось получить участника из этой строки");
+                    return;
+                }
+                if (PersonStartMinuteSelected == null)
+                {
+                    dataGridViewPersonMinutes.ClearSelection();
+                    dataGridViewPersonMinutes.Rows[e.RowIndex].Cells[e.ColumnIndex].Selected = true;
+                    PersonStartMinuteSelected = psm;
+                }
+                else
+                {
+                    dataGridViewPersonMinutes.ClearSelection();
+                    TimeSpan selectedStartTime = PersonStartMinuteSelected.StartMinute;
+                    TimeSpan clickedStartTime = psm.StartMinute;
+                    psm.StartMinute = selectedStartTime;
+                    PersonStartMinuteSelected.StartMinute = clickedStartTime;
+                    SendLog($"Поменяли местами стартовые минуты [{psm.FullName}] {psm.StartMinute} и [{PersonStartMinuteSelected.FullName}] {PersonStartMinuteSelected.StartMinute}");
+
+                    PersonStartMinuteSelected = null;
+
+
+
+                    PersonStartMinutes.Sort((a, b) => a.StartMinute.CompareTo(b.StartMinute));
+                    dataGridViewPersonMinutes.Refresh();
+                }
+                ReloadSelectedStartMinute();
+            }else if (e.Button == MouseButtons.Left)
+            {
+                PersonStartMinuteSelected = null;
+                ReloadSelectedStartMinute();
+            }
 
         }
     }

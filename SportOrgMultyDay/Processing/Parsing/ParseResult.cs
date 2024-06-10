@@ -73,6 +73,10 @@ namespace SportOrgMultyDay.Processing.Parsing
                 foreach (JToken result in results)
                 {
                     string personId = PRPersonId(result);
+                    if (personId == null)
+                    {
+                        continue;
+                    }
                     if (resultDict.ContainsKey(personId))
                     {
                         int placeNew = PRPlace(result);

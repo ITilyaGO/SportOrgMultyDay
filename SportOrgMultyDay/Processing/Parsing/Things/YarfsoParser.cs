@@ -19,9 +19,19 @@ namespace SportOrgMultyDay.Processing.Parsing.Things
 {
     public static class YarfsoParser
     {
-        public static string SetQualFromYarfso(JToken jBase, string inputFile, bool payAmountToComment)
+        public static string ImportFromYarfso(JToken jBase, string inputFile,
+            bool payAmountToComment = false,
+            bool payAmountToWorldCode = true,
+            bool replaceQual = false,
+            bool writeOldQual = false)
         {
-            string msgLog = "Установка квалификаций ис статусов оплаты из списка Yarfso...\n";
+            string msgLog = "Установка квалификаций и статусов оплаты из списка Yarfso...\n";
+
+            msgLog += "  Установка квалификаций с Yarfso - " + (replaceQual ? "Да" : "Нет") + "\n";
+            msgLog += "  Запомнить старую квалификацию - " + (writeOldQual ? "Да" : "Нет") + "\n";
+            msgLog += "  Оплата в Межд. Код - " + (payAmountToWorldCode ? "Да" : "Нет") + "\n";
+            msgLog += "  Сумма оплаты в комментарий - " + (payAmountToComment ? "Да" : "Нет") + "\n";
+
             try
             {
                 Dictionary<string, YarfsoPerson> yarPersons = ParseYarfsoFile(inputFile, out string log);
@@ -42,9 +52,17 @@ namespace SportOrgMultyDay.Processing.Parsing.Things
                         string fullName = $"{PPSurname(person)} {PPName(person)} {PPYear(person)}";
                         if (yarPersons.TryGetValue(YarfsoPerson.PrepareString(fullName), out YarfsoPerson yarPerson))
                         {
-                            person["is_paid"] = yarPerson.IsPaid;
-                            person["qual"] = yarPerson.QualId;
-                            person["comment"] += "Сумма: " + yarPerson.PayAmount;
+                            if (writeOldQual)
+                                person["comment"] += "OQ: " + person["qual"];
+
+                            if (payAmountToComment || payAmountToWorldCode)
+                                person["is_paid"] = yarPerson.IsPaid;
+                            if (replaceQual)
+                                person["qual"] = yarPerson.QualId;
+                            if (payAmountToComment)
+                                person["comment"] += "Сумма: " + (int)yarPerson.PayAmount;
+                            if (payAmountToWorldCode)
+                                person["world_code"] = (int)yarPerson.PayAmount;
                             okCount++;
                         }
                         else
@@ -84,7 +102,7 @@ namespace SportOrgMultyDay.Processing.Parsing.Things
                     try
                     {
                         YarfsoPerson yarPerson = new YarfsoPerson(inputString);
-                        yarPersons.Add(yarPerson.TpPrepareString(), yarPerson);
+                        yarPersons.Add(yarPerson.ToPrepareString(), yarPerson);
                     }
                     catch (Exception ex)
                     {
@@ -151,7 +169,7 @@ namespace SportOrgMultyDay.Processing.Parsing.Things
         {
             return FullName + " " + Year;
         }
-        public string TpPrepareString()
+        public string ToPrepareString()
         {
             return PrepareString(ToString());
         }
