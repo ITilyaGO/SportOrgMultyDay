@@ -118,6 +118,25 @@ namespace SportOrgMultyDay.Processing.Parsing
             catch (Exception ex) { LogError("dqwf34g3d", ex); }
             return -1;
         }
+        public static string PPWorldCode(JToken person)
+        {
+            try
+            {
+                return (string)person["world_code"];
+            }
+            catch (Exception ex) { LogError("23doiwgf0bwe", ex); }
+            return null;
+        }
+
+        public static bool PPIsPaid(JToken person)
+        {
+            try
+            {
+                return (bool)person["is_paid"];
+            }
+            catch (Exception ex) { LogError("qwdgs2254ff", ex); }
+            return false;
+        }
         public static TimeSpan? PPStartTimeTS(JToken person)
         {
             try

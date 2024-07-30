@@ -59,6 +59,16 @@ namespace SportOrgMultyDay.Processing.Parsing
             return -1;
         }
 
+        public static int PGPrice(JToken group)
+        {
+            try
+            {
+                return (int)group["price"];
+            }
+            catch (Exception ex) { LogError("dqwlgjbd2is", ex); }
+            return -1;
+        }
+
         public static string PGCourseId(JToken group)
         {
             try
@@ -123,6 +133,18 @@ namespace SportOrgMultyDay.Processing.Parsing
                 gIdPersonCount.Add(groupId, countInGroup);
             }
             return gIdPersonCount;
+        }
+
+        public static Dictionary<string, int> DictGIdPrice(JArray groups)
+        {
+            Dictionary<string, int> gIdPrice = new();
+            foreach (JToken group in groups)
+            {
+                string groupId = PGId(group);
+                int groupPrice = PGPrice(group);
+                gIdPrice.Add(groupId, groupPrice);
+            }
+            return gIdPrice;
         }
     }
 }

@@ -48,7 +48,9 @@ namespace SportOrgMultyDay.Processing
             string log = $"День {PDStartDatetime(data)}...\n";
 
             Dictionary<string, int> groupPersonCount = new Dictionary<string, int>();
+            Dictionary<string, int> groupPersonCountReserv = new Dictionary<string, int>();
             Dictionary<string, int> coursePersonCount = new Dictionary<string, int>();
+            Dictionary<string, int> coursePersonCountReserv = new Dictionary<string, int>();
             Dictionary<string, string> groupCourses = new Dictionary<string, string>();
 
             JArray persons = PBPersons(race);
@@ -59,8 +61,17 @@ namespace SportOrgMultyDay.Processing
                 bool isReserv = PPSurname(person) == "_Резерв";
                 if (onlyCurrentRace && !RemoveExtraPersons.RunPersonInDay(person, raceId))
                     continue;
-                if (!calcReserv && isReserv)
-                    continue;
+                if (isReserv)
+                {
+                    string personGroupIdr = PPGroupId(person);
+                    if (groupPersonCountReserv.ContainsKey(personGroupIdr))
+                        groupPersonCountReserv[personGroupIdr] += 1;
+                    else groupPersonCountReserv[personGroupIdr] = 1;
+                    if (!calcReserv)
+                        continue;
+                }
+
+
                 string personGroupId = PPGroupId(person);
                 if (groupPersonCount.ContainsKey(personGroupId))
                     groupPersonCount[personGroupId] += 1;
@@ -76,24 +87,54 @@ namespace SportOrgMultyDay.Processing
 
             foreach (var gp in groupPersonCount)
             {
-                if (groupCourses.TryGetValue(gp.Key, out string courceId))
+                if (groupCourses.TryGetValue(gp.Key, out string courceId) && courceId != null)
                     if (coursePersonCount.ContainsKey(courceId))
                         coursePersonCount[courceId] += gp.Value;
                     else coursePersonCount[courceId] = gp.Value;
                 else
                     Debug.WriteLine(gp.Key);
             }
+
+            foreach (var gp in groupPersonCountReserv)
+            {
+                if (groupCourses.TryGetValue(gp.Key, out string courceId) && courceId != null)
+                    if (coursePersonCountReserv.ContainsKey(courceId))
+                        coursePersonCountReserv[courceId] += gp.Value;
+                    else coursePersonCountReserv[courceId] = gp.Value;
+                else
+                    Debug.WriteLine(gp.Key);
+            }
+
+            log += $"  Группы:\n";
+            int summG = 0;
+            foreach (var gp in groupPersonCount)
+            {
+                JToken group = FGById(gp.Key, groups);
+                if (group == null)
+                {
+                    log += $"    Группа не найдена [{gp.Key}]\n";
+                    continue;
+                }
+                string groupName = PGName(group);
+                groupPersonCountReserv.TryGetValue(gp.Key, out int val);
+                log += $"      {groupName} - {gp.Value} r:{val} \n";
+                summG += gp.Value;
+            }
+            log += $"  Всего карт: {summG}\n";
+
+            log += $"  Дистанции:\n";
             int summ = 0;
             foreach (var cp in coursePersonCount)
             {
                 JToken cource = FCById(cp.Key, courses);
                 if (cource == null)
                 {
-                    log += $"  Дистанция не найдена [{cp.Key}]\n";
+                    log += $"    Дистанция не найдена [{cp.Key}]\n";
                     continue;
                 }
                 string courceName = PCName(cource);
-                log += $"    {courceName} - {cp.Value}\n";
+                coursePersonCountReserv.TryGetValue(cp.Key, out int val);
+                log += $"      {courceName} - {cp.Value} r:{val} \n";
                 summ += cp.Value;
             }
             log += $"  Всего карт: {summ}\n";

@@ -148,6 +148,11 @@ namespace SportOrgMultyDay.Processing
 
         public static OrganizationItemsController Load(out string msgLog, string path = DefaultPath)
         {
+            if(!File.Exists(path))
+            {
+                msgLog = $"Загрузка списка замен не удалась. Файл не найден {path}\n\n";
+                return new();
+            }
             string inputText = File.ReadAllText(path);
             OrganizationItemsController tempOrganizationTweakerController = JsonConvert.DeserializeObject<OrganizationItemsController>(inputText);
             if (tempOrganizationTweakerController == null)

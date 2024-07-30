@@ -12,12 +12,13 @@ using static SportOrgMultyDay.Processing.Parsing.ParseGroup;
 using static SportOrgMultyDay.Processing.Parsing.ParsePerson;
 using static SportOrgMultyDay.Processing.Parsing.ParseOrganization;
 using static SportOrgMultyDay.Processing.Logger;
+using System.Text.RegularExpressions;
 
 namespace SportOrgMultyDay.Processing.Parsing.Things
 {
     public static class OrgeoCsvParser
     {
-        public static string AddRegionsKodToOrgs(JToken race, string csvStr)
+        public static string AddRegionsKodToOrgs(JToken race, string csvStr, bool renameOrgs)
         {
             string msgLog = "Добавление регионов из CSV в названия команд...\n";
             try
@@ -35,11 +36,24 @@ namespace SportOrgMultyDay.Processing.Parsing.Things
                         JToken org = orgs[i];
                         string orgName = POName(org);
                         CsvPersons csvPers = csvPersons.Find(c => c.Organization == orgName);
+                        if (csvPers == null)
+                        {
+                            string noRegionOrgName = Regex.Replace(orgName, @"^\d\d_", "");
+                            csvPers = csvPersons.Find(c => c.Organization == noRegionOrgName);
+                            msgLog += $"    Команда не найдена. Поиск команды без региона - {noRegionOrgName}";
+                        }
                         if (csvPers != null)
                         {
-                            org["name"] = $"{csvPers.Kod}_{orgName}";
-                            org["region"] = csvPers.Kod.ToString();
-                            msgLog += $"    Переиминована команда - {org["name"]}...\n";
+                            if (renameOrgs)
+                            {
+                                org["name"] = $"{csvPers.Kod}_{orgName}";
+                                msgLog += $"    Переиминована команда - {org["name"]}";
+                            }
+                            org["code"] = csvPers.Kod.ToString();
+                            msgLog += $"    Установлен код - {org["code"]}.";
+                            org["region"] = csvPers.Region;
+                            msgLog += $"    Установлен код - {org["region"]}.\n";
+
                             complited++;
                         }
                         else
@@ -80,11 +94,21 @@ namespace SportOrgMultyDay.Processing.Parsing.Things
                 o.CardNumber = c[10];
                 o.Description = c[11];
                 o.SubmittedBy = c[12];
-                o.Phone = c[13];
-                o.Email = c[14];
-                o.ApplicationNumber = c[15];
-                o.SubmissionTime = c[16];
-                o.FromUrl = c[17];
+                if (c.Count >= 17)
+                {
+                    o.Phone = c[13];
+                    o.Email = c[14];
+                    o.ApplicationNumber = c[15];
+                    o.SubmissionTime = c[16];
+                    o.FromUrl = c[17];
+                }else
+                {
+                    o.Phone = string.Empty;
+                    o.Email = string.Empty;
+                    o.ApplicationNumber = string.Empty;
+                    o.SubmissionTime = string.Empty;
+                    o.FromUrl = string.Empty;
+                }
                 return true;
             });
         }

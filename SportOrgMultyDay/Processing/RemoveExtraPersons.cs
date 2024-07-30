@@ -39,14 +39,14 @@ namespace SportOrgMultyDay.Processing
             return logMsg; 
         }
 
-        public static bool RunPersonInDay(JToken person,int raceInd)
+        public static string PersonStartDays(JToken person)
         {
             string stringOfEntry = "C:";
             string comment = PPComment(person);
             int cIndex = comment.IndexOf(stringOfEntry);
-            
+
             if (cIndex == -1)
-                return true;
+                return null;
             int startCline = cIndex + stringOfEntry.Length;
             int endCline = startCline;
             for (int i = startCline; i < comment.Length; i++)
@@ -57,7 +57,15 @@ namespace SportOrgMultyDay.Processing
                     break;
             }
 
-            string numberBlock = comment.Substring(startCline, (endCline - startCline)+1);
+            string numberBlock = comment.Substring(startCline, (endCline - startCline) + 1);
+            return numberBlock;
+        }
+
+        public static bool RunPersonInDay(JToken person, int raceInd)
+        {
+            string numberBlock = PersonStartDays(person);
+            if (numberBlock == null)
+                return true;
 
             return numberBlock.Contains((raceInd + 1).ToString());
 

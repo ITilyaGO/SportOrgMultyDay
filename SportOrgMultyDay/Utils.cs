@@ -185,7 +185,7 @@ namespace SportOrgMultyDay
             }
             PersonStartMinuteSelected = null;
             dataGridViewPersonMinutes.DataSource = null;
-            
+
         }
 
         private void ReloadOrganizationNameListInCombobox(JToken currRace = null)
@@ -222,7 +222,7 @@ namespace SportOrgMultyDay
                 orgNames.Add(new(groupId, $"{PGName(group)} - {count}{countIsValid}"));
             }
 
-            orgNames.Sort((a,b) => a.Name.CompareTo(b.Name));
+            orgNames.Sort((a, b) => a.Name.CompareTo(b.Name));
 
             comboBoxStartMinutesGroupSelect.Items.Clear();
             comboBoxStartMinutesGroupSelect.Items.AddRange(orgNames.ToArray());
@@ -258,6 +258,9 @@ namespace SportOrgMultyDay
             buttonMapCountCalculateCurrent.Enabled = active;
             buttonGroupCourseNamesFormat.Enabled = active;
             comboBoxStartMinutesGroupSelect.Enabled = active;
+            buttonImportKodRegionsFromCsv.Enabled = active;
+            buttonMapCountCalculateAll.Enabled = active;
+            buttonReplaceAllPersonsForOtherDays.Enabled = active;
         }
 
         private void ReloadOrganizationRenameList()
@@ -582,7 +585,7 @@ namespace SportOrgMultyDay
 
         private void buttonGroupSetNumbersByGroups_Click(object sender, EventArgs e)
         {
-            SendLog(BibsNumbering.SetNumbers(PBCurrentRaceFromBase(JBase), richTextBoxBibsNumbering.Text, checkBoxSetNumbersByGroupsDebug.Checked));
+            SendLog(BibsNumbering.SetNumbers(PBCurrentRaceFromBase(JBase), richTextBoxBibsNumbering.Text, checkBoxSetNumbersByGroupsDebug.Checked, checkBoxSetNumbersRelay.Checked));
         }
 
         private void buttonSyncOrganizations_Click(object sender, EventArgs e)
@@ -692,7 +695,7 @@ namespace SportOrgMultyDay
                 return;
             }
             string csv = File.ReadAllText(openFileDialogCsvUTF8.FileName);
-            SendLog(OrgeoCsvParser.AddRegionsKodToOrgs(PBCurrentRaceFromBase(JBase), csv));
+            SendLog(OrgeoCsvParser.AddRegionsKodToOrgs(PBCurrentRaceFromBase(JBase), csv, checkBoxRenameOrgsImportKodRegionsFromCsv.Checked));
         }
 
         private void buttonMapCountCalculate_Click(object sender, EventArgs e)
@@ -810,12 +813,40 @@ namespace SportOrgMultyDay
                     dataGridViewPersonMinutes.Refresh();
                 }
                 ReloadSelectedStartMinute();
-            }else if (e.Button == MouseButtons.Left)
+            }
+            else if (e.Button == MouseButtons.Left)
             {
                 PersonStartMinuteSelected = null;
                 ReloadSelectedStartMinute();
             }
 
+        }
+
+        private void buttonReplaceAllPersonsForOtherDays_Click(object sender, EventArgs e)
+        {
+            SendLog(PersonListReplacer.ReplacePersonsListInOtherDays(JBase));
+        }
+
+        private void buttonCalculatePersonStartPrice_Click(object sender, EventArgs e)
+        {
+            SendLog(StartFeeCalculate.CalculatePersonStartPriceAllDays(JBase));
+        }
+
+        private void buttonVichestStart_Click(object sender, EventArgs e)
+        {
+            int milis = (int)TimeSpan.Parse("05:40:41").TotalMilliseconds;
+            JToken race = PBCurrentRaceFromBase(JBase);
+            JArray results = PBResults(race);
+            for (int i = 0; i < results.Count; i++)
+            {
+                JToken result = results[i];
+                
+                if(int.TryParse(result["start_time"]?.ToString(), out int currentMilis) && currentMilis > 47000000)
+                {
+                    result["start_time"] = currentMilis - milis;
+                    Debug.WriteLine(result["start_time"]);
+                }
+            }
         }
     }
 }

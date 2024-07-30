@@ -7,7 +7,10 @@ using System.Threading.Tasks;
 
 using static SportOrgMultyDay.Processing.Parsing.ParseBase;
 using static SportOrgMultyDay.Processing.Parsing.ParsePerson;
+using static SportOrgMultyDay.Processing.Parsing.ParseGroup;
+using static SportOrgMultyDay.Processing.Parsing.ParseData;
 using static SportOrgMultyDay.Processing.Logger;
+using Microsoft.VisualBasic;
 namespace SportOrgMultyDay.Processing
 {
     public class StartFeeCalculate
@@ -15,7 +18,7 @@ namespace SportOrgMultyDay.Processing
         public static string GetStatistic(JToken Base, string cardString)
         {
             string msgLog = "Подсчёт стартовых взносов... \n";
-            int cardSum = 0,cardCount = 0;
+            int cardSum = 0, cardCount = 0;
             int cashSum = 0, cashCount = 0;
             JArray persons = PBPersonsFromBase(Base);
             foreach (JToken person in persons)
@@ -76,6 +79,56 @@ namespace SportOrgMultyDay.Processing
             }
             catch (Exception ex) { LogError("a8dbd38vb", ex); }
             return -1;
+        }
+
+        public static string CalculatePersonStartPriceAllDays(JToken Base)
+        {
+            string msgLog = "Подсчет стартовых взносов для участников во всех днях...\n";
+
+            JArray races = PBRaces(Base);
+            foreach (JToken race in races)
+            {
+                JToken raceData = PBData(race);
+                string dateTime = PDStartDatetime(raceData);
+                msgLog += $"  День {dateTime}...\n";
+                msgLog += CalculatePersonStartPrice(race, races.Count);
+            }
+
+            msgLog += "  Завершено\n";
+            return msgLog;
+        }
+
+        public static string CalculatePersonStartPrice(JToken race, int raceCount)
+        {
+            string msgLog = "    Подсчет стартовых взносов для участников...\n";
+
+            JArray persons = PBPersons(race);
+            JArray groups = PBGroups(race);
+
+            Dictionary<string, int> groupIdPrice = DictGIdPrice(groups);
+            
+            foreach (JToken person in persons)
+            {
+                if (PPIsPaid(person))
+                {
+                    continue;
+                }
+                string personGroupId = PPGroupId(person);
+                if (groupIdPrice.TryGetValue(personGroupId, out int groupPrice))
+                {
+                    string startDays = RemoveExtraPersons.PersonStartDays(person);
+                    person["world_code"] = (groupPrice * (startDays?.Length ?? raceCount)).ToString();
+                    //msgLog += $"      Подсчитано [{PPToString(person)}] Дни:{startDays?.Length}/{raceCount} Взнос: [{person["world_code"]}]\n";
+                }
+                else
+                {
+                    msgLog += $"    Группа не найдена [{personGroupId}] Участник - [{PPToString(person)}]\n";
+                }
+            }
+            msgLog += "    Ок...\n";
+
+
+            return msgLog;
         }
     }
 }
