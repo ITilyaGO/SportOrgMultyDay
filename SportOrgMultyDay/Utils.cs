@@ -840,13 +840,48 @@ namespace SportOrgMultyDay
             for (int i = 0; i < results.Count; i++)
             {
                 JToken result = results[i];
-                
-                if(int.TryParse(result["start_time"]?.ToString(), out int currentMilis) && currentMilis > 47000000)
+
+                if (int.TryParse(result["start_time"]?.ToString(), out int currentMilis) && currentMilis > 47000000)
                 {
                     result["start_time"] = currentMilis - milis;
                     Debug.WriteLine(result["start_time"]);
                 }
             }
+        }
+
+        private void buttonQualFromOtherBase_Click(object sender, EventArgs e)
+        {
+            string msgLog = "Копирование квалификаций\n";
+            JToken race = PBCurrentRaceFromBase(JBase);
+            JArray persons = PBPersons(race);
+            OpenFileDialog openFileDialog = new();
+
+            if (openFileDialog.ShowDialog() != DialogResult.OK)
+            {
+                msgLog += "Отмена.";
+                SendLog(msgLog);
+                return;
+            }
+            string fileContent = File.ReadAllText(openFileDialog.FileName);
+            JObject rawJBase = ParseJson(fileContent);
+            JToken fromJbase = PBCurrentRaceFromBase(rawJBase);
+            JArray fromPersons = PBPersons(fromJbase);
+            foreach (JToken person in persons)
+            {
+                JToken fromPerson = FPByPerson(person, fromPersons);
+                if (fromPerson != null)
+                {
+                    string oldQual = person["qual"]?.ToString();
+                    int newQual = PPQual(fromPerson);
+                    person["qual"] = newQual;
+                    msgLog += $" Разряд изменен {PPToString(person)} [{oldQual} > {newQual}]\n";
+                }
+                else
+                {
+                    msgLog += $" Участник не найден во вторичной базе {PPToString(person)}\n";
+                }
+            }
+            SendLog(msgLog);
         }
     }
 }

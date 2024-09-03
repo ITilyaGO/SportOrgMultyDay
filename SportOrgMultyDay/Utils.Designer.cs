@@ -131,6 +131,7 @@
             textBoxOrganizationNewName = new TextBox();
             buttonAddOrganizationTweakItem = new Button();
             tabPageOther = new TabPage();
+            buttonVichestStart = new Button();
             groupBoxMapCountCalculate = new GroupBox();
             checkBoxMapCountCalculateReserv = new CheckBox();
             checkBoxMapCountCalculateOnlyInDay = new CheckBox();
@@ -169,7 +170,7 @@
             openFileDialogYarfso = new OpenFileDialog();
             openFileDialogBaseFromProtocol = new OpenFileDialog();
             openFileDialogCsvUTF8 = new OpenFileDialog();
-            buttonVichestStart = new Button();
+            buttonQualFromOtherBase = new Button();
             contextMenuStripLog.SuspendLayout();
             tabPageShahmatka.SuspendLayout();
             groupBoxStartLogProcessing.SuspendLayout();
@@ -1216,6 +1217,7 @@
             // tabPageOther
             // 
             tabPageOther.BackColor = Color.WhiteSmoke;
+            tabPageOther.Controls.Add(buttonQualFromOtherBase);
             tabPageOther.Controls.Add(buttonVichestStart);
             tabPageOther.Controls.Add(groupBoxMapCountCalculate);
             tabPageOther.Controls.Add(checkBoxCombineCourse);
@@ -1230,6 +1232,16 @@
             tabPageOther.Size = new Size(535, 485);
             tabPageOther.TabIndex = 3;
             tabPageOther.Text = "Остальное";
+            // 
+            // buttonVichestStart
+            // 
+            buttonVichestStart.Location = new Point(299, 396);
+            buttonVichestStart.Name = "buttonVichestStart";
+            buttonVichestStart.Size = new Size(75, 57);
+            buttonVichestStart.TabIndex = 9;
+            buttonVichestStart.Text = "TEMP Вычесть старт";
+            buttonVichestStart.UseVisualStyleBackColor = true;
+            buttonVichestStart.Click += buttonVichestStart_Click;
             // 
             // groupBoxMapCountCalculate
             // 
@@ -1585,15 +1597,15 @@
             openFileDialogCsvUTF8.FileName = "Импорт CSV";
             openFileDialogCsvUTF8.Filter = "csv utf8|*.csv|All files|*.*";
             // 
-            // buttonVichestStart
+            // buttonQualFromOtherBase
             // 
-            buttonVichestStart.Location = new Point(299, 396);
-            buttonVichestStart.Name = "buttonVichestStart";
-            buttonVichestStart.Size = new Size(75, 57);
-            buttonVichestStart.TabIndex = 9;
-            buttonVichestStart.Text = "TEMP Вычесть старт";
-            buttonVichestStart.UseVisualStyleBackColor = true;
-            buttonVichestStart.Click += buttonVichestStart_Click;
+            buttonQualFromOtherBase.Location = new Point(380, 358);
+            buttonQualFromOtherBase.Name = "buttonQualFromOtherBase";
+            buttonQualFromOtherBase.Size = new Size(116, 57);
+            buttonQualFromOtherBase.TabIndex = 9;
+            buttonQualFromOtherBase.Text = "TEMP Подтянуть квалификации из другой базы";
+            buttonQualFromOtherBase.UseVisualStyleBackColor = true;
+            buttonQualFromOtherBase.Click += buttonQualFromOtherBase_Click;
             // 
             // Utils
             // 
@@ -1798,5 +1810,6 @@
         private Button buttonReplaceAllPersonsForOtherDays;
         private Button buttonCalculatePersonStartPrice;
         private Button buttonVichestStart;
+        private Button buttonQualFromOtherBase;
     }
 }

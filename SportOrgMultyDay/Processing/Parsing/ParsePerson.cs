@@ -206,6 +206,23 @@ namespace SportOrgMultyDay.Processing.Parsing
             return null;
         }
 
+        public static JToken FPByPerson(JToken person, JArray persons)
+        {
+            string fpFingerPrint = PPGetFingerPrint(person);
+            for (int i = 0; i < persons.Count; i++)
+                if (fpFingerPrint == PPGetFingerPrint(persons[i])) return persons[i];
+            return null;
+        }
+
+        public static string PPGetFingerPrint(JToken person)
+        {
+            string fpName = PPName(person);
+            string fpSurname = PPSurname(person);
+            int fpYear = PPYear(person);
+            string fpFingerPrint = fpName + fpSurname + fpYear;
+            return fpFingerPrint;
+        }
+
         public static List<IGrouping<string, JToken>> GPByGroupId(JArray persons)
         {
             var groupIdPersons = persons.GroupBy(p => PPGroupId(p)).ToList();
