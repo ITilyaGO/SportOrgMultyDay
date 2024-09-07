@@ -134,8 +134,15 @@ namespace SportOrgMultyDay.Processing
                 }
                 string courceName = PCName(cource);
                 coursePersonCountReserv.TryGetValue(cp.Key, out int val);
-                log += $"      {courceName} - {cp.Value} r:{val} \n";
-                summ += cp.Value;
+                // TODO: ВЫнести переенные и UI 
+
+                int spare = (cp.Value / 10) + val;
+                if (spare > 10)
+                    spare = 10;
+                if (spare < 5)
+                    spare = 5;
+                log += $"      {courceName} - {cp.Value + spare} r:{(calcReserv ? "" : "+")}{val} s:{spare} \n";
+                summ += cp.Value + spare;
             }
             log += $"  Всего карт: {summ}\n";
             return log;

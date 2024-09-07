@@ -131,6 +131,7 @@
             textBoxOrganizationNewName = new TextBox();
             buttonAddOrganizationTweakItem = new Button();
             tabPageOther = new TabPage();
+            buttonQualFromOtherBase = new Button();
             buttonVichestStart = new Button();
             groupBoxMapCountCalculate = new GroupBox();
             checkBoxMapCountCalculateReserv = new CheckBox();
@@ -170,7 +171,6 @@
             openFileDialogYarfso = new OpenFileDialog();
             openFileDialogBaseFromProtocol = new OpenFileDialog();
             openFileDialogCsvUTF8 = new OpenFileDialog();
-            buttonQualFromOtherBase = new Button();
             contextMenuStripLog.SuspendLayout();
             tabPageShahmatka.SuspendLayout();
             groupBoxStartLogProcessing.SuspendLayout();
@@ -1233,6 +1233,16 @@
             tabPageOther.TabIndex = 3;
             tabPageOther.Text = "Остальное";
             // 
+            // buttonQualFromOtherBase
+            // 
+            buttonQualFromOtherBase.Location = new Point(380, 358);
+            buttonQualFromOtherBase.Name = "buttonQualFromOtherBase";
+            buttonQualFromOtherBase.Size = new Size(116, 57);
+            buttonQualFromOtherBase.TabIndex = 9;
+            buttonQualFromOtherBase.Text = "TEMP Подтянуть квалификации из другой базы";
+            buttonQualFromOtherBase.UseVisualStyleBackColor = true;
+            buttonQualFromOtherBase.Click += buttonQualFromOtherBase_Click;
+            // 
             // buttonVichestStart
             // 
             buttonVichestStart.Location = new Point(299, 396);
@@ -1597,16 +1607,6 @@
             openFileDialogCsvUTF8.FileName = "Импорт CSV";
             openFileDialogCsvUTF8.Filter = "csv utf8|*.csv|All files|*.*";
             // 
-            // buttonQualFromOtherBase
-            // 
-            buttonQualFromOtherBase.Location = new Point(380, 358);
-            buttonQualFromOtherBase.Name = "buttonQualFromOtherBase";
-            buttonQualFromOtherBase.Size = new Size(116, 57);
-            buttonQualFromOtherBase.TabIndex = 9;
-            buttonQualFromOtherBase.Text = "TEMP Подтянуть квалификации из другой базы";
-            buttonQualFromOtherBase.UseVisualStyleBackColor = true;
-            buttonQualFromOtherBase.Click += buttonQualFromOtherBase_Click;
-            // 
             // Utils
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1622,7 +1622,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             MinimumSize = new Size(900, 470);
             Name = "Utils";
-            Text = "Утилиты v0.17.5b";
+            Text = "Утилиты v0.18.x";
             FormClosing += Utils_FormClosing;
             Load += Utils_Load;
             SizeChanged += Utils_SizeChanged;

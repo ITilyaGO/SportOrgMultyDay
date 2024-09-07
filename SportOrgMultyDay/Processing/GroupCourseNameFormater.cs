@@ -88,7 +88,7 @@ namespace SportOrgMultyDay.Processing
                 }
                 string resultCourseName = courseName;
                 foreach (string name in findedNames)
-                    resultCourseName += $"-{name}";
+                    resultCourseName += $" {name}";
                 course["name"] = resultCourseName;
                 log += $". Переиминование [{courseName}] > [{resultCourseName}]\n";
             }
