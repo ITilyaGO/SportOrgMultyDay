@@ -536,11 +536,12 @@ namespace SportOrgMultyDay
 
         private void buttonSetStartMinutes_Click(object sender, EventArgs e)
         {
-            buttonSetStartMinutes.Text = dateTimePickerStartTime.Value.TimeOfDay.ToString();
             int currentRaceId = checkBoxSetStartTimeOnlyCurrentDayPersons.Checked ? CurrentRaceID(JBase) : -1;
 
+            JToken currentRace = PBCurrentRaceFromBase(JBase);
+
             if (richTextBoxGroupStartOrder.Text.Length == 0)
-                SendLog(StartTimeManager.SetStartTimes(PBCurrentRaceFromBase(JBase),
+                SendLog(StartTimeManager.SetStartTimes(currentRace,
                     currentRaceId,
                     dateTimePickerStartTime.Value.TimeOfDay,
                     dateTimePickerStartInterval.Value.TimeOfDay,
@@ -548,7 +549,7 @@ namespace SportOrgMultyDay
             else
             {
                 if (checkBoxUseShortStartTimeAlg.Checked)
-                    SendLog(StartTimeManager.ShortOrderedSetStartTimes(PBCurrentRaceFromBase(JBase),
+                    SendLog(StartTimeManager.ShortOrderedSetStartTimes(currentRace,
                         currentRaceId,
                         dateTimePickerStartTime.Value.TimeOfDay,
                         dateTimePickerStartInterval.Value.TimeOfDay,
@@ -556,7 +557,7 @@ namespace SportOrgMultyDay
                         richTextBoxGroupStartOrder.Text,
                         checkBoxStartTimesPersonShuffle.Checked));
                 else
-                    SendLog(StartTimeManager.OrderedSetStartTimes(PBCurrentRaceFromBase(JBase),
+                    SendLog(StartTimeManager.OrderedSetStartTimes(currentRace,
                         currentRaceId,
                         dateTimePickerStartTime.Value.TimeOfDay,
                         dateTimePickerStartInterval.Value.TimeOfDay,
@@ -564,8 +565,10 @@ namespace SportOrgMultyDay
                         checkBoxStartTimesPersonShuffle.Checked));
 
             }
-
+            JToken lastPerson = StartTimeManager.LastStartPerson(currentRace);
+            SendLog( StartTimeManager.StartPersonToString(lastPerson));
             ReloadStartMinutes();
+            buttonSetStartMinutes.Text = $"{dateTimePickerStartTime.Value.TimeOfDay} - {PPStartTimeTS(lastPerson).Value.ToString()}";
         }
 
         private void buttonSetAutoOrderStartTimes_Click(object sender, EventArgs e)
