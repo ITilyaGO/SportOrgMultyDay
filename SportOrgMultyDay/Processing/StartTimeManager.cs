@@ -18,6 +18,27 @@ namespace SportOrgMultyDay.Processing
 {
     public static class StartTimeManager
     {
+        public static string StartPersonToString(JToken person)
+        {
+            return $"{PPStartTimeTS(person).Value} - {PPToString(person)}" ;
+        }
+        public static JToken LastStartPerson(JToken race)
+        {
+            JArray allPersons = PBPersons(race);
+            TimeSpan maxTimeSpan = TimeSpan.MinValue;
+            JToken lastPerson = allPersons.First;
+            foreach (JToken person in allPersons)
+            {
+                TimeSpan? personTimeSpan = PPStartTimeTS(person);
+                if (personTimeSpan.HasValue && personTimeSpan.Value > maxTimeSpan)
+                {
+                    maxTimeSpan = personTimeSpan.Value;
+                    lastPerson = person;
+                }
+            }
+
+            return lastPerson;
+        }
         public static string AutoGroupOrder(JToken race)
         {
             JArray groups = PBGroups(race);
@@ -122,7 +143,7 @@ namespace SportOrgMultyDay.Processing
                     for (int j = 0; j < corridorColumn.Persons.Count; j++)
                     {
                         JToken person = corridorColumn.Persons[j];
-                        person["start_time"] = timeOfStart.Add(TimeSpan.FromMinutes(j * corridorColumnCount + i) * startInterval.Minutes).TotalMilliseconds;
+                        person["start_time"] = timeOfStart.Add(TimeSpan.FromMinutes(j * corridorColumnCount + i) * startInterval.Minutes + corridor.AdditionalStartTime).TotalMilliseconds;
                         msgLog += $"        - Старт: {StartTimeToString(PPStartTime(person))} Участник {j + 1}: {PPToString(person)}\n";
                     }
                 }
@@ -193,9 +214,19 @@ namespace SportOrgMultyDay.Processing
 
             List<Corridor> corridors = new();
             string[] rowsOfRawOrder = rawOrder.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-            foreach (string row in rowsOfRawOrder)
+            foreach (string rawRow in rowsOfRawOrder)
             {
                 Corridor corridor = new();
+                
+                int pluseCount = 0;
+                foreach (char c in rawRow)
+                    if (c == '+')
+                        pluseCount++;
+
+                corridor.AdditionalStartTime = TimeSpan.FromMinutes(pluseCount);
+                string row = rawRow.Trim('+');
+
+
                 string[] columns = row.Split(new char[] { '/', ';' });
                 foreach (string column in columns)
                 {
@@ -258,14 +289,16 @@ namespace SportOrgMultyDay.Processing
     { 
         public List<CorridorColumn> CorridorColumns { get; private set; }
         public TimeSpan CurrentStart { get; set; }
+        public TimeSpan AdditionalStartTime { get; set; }
         public Corridor()
         {
             CorridorColumns = new List<CorridorColumn>();
+            AdditionalStartTime = TimeSpan.Zero;
         }
 
         public void SetTime(TimeSpan timeSpan)
         {
-            CurrentStart = timeSpan;
+            CurrentStart = timeSpan + AdditionalStartTime;
         }
 
         public void Add(CorridorColumn column) => CorridorColumns.Add(column);
