@@ -171,6 +171,7 @@
             openFileDialogYarfso = new OpenFileDialog();
             openFileDialogBaseFromProtocol = new OpenFileDialog();
             openFileDialogCsvUTF8 = new OpenFileDialog();
+            checkBoxSetNumbersCreateReserv = new CheckBox();
             contextMenuStripLog.SuspendLayout();
             tabPageShahmatka.SuspendLayout();
             groupBoxStartLogProcessing.SuspendLayout();
@@ -878,6 +879,7 @@
             // 
             // groupBoxBibs
             // 
+            groupBoxBibs.Controls.Add(checkBoxSetNumbersCreateReserv);
             groupBoxBibs.Controls.Add(checkBoxSetNumbersRelay);
             groupBoxBibs.Controls.Add(checkBoxSetNumbersByGroupsDebug);
             groupBoxBibs.Controls.Add(buttonGroupSetNumbersByGroups);
@@ -1607,6 +1609,16 @@
             openFileDialogCsvUTF8.FileName = "Импорт CSV";
             openFileDialogCsvUTF8.Filter = "csv utf8|*.csv|All files|*.*";
             // 
+            // checkBoxSetNumbersCreateReserv
+            // 
+            checkBoxSetNumbersCreateReserv.AutoSize = true;
+            checkBoxSetNumbersCreateReserv.Location = new Point(224, 105);
+            checkBoxSetNumbersCreateReserv.Name = "checkBoxSetNumbersCreateReserv";
+            checkBoxSetNumbersCreateReserv.Size = new Size(130, 19);
+            checkBoxSetNumbersCreateReserv.TabIndex = 9;
+            checkBoxSetNumbersCreateReserv.Text = "Создавать резервы";
+            checkBoxSetNumbersCreateReserv.UseVisualStyleBackColor = true;
+            // 
             // Utils
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1811,5 +1823,6 @@
         private Button buttonCalculatePersonStartPrice;
         private Button buttonVichestStart;
         private Button buttonQualFromOtherBase;
+        private CheckBox checkBoxSetNumbersCreateReserv;
     }
 }

@@ -588,7 +588,7 @@ namespace SportOrgMultyDay
 
         private void buttonGroupSetNumbersByGroups_Click(object sender, EventArgs e)
         {
-            SendLog(BibsNumbering.SetNumbers(PBCurrentRaceFromBase(JBase), richTextBoxBibsNumbering.Text, checkBoxSetNumbersByGroupsDebug.Checked, checkBoxSetNumbersRelay.Checked));
+            SendLog(BibsNumbering.SetNumbers(PBCurrentRaceFromBase(JBase), richTextBoxBibsNumbering.Text, checkBoxSetNumbersByGroupsDebug.Checked, checkBoxSetNumbersRelay.Checked, checkBoxSetNumbersCreateReserv.Checked));
         }
 
         private void buttonSyncOrganizations_Click(object sender, EventArgs e)

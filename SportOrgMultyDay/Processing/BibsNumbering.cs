@@ -16,21 +16,22 @@ using static SportOrgMultyDay.Processing.Logger;
 using Microsoft.VisualBasic.Logging;
 using System.Linq.Expressions;
 using HtmlAgilityPack;
+using SportOrgMultyDay.Data;
 
 namespace SportOrgMultyDay.Processing
 {
     public class BibsNumbering
     {
 
-        public static string SetNumbers(JToken jRace, string bibsSample, bool isDebug = false, bool isRelay = false)
+        public static string SetNumbers(JToken jRace, string bibsSample, bool isDebug = false, bool isRelay = false, bool isCreateReserv = false)
         {
             if (isRelay)
-                return SetRelayNumbers(jRace, bibsSample, isDebug);
+                return SetRelayNumbers(jRace, bibsSample, isDebug, isCreateReserv);
             else
-                return SetDefaultNumbers(jRace, bibsSample, isDebug);
+                return SetDefaultNumbers(jRace, bibsSample, isDebug, isCreateReserv);
         }
 
-        public static string SetRelayNumbers(JToken jRace, string bibsSample, bool isDebug = false)
+        public static string SetRelayNumbers(JToken jRace, string bibsSample, bool isDebug = false, bool isCreateReserv = false, int stageCount = 2, int bibNormalization = 3)
         {
             bool checkNumberExist = true;
             string log = "Установка эстафетных номеров участникам групп...\n";
@@ -93,12 +94,12 @@ namespace SportOrgMultyDay.Processing
                     {
                         JToken person = personRelay.Person;
                         int beforBib = PPBib(person);
-                        string strBib = personRelay.Stage.ToString() + StringNormalizer(currentNumber.ToString(),3);
+                        string strBib = personRelay.Stage.ToString() + StringNormalizer(currentNumber.ToString(), bibNormalization);
                         int relayBib = int.Parse(strBib);
 
                         if (personBibs.Contains(relayBib))
                         {
-                            string msg = $"   Номер {relayBib} уже существует.\n";
+                            string msg = $"   Номер {relayBib} уже существует.";
                             if (checkNumberExist)
                             {
                                 switch (MessageBox.Show(msg + "Все равно установить номер и спрашивать дальше?\n Отмена - Остановка установки номеров\n Да - Установить и спрашивать\n Нет - Установить не спрашивать ", "Номер существует", MessageBoxButtons.YesNoCancel))
@@ -110,7 +111,7 @@ namespace SportOrgMultyDay.Processing
                                         break;
                                 }
                             }
-                            log += msg;
+                            log += msg + "Перезаписан.\n";
                         }
                         person["bib"] = relayBib;
 
@@ -119,14 +120,38 @@ namespace SportOrgMultyDay.Processing
                     }
                     currentNumber++;
                 }
-                log += $"    Номера установлены с {numberOfGroup.StartBib} по {currentNumber - 1}. {numberOfGroup}\n";
+                string reservCreateLog = string.Empty;
+                if (isCreateReserv)
+                {
+                    int createdReservCount = 0;
+                    if (isDebug)
+                        log += $"      Создание резервов...\n";
+                    while (currentNumber <= numberOfGroup.EndBib && createdReservCount < numberOfGroup.MaxReservCount)
+                    {
+                        for (int i = 1; i <= stageCount; i++)
+                        {
+                            string strBib = i.ToString() + StringNormalizer(currentNumber.ToString(), bibNormalization);
+                            int relayBib = int.Parse(strBib);
+                            JObject newReserv = PersonTemplate.Reserv;
+                            newReserv["group_id"] = groupId;
+                            newReserv["bib"] = relayBib;
+                            persons.Add(newReserv);
+                            if (isDebug)
+                                log += $"        Создан - {PPToString(newReserv)}\n";
+                        }
+                        currentNumber++;
+                        createdReservCount++;
+                    }
+                    reservCreateLog = $" Создано команд резервов: {createdReservCount}.";
+                }
+                log += $"    Номера установлены с {numberOfGroup.StartBib} по {currentNumber - 1}.{reservCreateLog} {numberOfGroup}\n";
             }
             log += $"  Установка номеров завершена!\n";
 
             return log;
         }
 
-        public static string SetDefaultNumbers(JToken jRace, string bibsSample, bool isDebug = false)
+        public static string SetDefaultNumbers(JToken jRace, string bibsSample, bool isDebug = false, bool isCreateReserv = false)
         {
             bool checkNumberExist = true;
             string log = "Установка номеров участникам групп...\n";
@@ -137,7 +162,7 @@ namespace SportOrgMultyDay.Processing
             if (numbersOfGroups == null)
                 return log;
 
-            List<int> personBibs = new List<int>();
+            List<int> personBibs = new();
             foreach (JToken person in persons)
             {
                 int bib = PPBib(person);
@@ -201,7 +226,28 @@ namespace SportOrgMultyDay.Processing
                         log += $"      Установка номера. Номер до:{beforBib} Установлено: {PersonToString.BibName(person)}\n";
                     currentNumber++;
                 }
-                log += $"    Номера установлены с {numberOfGroup.StartBib} по {currentNumber-1}. {numberOfGroup}\n";
+
+                string reservCreateLog = string.Empty;
+                if (isCreateReserv)
+                {
+                    int createdReservCount = 0;
+                    if (isDebug)
+                        log += $"      Создание резервов. максимальное кол-во {numberOfGroup.MaxReservCount} ...\n";
+                    while (currentNumber <= numberOfGroup.EndBib && createdReservCount < numberOfGroup.MaxReservCount)
+                    {
+                        JObject newReserv = PersonTemplate.Reserv;
+                        newReserv["group_id"] = groupId;
+                        newReserv["bib"] = currentNumber;
+                        persons.Add(newReserv);
+                        if (isDebug)
+                            log += $"        Создан - {PPToString(newReserv)}\n";
+                        currentNumber++;
+                        createdReservCount++;
+                    }
+                    reservCreateLog = $" Создано резервов: {createdReservCount}.";
+                }
+
+                log += $"    Номера установлены с {numberOfGroup.StartBib} по {currentNumber - 1}.{reservCreateLog} {numberOfGroup}\n";
             }
             log += $"  Установка номеров завершена!\n";
 
@@ -213,7 +259,7 @@ namespace SportOrgMultyDay.Processing
             log += $"  Парсинг списка номеров групп...\n";
             string[] groupSamples = sample.Split('\n', StringSplitOptions.RemoveEmptyEntries);
 
-            List<NumbersOfGroup> numbersOfGroups = new List<NumbersOfGroup>();
+            List<NumbersOfGroup> numbersOfGroups = new();
             
             for (int i = 0; i < groupSamples.Length; i++)
             {
@@ -227,7 +273,7 @@ namespace SportOrgMultyDay.Processing
                 }
                 else
                 {
-                    numbersOfGroup.StringNumber = i;
+                    numbersOfGroup.NumberOfString = i;
                     log += $"    Парсинг удался: {numbersOfGroup}\n";
                     numbersOfGroups.Add(numbersOfGroup);
                 }
@@ -237,23 +283,59 @@ namespace SportOrgMultyDay.Processing
 
         internal static NumbersOfGroup ParseGroupSample(string groupSample)
         {
-            string[] parts = groupSample.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            if (parts.Length < 2) return null;
+            if (string.IsNullOrWhiteSpace(groupSample))
+                return null;
+
+            var parts = groupSample.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            if (parts.Length < 2)
+                return null;
+
             string groupName = parts[0];
             string numbersRange = parts[1];
-            string[] rangeParts = numbersRange.Split('-');
-            if (rangeParts.Length == 1)
-            {
-                if (int.TryParse(rangeParts[0], out int startBib))
-                    return new NumbersOfGroup(groupName, startBib, 9999999);
-            }
-            else
-            {
-                if (int.TryParse(rangeParts[0], out int startBib) && int.TryParse(rangeParts[1], out int endBib))
-                    return new NumbersOfGroup(groupName, startBib, endBib);
-            }
-            return null;
+            string rawReservCount = parts.ElementAtOrDefault(2);
+
+
+            // Попробуем разобрать диапазон номеров
+            if (!TryParseNumbersRange(numbersRange, out int startBib, out int endBib))
+                return null;
+
+            _ = TryParseReservCount(rawReservCount, out int reservCount);
+
+            return new NumbersOfGroup(groupName, startBib, endBib, reservCount: reservCount);
         }
+
+        private static bool TryParseReservCount(string rawReservCount, out int reservCount)
+        {
+            reservCount = 100;
+            if (string.IsNullOrWhiteSpace(rawReservCount))
+                return false;
+            string[] parts = rawReservCount.Split(':', StringSplitOptions.RemoveEmptyEntries);
+            if (parts.Length < 2)
+                return false;
+            if (parts[0] == "r")
+                return int.TryParse(parts[1], out reservCount);
+            return false;
+        }
+
+        private static bool TryParseNumbersRange(string numbersRange, out int startBib, out int endBib)
+        {
+            const int defaultEndBib = 9999999;
+            endBib = defaultEndBib;
+
+            // Разделим диапазон на части
+            var rangeParts = numbersRange.Split('-');
+
+            // Попытка разобрать начальный номер
+            if (!int.TryParse(rangeParts[0], out startBib))
+                return false; // Ошибка разбора, возвращаем false
+
+            // Если есть второй элемент, попытаемся разобрать его, иначе присвоим дефолтный конец диапазона
+            if (rangeParts.Length > 1 && !int.TryParse(rangeParts[1], out endBib))
+                endBib = defaultEndBib;
+
+            return true;
+        }
+
 
         static string StringNormalizer(string input, int minLength, char filler = '0')
         {
@@ -272,23 +354,25 @@ namespace SportOrgMultyDay.Processing
 
     internal class NumbersOfGroup
     {
-        public int StringNumber { get; set; }
+        public int NumberOfString { get; set; }
         public int StartBib { get; set; }
         public int EndBib { get; set; }
+        public int MaxReservCount { get; set; }
         public string GroupName { get; set; }
         public int NumbersCount => (EndBib - StartBib) + 1;
 
-        public NumbersOfGroup(string group, int startBib = 0, int endBib = 0, int stringNumber = 0)
+        public NumbersOfGroup(string group, int startBib = 0, int endBib = 0, int numberOfString = 0, int reservCount = 100)
         {
             GroupName = group;
             StartBib = startBib;
             EndBib = endBib;
-            StringNumber = stringNumber;
+            NumberOfString = numberOfString;
+            MaxReservCount = reservCount;
         }
 
         public override string ToString()
         {
-            return $"Строка: {StringNumber+1} Имя: {GroupName} Номера: {StartBib}-{EndBib}";
+            return $"Строка: {NumberOfString+1} Имя: {GroupName} Максимум резервов:{MaxReservCount} Номера: {StartBib}-{EndBib}";
         }
     }
 
@@ -331,6 +415,12 @@ namespace SportOrgMultyDay.Processing
                 personStage = pStage;
             }
         }
-        
+
+        public PersonRelayData(JToken person, int stage)
+        {
+            Person = person;
+            personStage = stage;
+        }
+
     }
 }
