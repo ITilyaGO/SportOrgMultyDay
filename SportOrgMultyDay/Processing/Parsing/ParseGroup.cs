@@ -128,6 +128,8 @@ namespace SportOrgMultyDay.Processing.Parsing
             List<IGrouping<string, JToken>> groupedPersons = GPByGroupId(persons);
             foreach (var groupIdpersons in groupedPersons)
             {
+                if (groupIdpersons.Key == null)
+                    continue;
                 string groupId = groupIdpersons.Key;
                 int countInGroup = groupIdpersons.Count();
                 gIdPersonCount.Add(groupId, countInGroup);

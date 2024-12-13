@@ -84,17 +84,20 @@ namespace SportOrgMultyDay.Processing
         public static string CalculatePersonStartPriceAllDays(JToken Base)
         {
             string msgLog = "Подсчет стартовых взносов для участников во всех днях...\n";
-
-            JArray races = PBRaces(Base);
-            foreach (JToken race in races)
+            try
             {
-                JToken raceData = PBData(race);
-                string dateTime = PDStartDatetime(raceData);
-                msgLog += $"  День {dateTime}...\n";
-                msgLog += CalculatePersonStartPrice(race, races.Count);
-            }
 
-            msgLog += "  Завершено\n";
+                JArray races = PBRaces(Base);
+                foreach (JToken race in races)
+                {
+                    JToken raceData = PBData(race);
+                    string dateTime = PDStartDatetime(raceData);
+                    msgLog += $"  День {dateTime}...\n";
+                    msgLog += CalculatePersonStartPrice(race, races.Count);
+                }
+                msgLog += "  Завершено\n";
+            }
+            catch (Exception ex) { msgLog += $"!!!Ошибка\n{ex.Message}"; LogError("fqfd13f23sa", ex); }
             return msgLog;
         }
 

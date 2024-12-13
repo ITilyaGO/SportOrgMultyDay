@@ -103,7 +103,7 @@ namespace SportOrgMultyDay.Processing
 
         private static string FormatName(string name)
         {
-            return Regex.Replace(name, @"[^\p{L}\p{N}]", "");
+            return Regex.Replace(name, @"[^\p{L}\p{N}-]", "");
         }
 
 

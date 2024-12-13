@@ -261,6 +261,8 @@ namespace SportOrgMultyDay
             buttonImportKodRegionsFromCsv.Enabled = active;
             buttonMapCountCalculateAll.Enabled = active;
             buttonReplaceAllPersonsForOtherDays.Enabled = active;
+            buttonBibsAutoCreateListNumbering.Enabled = active;
+            buttonCalculatePersonStartPrice.Enabled = active;
         }
 
         private void ReloadOrganizationRenameList()
@@ -354,6 +356,7 @@ namespace SportOrgMultyDay
             autoResize.Add(checkedListBoxWithSync, false, true);
             autoResize.Add(dataGridViewPersonMinutes, true, true);
 
+            dateTimePickerExportStartLog.Value.AddHours(22);
         }
 
         private void LoadOrganizationItems()
@@ -566,7 +569,7 @@ namespace SportOrgMultyDay
 
             }
             JToken lastPerson = StartTimeManager.LastStartPerson(currentRace);
-            SendLog( StartTimeManager.StartPersonToString(lastPerson));
+            SendLog(StartTimeManager.StartPersonToString(lastPerson));
             ReloadStartMinutes();
             buttonSetStartMinutes.Text = $"{dateTimePickerStartTime.Value.TimeOfDay} - {PPStartTimeTS(lastPerson).Value.ToString()}";
         }
@@ -583,7 +586,9 @@ namespace SportOrgMultyDay
 
         private void buttonBibsAutoCreateListNumbering_Click(object sender, EventArgs e)
         {
-
+            string instruction = ("Функция в разработке. \r\n Пишем через пробел - \"[Название группы] [Номера] r:[Резервы]\"\r\nКонечные номера и резервы писать не обязательно не обязательно.\r\n Если написать просто \"М21 100\" то будут присвоены номера с 100 но если добавить \"М18 110\" и в группе М21 будет больше 10 участников, номера переназначатся. Не допускайте пересечения номеров или исопльзуйте ограничение такого плана 100-199\r\n\r\n Пример обычных минут - \r\nМЭ 5000-5199\r\nЖЭ 100-5199\r\n\r\nПример обычных минут с резервами - \r\nМЭ 5000-5199 r:10\r\nЖЭ 100-5199 r:5\r\n\r\nПример эстафеты - \r\nМ21 101-119\r\nМ16-20 201-215\r\nМ45 301-309\r\nЖ21 401-412\r\nЖ16-20 501-504\r\nМ60 601-605\r\nЖ60 701-703\r\nМ12-14 801-816\r\nЖ12-14 901-907");
+            MessageBox.Show(instruction);
+            SendLog(instruction);
         }
 
         private void buttonGroupSetNumbersByGroups_Click(object sender, EventArgs e)
@@ -885,6 +890,22 @@ namespace SportOrgMultyDay
                 }
             }
             SendLog(msgLog);
+        }
+
+        private void linkLabelGitHub_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            linkLabelGitHub.LinkVisited = true;
+            var url = "http://github.com/ITilyaGO/SportOrgMultyDay";
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = url,
+                UseShellExecute = true
+            });
+        }
+
+        private void labelHowToWorkStartMinutesSwap_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("ПКМ по одному участнику, затем по другому, с которым нужно поменять стартовые минуты местами");
         }
     }
 }

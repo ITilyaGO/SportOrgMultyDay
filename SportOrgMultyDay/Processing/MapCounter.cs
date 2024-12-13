@@ -25,20 +25,29 @@ namespace SportOrgMultyDay.Processing
         public static string CalculateCurrentRaceCount(JToken jBase, bool onlyCurrentRace, bool calcReserv)
         {
             string log = "Подсчет карт текущего дня...\n";
-            JToken race = PBCurrentRaceFromBase(jBase);
-            int correntRaceId = CurrentRaceID(jBase);
-            log += CalculateCount(race, correntRaceId, onlyCurrentRace, calcReserv);
+            try
+            {
+                JToken race = PBCurrentRaceFromBase(jBase);
+                int correntRaceId = CurrentRaceID(jBase);
+                log += CalculateCount(race, correntRaceId, onlyCurrentRace, calcReserv);
+            }
+            catch (Exception ex) { log += $"  Ошибка\n{ex.Message}"; LogError("22gf32ef3efd", ex); }
+            
             return log;
         }
         public static string CalculateAllRaceCount(JToken jBase, bool onlyCurrentRace, bool calcReserv)
         {
             string log = "Подсчет карт всех дней...\n";
-            JArray races = PBRaces(jBase);
-            for (int r = 0; r < races.Count; r++)  //Перечисляем Races для копирования настроек групп
+            try
             {
-                JToken race = races[r];
-                log += CalculateCount(race, r, onlyCurrentRace, calcReserv);
+                JArray races = PBRaces(jBase);
+                for (int r = 0; r < races.Count; r++)  //Перечисляем Races для копирования настроек групп
+                {
+                    JToken race = races[r];
+                    log += CalculateCount(race, r, onlyCurrentRace, calcReserv);
+                }
             }
+            catch (Exception ex) { log += $"  Ошибка\n{ex.Message}"; LogError("adstf324g3", ex); }
             return log;
         }
         public static string CalculateCount(JToken race, int raceId, bool onlyCurrentRace, bool calcReserv)
@@ -136,7 +145,8 @@ namespace SportOrgMultyDay.Processing
                 coursePersonCountReserv.TryGetValue(cp.Key, out int val);
                 // TODO: ВЫнести переенные и UI 
 
-                int spare = (cp.Value / 10) + val;
+               // int spare = (cp.Value / 10) + val;
+                int spare = (cp.Value / 10);
                 if (spare > 10)
                     spare = 10;
                 if (spare < 5)

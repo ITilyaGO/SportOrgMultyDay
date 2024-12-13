@@ -99,6 +99,7 @@
             tabPageStartTimes = new TabPage();
             tabPageBibs = new TabPage();
             groupBoxBibs = new GroupBox();
+            checkBoxSetNumbersCreateReserv = new CheckBox();
             checkBoxSetNumbersRelay = new CheckBox();
             checkBoxSetNumbersByGroupsDebug = new CheckBox();
             buttonGroupSetNumbersByGroups = new Button();
@@ -158,6 +159,7 @@
             buttonOpenNumbersForm = new Button();
             buttonRemvoeWorstResult = new Button();
             tabPage2 = new TabPage();
+            labelHowToWorkStartMinutesSwap = new Label();
             labelStartMinutesSelectedPerson = new Label();
             comboBoxStartMinutesGroupSelect = new ComboBox();
             dataGridViewPersonMinutes = new DataGridView();
@@ -171,7 +173,8 @@
             openFileDialogYarfso = new OpenFileDialog();
             openFileDialogBaseFromProtocol = new OpenFileDialog();
             openFileDialogCsvUTF8 = new OpenFileDialog();
-            checkBoxSetNumbersCreateReserv = new CheckBox();
+            label17 = new Label();
+            linkLabelGitHub = new LinkLabel();
             contextMenuStripLog.SuspendLayout();
             tabPageShahmatka.SuspendLayout();
             groupBoxStartLogProcessing.SuspendLayout();
@@ -263,7 +266,7 @@
             // buttonCombineAllBase
             // 
             buttonCombineAllBase.Enabled = false;
-            buttonCombineAllBase.Location = new Point(1391, 16);
+            buttonCombineAllBase.Location = new Point(261, 367);
             buttonCombineAllBase.Name = "buttonCombineAllBase";
             buttonCombineAllBase.Size = new Size(115, 23);
             buttonCombineAllBase.TabIndex = 20;
@@ -325,9 +328,9 @@
             label12.AutoSize = true;
             label12.Location = new Point(6, 16);
             label12.Name = "label12";
-            label12.Size = new Size(187, 15);
+            label12.Size = new Size(184, 15);
             label12.TabIndex = 42;
-            label12.Text = "Время экспорта стартового лога";
+            label12.Text = "Время загрузки стартового лога";
             // 
             // dateTimePickerExportStartLog
             // 
@@ -403,7 +406,7 @@
             buttonSFRStartLogDNSCopy.Name = "buttonSFRStartLogDNSCopy";
             buttonSFRStartLogDNSCopy.Size = new Size(136, 23);
             buttonSFRStartLogDNSCopy.TabIndex = 34;
-            buttonSFRStartLogDNSCopy.Text = "Копировать";
+            buttonSFRStartLogDNSCopy.Text = "Копировать DNS";
             buttonSFRStartLogDNSCopy.UseVisualStyleBackColor = true;
             buttonSFRStartLogDNSCopy.Click += buttonSFRStartLogDNSCopy_Click;
             // 
@@ -892,6 +895,16 @@
             groupBoxBibs.TabStop = false;
             groupBoxBibs.Text = "Номера";
             // 
+            // checkBoxSetNumbersCreateReserv
+            // 
+            checkBoxSetNumbersCreateReserv.AutoSize = true;
+            checkBoxSetNumbersCreateReserv.Location = new Point(224, 105);
+            checkBoxSetNumbersCreateReserv.Name = "checkBoxSetNumbersCreateReserv";
+            checkBoxSetNumbersCreateReserv.Size = new Size(130, 19);
+            checkBoxSetNumbersCreateReserv.TabIndex = 9;
+            checkBoxSetNumbersCreateReserv.Text = "Создавать резервы";
+            checkBoxSetNumbersCreateReserv.UseVisualStyleBackColor = true;
+            // 
             // checkBoxSetNumbersRelay
             // 
             checkBoxSetNumbersRelay.AutoSize = true;
@@ -1225,6 +1238,7 @@
             tabPageOther.Controls.Add(checkBoxCombineCourse);
             tabPageOther.Controls.Add(buttonGroupCourseNamesFormat);
             tabPageOther.Controls.Add(groupBoxImport);
+            tabPageOther.Controls.Add(buttonCombineAllBase);
             tabPageOther.Controls.Add(groupBoxStartFee);
             tabPageOther.Controls.Add(buttonOpenNumbersForm);
             tabPageOther.Controls.Add(buttonRemvoeWorstResult);
@@ -1243,6 +1257,7 @@
             buttonQualFromOtherBase.TabIndex = 9;
             buttonQualFromOtherBase.Text = "TEMP Подтянуть квалификации из другой базы";
             buttonQualFromOtherBase.UseVisualStyleBackColor = true;
+            buttonQualFromOtherBase.Visible = false;
             buttonQualFromOtherBase.Click += buttonQualFromOtherBase_Click;
             // 
             // buttonVichestStart
@@ -1253,6 +1268,7 @@
             buttonVichestStart.TabIndex = 9;
             buttonVichestStart.Text = "TEMP Вычесть старт";
             buttonVichestStart.UseVisualStyleBackColor = true;
+            buttonVichestStart.Visible = false;
             buttonVichestStart.Click += buttonVichestStart_Click;
             // 
             // groupBoxMapCountCalculate
@@ -1514,6 +1530,7 @@
             // 
             // tabPage2
             // 
+            tabPage2.Controls.Add(labelHowToWorkStartMinutesSwap);
             tabPage2.Controls.Add(labelStartMinutesSelectedPerson);
             tabPage2.Controls.Add(comboBoxStartMinutesGroupSelect);
             tabPage2.Controls.Add(dataGridViewPersonMinutes);
@@ -1522,8 +1539,18 @@
             tabPage2.Padding = new Padding(3);
             tabPage2.Size = new Size(833, 514);
             tabPage2.TabIndex = 1;
-            tabPage2.Text = "Стартовые минуты (WIP)";
+            tabPage2.Text = "Стартовые минуты";
             tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // labelHowToWorkStartMinutesSwap
+            // 
+            labelHowToWorkStartMinutesSwap.AutoSize = true;
+            labelHowToWorkStartMinutesSwap.Location = new Point(697, 6);
+            labelHowToWorkStartMinutesSwap.Name = "labelHowToWorkStartMinutesSwap";
+            labelHowToWorkStartMinutesSwap.Size = new Size(130, 15);
+            labelHowToWorkStartMinutesSwap.TabIndex = 3;
+            labelHowToWorkStartMinutesSwap.Text = "Как работает (Кликни)";
+            labelHowToWorkStartMinutesSwap.Click += labelHowToWorkStartMinutesSwap_Click;
             // 
             // labelStartMinutesSelectedPerson
             // 
@@ -1609,32 +1636,42 @@
             openFileDialogCsvUTF8.FileName = "Импорт CSV";
             openFileDialogCsvUTF8.Filter = "csv utf8|*.csv|All files|*.*";
             // 
-            // checkBoxSetNumbersCreateReserv
+            // label17
             // 
-            checkBoxSetNumbersCreateReserv.AutoSize = true;
-            checkBoxSetNumbersCreateReserv.Location = new Point(224, 105);
-            checkBoxSetNumbersCreateReserv.Name = "checkBoxSetNumbersCreateReserv";
-            checkBoxSetNumbersCreateReserv.Size = new Size(130, 19);
-            checkBoxSetNumbersCreateReserv.TabIndex = 9;
-            checkBoxSetNumbersCreateReserv.Text = "Создавать резервы";
-            checkBoxSetNumbersCreateReserv.UseVisualStyleBackColor = true;
+            label17.AutoSize = true;
+            label17.Location = new Point(255, 16);
+            label17.Name = "label17";
+            label17.Size = new Size(0, 15);
+            label17.TabIndex = 31;
+            // 
+            // linkLabelGitHub
+            // 
+            linkLabelGitHub.AutoSize = true;
+            linkLabelGitHub.Location = new Point(277, 17);
+            linkLabelGitHub.Name = "linkLabelGitHub";
+            linkLabelGitHub.Size = new Size(133, 15);
+            linkLabelGitHub.TabIndex = 32;
+            linkLabelGitHub.TabStop = true;
+            linkLabelGitHub.Text = "Обновления на GitHub";
+            linkLabelGitHub.LinkClicked += linkLabelGitHub_LinkClicked;
             // 
             // Utils
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1408, 565);
+            Controls.Add(linkLabelGitHub);
+            Controls.Add(label17);
             Controls.Add(tabControlFunc);
             Controls.Add(comboBoxDays);
             Controls.Add(tabControl1);
-            Controls.Add(buttonCombineAllBase);
             Controls.Add(buttonBaseExport);
             Controls.Add(labelBaseImport);
             Controls.Add(buttonBaseImport);
             Icon = (Icon)resources.GetObject("$this.Icon");
             MinimumSize = new Size(900, 470);
             Name = "Utils";
-            Text = "Утилиты v0.18.x";
+            Text = "Утилиты v0.18.5";
             FormClosing += Utils_FormClosing;
             Load += Utils_Load;
             SizeChanged += Utils_SizeChanged;
@@ -1824,5 +1861,8 @@
         private Button buttonVichestStart;
         private Button buttonQualFromOtherBase;
         private CheckBox checkBoxSetNumbersCreateReserv;
+        private Label label17;
+        private LinkLabel linkLabelGitHub;
+        private Label labelHowToWorkStartMinutesSwap;
     }
 }

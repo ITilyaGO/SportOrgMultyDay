@@ -13,6 +13,7 @@ namespace SportOrgMultyDay
 {
     public partial class General : Form
     {
+        //TODO: Удалить лишние формы, оставить только утилиты
         public General()
         {
             InitializeComponent();
