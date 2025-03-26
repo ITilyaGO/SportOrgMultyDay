@@ -57,6 +57,7 @@
             labelSFRStartLogDupl = new Label();
             richTextBoxStartLogDupl = new RichTextBox();
             labelSFRStartLogCount = new Label();
+            buttonExportSFRx = new Button();
             buttonExportStartTimes = new Button();
             tabPageBase = new TabPage();
             buttonReplaceAllPersonsForOtherDays = new Button();
@@ -175,6 +176,7 @@
             openFileDialogCsvUTF8 = new OpenFileDialog();
             label17 = new Label();
             linkLabelGitHub = new LinkLabel();
+            saveFileDialogSFRx = new SaveFileDialog();
             contextMenuStripLog.SuspendLayout();
             tabPageShahmatka.SuspendLayout();
             groupBoxStartLogProcessing.SuspendLayout();
@@ -292,6 +294,7 @@
             // 
             tabPageShahmatka.BackColor = Color.WhiteSmoke;
             tabPageShahmatka.Controls.Add(groupBoxStartLogProcessing);
+            tabPageShahmatka.Controls.Add(buttonExportSFRx);
             tabPageShahmatka.Controls.Add(buttonExportStartTimes);
             tabPageShahmatka.Location = new Point(4, 24);
             tabPageShahmatka.Name = "tabPageShahmatka";
@@ -452,6 +455,16 @@
             labelSFRStartLogCount.Size = new Size(74, 15);
             labelSFRStartLogCount.TabIndex = 30;
             labelSFRStartLogCount.Text = "Стартовало:";
+            // 
+            // buttonExportSFRx
+            // 
+            buttonExportSFRx.Location = new Point(326, 58);
+            buttonExportSFRx.Name = "buttonExportSFRx";
+            buttonExportSFRx.Size = new Size(203, 68);
+            buttonExportSFRx.TabIndex = 27;
+            buttonExportSFRx.Text = "Экспорт в SFRx\r\n(Пока не полная поддержка)\r\nВ основном для использования в приложении";
+            buttonExportSFRx.UseVisualStyleBackColor = true;
+            buttonExportSFRx.Click += buttonExportSFRx_Click;
             // 
             // buttonExportStartTimes
             // 
@@ -1205,7 +1218,6 @@
             // listBoxCityOrganizationTweaks
             // 
             listBoxCityOrganizationTweaks.FormattingEnabled = true;
-            listBoxCityOrganizationTweaks.ItemHeight = 15;
             listBoxCityOrganizationTweaks.Location = new Point(6, 6);
             listBoxCityOrganizationTweaks.Name = "listBoxCityOrganizationTweaks";
             listBoxCityOrganizationTweaks.Size = new Size(224, 439);
@@ -1575,7 +1587,6 @@
             dataGridViewPersonMinutes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewPersonMinutes.Location = new Point(6, 29);
             dataGridViewPersonMinutes.Name = "dataGridViewPersonMinutes";
-            dataGridViewPersonMinutes.RowTemplate.Height = 25;
             dataGridViewPersonMinutes.Size = new Size(821, 479);
             dataGridViewPersonMinutes.TabIndex = 0;
             dataGridViewPersonMinutes.CellMouseUp += dataGridViewPersonMinutes_CellMouseUp;
@@ -1654,6 +1665,10 @@
             linkLabelGitHub.TabStop = true;
             linkLabelGitHub.Text = "Обновления на GitHub";
             linkLabelGitHub.LinkClicked += linkLabelGitHub_LinkClicked;
+            // 
+            // saveFileDialogSFRx
+            // 
+            saveFileDialogSFRx.Filter = "SFRx|*.sfrx|All files|*.*";
             // 
             // Utils
             // 
@@ -1864,5 +1879,7 @@
         private Label label17;
         private LinkLabel linkLabelGitHub;
         private Label labelHowToWorkStartMinutesSwap;
+        private Button buttonExportSFRx;
+        private SaveFileDialog saveFileDialogSFRx;
     }
 }

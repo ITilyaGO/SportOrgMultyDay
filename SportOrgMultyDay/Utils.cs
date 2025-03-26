@@ -21,6 +21,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using System;
 using System.Collections.Generic;
+using SportOrgMultyDay.Processing.SFR;
 
 namespace SportOrgMultyDay
 {
@@ -420,6 +421,14 @@ namespace SportOrgMultyDay
             string sftStartTxt = ExportStartTimes.ToSFRSmartTerminal(JBase);
             File.WriteAllText(saveFileDialogSfrst.FileName, sftStartTxt, new UTF8Encoding(true));
             SendLog($"Экспорт стартового файла SFT Smart Terminal...\nСохранено в файл: {saveFileDialogSfrst.FileName}\n==========================\n{sftStartTxt}\n==========================");
+        }
+
+        private void buttonExportSFRx_Click(object sender, EventArgs e)
+        {
+            if (saveFileDialogSFRx.ShowDialog() != DialogResult.OK) return;
+            string sftxTxt = SFRxManager.RaceToSFRx(out string log, PBCurrentRaceFromBase(JBase));
+            File.WriteAllText(saveFileDialogSFRx.FileName, sftxTxt, new UTF8Encoding(true));
+            SendLog($"Экспорт SFRx...\nСохранено в файл: {saveFileDialogSFRx.FileName}\n==========================\n{sftxTxt}\n==========================");
         }
 
         private void comboBoxDays_SelectedIndexChanged(object sender, EventArgs e)
