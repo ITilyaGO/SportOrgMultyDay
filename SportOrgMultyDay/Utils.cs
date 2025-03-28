@@ -39,7 +39,6 @@ namespace SportOrgMultyDay
         //public JBase SportOrgBase;
         int raceCount = 0;
         AutoResize autoResize;
-        List<int> SFRStartLog = new();
         OrganizationItemsController organizationItemsController = new();
 
         PersonStartMinute PersonStartMinuteSelected;
@@ -264,6 +263,7 @@ namespace SportOrgMultyDay
             buttonReplaceAllPersonsForOtherDays.Enabled = active;
             buttonBibsAutoCreateListNumbering.Enabled = active;
             buttonCalculatePersonStartPrice.Enabled = active;
+            buttonExportSFRx.Enabled = active;
         }
 
         private void ReloadOrganizationRenameList()
@@ -425,10 +425,16 @@ namespace SportOrgMultyDay
 
         private void buttonExportSFRx_Click(object sender, EventArgs e)
         {
+            JToken race = PBCurrentRaceFromBase(JBase);
+            JToken data = PBData(race);
+            string race_date = PDStartDate(data);
+            saveFileDialogSFRx.FileName = race_date;
             if (saveFileDialogSFRx.ShowDialog() != DialogResult.OK) return;
-            string sftxTxt = SFRxManager.RaceToSFRx(out string log, PBCurrentRaceFromBase(JBase));
+            string sftxTxt = SFRxManager.RaceToSFRx(out string log, race);
+            SendLog(log);
             File.WriteAllText(saveFileDialogSFRx.FileName, sftxTxt, new UTF8Encoding(true));
-            SendLog($"Экспорт SFRx...\nСохранено в файл: {saveFileDialogSFRx.FileName}\n==========================\n{sftxTxt}\n==========================");
+            if (checkBoxShahmatkaExtendedLogs.Checked)
+                SendLog($"Экспорт SFRx...\nСохранено в файл: {saveFileDialogSFRx.FileName}\n==========================\n{sftxTxt}\n==========================");
         }
 
         private void comboBoxDays_SelectedIndexChanged(object sender, EventArgs e)
@@ -578,9 +584,9 @@ namespace SportOrgMultyDay
 
             }
             JToken lastPerson = StartTimeManager.LastStartPerson(currentRace);
-            SendLog(StartTimeManager.StartPersonToString(lastPerson));
+            SendLog("Последний стартующий участник - " + StartTimeManager.StartPersonToString(lastPerson));
             ReloadStartMinutes();
-            buttonSetStartMinutes.Text = $"{dateTimePickerStartTime.Value.TimeOfDay} - {PPStartTimeTS(lastPerson).Value.ToString()}";
+            buttonSetStartMinutes.Text = $"{dateTimePickerStartTime.Value.TimeOfDay} - {PPStartTimeTS(lastPerson).Value}";
         }
 
         private void buttonSetAutoOrderStartTimes_Click(object sender, EventArgs e)
@@ -915,6 +921,13 @@ namespace SportOrgMultyDay
         private void labelHowToWorkStartMinutesSwap_Click(object sender, EventArgs e)
         {
             MessageBox.Show("ПКМ по одному участнику, затем по другому, с которым нужно поменять стартовые минуты местами");
+        }
+
+        private void labelHTWStartBibs_Click(object sender, EventArgs e)
+        {
+            string instruction = "Расширенный генератор минут участников.\r\nКаждая новая строка это \"Карридор\" или колонка группы в строке - своеборазный порядок в корридоре.\r\n\r\nДля правильной авто генерации порядка старта установите коридоры группам в спорт орг. После не забудте проверишть шахматку на предмет стартующих на одной минуте из одного корридора.\r\n\r\nИспользуются два основных символа разделения - \r\n\" \" - пробел\r\n\"/\" - слеш\r\nВ начале стсроки можно написать \"+\" тогда все стартовые минуты в этом корридоре сдвинкться на 1 минуту за каждый +\r\n\r\nЕсли написать группы через пробел то минуты будут присваиваться сначала участникам одной группе зачем второй и т.д.\r\nЕсли использовать слеш то участини будут браться последовательно из разделенных таким способом групп.\r\nСлеши имеют приоритет, то есть сначала строка разделяется на части которым будут применяться минуты по очереди, но внути этих частей разделенных слешем можно использовать последовательные группы.\r\nСжимать конец старта в колонках - если выключено то при использовании слешей в итоговых минутах в каждой группе будет поддерживаться постоянный интервал старта. Включено - когда в одной из групп разделенных слешем кончатся участники, то оставшимся будут выдаваться ближайшие возможные минуты, но не меньше чем минимальный заданный интервал. \r\nПримеры \r\nЕсть группы\r\nМ21 - 3 участника\r\nЖ21 - 3 участника\r\nМ18 - 1 участник\r\nМ35 - 2 участника\r\nСтрока - \"М21 Ж21 М18 М35\" результат - М21 10:01, М21 10:02, М21 10:03, Ж21 10:04, Ж21 10:05, Ж21 10:06, М18 10:07, М35 10:08, М35 10:09\r\nСтрока - \"М21/Ж21/М18/М35\" результат - М21 10:01, Ж21 10:02, М18 10:03, М35 10:04, М21 10:05, Ж21 10:06, М35 10:07, М21 10:08, Ж21 10:09\r\nСтрока - \"М21 Ж21/М18 М35\" результат - М21 10:01, М18 10:02, М21 10:03, М35 10:04, М21 10:05, М35 10:06, Ж21 10:07, Ж21 10:08, Ж21 10:09\r\nСтрока - \"М21/Ж21/М18 М35\" результат - М21 10:01, Ж21 10:02, М18 10:03, М21 10:04, Ж21 10:05, М35 10:06, М21 10:07, Ж21 10:08, М35 10:09 \r\n\r\nЕсли выключено - Сжимать конец старта в колонках \r\nСтрока - \"Ж21 М35/М18/М21\" результат - Ж21 10:00, М18 10:01, М21 10:02, Ж21 10:03, М21 10:05, Ж21 10:06, М21 10:08, М35 10:09, М35 10:12";
+            SendLog(instruction);
+            MessageBox.Show(instruction);
         }
     }
 }

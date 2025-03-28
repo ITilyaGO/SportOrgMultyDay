@@ -42,6 +42,7 @@
             saveFileDialogSfrst = new SaveFileDialog();
             comboBoxDays = new ComboBox();
             tabPageShahmatka = new TabPage();
+            checkBoxShahmatkaExtendedLogs = new CheckBox();
             groupBoxStartLogProcessing = new GroupBox();
             label12 = new Label();
             dateTimePickerExportStartLog = new DateTimePicker();
@@ -100,6 +101,7 @@
             tabPageStartTimes = new TabPage();
             tabPageBibs = new TabPage();
             groupBoxBibs = new GroupBox();
+            labelHTWStartBibs = new Label();
             checkBoxSetNumbersCreateReserv = new CheckBox();
             checkBoxSetNumbersRelay = new CheckBox();
             checkBoxSetNumbersByGroupsDebug = new CheckBox();
@@ -212,6 +214,7 @@
             buttonBaseImport.Size = new Size(109, 23);
             buttonBaseImport.TabIndex = 0;
             buttonBaseImport.Text = "Импорт базы";
+            toolTipGeneral.SetToolTip(buttonBaseImport, "Импорт базы SportOrg");
             buttonBaseImport.UseVisualStyleBackColor = true;
             buttonBaseImport.Click += buttonBaseImport_Click;
             // 
@@ -288,11 +291,13 @@
             comboBoxDays.Name = "comboBoxDays";
             comboBoxDays.Size = new Size(79, 23);
             comboBoxDays.TabIndex = 29;
+            toolTipGeneral.SetToolTip(comboBoxDays, "Текущий день соревнований");
             comboBoxDays.SelectedIndexChanged += comboBoxDays_SelectedIndexChanged;
             // 
             // tabPageShahmatka
             // 
             tabPageShahmatka.BackColor = Color.WhiteSmoke;
+            tabPageShahmatka.Controls.Add(checkBoxShahmatkaExtendedLogs);
             tabPageShahmatka.Controls.Add(groupBoxStartLogProcessing);
             tabPageShahmatka.Controls.Add(buttonExportSFRx);
             tabPageShahmatka.Controls.Add(buttonExportStartTimes);
@@ -302,6 +307,16 @@
             tabPageShahmatka.Size = new Size(535, 485);
             tabPageShahmatka.TabIndex = 1;
             tabPageShahmatka.Text = "Шахматка";
+            // 
+            // checkBoxShahmatkaExtendedLogs
+            // 
+            checkBoxShahmatkaExtendedLogs.AutoSize = true;
+            checkBoxShahmatkaExtendedLogs.Location = new Point(326, 132);
+            checkBoxShahmatkaExtendedLogs.Name = "checkBoxShahmatkaExtendedLogs";
+            checkBoxShahmatkaExtendedLogs.Size = new Size(134, 19);
+            checkBoxShahmatkaExtendedLogs.TabIndex = 30;
+            checkBoxShahmatkaExtendedLogs.Text = "Расширенные логи";
+            checkBoxShahmatkaExtendedLogs.UseVisualStyleBackColor = true;
             // 
             // groupBoxStartLogProcessing
             // 
@@ -462,7 +477,8 @@
             buttonExportSFRx.Name = "buttonExportSFRx";
             buttonExportSFRx.Size = new Size(203, 68);
             buttonExportSFRx.TabIndex = 27;
-            buttonExportSFRx.Text = "Экспорт в SFRx\r\n(Пока не полная поддержка)\r\nВ основном для использования в приложении";
+            buttonExportSFRx.Text = "Экспорт в SFRx\r\n(Пока не полная поддержка)\r\nВ основном для использования в приложении SFR на старте";
+            toolTipGeneral.SetToolTip(buttonExportSFRx, "На данный момент поддержвиется экспорт только одного выбранного дня. \r\nЭкспортируются - Участники, Группы, Команды");
             buttonExportSFRx.UseVisualStyleBackColor = true;
             buttonExportSFRx.Click += buttonExportSFRx_Click;
             // 
@@ -473,6 +489,7 @@
             buttonExportStartTimes.Size = new Size(203, 46);
             buttonExportStartTimes.TabIndex = 27;
             buttonExportStartTimes.Text = "Экспортировать стартовые минуты для SFR Smart Terminal";
+            toolTipGeneral.SetToolTip(buttonExportStartTimes, "SFR Smart Terminal - Старое приложение, для работы с SFR.");
             buttonExportStartTimes.UseVisualStyleBackColor = true;
             buttonExportStartTimes.Click += buttonExportStartTimes_Click;
             // 
@@ -690,6 +707,7 @@
             // 
             // groupBoxStartTime
             // 
+            groupBoxStartTime.Controls.Add(labelHTWStartBibs);
             groupBoxStartTime.Controls.Add(checkBoxSetStartTimeOnlyCurrentDayPersons);
             groupBoxStartTime.Controls.Add(checkBoxUseShortStartTimeAlg);
             groupBoxStartTime.Controls.Add(checkBoxStartTimesPersonShuffle);
@@ -714,9 +732,10 @@
             checkBoxSetStartTimeOnlyCurrentDayPersons.AutoSize = true;
             checkBoxSetStartTimeOnlyCurrentDayPersons.Location = new Point(224, 158);
             checkBoxSetStartTimeOnlyCurrentDayPersons.Name = "checkBoxSetStartTimeOnlyCurrentDayPersons";
-            checkBoxSetStartTimeOnlyCurrentDayPersons.Size = new Size(310, 19);
+            checkBoxSetStartTimeOnlyCurrentDayPersons.Size = new Size(285, 34);
             checkBoxSetStartTimeOnlyCurrentDayPersons.TabIndex = 8;
-            checkBoxSetStartTimeOnlyCurrentDayPersons.Text = "Выдавать минуты только участником текущего дня";
+            checkBoxSetStartTimeOnlyCurrentDayPersons.Text = "Выдавать минуты только участникам\r\nтекущего дня - определяется по комментарию";
+            toolTipGeneral.SetToolTip(checkBoxSetStartTimeOnlyCurrentDayPersons, resources.GetString("checkBoxSetStartTimeOnlyCurrentDayPersons.ToolTip"));
             checkBoxSetStartTimeOnlyCurrentDayPersons.UseVisualStyleBackColor = true;
             // 
             // checkBoxUseShortStartTimeAlg
@@ -778,7 +797,7 @@
             dateTimePickerMinColumnStartInterval.Name = "dateTimePickerMinColumnStartInterval";
             dateTimePickerMinColumnStartInterval.Size = new Size(83, 23);
             dateTimePickerMinColumnStartInterval.TabIndex = 4;
-            dateTimePickerMinColumnStartInterval.Value = new DateTime(1753, 1, 1, 0, 2, 0, 0);
+            dateTimePickerMinColumnStartInterval.Value = new DateTime(1753, 1, 1, 0, 1, 0, 0);
             // 
             // dateTimePickerStartInterval
             // 
@@ -826,7 +845,7 @@
             dateTimePickerStartTime.Name = "dateTimePickerStartTime";
             dateTimePickerStartTime.Size = new Size(83, 23);
             dateTimePickerStartTime.TabIndex = 0;
-            dateTimePickerStartTime.Value = new DateTime(1753, 1, 1, 0, 0, 0, 0);
+            dateTimePickerStartTime.Value = new DateTime(1753, 1, 1, 10, 0, 0, 0);
             // 
             // buttonCopyGroupSettings
             // 
@@ -907,6 +926,16 @@
             groupBoxBibs.TabIndex = 6;
             groupBoxBibs.TabStop = false;
             groupBoxBibs.Text = "Номера";
+            // 
+            // labelHTWStartBibs
+            // 
+            labelHTWStartBibs.AutoSize = true;
+            labelHTWStartBibs.Location = new Point(411, 422);
+            labelHTWStartBibs.Name = "labelHTWStartBibs";
+            labelHTWStartBibs.Size = new Size(104, 15);
+            labelHTWStartBibs.TabIndex = 10;
+            labelHTWStartBibs.Text = "Как это работает?";
+            labelHTWStartBibs.Click += labelHTWStartBibs_Click;
             // 
             // checkBoxSetNumbersCreateReserv
             // 
@@ -1557,11 +1586,11 @@
             // labelHowToWorkStartMinutesSwap
             // 
             labelHowToWorkStartMinutesSwap.AutoSize = true;
-            labelHowToWorkStartMinutesSwap.Location = new Point(697, 6);
+            labelHowToWorkStartMinutesSwap.Location = new Point(671, 7);
             labelHowToWorkStartMinutesSwap.Name = "labelHowToWorkStartMinutesSwap";
-            labelHowToWorkStartMinutesSwap.Size = new Size(130, 15);
+            labelHowToWorkStartMinutesSwap.Size = new Size(156, 15);
             labelHowToWorkStartMinutesSwap.TabIndex = 3;
-            labelHowToWorkStartMinutesSwap.Text = "Как работает (Кликни)";
+            labelHowToWorkStartMinutesSwap.Text = "Как это работает? (Кликни)";
             labelHowToWorkStartMinutesSwap.Click += labelHowToWorkStartMinutesSwap_Click;
             // 
             // labelStartMinutesSelectedPerson
@@ -1686,12 +1715,13 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             MinimumSize = new Size(900, 470);
             Name = "Utils";
-            Text = "Утилиты v0.18.5";
+            Text = "Утилиты v0.19.0";
             FormClosing += Utils_FormClosing;
             Load += Utils_Load;
             SizeChanged += Utils_SizeChanged;
             contextMenuStripLog.ResumeLayout(false);
             tabPageShahmatka.ResumeLayout(false);
+            tabPageShahmatka.PerformLayout();
             groupBoxStartLogProcessing.ResumeLayout(false);
             groupBoxStartLogProcessing.PerformLayout();
             tabPageBase.ResumeLayout(false);
@@ -1881,5 +1911,7 @@
         private Label labelHowToWorkStartMinutesSwap;
         private Button buttonExportSFRx;
         private SaveFileDialog saveFileDialogSFRx;
+        private CheckBox checkBoxShahmatkaExtendedLogs;
+        private Label labelHTWStartBibs;
     }
 }

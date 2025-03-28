@@ -8,8 +8,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <StartupObject>SportOrgMultyDay.Program</StartupObject>
     <ApplicationIcon>sportorg_oragne.ico</ApplicationIcon>
-    <AssemblyVersion>0.18.2</AssemblyVersion>
-    <FileVersion>0.18.2</FileVersion>
+    <AssemblyVersion>0.19</AssemblyVersion>
+    <FileVersion>0.19</FileVersion>
     <IncludeSymbols>False</IncludeSymbols>
   </PropertyGroup>
 

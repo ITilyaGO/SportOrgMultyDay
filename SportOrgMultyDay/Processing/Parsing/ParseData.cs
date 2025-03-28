@@ -47,5 +47,26 @@ namespace SportOrgMultyDay.Processing.Parsing
             catch (Exception ex) { LogError("4gszhj56fs", ex); }
             return null;
         }
+        public static DateTime? PDStartDatetimeDT(JToken data)
+        {
+            try
+            {
+                string strDt = (string)data["start_datetime"];
+                if (strDt == null)
+                    return null;
+                DateTime dateTime = DateTime.Parse(strDt);
+                return dateTime;
+            }
+            catch (Exception ex) { LogError("4gszhj56fs", ex); }
+            return null;
+        }
+        public static string PDStartDate(JToken data)
+        {
+            DateTime? dateTime = PDStartDatetimeDT(data);
+            if (!dateTime.HasValue)
+                return null;
+            return dateTime.Value.ToString("dd.MM.yyyy");
+        }
+
     }
 }

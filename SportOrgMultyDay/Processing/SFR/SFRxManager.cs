@@ -10,12 +10,13 @@ namespace SportOrgMultyDay.Processing.SFR
 {
     public static class SFRxManager
     {
-        public static string RaceToSFRx(out string log, JToken race)
+        public static string RaceToSFRx(out string _log, JToken race)
         {
-            log = "Перевод в SFRx...\n";
-            SFRGeneral sFRGeneral = SportOrgToSFR.RaceToSFR(race);
-                log += "  Генерация SFRx...\n";
-            return sFRGeneral.Serialize();
+            SFRGeneral sFRGeneral = SportOrgToSFR.RaceToSFR(race, out string log);
+            string result = sFRGeneral.Serialize(out string log2);
+            _log = log;
+            _log += log2;
+            return result;
         }
     }
 }

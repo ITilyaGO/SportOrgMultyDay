@@ -50,7 +50,7 @@ namespace SportOrgMultyDay.Processing
                 List<string> groupNames = new();
                 List<JToken> corGroups = corridorGroups[corridorId];
                 corGroups.ForEach(group => { groupNames.Add(PGName(group)); });
-                string outStr = string.Join('/', groupNames);
+                string outStr = string.Join(' ', groupNames);
                 corridorsStr.Add(outStr);
             }
             return string.Join('\n', corridorsStr);
@@ -121,6 +121,11 @@ namespace SportOrgMultyDay.Processing
         {
             string msgLog = "Установка стартовых минут по заданному порядку...\n";
             JArray groups = PBGroups(race);
+
+            Dictionary<string, string> groupId_Name = [];
+            foreach (JToken group in groups)
+                groupId_Name.Add(PGId(group), PGName(group));
+
             JArray allPersons = PBPersons(race);
             List<JToken> personsList = new();
             if (raceId > -1)
@@ -144,7 +149,7 @@ namespace SportOrgMultyDay.Processing
                     {
                         JToken person = corridorColumn.Persons[j];
                         person["start_time"] = timeOfStart.Add(TimeSpan.FromMinutes(j * corridorColumnCount + i) * startInterval.Minutes + corridor.AdditionalStartTime).TotalMilliseconds;
-                        msgLog += $"        - Старт: {StartTimeToString(PPStartTime(person))} Участник {j + 1}: {PPToString(person)}\n";
+                        msgLog += $"        - Старт: {StartTimeToString(PPStartTime(person))} Группа: {groupId_Name[PPGroupId(person)]} Участник {j + 1}: {PPToString(person)}\n";
                     }
                 }
             }
@@ -156,7 +161,12 @@ namespace SportOrgMultyDay.Processing
             string msgLog = "Установка стартовых минут по заданному порядку, с коротким концом...\n";
             JArray groups = PBGroups(race);
             JArray allPersons = PBPersons(race);
-            List<JToken> personsList = new();
+
+            Dictionary<string, string> groupId_Name = [];
+            foreach (JToken group in groups)
+                groupId_Name.Add(PGId(group), PGName(group));
+
+            List<JToken> personsList = [];
             if (raceId > -1)
                 for(int i = 0; i < allPersons.Count; i++)
                 {
@@ -196,7 +206,7 @@ namespace SportOrgMultyDay.Processing
                         person["start_time"] = newTime.TotalMilliseconds;
                         corridor.CurrentStart = newTime;
                         currentCol.LastStart = newTime;
-                        msgLog += $"        - Старт: {StartTimeToString(PPStartTime(person))} Участник: {PPToString(person)}\n";
+                        msgLog += $"        - Старт: {StartTimeToString(PPStartTime(person))} Группа: {groupId_Name[PPGroupId(person)]} Участник: {PPToString(person)}\n";
 
                     }
                     if (minIntervalColumns >= corridor.CorridorColumns.Count - emptyColumns)
@@ -212,7 +222,7 @@ namespace SportOrgMultyDay.Processing
             log += "  Парсинг порядка групп...\n";
             Dictionary<string, JToken> groupsByName = DictGNameGroup(groups);
 
-            List<Corridor> corridors = new();
+            List<Corridor> corridors = [];
             string[] rowsOfRawOrder = rawOrder.Split('\n', StringSplitOptions.RemoveEmptyEntries);
             foreach (string rawRow in rowsOfRawOrder)
             {
@@ -227,11 +237,11 @@ namespace SportOrgMultyDay.Processing
                 string row = rawRow.Trim('+');
 
 
-                string[] columns = row.Split(new char[] { '/', ';' });
+                string[] columns = row.Split(['/', ';']);
                 foreach (string column in columns)
                 {
                     CorridorColumn corridorColumn = new();
-                    string[] groupNames = column.Split(new char[] { ',', ' ' });
+                    string[] groupNames = column.Split([',', ' ']);
                     foreach (string groupName in groupNames)
                     {
                         if (groupsByName.TryGetValue(groupName, out JToken group))

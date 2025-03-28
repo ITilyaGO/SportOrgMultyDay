@@ -24,6 +24,7 @@ namespace SportOrgMultyDay.Processing.Parsing
         {
             try
             {
+                if (organization == null) return null;
                 return (string)organization["name"];
             }
             catch (Exception ex) { LogError("86flvuwcq", ex); }
