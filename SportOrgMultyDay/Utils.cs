@@ -929,5 +929,10 @@ namespace SportOrgMultyDay
             SendLog(instruction);
             MessageBox.Show(instruction);
         }
+
+        private void buttonRemovePersonDuplicates_Click(object sender, EventArgs e)
+        {
+            SendLog(RemovePersonDuplicates.RemoveDuplicates(PBCurrentRaceFromBase(JBase)));
+        }
     }
 }

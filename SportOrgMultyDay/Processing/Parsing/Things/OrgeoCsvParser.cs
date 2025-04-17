@@ -86,7 +86,7 @@ namespace SportOrgMultyDay.Processing.Parsing.Things
                 o.LastName = c[2];
                 o.FirstName = c[3];
                 o.Organization = c[4];
-                o.Kod = Convert.ToInt32(c[5]);
+                o.Kod = int.TryParse(c[5], out int kod) ? kod : 0;
                 o.Region = c[6];
                 o.SfrKval = c[7];
                 o.Kval = c[8];

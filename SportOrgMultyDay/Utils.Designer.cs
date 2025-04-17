@@ -82,6 +82,7 @@
             textBoxStringFindComment = new TextBox();
             label2 = new Label();
             groupBoxStartTime = new GroupBox();
+            labelHTWStartBibs = new Label();
             checkBoxSetStartTimeOnlyCurrentDayPersons = new CheckBox();
             checkBoxUseShortStartTimeAlg = new CheckBox();
             checkBoxStartTimesPersonShuffle = new CheckBox();
@@ -101,7 +102,6 @@
             tabPageStartTimes = new TabPage();
             tabPageBibs = new TabPage();
             groupBoxBibs = new GroupBox();
-            labelHTWStartBibs = new Label();
             checkBoxSetNumbersCreateReserv = new CheckBox();
             checkBoxSetNumbersRelay = new CheckBox();
             checkBoxSetNumbersByGroupsDebug = new CheckBox();
@@ -179,6 +179,7 @@
             label17 = new Label();
             linkLabelGitHub = new LinkLabel();
             saveFileDialogSFRx = new SaveFileDialog();
+            buttonRemovePersonDuplicates = new Button();
             contextMenuStripLog.SuspendLayout();
             tabPageShahmatka.SuspendLayout();
             groupBoxStartLogProcessing.SuspendLayout();
@@ -496,6 +497,7 @@
             // tabPageBase
             // 
             tabPageBase.BackColor = Color.WhiteSmoke;
+            tabPageBase.Controls.Add(buttonRemovePersonDuplicates);
             tabPageBase.Controls.Add(buttonReplaceAllPersonsForOtherDays);
             tabPageBase.Controls.Add(groupBox2);
             tabPageBase.Controls.Add(checkedListBoxWithSync);
@@ -727,6 +729,16 @@
             groupBoxStartTime.TabStop = false;
             groupBoxStartTime.Text = "Стартовые минуты";
             // 
+            // labelHTWStartBibs
+            // 
+            labelHTWStartBibs.AutoSize = true;
+            labelHTWStartBibs.Location = new Point(411, 422);
+            labelHTWStartBibs.Name = "labelHTWStartBibs";
+            labelHTWStartBibs.Size = new Size(104, 15);
+            labelHTWStartBibs.TabIndex = 10;
+            labelHTWStartBibs.Text = "Как это работает?";
+            labelHTWStartBibs.Click += labelHTWStartBibs_Click;
+            // 
             // checkBoxSetStartTimeOnlyCurrentDayPersons
             // 
             checkBoxSetStartTimeOnlyCurrentDayPersons.AutoSize = true;
@@ -926,16 +938,6 @@
             groupBoxBibs.TabIndex = 6;
             groupBoxBibs.TabStop = false;
             groupBoxBibs.Text = "Номера";
-            // 
-            // labelHTWStartBibs
-            // 
-            labelHTWStartBibs.AutoSize = true;
-            labelHTWStartBibs.Location = new Point(411, 422);
-            labelHTWStartBibs.Name = "labelHTWStartBibs";
-            labelHTWStartBibs.Size = new Size(104, 15);
-            labelHTWStartBibs.TabIndex = 10;
-            labelHTWStartBibs.Text = "Как это работает?";
-            labelHTWStartBibs.Click += labelHTWStartBibs_Click;
             // 
             // checkBoxSetNumbersCreateReserv
             // 
@@ -1699,6 +1701,16 @@
             // 
             saveFileDialogSFRx.Filter = "SFRx|*.sfrx|All files|*.*";
             // 
+            // buttonRemovePersonDuplicates
+            // 
+            buttonRemovePersonDuplicates.Location = new Point(265, 352);
+            buttonRemovePersonDuplicates.Name = "buttonRemovePersonDuplicates";
+            buttonRemovePersonDuplicates.Size = new Size(248, 23);
+            buttonRemovePersonDuplicates.TabIndex = 28;
+            buttonRemovePersonDuplicates.Text = "Удалить дубликаты участников";
+            buttonRemovePersonDuplicates.UseVisualStyleBackColor = true;
+            buttonRemovePersonDuplicates.Click += buttonRemovePersonDuplicates_Click;
+            // 
             // Utils
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1913,5 +1925,6 @@
         private SaveFileDialog saveFileDialogSFRx;
         private CheckBox checkBoxShahmatkaExtendedLogs;
         private Label labelHTWStartBibs;
+        private Button buttonRemovePersonDuplicates;
     }
 }

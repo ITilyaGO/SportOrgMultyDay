@@ -294,19 +294,18 @@ namespace SportOrgMultyDay.Processing
             string numbersRange = parts[1];
             string rawReservCount = parts.ElementAtOrDefault(2);
 
-
             // Попробуем разобрать диапазон номеров
             if (!TryParseNumbersRange(numbersRange, out int startBib, out int endBib))
                 return null;
 
-            _ = TryParseReservCount(rawReservCount, out int reservCount);
+            _ = TryParseReservCount(rawReservCount , out int reservCount);
 
             return new NumbersOfGroup(groupName, startBib, endBib, reservCount: reservCount);
         }
 
         private static bool TryParseReservCount(string rawReservCount, out int reservCount)
         {
-            reservCount = 100;
+            reservCount = 0;
             if (string.IsNullOrWhiteSpace(rawReservCount))
                 return false;
             string[] parts = rawReservCount.Split(':', StringSplitOptions.RemoveEmptyEntries);
