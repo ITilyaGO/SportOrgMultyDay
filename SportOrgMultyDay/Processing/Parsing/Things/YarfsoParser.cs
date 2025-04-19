@@ -147,20 +147,34 @@ namespace SportOrgMultyDay.Processing.Parsing.Things
         {
             string[] data = input.Split(';');
 
+            //Dictionary<string, string> parsedData = new Dictionary<string, string>()
+            //{
+            //    { "fullName", data[0] },
+            //    { "gender", data[1] },
+            //    { "year", data[2] },
+            //    { "team", data[3] },
+            //    { "qual", data[4] },
+            //    { "med", data[5] },
+            //    { "group", data[6] },
+            //    { "days", data[7] },
+            //    { "request", data[8] },
+            //    { "amount", data[9] },
+            //    { "isPaid", data[10] }
+            //};
+
             Dictionary<string, string> parsedData = new Dictionary<string, string>()
             {
                 { "fullName", data[0] },
-                { "gender", data[1] },
-                { "year", data[2] },
+                { "amount", data[1] },
+                { "isPaid", data[2] },
                 { "team", data[3] },
-                { "qual", data[4] },
-                { "med", data[5] },
-                { "group", data[6] },
-                { "days", data[7] },
-                { "request", data[8] },
-                { "amount", data[9] },
-                { "isPaid", data[10] }
+                { "year", data[4] },
+                { "group", data[5] },
+                { "days", data[6] },
+                { "qual", data[7] },
+                { "med", data[8] }
             };
+
 
             return parsedData;
         }
