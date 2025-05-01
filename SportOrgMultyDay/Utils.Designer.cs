@@ -61,6 +61,7 @@
             buttonExportSFRx = new Button();
             buttonExportStartTimes = new Button();
             tabPageBase = new TabPage();
+            buttonRemovePersonDuplicates = new Button();
             buttonReplaceAllPersonsForOtherDays = new Button();
             groupBox2 = new GroupBox();
             buttonRemoveMissingPersons = new Button();
@@ -109,6 +110,9 @@
             richTextBoxBibsNumbering = new RichTextBox();
             buttonBibsAutoCreateListNumbering = new Button();
             tabPageGroups = new TabPage();
+            groupBoxGroupRemoving = new GroupBox();
+            buttonGroupRemoveIfNotInList = new Button();
+            richTextBoxGroupNotRemoveList = new RichTextBox();
             groupBoxGroupRanks = new GroupBox();
             label9 = new Label();
             label6 = new Label();
@@ -179,7 +183,7 @@
             label17 = new Label();
             linkLabelGitHub = new LinkLabel();
             saveFileDialogSFRx = new SaveFileDialog();
-            buttonRemovePersonDuplicates = new Button();
+            buttonGroupRemoveGetList = new Button();
             contextMenuStripLog.SuspendLayout();
             tabPageShahmatka.SuspendLayout();
             groupBoxStartLogProcessing.SuspendLayout();
@@ -194,6 +198,7 @@
             tabPageBibs.SuspendLayout();
             groupBoxBibs.SuspendLayout();
             tabPageGroups.SuspendLayout();
+            groupBoxGroupRemoving.SuspendLayout();
             groupBoxGroupRanks.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDownGroupResultsCountToCompleteRank).BeginInit();
             tabPageOrganizations.SuspendLayout();
@@ -510,6 +515,16 @@
             tabPageBase.Size = new Size(535, 485);
             tabPageBase.TabIndex = 0;
             tabPageBase.Text = "База";
+            // 
+            // buttonRemovePersonDuplicates
+            // 
+            buttonRemovePersonDuplicates.Location = new Point(265, 352);
+            buttonRemovePersonDuplicates.Name = "buttonRemovePersonDuplicates";
+            buttonRemovePersonDuplicates.Size = new Size(248, 23);
+            buttonRemovePersonDuplicates.TabIndex = 28;
+            buttonRemovePersonDuplicates.Text = "Удалить дубликаты участников";
+            buttonRemovePersonDuplicates.UseVisualStyleBackColor = true;
+            buttonRemovePersonDuplicates.Click += buttonRemovePersonDuplicates_Click;
             // 
             // buttonReplaceAllPersonsForOtherDays
             // 
@@ -1001,6 +1016,7 @@
             // tabPageGroups
             // 
             tabPageGroups.BackColor = Color.WhiteSmoke;
+            tabPageGroups.Controls.Add(groupBoxGroupRemoving);
             tabPageGroups.Controls.Add(buttonCopyGroupSettings);
             tabPageGroups.Controls.Add(groupBoxGroupRanks);
             tabPageGroups.Location = new Point(4, 24);
@@ -1009,6 +1025,36 @@
             tabPageGroups.Size = new Size(535, 485);
             tabPageGroups.TabIndex = 4;
             tabPageGroups.Text = "Группы";
+            // 
+            // groupBoxGroupRemoving
+            // 
+            groupBoxGroupRemoving.Controls.Add(buttonGroupRemoveGetList);
+            groupBoxGroupRemoving.Controls.Add(buttonGroupRemoveIfNotInList);
+            groupBoxGroupRemoving.Controls.Add(richTextBoxGroupNotRemoveList);
+            groupBoxGroupRemoving.Location = new Point(6, 109);
+            groupBoxGroupRemoving.Name = "groupBoxGroupRemoving";
+            groupBoxGroupRemoving.Size = new Size(189, 370);
+            groupBoxGroupRemoving.TabIndex = 30;
+            groupBoxGroupRemoving.TabStop = false;
+            groupBoxGroupRemoving.Text = "Удаление групп";
+            // 
+            // buttonGroupRemoveIfNotInList
+            // 
+            buttonGroupRemoveIfNotInList.Location = new Point(6, 336);
+            buttonGroupRemoveIfNotInList.Name = "buttonGroupRemoveIfNotInList";
+            buttonGroupRemoveIfNotInList.Size = new Size(175, 23);
+            buttonGroupRemoveIfNotInList.TabIndex = 31;
+            buttonGroupRemoveIfNotInList.Text = "Удалить группы вне списка";
+            buttonGroupRemoveIfNotInList.UseVisualStyleBackColor = true;
+            buttonGroupRemoveIfNotInList.Click += buttonGroupRemoveIfNotInList_Click;
+            // 
+            // richTextBoxGroupNotRemoveList
+            // 
+            richTextBoxGroupNotRemoveList.Location = new Point(6, 51);
+            richTextBoxGroupNotRemoveList.Name = "richTextBoxGroupNotRemoveList";
+            richTextBoxGroupNotRemoveList.Size = new Size(175, 279);
+            richTextBoxGroupNotRemoveList.TabIndex = 31;
+            richTextBoxGroupNotRemoveList.Text = "";
             // 
             // groupBoxGroupRanks
             // 
@@ -1701,15 +1747,15 @@
             // 
             saveFileDialogSFRx.Filter = "SFRx|*.sfrx|All files|*.*";
             // 
-            // buttonRemovePersonDuplicates
+            // buttonGroupRemoveGetList
             // 
-            buttonRemovePersonDuplicates.Location = new Point(265, 352);
-            buttonRemovePersonDuplicates.Name = "buttonRemovePersonDuplicates";
-            buttonRemovePersonDuplicates.Size = new Size(248, 23);
-            buttonRemovePersonDuplicates.TabIndex = 28;
-            buttonRemovePersonDuplicates.Text = "Удалить дубликаты участников";
-            buttonRemovePersonDuplicates.UseVisualStyleBackColor = true;
-            buttonRemovePersonDuplicates.Click += buttonRemovePersonDuplicates_Click;
+            buttonGroupRemoveGetList.Location = new Point(6, 22);
+            buttonGroupRemoveGetList.Name = "buttonGroupRemoveGetList";
+            buttonGroupRemoveGetList.Size = new Size(175, 23);
+            buttonGroupRemoveGetList.TabIndex = 31;
+            buttonGroupRemoveGetList.Text = "Получить группы";
+            buttonGroupRemoveGetList.UseVisualStyleBackColor = true;
+            buttonGroupRemoveGetList.Click += buttonGroupRemoveGetList_Click;
             // 
             // Utils
             // 
@@ -1752,6 +1798,7 @@
             groupBoxBibs.ResumeLayout(false);
             groupBoxBibs.PerformLayout();
             tabPageGroups.ResumeLayout(false);
+            groupBoxGroupRemoving.ResumeLayout(false);
             groupBoxGroupRanks.ResumeLayout(false);
             groupBoxGroupRanks.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDownGroupResultsCountToCompleteRank).EndInit();
@@ -1926,5 +1973,9 @@
         private CheckBox checkBoxShahmatkaExtendedLogs;
         private Label labelHTWStartBibs;
         private Button buttonRemovePersonDuplicates;
+        private GroupBox groupBoxGroupRemoving;
+        private Button buttonGroupRemoveIfNotInList;
+        private RichTextBox richTextBoxGroupNotRemoveList;
+        private Button buttonGroupRemoveGetList;
     }
 }

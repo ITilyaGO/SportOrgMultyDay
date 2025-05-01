@@ -934,5 +934,15 @@ namespace SportOrgMultyDay
         {
             SendLog(RemovePersonDuplicates.RemoveDuplicates(PBCurrentRaceFromBase(JBase)));
         }
+
+        private void buttonGroupRemoveIfNotInList_Click(object sender, EventArgs e)
+        {
+            SendLog(RemoveGroups.RemoveGroupsIfNotInList(PBCurrentRaceFromBase(JBase), richTextBoxGroupNotRemoveList.Text));
+        }
+
+        private void buttonGroupRemoveGetList_Click(object sender, EventArgs e)
+        {
+            richTextBoxGroupNotRemoveList.Text = RemoveGroups.GetGroups(PBCurrentRaceFromBase(JBase));
+        }
     }
 }
