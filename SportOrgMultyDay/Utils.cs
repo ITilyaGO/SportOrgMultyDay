@@ -312,6 +312,19 @@ namespace SportOrgMultyDay
             richTextBoxLog.Text += $"[{DateTime.Now:HH:mm:ss}] >> {message}\n";
             richTextBoxLog.ScrollToCaret();
         }
+        private void SendSubLog(string message, bool isNextLine = true)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => SendSubLog(message, isNextLine)));
+            }
+            else
+            {
+                message += isNextLine ? "\n" : "";
+                richTextBoxLog.Text += message;
+                richTextBoxLog.ScrollToCaret();
+            }
+        }
 
         private void Utils_Load(object sender, EventArgs e)
         {
@@ -946,11 +959,11 @@ namespace SportOrgMultyDay
             richTextBoxGroupNotRemoveList.Text = RemoveGroups.GetGroups(PBCurrentRaceFromBase(JBase));
         }
 
-        private void buttonPhoneFtpSendBase_Click(object sender, EventArgs e)
+        private async void buttonPhoneFtpSendBase_Click(object sender, EventArgs e)
         {
-            PhoneFTPManager phoneFTPManager = new PhoneFTPManager("ips.txt");
-            phoneFTPManager.SendBaseToAllFromRace(PBCurrentRaceFromBase(JBase));
-            SendLog(phoneFTPManager.GetLog());
+            PhoneFTPManager phoneFTPManager = new PhoneFTPManager("ips.txt", SendSubLog);
+            SendLog("Запуск задачи");
+            await Task.Run(() => phoneFTPManager.SendBaseToAllFromRace(PBCurrentRaceFromBase(JBase)));
         }
     }
 }

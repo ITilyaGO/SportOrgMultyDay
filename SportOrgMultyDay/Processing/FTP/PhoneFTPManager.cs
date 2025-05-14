@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using static SportOrgMultyDay.Processing.Parsing.ParseBase;
 using static SportOrgMultyDay.Processing.Parsing.ParseGroup;
 using static SportOrgMultyDay.Processing.Parsing.ParseOrganization;
@@ -18,11 +19,12 @@ namespace SportOrgMultyDay.Processing.FTP
 {
     public class PhoneFTPManager
     {
-        public string Log { get; private set; } = string.Empty;
         public List<PhoneFTP> Devices { get; } = new();
+        private readonly Action<string> _sendLog;
 
-        public PhoneFTPManager(string ipsPath)
+        public PhoneFTPManager(string ipsPath, Action<string, bool> sendLog = null)
         {
+            _sendLog = sendLog != null ? (msg => sendLog(msg, true)) : (_ => { });
             LoadFromFile(ipsPath);
         }
 
@@ -35,21 +37,54 @@ namespace SportOrgMultyDay.Processing.FTP
                           .Select(line => line.Trim())
                           .Where(line => !string.IsNullOrWhiteSpace(line));
 
+            string configPath = "ftpconfig.json";
+            PhoneFtpConfig phoneCfg;
+            if (File.Exists(configPath))
+            {
+                try
+                {
+                    var json = File.ReadAllText(configPath);
+                    phoneCfg = Newtonsoft.Json.JsonConvert.DeserializeObject<PhoneFtpConfig>(json) ?? new();
+                }
+                catch (Exception ex)
+                {
+                    _sendLog($"⚠️ Ошибка чтения ftpconfig.json: {ex.Message}");
+                    phoneCfg = new();
+                }
+            }
+            else
+            {
+                phoneCfg = new();
+                try
+                {
+                    var json = Newtonsoft.Json.JsonConvert.SerializeObject(phoneCfg, Newtonsoft.Json.Formatting.Indented);
+                    File.WriteAllText(configPath, json, new UTF8Encoding(false));
+                    _sendLog($"⚠️ Конфиг {configPath} не найден. Создан шаблон.");
+                }
+                catch (Exception ex)
+                {
+                    _sendLog($"⚠️ Не удалось создать {configPath}: {ex.Message}");
+                }
+            }
+
             Devices.Clear();
-            Devices.AddRange(ips.Select(ip => new PhoneFTP(ip)));
+            foreach (string ip in ips)
+            {
+                Devices.Add(new PhoneFTP(ip, phoneCfg.UserName, phoneCfg.Password));
+            }
         }
 
-        public void SendBaseToAllFromRace(JToken race)
+        public async void SendBaseToAllFromRace(JToken race)
         {
-            Log += "Экспорт SFRx-файла и отправка на устройства...\n";
+            _sendLog("Экспорт SFRx-файла и отправка на устройства...");
 
             try
             {
                 JToken data = PBData(race);
-                string raceDate = PDStartDate(data); // формат: yyyy-MM-dd
+                string raceDate = PDStartDate(data);
 
                 string sftxTxt = SFRxManager.RaceToSFRx(out string sfrxGenLog, race);
-                Log += sfrxGenLog;
+                _sendLog(sfrxGenLog);
 
                 string exeDir = AppDomain.CurrentDomain.BaseDirectory;
                 string cacheDir = Path.Combine(exeDir, "cache");
@@ -59,23 +94,29 @@ namespace SportOrgMultyDay.Processing.FTP
                 string cacheFilename = $"{raceDate}_{timestamp}.sfrx";
                 string cacheFilePath = Path.Combine(cacheDir, cacheFilename);
 
-
                 File.WriteAllText(cacheFilePath, sftxTxt, new UTF8Encoding(false));
-                Log += $"  Файл сохранён: {cacheFilePath}\n";
+                _sendLog($"  Файл сохранён: {cacheFilePath}");
 
                 string remoteFileName = $"{raceDate}.sfrx";
 
-                foreach (var device in Devices)
+                _sendLog($"  Отправка на {Devices.Count} устройства");
+
+                var uploadTasks = Devices.Select(async device =>
                 {
-                    bool ok = device.UploadFile(cacheFilePath, "/Download/", remoteFileName);
-                    Log += ok
-                        ? $"  ✅ Отправлено на {device.IP}\n"
-                        : $"  ❌ Ошибка при отправке на {device.IP}\n";
-                }
+                    bool ok = await Task.Run(() => device.UploadFile(cacheFilePath, "/Download/", remoteFileName));
+                    string msg = ok
+                        ? $"  ✅ Отправлено на {device.IP}"
+                        : $"  ❌ Ошибка при отправке на {device.IP}";
+                    _sendLog(msg);
+                }).ToArray();
+
+                await Task.WhenAll(uploadTasks);
+                _sendLog("  Выполнение задачи Отправка FTP завершено.");
             }
             catch (Exception ex)
             {
-                Log += $"  ❌ Ошибка в SendBaseToAllFromRace:\n{ex.Message}\n";
+                string err = $"  ❌ Ошибка в SendBaseToAllFromRace:\n{ex.Message}";
+                _sendLog(err);
                 LogError("ftp_send_sfrx", ex);
             }
         }
@@ -84,11 +125,11 @@ namespace SportOrgMultyDay.Processing.FTP
         {
             foreach (var device in Devices)
             {
-                Log += $"→ Отправка на {device.IP}...\n";
+                _sendLog($"→ Отправка на {device.IP}...");
                 bool ok = device.UploadFile(localFilePath, remoteSubDir);
-                Log += ok
-                    ? $"✅ Успешно: {device.IP}\n"
-                    : $"❌ Ошибка: {device.IP}\n";
+                _sendLog(ok
+                    ? $"✅ Успешно: {device.IP}"
+                    : $"❌ Ошибка: {device.IP}");
             }
         }
 
@@ -100,11 +141,11 @@ namespace SportOrgMultyDay.Processing.FTP
                 string safeIp = device.IP.Replace(".", "_");
                 string localPath = Path.Combine(localTargetDir, $"log_{safeIp}.txt");
 
-                Log += $"← Скачивание с {device.IP}...\n";
+                _sendLog($"← Скачивание с {device.IP}...");
                 bool ok = device.DownloadFile(remoteFilename, localPath);
-                Log += ok
-                    ? $"✅ Успешно: {device.IP}\n"
-                    : $"❌ Ошибка: {device.IP}\n";
+                _sendLog(ok
+                    ? $"✅ Успешно: {device.IP}"
+                    : $"❌ Ошибка: {device.IP}");
             }
         }
 
@@ -113,9 +154,9 @@ namespace SportOrgMultyDay.Processing.FTP
             foreach (var device in Devices)
             {
                 bool ok = device.MakeDirectory(remoteDir);
-                Log += ok
-                    ? $"📁 Папка создана на {device.IP}\n"
-                    : $"⚠️ Не удалось создать папку на {device.IP}\n";
+                _sendLog(ok
+                    ? $"📁 Папка создана на {device.IP}"
+                    : $"⚠️ Не удалось создать папку на {device.IP}");
             }
         }
 
@@ -126,17 +167,10 @@ namespace SportOrgMultyDay.Processing.FTP
                 string safeIp = device.IP.Replace(".", "_");
                 string remoteNewPath = remoteNewPathTemplate.Replace("{ip}", safeIp);
                 bool ok = device.Rename(remoteOldPath, remoteNewPath);
-                Log += ok
-                    ? $"🔁 Переименовано на {device.IP}\n"
-                    : $"⚠️ Не удалось переименовать на {device.IP}\n";
+                _sendLog(ok
+                    ? $"🔁 Переименовано на {device.IP}"
+                    : $"⚠️ Не удалось переименовать на {device.IP}");
             }
-        }
-
-        public string GetLog()
-        {
-            string result = Log;
-            Log = string.Empty;
-            return result;
         }
     }
 }

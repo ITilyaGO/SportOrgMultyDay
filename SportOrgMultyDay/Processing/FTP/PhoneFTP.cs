@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System;
 using System.IO;
 using System.Net;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace SportOrgMultyDay.Processing.FTP
 {
@@ -14,12 +15,14 @@ namespace SportOrgMultyDay.Processing.FTP
     {
         public string IP { get; }
         public int Port { get; set; } = 2221;
-        public string Username { get; set; } = "android";
-        public string Password { get; set; } = "qwezxcasd";
+        public string Username { get; set; } = "";
+        public string Password { get; set; } = "";
 
-        public PhoneFTP(string ip)
+        public PhoneFTP(string ip, string username, string password )
         {
             IP = ip;
+            Username = username;
+            Password = password;
         }
 
         private string GetFtpUri(string remotePath)
