@@ -22,6 +22,7 @@ using System.Windows.Forms;
 using System;
 using System.Collections.Generic;
 using SportOrgMultyDay.Processing.SFR;
+using SportOrgMultyDay.Processing.FTP;
 
 namespace SportOrgMultyDay
 {
@@ -432,7 +433,7 @@ namespace SportOrgMultyDay
             if (saveFileDialogSFRx.ShowDialog() != DialogResult.OK) return;
             string sftxTxt = SFRxManager.RaceToSFRx(out string log, race);
             SendLog(log);
-            File.WriteAllText(saveFileDialogSFRx.FileName, sftxTxt, new UTF8Encoding(true));
+            File.WriteAllText(saveFileDialogSFRx.FileName, sftxTxt, Encoding.UTF8); // без BOM
             if (checkBoxShahmatkaExtendedLogs.Checked)
                 SendLog($"Экспорт SFRx...\nСохранено в файл: {saveFileDialogSFRx.FileName}\n==========================\n{sftxTxt}\n==========================");
         }
@@ -943,6 +944,13 @@ namespace SportOrgMultyDay
         private void buttonGroupRemoveGetList_Click(object sender, EventArgs e)
         {
             richTextBoxGroupNotRemoveList.Text = RemoveGroups.GetGroups(PBCurrentRaceFromBase(JBase));
+        }
+
+        private void buttonPhoneFtpSendBase_Click(object sender, EventArgs e)
+        {
+            PhoneFTPManager phoneFTPManager = new PhoneFTPManager("ips.txt");
+            phoneFTPManager.SendBaseToAllFromRace(PBCurrentRaceFromBase(JBase));
+            SendLog(phoneFTPManager.GetLog());
         }
     }
 }

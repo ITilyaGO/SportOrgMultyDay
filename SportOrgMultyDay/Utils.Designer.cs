@@ -42,6 +42,8 @@
             saveFileDialogSfrst = new SaveFileDialog();
             comboBoxDays = new ComboBox();
             tabPageShahmatka = new TabPage();
+            groupBoxPhoneFtp = new GroupBox();
+            buttonPhoneFtpSendBase = new Button();
             checkBoxShahmatkaExtendedLogs = new CheckBox();
             groupBoxStartLogProcessing = new GroupBox();
             label12 = new Label();
@@ -111,6 +113,7 @@
             buttonBibsAutoCreateListNumbering = new Button();
             tabPageGroups = new TabPage();
             groupBoxGroupRemoving = new GroupBox();
+            buttonGroupRemoveGetList = new Button();
             buttonGroupRemoveIfNotInList = new Button();
             richTextBoxGroupNotRemoveList = new RichTextBox();
             groupBoxGroupRanks = new GroupBox();
@@ -183,9 +186,9 @@
             label17 = new Label();
             linkLabelGitHub = new LinkLabel();
             saveFileDialogSFRx = new SaveFileDialog();
-            buttonGroupRemoveGetList = new Button();
             contextMenuStripLog.SuspendLayout();
             tabPageShahmatka.SuspendLayout();
+            groupBoxPhoneFtp.SuspendLayout();
             groupBoxStartLogProcessing.SuspendLayout();
             tabPageBase.SuspendLayout();
             groupBox2.SuspendLayout();
@@ -303,6 +306,7 @@
             // tabPageShahmatka
             // 
             tabPageShahmatka.BackColor = Color.WhiteSmoke;
+            tabPageShahmatka.Controls.Add(groupBoxPhoneFtp);
             tabPageShahmatka.Controls.Add(checkBoxShahmatkaExtendedLogs);
             tabPageShahmatka.Controls.Add(groupBoxStartLogProcessing);
             tabPageShahmatka.Controls.Add(buttonExportSFRx);
@@ -313,6 +317,26 @@
             tabPageShahmatka.Size = new Size(535, 485);
             tabPageShahmatka.TabIndex = 1;
             tabPageShahmatka.Text = "Шахматка";
+            // 
+            // groupBoxPhoneFtp
+            // 
+            groupBoxPhoneFtp.Controls.Add(buttonPhoneFtpSendBase);
+            groupBoxPhoneFtp.Location = new Point(326, 157);
+            groupBoxPhoneFtp.Name = "groupBoxPhoneFtp";
+            groupBoxPhoneFtp.Size = new Size(200, 203);
+            groupBoxPhoneFtp.TabIndex = 31;
+            groupBoxPhoneFtp.TabStop = false;
+            groupBoxPhoneFtp.Text = "FTP С телефонами";
+            // 
+            // buttonPhoneFtpSendBase
+            // 
+            buttonPhoneFtpSendBase.Location = new Point(6, 22);
+            buttonPhoneFtpSendBase.Name = "buttonPhoneFtpSendBase";
+            buttonPhoneFtpSendBase.Size = new Size(188, 25);
+            buttonPhoneFtpSendBase.TabIndex = 27;
+            buttonPhoneFtpSendBase.Text = "Отправить базу на устройства";
+            buttonPhoneFtpSendBase.UseVisualStyleBackColor = true;
+            buttonPhoneFtpSendBase.Click += buttonPhoneFtpSendBase_Click;
             // 
             // checkBoxShahmatkaExtendedLogs
             // 
@@ -1038,6 +1062,16 @@
             groupBoxGroupRemoving.TabStop = false;
             groupBoxGroupRemoving.Text = "Удаление групп";
             // 
+            // buttonGroupRemoveGetList
+            // 
+            buttonGroupRemoveGetList.Location = new Point(6, 22);
+            buttonGroupRemoveGetList.Name = "buttonGroupRemoveGetList";
+            buttonGroupRemoveGetList.Size = new Size(175, 23);
+            buttonGroupRemoveGetList.TabIndex = 31;
+            buttonGroupRemoveGetList.Text = "Получить группы";
+            buttonGroupRemoveGetList.UseVisualStyleBackColor = true;
+            buttonGroupRemoveGetList.Click += buttonGroupRemoveGetList_Click;
+            // 
             // buttonGroupRemoveIfNotInList
             // 
             buttonGroupRemoveIfNotInList.Location = new Point(6, 336);
@@ -1747,16 +1781,6 @@
             // 
             saveFileDialogSFRx.Filter = "SFRx|*.sfrx|All files|*.*";
             // 
-            // buttonGroupRemoveGetList
-            // 
-            buttonGroupRemoveGetList.Location = new Point(6, 22);
-            buttonGroupRemoveGetList.Name = "buttonGroupRemoveGetList";
-            buttonGroupRemoveGetList.Size = new Size(175, 23);
-            buttonGroupRemoveGetList.TabIndex = 31;
-            buttonGroupRemoveGetList.Text = "Получить группы";
-            buttonGroupRemoveGetList.UseVisualStyleBackColor = true;
-            buttonGroupRemoveGetList.Click += buttonGroupRemoveGetList_Click;
-            // 
             // Utils
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1780,6 +1804,7 @@
             contextMenuStripLog.ResumeLayout(false);
             tabPageShahmatka.ResumeLayout(false);
             tabPageShahmatka.PerformLayout();
+            groupBoxPhoneFtp.ResumeLayout(false);
             groupBoxStartLogProcessing.ResumeLayout(false);
             groupBoxStartLogProcessing.PerformLayout();
             tabPageBase.ResumeLayout(false);
@@ -1977,5 +2002,7 @@
         private Button buttonGroupRemoveIfNotInList;
         private RichTextBox richTextBoxGroupNotRemoveList;
         private Button buttonGroupRemoveGetList;
+        private GroupBox groupBoxPhoneFtp;
+        private Button buttonPhoneFtpSendBase;
     }
 }
