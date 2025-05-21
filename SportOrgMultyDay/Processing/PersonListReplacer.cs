@@ -19,6 +19,7 @@ namespace SportOrgMultyDay.Processing
             JToken currRace = PBCurrentRace(races, currentRaceI);
             JArray persons = PBPersons(currRace);
             JArray organizations = PBOrganizations(currRace);
+            JArray groups = PBGroups(currRace);
 
             for (int i = 0; i < races.Count; i++)
             {
@@ -31,9 +32,11 @@ namespace SportOrgMultyDay.Processing
                 JToken race = races[i];
                 int beforCount = PBPersons(race).Count;
                 int beforCountOrg = PBOrganizations(race).Count;
+                int beforCountGrp = PBGroups(race).Count;
                 race["persons"] = persons.DeepClone();
                 race["organizations"] = organizations.DeepClone();
-                msgLog += $"  Скопировано. Кол-во участников [{beforCount} > {PBPersons(race).Count}]. Команды [{beforCountOrg} > {PBOrganizations(race).Count}] \n";
+                race["groups"] = groups.DeepClone();
+                msgLog += $"  Скопировано. Кол-во участников [{beforCount} > {PBPersons(race).Count}]. Команды [{beforCountOrg} > {PBOrganizations(race).Count}]. Группы [{beforCountOrg} > {PBGroups(race).Count}]\n";
             }
 
 
