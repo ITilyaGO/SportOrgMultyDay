@@ -25,9 +25,11 @@ namespace SportOrgMultyDay.Processing
             string log = "Форматирование назщваний групп и дистанций... \n";
             JToken race = PBCurrentRaceFromBase(jBase);
             FormatGroupNames(race, ref log);
-            FormatCourseNames(race, ref log);
             if (combineCourses)
+            {
+                FormatCourseNames(race, ref log);
                 CompactCourses(race, ref log);
+            }
             return log;
         }
 
@@ -41,6 +43,10 @@ namespace SportOrgMultyDay.Processing
                 JToken group = groups[i];
                 string groupName = PGName(group);
                 string formatedName = FormatName(groupName);
+                formatedName = formatedName
+                    .Replace("OPEN", "O")
+                    .Replace("Женщины", "Ж21")
+                    .Replace("Мужчины", "М21");
                 group["name"] = formatedName;
                 log += $"    [{groupName}] > [{formatedName}]\n";
             }

@@ -23,7 +23,7 @@ namespace SportOrgMultyDay.Processing
 
             for (int i = 0; i < races.Count; i++)
             {
-                msgLog += $"    Д{currentRaceI+1}:";
+                msgLog += $"    Д{i + 1}:";
                 if (i == currentRaceI)
                 {
                     msgLog += "  Пропущен - текуший. \n";

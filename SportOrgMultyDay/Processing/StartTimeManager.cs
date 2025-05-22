@@ -56,7 +56,7 @@ namespace SportOrgMultyDay.Processing
             return string.Join('\n', corridorsStr);
         }
 
-        public static string SetStartTimes(JToken race, int raceId, TimeSpan timeOfStart, TimeSpan startInterval, bool shuffle)
+        public static string SetStartTimes(JToken race, int raceId, TimeSpan timeOfStart, TimeSpan startInterval, bool shuffle, bool useOrgs, int minOrgGap = 1)
         {
             string msgLog = "Установка стартовых минут...\n";
             msgLog += $"  Начало старта: {StartTimeToString(timeOfStart)}\n";
@@ -99,6 +99,8 @@ namespace SportOrgMultyDay.Processing
 
                         if (shuffle)
                             personsInGroup.Shuffle();
+                        if (useOrgs)
+                            personsInGroup = RangeByOrganization(personsInGroup, minOrgGap);
                         for (int j = 0; j < personsInGroup.Count; j++)
                         {
                             JToken person = personsInGroup[j];
@@ -117,7 +119,42 @@ namespace SportOrgMultyDay.Processing
             return msgLog;
         }
 
-        public static string OrderedSetStartTimes(JToken race, int raceId, TimeSpan timeOfStart, TimeSpan startInterval, string rawOrder, bool shuffle)
+        public static List<JToken> RangeByOrganization(List<JToken> persons, int minGap)
+        {
+            var groupQueues = persons
+                .GroupBy(p => PPOrganizationId(p))
+                .OrderByDescending(g => g.Count())
+                .Select(g => new Queue<JToken>(g))
+                .ToList();
+
+            var result = new List<JToken>();
+            var recentOrgs = new Queue<string>();
+
+            while (groupQueues.Any(q => q.Count > 0))
+            {
+                var next = groupQueues
+                    .FirstOrDefault(q => q.Count > 0 && !recentOrgs.Contains(PPOrganizationId(q.Peek())));
+
+                if (next == null)
+                {
+                    // Fallback: берём любого, если нет вариантов без нарушения правила
+                    next = groupQueues.First(q => q.Count > 0);
+                }
+
+                var person = next.Dequeue();
+                var orgId = PPOrganizationId(person);
+
+                result.Add(person);
+                recentOrgs.Enqueue(orgId);
+                if (recentOrgs.Count > minGap)
+                    recentOrgs.Dequeue();
+            }
+
+            return result;
+        }
+
+
+        public static string OrderedSetStartTimes(JToken race, int raceId, TimeSpan timeOfStart, TimeSpan startInterval, string rawOrder, bool shuffle, bool useOrgs, int minOrgGap = 1)
         {
             string msgLog = "Установка стартовых минут по заданному порядку...\n";
             JArray groups = PBGroups(race);
@@ -137,7 +174,7 @@ namespace SportOrgMultyDay.Processing
             else
                 personsList = allPersons.ToList();
 
-            List<Corridor> corridors = ParseRawOrder(personsList, groups, rawOrder, ref msgLog, shuffle);
+            List<Corridor> corridors = ParseRawOrder(personsList, groups, rawOrder, ref msgLog, shuffle, useOrgs, minOrgGap);
             
             foreach (Corridor corridor in corridors)
             {
@@ -156,7 +193,7 @@ namespace SportOrgMultyDay.Processing
             return msgLog;
         }
 
-        public static string ShortOrderedSetStartTimes(JToken race, int raceId, TimeSpan timeOfStart, TimeSpan startInterval, TimeSpan minColumnStartInterval, string rawOrder, bool shuffle)
+        public static string ShortOrderedSetStartTimes(JToken race, int raceId, TimeSpan timeOfStart, TimeSpan startInterval, TimeSpan minColumnStartInterval, string rawOrder, bool shuffle, bool useOrgs, int minOrgGap = 1)
         {
             string msgLog = "Установка стартовых минут по заданному порядку, с коротким концом...\n";
             JArray groups = PBGroups(race);
@@ -176,7 +213,7 @@ namespace SportOrgMultyDay.Processing
             else
                 personsList = allPersons.ToList();
 
-            List<Corridor> corridors = ParseRawOrder(personsList, groups, rawOrder, ref msgLog, shuffle);
+            List<Corridor> corridors = ParseRawOrder(personsList, groups, rawOrder, ref msgLog, shuffle, useOrgs, minOrgGap);
 
             corridors.ForEach(cor => cor.SetTime(timeOfStart));
             foreach (Corridor corridor in corridors)
@@ -217,7 +254,7 @@ namespace SportOrgMultyDay.Processing
             return msgLog;
         }
 
-        internal static List<Corridor> ParseRawOrder(List<JToken> persons, JArray groups, string rawOrder, ref string log, bool shuffle)
+        internal static List<Corridor> ParseRawOrder(List<JToken> persons, JArray groups, string rawOrder, ref string log, bool shuffle, bool useOrgs, int minOrgGap = 1)
         {
             log += "  Парсинг порядка групп...\n";
             Dictionary<string, JToken> groupsByName = DictGNameGroup(groups);
@@ -249,6 +286,8 @@ namespace SportOrgMultyDay.Processing
                             List<JToken> personsInGroup = FPAllByGroup(PGId(group), persons);
                             if (shuffle)
                                 personsInGroup.Shuffle();
+                            if (useOrgs)
+                                personsInGroup = RangeByOrganization(personsInGroup, minOrgGap);
                             corridorColumn.AddRange(personsInGroup);
                         }
                         else

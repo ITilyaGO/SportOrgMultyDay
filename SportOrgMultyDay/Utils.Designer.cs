@@ -85,6 +85,7 @@
             textBoxStringFindComment = new TextBox();
             label2 = new Label();
             groupBoxStartTime = new GroupBox();
+            checkBoxSetStartTimeSuffleWithOrgs = new CheckBox();
             labelHTWStartBibs = new Label();
             checkBoxSetStartTimeOnlyCurrentDayPersons = new CheckBox();
             checkBoxUseShortStartTimeAlg = new CheckBox();
@@ -186,6 +187,8 @@
             label17 = new Label();
             linkLabelGitHub = new LinkLabel();
             saveFileDialogSFRx = new SaveFileDialog();
+            numericUpDownSetStartTimeMinGap = new NumericUpDown();
+            label18 = new Label();
             contextMenuStripLog.SuspendLayout();
             tabPageShahmatka.SuspendLayout();
             groupBoxPhoneFtp.SuspendLayout();
@@ -214,6 +217,7 @@
             ((System.ComponentModel.ISupportInitialize)personStartMinuteBindingSource).BeginInit();
             tabPage1.SuspendLayout();
             tabControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownSetStartTimeMinGap).BeginInit();
             SuspendLayout();
             // 
             // buttonBaseImport
@@ -748,6 +752,9 @@
             // 
             // groupBoxStartTime
             // 
+            groupBoxStartTime.Controls.Add(label18);
+            groupBoxStartTime.Controls.Add(numericUpDownSetStartTimeMinGap);
+            groupBoxStartTime.Controls.Add(checkBoxSetStartTimeSuffleWithOrgs);
             groupBoxStartTime.Controls.Add(labelHTWStartBibs);
             groupBoxStartTime.Controls.Add(checkBoxSetStartTimeOnlyCurrentDayPersons);
             groupBoxStartTime.Controls.Add(checkBoxUseShortStartTimeAlg);
@@ -768,6 +775,17 @@
             groupBoxStartTime.TabStop = false;
             groupBoxStartTime.Text = "Стартовые минуты";
             // 
+            // checkBoxSetStartTimeSuffleWithOrgs
+            // 
+            checkBoxSetStartTimeSuffleWithOrgs.AutoSize = true;
+            checkBoxSetStartTimeSuffleWithOrgs.Location = new Point(224, 217);
+            checkBoxSetStartTimeSuffleWithOrgs.Name = "checkBoxSetStartTimeSuffleWithOrgs";
+            checkBoxSetStartTimeSuffleWithOrgs.Size = new Size(256, 19);
+            checkBoxSetStartTimeSuffleWithOrgs.TabIndex = 11;
+            checkBoxSetStartTimeSuffleWithOrgs.Text = "Учитывать команды при перемешивании";
+            toolTipGeneral.SetToolTip(checkBoxSetStartTimeSuffleWithOrgs, resources.GetString("checkBoxSetStartTimeSuffleWithOrgs.ToolTip"));
+            checkBoxSetStartTimeSuffleWithOrgs.UseVisualStyleBackColor = true;
+            // 
             // labelHTWStartBibs
             // 
             labelHTWStartBibs.AutoSize = true;
@@ -781,6 +799,8 @@
             // checkBoxSetStartTimeOnlyCurrentDayPersons
             // 
             checkBoxSetStartTimeOnlyCurrentDayPersons.AutoSize = true;
+            checkBoxSetStartTimeOnlyCurrentDayPersons.Checked = true;
+            checkBoxSetStartTimeOnlyCurrentDayPersons.CheckState = CheckState.Checked;
             checkBoxSetStartTimeOnlyCurrentDayPersons.Location = new Point(224, 158);
             checkBoxSetStartTimeOnlyCurrentDayPersons.Name = "checkBoxSetStartTimeOnlyCurrentDayPersons";
             checkBoxSetStartTimeOnlyCurrentDayPersons.Size = new Size(285, 34);
@@ -792,8 +812,6 @@
             // checkBoxUseShortStartTimeAlg
             // 
             checkBoxUseShortStartTimeAlg.AutoSize = true;
-            checkBoxUseShortStartTimeAlg.Checked = true;
-            checkBoxUseShortStartTimeAlg.CheckState = CheckState.Checked;
             checkBoxUseShortStartTimeAlg.Location = new Point(224, 133);
             checkBoxUseShortStartTimeAlg.Name = "checkBoxUseShortStartTimeAlg";
             checkBoxUseShortStartTimeAlg.Size = new Size(214, 19);
@@ -1781,6 +1799,22 @@
             // 
             saveFileDialogSFRx.Filter = "SFRx|*.sfrx|All files|*.*";
             // 
+            // numericUpDownSetStartTimeMinGap
+            // 
+            numericUpDownSetStartTimeMinGap.Location = new Point(224, 242);
+            numericUpDownSetStartTimeMinGap.Name = "numericUpDownSetStartTimeMinGap";
+            numericUpDownSetStartTimeMinGap.Size = new Size(42, 23);
+            numericUpDownSetStartTimeMinGap.TabIndex = 12;
+            // 
+            // label18
+            // 
+            label18.AutoSize = true;
+            label18.Location = new Point(272, 246);
+            label18.Name = "label18";
+            label18.Size = new Size(228, 15);
+            label18.TabIndex = 13;
+            label18.Text = "Минимальный зазор между командами";
+            // 
             // Utils
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1843,6 +1877,7 @@
             ((System.ComponentModel.ISupportInitialize)personStartMinuteBindingSource).EndInit();
             tabPage1.ResumeLayout(false);
             tabControl1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)numericUpDownSetStartTimeMinGap).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -2004,5 +2039,8 @@
         private Button buttonGroupRemoveGetList;
         private GroupBox groupBoxPhoneFtp;
         private Button buttonPhoneFtpSendBase;
+        private CheckBox checkBoxSetStartTimeSuffleWithOrgs;
+        private Label label18;
+        private NumericUpDown numericUpDownSetStartTimeMinGap;
     }
 }

@@ -132,6 +132,10 @@
   <metadata name="saveFileDialogSfrst.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>295, 8</value>
   </metadata>
+  <data name="checkBoxSetStartTimeSuffleWithOrgs.ToolTip" xml:space="preserve">
+    <value>Есть у вас в базе несколько дней, и в комментариях участников указаны дни участия C:1234
+К примеру - вы на втором дне (выбор сверху) в этом дне у вас есть участники с C:34, то есть не учавствующие во втором, они будут проигнорированы</value>
+  </data>
   <data name="checkBoxSetStartTimeOnlyCurrentDayPersons.ToolTip" xml:space="preserve">
     <value>Есть у вас в базе несколько дней, и в комментариях участников указаны дни участия C:1234
 К примеру - вы на втором дне (выбор сверху) в этом дне у вас есть участники с C:34, то есть не учавствующие во втором, они будут проигнорированы</value>

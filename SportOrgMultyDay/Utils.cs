@@ -577,7 +577,9 @@ namespace SportOrgMultyDay
                     currentRaceId,
                     dateTimePickerStartTime.Value.TimeOfDay,
                     dateTimePickerStartInterval.Value.TimeOfDay,
-                    checkBoxStartTimesPersonShuffle.Checked));
+                    checkBoxStartTimesPersonShuffle.Checked,
+                    checkBoxSetStartTimeSuffleWithOrgs.Checked,
+                    (int)numericUpDownSetStartTimeMinGap.Value));
             else
             {
                 if (checkBoxUseShortStartTimeAlg.Checked)
@@ -587,14 +589,18 @@ namespace SportOrgMultyDay
                         dateTimePickerStartInterval.Value.TimeOfDay,
                         dateTimePickerMinColumnStartInterval.Value.TimeOfDay,
                         richTextBoxGroupStartOrder.Text,
-                        checkBoxStartTimesPersonShuffle.Checked));
+                        checkBoxStartTimesPersonShuffle.Checked,
+                        checkBoxSetStartTimeSuffleWithOrgs.Checked,
+                        (int)numericUpDownSetStartTimeMinGap.Value));
                 else
                     SendLog(StartTimeManager.OrderedSetStartTimes(currentRace,
                         currentRaceId,
                         dateTimePickerStartTime.Value.TimeOfDay,
                         dateTimePickerStartInterval.Value.TimeOfDay,
                         richTextBoxGroupStartOrder.Text,
-                        checkBoxStartTimesPersonShuffle.Checked));
+                        checkBoxStartTimesPersonShuffle.Checked,
+                        checkBoxSetStartTimeSuffleWithOrgs.Checked,
+                        (int)numericUpDownSetStartTimeMinGap.Value));
 
             }
             JToken lastPerson = StartTimeManager.LastStartPerson(currentRace);
