@@ -85,6 +85,8 @@
             textBoxStringFindComment = new TextBox();
             label2 = new Label();
             groupBoxStartTime = new GroupBox();
+            label18 = new Label();
+            numericUpDownSetStartTimeMinGap = new NumericUpDown();
             checkBoxSetStartTimeSuffleWithOrgs = new CheckBox();
             labelHTWStartBibs = new Label();
             checkBoxSetStartTimeOnlyCurrentDayPersons = new CheckBox();
@@ -187,8 +189,9 @@
             label17 = new Label();
             linkLabelGitHub = new LinkLabel();
             saveFileDialogSFRx = new SaveFileDialog();
-            numericUpDownSetStartTimeMinGap = new NumericUpDown();
-            label18 = new Label();
+            checkBoxDeepClonePersons = new CheckBox();
+            checkBoxDeepCloneGroups = new CheckBox();
+            checkBoxDeepCloneOrganizations = new CheckBox();
             contextMenuStripLog.SuspendLayout();
             tabPageShahmatka.SuspendLayout();
             groupBoxPhoneFtp.SuspendLayout();
@@ -199,6 +202,7 @@
             groupBox5.SuspendLayout();
             groupBox4.SuspendLayout();
             groupBoxStartTime.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownSetStartTimeMinGap).BeginInit();
             tabControlFunc.SuspendLayout();
             tabPageStartTimes.SuspendLayout();
             tabPageBibs.SuspendLayout();
@@ -217,7 +221,6 @@
             ((System.ComponentModel.ISupportInitialize)personStartMinuteBindingSource).BeginInit();
             tabPage1.SuspendLayout();
             tabControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)numericUpDownSetStartTimeMinGap).BeginInit();
             SuspendLayout();
             // 
             // buttonBaseImport
@@ -530,6 +533,9 @@
             // tabPageBase
             // 
             tabPageBase.BackColor = Color.WhiteSmoke;
+            tabPageBase.Controls.Add(checkBoxDeepCloneOrganizations);
+            tabPageBase.Controls.Add(checkBoxDeepCloneGroups);
+            tabPageBase.Controls.Add(checkBoxDeepClonePersons);
             tabPageBase.Controls.Add(buttonRemovePersonDuplicates);
             tabPageBase.Controls.Add(buttonReplaceAllPersonsForOtherDays);
             tabPageBase.Controls.Add(groupBox2);
@@ -546,7 +552,7 @@
             // 
             // buttonRemovePersonDuplicates
             // 
-            buttonRemovePersonDuplicates.Location = new Point(265, 352);
+            buttonRemovePersonDuplicates.Location = new Point(265, 339);
             buttonRemovePersonDuplicates.Name = "buttonRemovePersonDuplicates";
             buttonRemovePersonDuplicates.Size = new Size(248, 23);
             buttonRemovePersonDuplicates.TabIndex = 28;
@@ -620,7 +626,7 @@
             groupBox3.Controls.Add(groupBox5);
             groupBox3.Location = new Point(259, 6);
             groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(260, 191);
+            groupBox3.Size = new Size(260, 178);
             groupBox3.TabIndex = 24;
             groupBox3.TabStop = false;
             groupBox3.Text = "Синхронизация";
@@ -700,7 +706,7 @@
             groupBox4.Controls.Add(textBoxPersonsFromCopy);
             groupBox4.Controls.Add(textBoxStringFindComment);
             groupBox4.Controls.Add(label2);
-            groupBox4.Location = new Point(259, 203);
+            groupBox4.Location = new Point(259, 190);
             groupBox4.Name = "groupBox4";
             groupBox4.Size = new Size(260, 143);
             groupBox4.TabIndex = 25;
@@ -774,6 +780,22 @@
             groupBoxStartTime.TabIndex = 27;
             groupBoxStartTime.TabStop = false;
             groupBoxStartTime.Text = "Стартовые минуты";
+            // 
+            // label18
+            // 
+            label18.AutoSize = true;
+            label18.Location = new Point(272, 246);
+            label18.Name = "label18";
+            label18.Size = new Size(228, 15);
+            label18.TabIndex = 13;
+            label18.Text = "Минимальный зазор между командами";
+            // 
+            // numericUpDownSetStartTimeMinGap
+            // 
+            numericUpDownSetStartTimeMinGap.Location = new Point(224, 242);
+            numericUpDownSetStartTimeMinGap.Name = "numericUpDownSetStartTimeMinGap";
+            numericUpDownSetStartTimeMinGap.Size = new Size(42, 23);
+            numericUpDownSetStartTimeMinGap.TabIndex = 12;
             // 
             // checkBoxSetStartTimeSuffleWithOrgs
             // 
@@ -1799,21 +1821,41 @@
             // 
             saveFileDialogSFRx.Filter = "SFRx|*.sfrx|All files|*.*";
             // 
-            // numericUpDownSetStartTimeMinGap
+            // checkBoxDeepClonePersons
             // 
-            numericUpDownSetStartTimeMinGap.Location = new Point(224, 242);
-            numericUpDownSetStartTimeMinGap.Name = "numericUpDownSetStartTimeMinGap";
-            numericUpDownSetStartTimeMinGap.Size = new Size(42, 23);
-            numericUpDownSetStartTimeMinGap.TabIndex = 12;
+            checkBoxDeepClonePersons.AutoSize = true;
+            checkBoxDeepClonePersons.Checked = true;
+            checkBoxDeepClonePersons.CheckState = CheckState.Checked;
+            checkBoxDeepClonePersons.Location = new Point(265, 404);
+            checkBoxDeepClonePersons.Name = "checkBoxDeepClonePersons";
+            checkBoxDeepClonePersons.Size = new Size(84, 19);
+            checkBoxDeepClonePersons.TabIndex = 29;
+            checkBoxDeepClonePersons.Text = "Участники";
+            checkBoxDeepClonePersons.UseVisualStyleBackColor = true;
             // 
-            // label18
+            // checkBoxDeepCloneGroups
             // 
-            label18.AutoSize = true;
-            label18.Location = new Point(272, 246);
-            label18.Name = "label18";
-            label18.Size = new Size(228, 15);
-            label18.TabIndex = 13;
-            label18.Text = "Минимальный зазор между командами";
+            checkBoxDeepCloneGroups.AutoSize = true;
+            checkBoxDeepCloneGroups.Checked = true;
+            checkBoxDeepCloneGroups.CheckState = CheckState.Checked;
+            checkBoxDeepCloneGroups.Location = new Point(355, 404);
+            checkBoxDeepCloneGroups.Name = "checkBoxDeepCloneGroups";
+            checkBoxDeepCloneGroups.Size = new Size(68, 19);
+            checkBoxDeepCloneGroups.TabIndex = 29;
+            checkBoxDeepCloneGroups.Text = "Группы";
+            checkBoxDeepCloneGroups.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxDeepCloneOrganizations
+            // 
+            checkBoxDeepCloneOrganizations.AutoSize = true;
+            checkBoxDeepCloneOrganizations.Checked = true;
+            checkBoxDeepCloneOrganizations.CheckState = CheckState.Checked;
+            checkBoxDeepCloneOrganizations.Location = new Point(429, 404);
+            checkBoxDeepCloneOrganizations.Name = "checkBoxDeepCloneOrganizations";
+            checkBoxDeepCloneOrganizations.Size = new Size(93, 19);
+            checkBoxDeepCloneOrganizations.TabIndex = 29;
+            checkBoxDeepCloneOrganizations.Text = "Коллективы";
+            checkBoxDeepCloneOrganizations.UseVisualStyleBackColor = true;
             // 
             // Utils
             // 
@@ -1851,6 +1893,7 @@
             groupBox4.PerformLayout();
             groupBoxStartTime.ResumeLayout(false);
             groupBoxStartTime.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownSetStartTimeMinGap).EndInit();
             tabControlFunc.ResumeLayout(false);
             tabPageStartTimes.ResumeLayout(false);
             tabPageBibs.ResumeLayout(false);
@@ -1877,7 +1920,6 @@
             ((System.ComponentModel.ISupportInitialize)personStartMinuteBindingSource).EndInit();
             tabPage1.ResumeLayout(false);
             tabControl1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)numericUpDownSetStartTimeMinGap).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -2042,5 +2084,8 @@
         private CheckBox checkBoxSetStartTimeSuffleWithOrgs;
         private Label label18;
         private NumericUpDown numericUpDownSetStartTimeMinGap;
+        private CheckBox checkBoxDeepCloneOrganizations;
+        private CheckBox checkBoxDeepCloneGroups;
+        private CheckBox checkBoxDeepClonePersons;
     }
 }

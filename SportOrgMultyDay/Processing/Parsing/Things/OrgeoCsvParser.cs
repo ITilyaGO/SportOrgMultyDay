@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using static SportOrgMultyDay.Processing.Combine.ResultsCountInGroup;
 using static SportOrgMultyDay.Processing.Parsing.ParseBase;
 using static SportOrgMultyDay.Processing.Parsing.ParseResult;
@@ -78,39 +77,55 @@ namespace SportOrgMultyDay.Processing.Parsing.Things
 
         public static List<CsvPersons> ParseCsvUTF8(string csvStr)
         {
-            using StringReader reader = new StringReader(csvStr);
-            return fastCSV.ReadStream<CsvPersons>(reader, ';', (o, c) =>
+            using var reader = new StringReader(csvStr);
+
+            // 1) Заголовок
+            var headerLine = reader.ReadLine();
+            if (string.IsNullOrWhiteSpace(headerLine))
+                return new List<CsvPersons>();
+
+            var headers = headerLine.Split(';');
+            // Словарь: имя колонки (trim + ignore case) -> её индекс
+            var idx = headers
+                .Select((h, i) => (Name: h.Trim(), Index: i))
+                .ToDictionary(x => x.Name, x => x.Index, StringComparer.OrdinalIgnoreCase);
+
+            // 2) Читаем все оставшиеся строки через fastCSV
+            //    fastCSV.ReadStream читает с текущей позиции reader
+            var list = fastCSV.ReadStream<CsvPersons>(reader, ';', (o, c) =>
             {
-                o.Group = c[0];
-                o.Gender = c[1];
-                o.LastName = c[2];
-                o.FirstName = c[3];
-                o.Organization = c[4];
-                o.Kod = int.TryParse(c[5], out int kod) ? kod : 0;
-                o.Region = c[6];
-                o.SfrKval = c[7];
-                o.Kval = c[8];
-                o.Year = Convert.ToInt32(c[9]);
-                o.CardNumber = c[10];
-                o.Description = c[11];
-                o.SubmittedBy = c[12];
-                if (c.Count >= 17)
-                {
-                    o.Phone = c[13];
-                    o.Email = c[14];
-                    o.ApplicationNumber = c[15];
-                    o.SubmissionTime = c[16];
-                    o.FromUrl = c[17];
-                }else
-                {
-                    o.Phone = string.Empty;
-                    o.Email = string.Empty;
-                    o.ApplicationNumber = string.Empty;
-                    o.SubmissionTime = string.Empty;
-                    o.FromUrl = string.Empty;
-                }
+                // Вспомог local-функция для безопасного доступа
+                string G(string name) =>
+                    idx.TryGetValue(name, out var i) && i < c.Count
+                        ? c[i]
+                        : string.Empty;
+
+                o.Group = G("Группа");
+                o.Gender = G("Пол");
+                o.LastName = G("Фамилия");
+                o.MiddleName = G("Отчество");
+                o.FirstName = G("Имя");
+                o.Organization = G("Команда");
+                o.Kod = int.TryParse(G("Код"), out var k) ? k : 0;
+                o.Region = G("Регион");
+                o.SfrKval = G("Квал. SFR");
+                o.Kval = G("Квал.");
+                // Если нужно Year как DOB или др. дата — можно парсить DateTime
+                // Здесь пример int
+                o.Year = int.TryParse(G("Дата рожд."), out var y) ? y : 0;
+                o.CardNumber = G("№ чипа");
+                o.Description = G("Примечания");
+                o.SubmittedBy = G("Кем подана");
+                o.Phone = G("Телефон");
+                o.Email = G("E-mail");
+                o.ApplicationNumber = G("Номер заявки");
+                o.SubmissionTime = G("Время подачи");
+                o.FromUrl = G("Вошел по ссылке");
+
                 return true;
             });
+
+            return list.ToList();
         }
     }
 
@@ -120,6 +135,7 @@ namespace SportOrgMultyDay.Processing.Parsing.Things
         public string Gender;
         public string LastName;
         public string FirstName;
+        public string MiddleName;
         public string Organization;
         public int Kod;
         public string Region;

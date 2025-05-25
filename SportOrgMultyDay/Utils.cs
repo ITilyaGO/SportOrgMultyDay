@@ -867,7 +867,11 @@ namespace SportOrgMultyDay
 
         private void buttonReplaceAllPersonsForOtherDays_Click(object sender, EventArgs e)
         {
-            SendLog(PersonListReplacer.ReplacePersonsListInOtherDays(JBase));
+            SendLog(PersonListReplacer.ReplacePersonsListInOtherDays(
+                JBase,
+                checkBoxDeepClonePersons.Checked,
+                checkBoxDeepCloneOrganizations.Checked,
+                checkBoxDeepCloneGroups.Checked));
         }
 
         private void buttonCalculatePersonStartPrice_Click(object sender, EventArgs e)

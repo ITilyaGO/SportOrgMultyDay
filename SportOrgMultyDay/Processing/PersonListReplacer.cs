@@ -11,12 +11,13 @@ namespace SportOrgMultyDay.Processing
 {
     public static class PersonListReplacer
     {
-        public static string ReplacePersonsListInOtherDays(JToken jBase)
+        public static string ReplacePersonsListInOtherDays(JToken jBase, bool copyPersons, bool copyOrganizations, bool copyGroups)
         {
             string msgLog = "Замена списков участников... \n";
             int currentRaceI = CurrentRaceID(jBase);
             JArray races = PBRaces(jBase);
             JToken currRace = PBCurrentRace(races, currentRaceI);
+
             JArray persons = PBPersons(currRace);
             JArray organizations = PBOrganizations(currRace);
             JArray groups = PBGroups(currRace);
@@ -33,13 +34,23 @@ namespace SportOrgMultyDay.Processing
                 int beforCount = PBPersons(race).Count;
                 int beforCountOrg = PBOrganizations(race).Count;
                 int beforCountGrp = PBGroups(race).Count;
-                race["persons"] = persons.DeepClone();
-                race["organizations"] = organizations.DeepClone();
-                race["groups"] = groups.DeepClone();
-                msgLog += $"  Скопировано. Кол-во участников [{beforCount} > {PBPersons(race).Count}]. Команды [{beforCountOrg} > {PBOrganizations(race).Count}]. Группы [{beforCountOrg} > {PBGroups(race).Count}]\n";
+
+                if (copyPersons)
+                    race["persons"] = persons.DeepClone();
+                if (copyOrganizations)
+                    race["organizations"] = organizations.DeepClone();
+                if (copyGroups)
+                    race["groups"] = groups.DeepClone();
+
+                msgLog += "  Скопировано.";
+                if (copyPersons)
+                    msgLog += $" Кол-во участников [{beforCount} > {PBPersons(race).Count}]";
+                if (copyOrganizations)
+                    msgLog += $" Команды [{beforCountOrg} > {PBOrganizations(race).Count}]";
+                if (copyGroups)
+                    msgLog += $" Группы [{beforCountGrp} > {PBGroups(race).Count}]";
+                msgLog += "\n";
             }
-
-
             msgLog += "Завершено.\n";
 
             return msgLog;
