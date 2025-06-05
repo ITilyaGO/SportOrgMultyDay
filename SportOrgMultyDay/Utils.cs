@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using SportOrgMultyDay.Processing.SFR;
 using SportOrgMultyDay.Processing.FTP;
+using SportOrgMultyDay.Processing.Orgeo;
 
 namespace SportOrgMultyDay
 {
@@ -974,6 +975,11 @@ namespace SportOrgMultyDay
             PhoneFTPManager phoneFTPManager = new PhoneFTPManager("ips.txt", SendSubLog);
             SendLog("Запуск задачи");
             await Task.Run(() => phoneFTPManager.SendBaseToAllFromRace(PBCurrentRaceFromBase(JBase)));
+        }
+
+        private void buttonChipRentFromComment_Click(object sender, EventArgs e)
+        {
+            SendLog(OrgeoRentedCards.FromComment(PBCurrentRaceFromBase(JBase)));
         }
     }
 }

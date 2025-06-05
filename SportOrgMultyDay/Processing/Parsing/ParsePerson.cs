@@ -40,6 +40,15 @@ namespace SportOrgMultyDay.Processing.Parsing
             catch (Exception ex) { LogError("23846rvcs", ex); }
             return false;
         }
+        public static bool PPIsRentedCard(JToken person)
+        {
+            try
+            {
+                return (bool)person["is_rented_card"];
+            }
+            catch (Exception ex) { LogError("23f42swdew", ex); }
+            return false;
+        }
         public static string PPComment(JToken person)
         {
             try

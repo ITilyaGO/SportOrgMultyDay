@@ -63,6 +63,9 @@
             buttonExportSFRx = new Button();
             buttonExportStartTimes = new Button();
             tabPageBase = new TabPage();
+            checkBoxDeepCloneOrganizations = new CheckBox();
+            checkBoxDeepCloneGroups = new CheckBox();
+            checkBoxDeepClonePersons = new CheckBox();
             buttonRemovePersonDuplicates = new Button();
             buttonReplaceAllPersonsForOtherDays = new Button();
             groupBox2 = new GroupBox();
@@ -189,9 +192,7 @@
             label17 = new Label();
             linkLabelGitHub = new LinkLabel();
             saveFileDialogSFRx = new SaveFileDialog();
-            checkBoxDeepClonePersons = new CheckBox();
-            checkBoxDeepCloneGroups = new CheckBox();
-            checkBoxDeepCloneOrganizations = new CheckBox();
+            buttonChipRentFromComment = new Button();
             contextMenuStripLog.SuspendLayout();
             tabPageShahmatka.SuspendLayout();
             groupBoxPhoneFtp.SuspendLayout();
@@ -549,6 +550,42 @@
             tabPageBase.Size = new Size(535, 485);
             tabPageBase.TabIndex = 0;
             tabPageBase.Text = "База";
+            // 
+            // checkBoxDeepCloneOrganizations
+            // 
+            checkBoxDeepCloneOrganizations.AutoSize = true;
+            checkBoxDeepCloneOrganizations.Checked = true;
+            checkBoxDeepCloneOrganizations.CheckState = CheckState.Checked;
+            checkBoxDeepCloneOrganizations.Location = new Point(429, 404);
+            checkBoxDeepCloneOrganizations.Name = "checkBoxDeepCloneOrganizations";
+            checkBoxDeepCloneOrganizations.Size = new Size(93, 19);
+            checkBoxDeepCloneOrganizations.TabIndex = 29;
+            checkBoxDeepCloneOrganizations.Text = "Коллективы";
+            checkBoxDeepCloneOrganizations.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxDeepCloneGroups
+            // 
+            checkBoxDeepCloneGroups.AutoSize = true;
+            checkBoxDeepCloneGroups.Checked = true;
+            checkBoxDeepCloneGroups.CheckState = CheckState.Checked;
+            checkBoxDeepCloneGroups.Location = new Point(355, 404);
+            checkBoxDeepCloneGroups.Name = "checkBoxDeepCloneGroups";
+            checkBoxDeepCloneGroups.Size = new Size(68, 19);
+            checkBoxDeepCloneGroups.TabIndex = 29;
+            checkBoxDeepCloneGroups.Text = "Группы";
+            checkBoxDeepCloneGroups.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxDeepClonePersons
+            // 
+            checkBoxDeepClonePersons.AutoSize = true;
+            checkBoxDeepClonePersons.Checked = true;
+            checkBoxDeepClonePersons.CheckState = CheckState.Checked;
+            checkBoxDeepClonePersons.Location = new Point(265, 404);
+            checkBoxDeepClonePersons.Name = "checkBoxDeepClonePersons";
+            checkBoxDeepClonePersons.Size = new Size(84, 19);
+            checkBoxDeepClonePersons.TabIndex = 29;
+            checkBoxDeepClonePersons.Text = "Участники";
+            checkBoxDeepClonePersons.UseVisualStyleBackColor = true;
             // 
             // buttonRemovePersonDuplicates
             // 
@@ -1514,6 +1551,7 @@
             // groupBoxImport
             // 
             groupBoxImport.Controls.Add(checkBoxRenameOrgsImportKodRegionsFromCsv);
+            groupBoxImport.Controls.Add(buttonChipRentFromComment);
             groupBoxImport.Controls.Add(buttonImportKodRegionsFromCsv);
             groupBoxImport.Controls.Add(buttonBaseImportFromUrl);
             groupBoxImport.Controls.Add(buttonBaseImportFromProtocol);
@@ -1524,7 +1562,7 @@
             groupBoxImport.Controls.Add(buttonImportFromYarfso);
             groupBoxImport.Location = new Point(6, 6);
             groupBoxImport.Name = "groupBoxImport";
-            groupBoxImport.Size = new Size(243, 310);
+            groupBoxImport.Size = new Size(243, 384);
             groupBoxImport.TabIndex = 4;
             groupBoxImport.TabStop = false;
             groupBoxImport.Text = "Импорт";
@@ -1541,7 +1579,7 @@
             // 
             // buttonImportKodRegionsFromCsv
             // 
-            buttonImportKodRegionsFromCsv.Location = new Point(6, 114);
+            buttonImportKodRegionsFromCsv.Location = new Point(6, 107);
             buttonImportKodRegionsFromCsv.Name = "buttonImportKodRegionsFromCsv";
             buttonImportKodRegionsFromCsv.Size = new Size(230, 23);
             buttonImportKodRegionsFromCsv.TabIndex = 5;
@@ -1572,7 +1610,7 @@
             // checkBoxYarfsoParserWriteOldQual
             // 
             checkBoxYarfsoParserWriteOldQual.AutoSize = true;
-            checkBoxYarfsoParserWriteOldQual.Location = new Point(6, 201);
+            checkBoxYarfsoParserWriteOldQual.Location = new Point(6, 275);
             checkBoxYarfsoParserWriteOldQual.Name = "checkBoxYarfsoParserWriteOldQual";
             checkBoxYarfsoParserWriteOldQual.Size = new Size(217, 19);
             checkBoxYarfsoParserWriteOldQual.TabIndex = 3;
@@ -1584,7 +1622,7 @@
             checkBoxYarfsoParserPayAmountToWorldCode.AutoSize = true;
             checkBoxYarfsoParserPayAmountToWorldCode.Checked = true;
             checkBoxYarfsoParserPayAmountToWorldCode.CheckState = CheckState.Checked;
-            checkBoxYarfsoParserPayAmountToWorldCode.Location = new Point(6, 220);
+            checkBoxYarfsoParserPayAmountToWorldCode.Location = new Point(6, 294);
             checkBoxYarfsoParserPayAmountToWorldCode.Name = "checkBoxYarfsoParserPayAmountToWorldCode";
             checkBoxYarfsoParserPayAmountToWorldCode.Size = new Size(136, 19);
             checkBoxYarfsoParserPayAmountToWorldCode.TabIndex = 3;
@@ -1594,7 +1632,7 @@
             // checkBoxYarfsoParserReplaceQual
             // 
             checkBoxYarfsoParserReplaceQual.AutoSize = true;
-            checkBoxYarfsoParserReplaceQual.Location = new Point(6, 182);
+            checkBoxYarfsoParserReplaceQual.Location = new Point(6, 256);
             checkBoxYarfsoParserReplaceQual.Name = "checkBoxYarfsoParserReplaceQual";
             checkBoxYarfsoParserReplaceQual.Size = new Size(210, 19);
             checkBoxYarfsoParserReplaceQual.TabIndex = 3;
@@ -1604,7 +1642,7 @@
             // checkBoxPayAmountToComment
             // 
             checkBoxPayAmountToComment.AutoSize = true;
-            checkBoxPayAmountToComment.Location = new Point(6, 239);
+            checkBoxPayAmountToComment.Location = new Point(6, 313);
             checkBoxPayAmountToComment.Name = "checkBoxPayAmountToComment";
             checkBoxPayAmountToComment.Size = new Size(196, 19);
             checkBoxPayAmountToComment.TabIndex = 3;
@@ -1613,7 +1651,7 @@
             // 
             // buttonImportFromYarfso
             // 
-            buttonImportFromYarfso.Location = new Point(6, 264);
+            buttonImportFromYarfso.Location = new Point(6, 338);
             buttonImportFromYarfso.Name = "buttonImportFromYarfso";
             buttonImportFromYarfso.Size = new Size(230, 40);
             buttonImportFromYarfso.TabIndex = 2;
@@ -1821,41 +1859,15 @@
             // 
             saveFileDialogSFRx.Filter = "SFRx|*.sfrx|All files|*.*";
             // 
-            // checkBoxDeepClonePersons
+            // buttonChipRentFromComment
             // 
-            checkBoxDeepClonePersons.AutoSize = true;
-            checkBoxDeepClonePersons.Checked = true;
-            checkBoxDeepClonePersons.CheckState = CheckState.Checked;
-            checkBoxDeepClonePersons.Location = new Point(265, 404);
-            checkBoxDeepClonePersons.Name = "checkBoxDeepClonePersons";
-            checkBoxDeepClonePersons.Size = new Size(84, 19);
-            checkBoxDeepClonePersons.TabIndex = 29;
-            checkBoxDeepClonePersons.Text = "Участники";
-            checkBoxDeepClonePersons.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxDeepCloneGroups
-            // 
-            checkBoxDeepCloneGroups.AutoSize = true;
-            checkBoxDeepCloneGroups.Checked = true;
-            checkBoxDeepCloneGroups.CheckState = CheckState.Checked;
-            checkBoxDeepCloneGroups.Location = new Point(355, 404);
-            checkBoxDeepCloneGroups.Name = "checkBoxDeepCloneGroups";
-            checkBoxDeepCloneGroups.Size = new Size(68, 19);
-            checkBoxDeepCloneGroups.TabIndex = 29;
-            checkBoxDeepCloneGroups.Text = "Группы";
-            checkBoxDeepCloneGroups.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxDeepCloneOrganizations
-            // 
-            checkBoxDeepCloneOrganizations.AutoSize = true;
-            checkBoxDeepCloneOrganizations.Checked = true;
-            checkBoxDeepCloneOrganizations.CheckState = CheckState.Checked;
-            checkBoxDeepCloneOrganizations.Location = new Point(429, 404);
-            checkBoxDeepCloneOrganizations.Name = "checkBoxDeepCloneOrganizations";
-            checkBoxDeepCloneOrganizations.Size = new Size(93, 19);
-            checkBoxDeepCloneOrganizations.TabIndex = 29;
-            checkBoxDeepCloneOrganizations.Text = "Коллективы";
-            checkBoxDeepCloneOrganizations.UseVisualStyleBackColor = true;
+            buttonChipRentFromComment.Location = new Point(6, 143);
+            buttonChipRentFromComment.Name = "buttonChipRentFromComment";
+            buttonChipRentFromComment.Size = new Size(230, 23);
+            buttonChipRentFromComment.TabIndex = 5;
+            buttonChipRentFromComment.Text = "Аренда чипа из комментариев";
+            buttonChipRentFromComment.UseVisualStyleBackColor = true;
+            buttonChipRentFromComment.Click += buttonChipRentFromComment_Click;
             // 
             // Utils
             // 
@@ -2087,5 +2099,6 @@
         private CheckBox checkBoxDeepCloneOrganizations;
         private CheckBox checkBoxDeepCloneGroups;
         private CheckBox checkBoxDeepClonePersons;
+        private Button buttonChipRentFromComment;
     }
 }
