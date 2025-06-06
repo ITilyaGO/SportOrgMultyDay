@@ -371,8 +371,6 @@ namespace SportOrgMultyDay
             autoResize.Add(tabControlFunc, false, true);
             autoResize.Add(checkedListBoxWithSync, false, true);
             autoResize.Add(dataGridViewPersonMinutes, true, true);
-
-            dateTimePickerExportStartLog.Value.AddHours(22);
         }
 
         private void LoadOrganizationItems()
@@ -980,6 +978,17 @@ namespace SportOrgMultyDay
         private void buttonChipRentFromComment_Click(object sender, EventArgs e)
         {
             SendLog(OrgeoRentedCards.FromComment(PBCurrentRaceFromBase(JBase)));
+        }
+
+        private async void buttonPhoneFtpGetLogs_Click(object sender, EventArgs e)
+        {
+            PhoneFTPManager phoneFTPManager = new PhoneFTPManager("ips.txt", SendSubLog);
+            SendLog("Запуск задачи");
+
+            string summary = await phoneFTPManager.DownloadAndArchiveLogsAsync();
+            if (summary != "")
+                StartLogProcess(summary);
+
         }
     }
 }

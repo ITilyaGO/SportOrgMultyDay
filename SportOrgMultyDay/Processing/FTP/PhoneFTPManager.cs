@@ -28,6 +28,83 @@ namespace SportOrgMultyDay.Processing.FTP
             LoadFromFile(ipsPath);
         }
 
+        public async Task<string> DownloadAndArchiveLogsAsync()
+        {
+            string remoteDir = "/Download";
+            string remoteFile = "StartLog_G07A.txt";
+            string remotePath = $"{remoteDir}/{remoteFile}";
+
+            string dateOnly = DateTime.Now.ToString("yyyy-MM-dd");
+            string dateTimeTag = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+
+            string exeDir = AppDomain.CurrentDomain.BaseDirectory;
+            string todayFolder = Path.Combine(exeDir, "Logs", dateOnly);
+            Directory.CreateDirectory(todayFolder);
+
+            List<string> successIps = new();
+            List<string> failedIps = new();
+            List<string> downloadedFiles = new();
+
+            _sendLog($"[{DateTime.Now:HH:mm:ss}] 🔽 Начато скачивание логов с устройств...");
+
+            var tasks = Devices.Select(async device =>
+            {
+                string safeIp = device.IP.Replace(".", "_");
+                string localFile = Path.Combine(todayFolder, $"log_{safeIp}.txt");
+
+                bool downloaded = await Task.Run(() => device.DownloadFile(remoteFile, localFile));
+                if (downloaded)
+                {
+                    successIps.Add(device.IP);
+                    downloadedFiles.Add(localFile);
+
+                    //string header = $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] Лог с {device.IP}\n";
+                    string header = $"\n";
+                    string original = await File.ReadAllTextAsync(localFile, Encoding.UTF8);
+                    await File.WriteAllTextAsync(localFile, header + original, Encoding.UTF8);
+
+                    _sendLog($"✅ Получен файл с {device.IP}");
+
+                    await Task.Run(() => device.MakeDirectory($"{remoteDir}/old"));
+
+                    string newRemoteFileName = $"StartLog_G07A_{dateTimeTag}_{safeIp}.txt";
+                    string renameTarget = $"{remoteDir}/old/{newRemoteFileName}";
+                    bool renamed = await Task.Run(() => device.Rename(remotePath, renameTarget));
+                    _sendLog(renamed
+                        ? $"📁 Перемещено на {device.IP} → {renameTarget}"
+                        : $"⚠️ Не удалось переместить на {device.IP}");
+                }
+                else
+                {
+                    failedIps.Add(device.IP);
+                    _sendLog($"❌ Ошибка при скачивании с {device.IP}");
+                }
+            });
+
+            await Task.WhenAll(tasks);
+
+            // Объединение только тех логов, которые были скачаны сейчас
+            string summaryFile = Path.Combine(todayFolder, $"summary_{dateTimeTag}.txt");
+            foreach (var file in downloadedFiles.OrderBy(f => f))
+            {
+                string content = await File.ReadAllTextAsync(file, Encoding.UTF8);
+                await File.AppendAllTextAsync(summaryFile, content + "\n", Encoding.UTF8);
+            }
+
+            _sendLog($"📝 Итоговый лог: {summaryFile}");
+            _sendLog($"✅ Успешно: {string.Join(", ", successIps)}");
+            _sendLog($"❌ Неудачи: {string.Join(", ", failedIps)}");
+
+            if (!File.Exists(summaryFile))
+            {
+                _sendLog("⚠️ Файл summary не создан, так как не было успешно получено ни одного лога.");
+                return "";
+            }
+
+            return await File.ReadAllTextAsync(summaryFile, Encoding.UTF8);
+
+        }
+
         public void LoadFromFile(string ipsPath)
         {
             if (!File.Exists(ipsPath))

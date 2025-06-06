@@ -43,6 +43,7 @@
             comboBoxDays = new ComboBox();
             tabPageShahmatka = new TabPage();
             groupBoxPhoneFtp = new GroupBox();
+            buttonPhoneFtpGetLogs = new Button();
             buttonPhoneFtpSendBase = new Button();
             checkBoxShahmatkaExtendedLogs = new CheckBox();
             groupBoxStartLogProcessing = new GroupBox();
@@ -159,6 +160,7 @@
             buttonGroupCourseNamesFormat = new Button();
             groupBoxImport = new GroupBox();
             checkBoxRenameOrgsImportKodRegionsFromCsv = new CheckBox();
+            buttonChipRentFromComment = new Button();
             buttonImportKodRegionsFromCsv = new Button();
             buttonBaseImportFromUrl = new Button();
             buttonBaseImportFromProtocol = new Button();
@@ -192,7 +194,6 @@
             label17 = new Label();
             linkLabelGitHub = new LinkLabel();
             saveFileDialogSFRx = new SaveFileDialog();
-            buttonChipRentFromComment = new Button();
             contextMenuStripLog.SuspendLayout();
             tabPageShahmatka.SuspendLayout();
             groupBoxPhoneFtp.SuspendLayout();
@@ -328,6 +329,7 @@
             // 
             // groupBoxPhoneFtp
             // 
+            groupBoxPhoneFtp.Controls.Add(buttonPhoneFtpGetLogs);
             groupBoxPhoneFtp.Controls.Add(buttonPhoneFtpSendBase);
             groupBoxPhoneFtp.Location = new Point(326, 157);
             groupBoxPhoneFtp.Name = "groupBoxPhoneFtp";
@@ -335,6 +337,16 @@
             groupBoxPhoneFtp.TabIndex = 31;
             groupBoxPhoneFtp.TabStop = false;
             groupBoxPhoneFtp.Text = "FTP С телефонами";
+            // 
+            // buttonPhoneFtpGetLogs
+            // 
+            buttonPhoneFtpGetLogs.Location = new Point(6, 53);
+            buttonPhoneFtpGetLogs.Name = "buttonPhoneFtpGetLogs";
+            buttonPhoneFtpGetLogs.Size = new Size(188, 25);
+            buttonPhoneFtpGetLogs.TabIndex = 27;
+            buttonPhoneFtpGetLogs.Text = "Получить базу с устройств";
+            buttonPhoneFtpGetLogs.UseVisualStyleBackColor = true;
+            buttonPhoneFtpGetLogs.Click += buttonPhoneFtpGetLogs_Click;
             // 
             // buttonPhoneFtpSendBase
             // 
@@ -396,7 +408,7 @@
             dateTimePickerExportStartLog.Name = "dateTimePickerExportStartLog";
             dateTimePickerExportStartLog.Size = new Size(82, 23);
             dateTimePickerExportStartLog.TabIndex = 30;
-            dateTimePickerExportStartLog.Value = new DateTime(1753, 1, 1, 0, 0, 0, 0);
+            dateTimePickerExportStartLog.Value = new DateTime(1753, 1, 1, 22, 0, 0, 0);
             // 
             // comboBoxStartLogOutFieldsSplitter
             // 
@@ -1577,6 +1589,16 @@
             checkBoxRenameOrgsImportKodRegionsFromCsv.Text = "Переиминование команд";
             checkBoxRenameOrgsImportKodRegionsFromCsv.UseVisualStyleBackColor = true;
             // 
+            // buttonChipRentFromComment
+            // 
+            buttonChipRentFromComment.Location = new Point(6, 143);
+            buttonChipRentFromComment.Name = "buttonChipRentFromComment";
+            buttonChipRentFromComment.Size = new Size(230, 23);
+            buttonChipRentFromComment.TabIndex = 5;
+            buttonChipRentFromComment.Text = "Аренда чипа из комментариев";
+            buttonChipRentFromComment.UseVisualStyleBackColor = true;
+            buttonChipRentFromComment.Click += buttonChipRentFromComment_Click;
+            // 
             // buttonImportKodRegionsFromCsv
             // 
             buttonImportKodRegionsFromCsv.Location = new Point(6, 107);
@@ -1859,16 +1881,6 @@
             // 
             saveFileDialogSFRx.Filter = "SFRx|*.sfrx|All files|*.*";
             // 
-            // buttonChipRentFromComment
-            // 
-            buttonChipRentFromComment.Location = new Point(6, 143);
-            buttonChipRentFromComment.Name = "buttonChipRentFromComment";
-            buttonChipRentFromComment.Size = new Size(230, 23);
-            buttonChipRentFromComment.TabIndex = 5;
-            buttonChipRentFromComment.Text = "Аренда чипа из комментариев";
-            buttonChipRentFromComment.UseVisualStyleBackColor = true;
-            buttonChipRentFromComment.Click += buttonChipRentFromComment_Click;
-            // 
             // Utils
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -2100,5 +2112,6 @@
         private CheckBox checkBoxDeepCloneGroups;
         private CheckBox checkBoxDeepClonePersons;
         private Button buttonChipRentFromComment;
+        private Button buttonPhoneFtpGetLogs;
     }
 }
