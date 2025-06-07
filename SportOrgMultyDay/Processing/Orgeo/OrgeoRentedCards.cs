@@ -12,6 +12,7 @@ namespace SportOrgMultyDay.Processing.Orgeo
     public class OrgeoRentedCards
     {
         static string FindingPhrase = "Аренда чипа: Да";
+        static string FindingPhraseNo = "Аренда чипа: Нет";
         public static string FromComment(JToken race)
         {
             string log = "Обработка арендованных карт из комментариев...\n";
@@ -31,6 +32,15 @@ namespace SportOrgMultyDay.Processing.Orgeo
                         comment = comment.Remove(fpIndex - 2, 2);
                     }
                     person["comment"] = comment.Replace(FindingPhrase, "").Trim();
+                }
+                else if (comment.Contains(FindingPhraseNo))
+                {
+                    int fpIndex = comment.IndexOf(FindingPhraseNo);
+                    if (fpIndex >= 2 && comment.Substring(fpIndex - 2, 2) == ", ")
+                    {
+                        comment = comment.Remove(fpIndex - 2, 2);
+                    }
+                    person["comment"] = comment.Replace(FindingPhraseNo, "").Trim();
                 }
             }
 

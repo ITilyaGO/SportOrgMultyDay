@@ -231,8 +231,15 @@ namespace SportOrgMultyDay.Processing
                 if (isCreateReserv)
                 {
                     int createdReservCount = 0;
+                    if (numberOfGroup.MaxReservCount == -1)
+                    {
+                        if (isDebug)
+                            log += $"      Максимальние кол-во пересчитано {numberOfGroup.MaxReservCount} ...\n";
+                        numberOfGroup.MaxReservCount = (int)Math.Ceiling(groupPersons.Count() / 5.0);
+                    }
                     if (isDebug)
                         log += $"      Создание резервов. максимальное кол-во {numberOfGroup.MaxReservCount} ...\n";
+
                     while (currentNumber <= numberOfGroup.EndBib && createdReservCount < numberOfGroup.MaxReservCount)
                     {
                         JObject newReserv = PersonTemplate.Reserv;

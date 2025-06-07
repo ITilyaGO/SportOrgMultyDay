@@ -142,6 +142,7 @@ namespace SportOrgMultyDay.Processing
                     continue;
                 }
                 string courceName = PCName(cource);
+                
                 coursePersonCountReserv.TryGetValue(cp.Key, out int val);
                 // TODO: ВЫнести переенные и UI 
 

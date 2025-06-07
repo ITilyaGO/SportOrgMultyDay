@@ -33,6 +33,8 @@ namespace SportOrgMultyDay.Processing
             return log;
         }
 
+
+
         public static void FormatGroupNames(JToken race, ref string log)
         {
             log += $"  Форматирование имен групп...\n";
@@ -42,16 +44,81 @@ namespace SportOrgMultyDay.Processing
             {
                 JToken group = groups[i];
                 string groupName = PGName(group);
-                string formatedName = FormatName(groupName);
-                formatedName = formatedName
-                    .Replace("OPEN", "O")
-                    .Replace("Женщины", "Ж21")
-                    .Replace("Мужчины", "М21");
+                string formatedName = FormatName(groupName).Trim();
+
+                // Предобработка начала строки (убрать пробелы/дефисы между буквой и цифрой)
+                string normalizedStart = Regex.Replace(formatedName, @"^([МЖO])\s*[-]?\s*(\d+)", "$1$2");
+
+                if (Regex.IsMatch(normalizedStart, @"^(М|Ж)\d{1,2}$") || Regex.IsMatch(normalizedStart, @"^O\d*$"))
+                {
+                    // Просто обрезаем по строчной или спецсимволу
+                    int cutIndex = -1;
+                    for (int j = 0; j < formatedName.Length; j++)
+                    {
+                        char ch = formatedName[j];
+                        if (char.IsLower(ch) || ch == ' ' || ch == '-' || ch == '(')
+                        {
+                            cutIndex = j;
+                            break;
+                        }
+                    }
+
+                    if (cutIndex > 0)
+                        formatedName = formatedName.Substring(0, cutIndex).Trim();
+                    else
+                        formatedName = normalizedStart;
+                }
+                else if (formatedName.StartsWith("Мужчины"))
+                {
+                    formatedName = "М21";
+                }
+                else if (formatedName.StartsWith("Женщины"))
+                {
+                    formatedName = "Ж21";
+                }
+                else if (formatedName.StartsWith("OPEN"))
+                {
+                    formatedName = Regex.Replace(formatedName, @"^OPEN(\d*)", "O$1");
+
+                    int cutIndex = -1;
+                    for (int j = 0; j < formatedName.Length; j++)
+                    {
+                        char ch = formatedName[j];
+                        if (char.IsLower(ch) || ch == ' ' || ch == '-' || ch == '(')
+                        {
+                            cutIndex = j;
+                            break;
+                        }
+                    }
+
+                    if (cutIndex > 0)
+                        formatedName = formatedName.Substring(0, cutIndex).Trim();
+                }
+                else
+                {
+                    int cutIndex = -1;
+                    for (int j = 0; j < formatedName.Length; j++)
+                    {
+                        char ch = formatedName[j];
+                        if (char.IsLower(ch) || ch == ' ' || ch == '-' || ch == '(')
+                        {
+                            cutIndex = j;
+                            break;
+                        }
+                    }
+
+                    if (cutIndex > 0)
+                        formatedName = formatedName.Substring(0, cutIndex).Trim();
+                }
+
                 group["name"] = formatedName;
                 log += $"    [{groupName}] > [{formatedName}]\n";
             }
+
             log += "  Форматирование имен групп завершено\n\n";
         }
+
+
         public static void FormatCourseNames(JToken race, ref string log)
         {
             log += $"  Форматирование имен дистанций...\n";
@@ -61,6 +128,7 @@ namespace SportOrgMultyDay.Processing
                 JToken course = courses[i];
                 string courseName = PCName(course);
                 string formatedName = FormatName(courseName);
+                formatedName = formatedName.Replace("О", "O");
                 course["name"] = formatedName;
                 log += $"    [{courseName}] > [{formatedName}]\n";
             }
