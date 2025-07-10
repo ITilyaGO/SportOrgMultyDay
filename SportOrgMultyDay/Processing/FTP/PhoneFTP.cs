@@ -7,6 +7,7 @@ using System;
 using System.IO;
 using System.Net;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using System.Diagnostics;
 
 namespace SportOrgMultyDay.Processing.FTP
 {
@@ -83,7 +84,7 @@ namespace SportOrgMultyDay.Processing.FTP
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Ошибка при скачивании с {IP}: {ex.Message}");
+                Debug.WriteLine($"Ошибка при скачивании с {IP}: {ex.Message}");
                 return false;
             }
         }

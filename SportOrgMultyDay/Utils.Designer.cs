@@ -169,6 +169,7 @@
             checkBoxYarfsoParserReplaceQual = new CheckBox();
             checkBoxPayAmountToComment = new CheckBox();
             buttonImportFromYarfso = new Button();
+            buttonInportResultsFromAnothrBase = new Button();
             groupBoxStartFee = new GroupBox();
             buttonCalculatePersonStartPrice = new Button();
             label5 = new Label();
@@ -289,7 +290,7 @@
             // buttonCombineAllBase
             // 
             buttonCombineAllBase.Enabled = false;
-            buttonCombineAllBase.Location = new Point(261, 367);
+            buttonCombineAllBase.Location = new Point(299, 328);
             buttonCombineAllBase.Name = "buttonCombineAllBase";
             buttonCombineAllBase.Size = new Size(115, 23);
             buttonCombineAllBase.TabIndex = 20;
@@ -1450,6 +1451,7 @@
             tabPageOther.Controls.Add(checkBoxCombineCourse);
             tabPageOther.Controls.Add(buttonGroupCourseNamesFormat);
             tabPageOther.Controls.Add(groupBoxImport);
+            tabPageOther.Controls.Add(buttonInportResultsFromAnothrBase);
             tabPageOther.Controls.Add(buttonCombineAllBase);
             tabPageOther.Controls.Add(groupBoxStartFee);
             tabPageOther.Controls.Add(buttonOpenNumbersForm);
@@ -1463,7 +1465,7 @@
             // 
             // buttonQualFromOtherBase
             // 
-            buttonQualFromOtherBase.Location = new Point(380, 358);
+            buttonQualFromOtherBase.Location = new Point(416, 328);
             buttonQualFromOtherBase.Name = "buttonQualFromOtherBase";
             buttonQualFromOtherBase.Size = new Size(116, 57);
             buttonQualFromOtherBase.TabIndex = 9;
@@ -1474,9 +1476,9 @@
             // 
             // buttonVichestStart
             // 
-            buttonVichestStart.Location = new Point(299, 396);
+            buttonVichestStart.Location = new Point(261, 436);
             buttonVichestStart.Name = "buttonVichestStart";
-            buttonVichestStart.Size = new Size(75, 57);
+            buttonVichestStart.Size = new Size(101, 44);
             buttonVichestStart.TabIndex = 9;
             buttonVichestStart.Text = "TEMP Вычесть старт";
             buttonVichestStart.UseVisualStyleBackColor = true;
@@ -1680,6 +1682,16 @@
             buttonImportFromYarfso.Text = "Импорт разрядов и статусов оплачено с сайта yarfso";
             buttonImportFromYarfso.UseVisualStyleBackColor = true;
             buttonImportFromYarfso.Click += buttonImportFromYarfso_Click;
+            // 
+            // buttonInportResultsFromAnothrBase
+            // 
+            buttonInportResultsFromAnothrBase.Location = new Point(260, 392);
+            buttonInportResultsFromAnothrBase.Name = "buttonInportResultsFromAnothrBase";
+            buttonInportResultsFromAnothrBase.Size = new Size(269, 45);
+            buttonInportResultsFromAnothrBase.TabIndex = 20;
+            buttonInportResultsFromAnothrBase.Text = "Импорт результатов из другой базы по номерам и присваивание id участников";
+            buttonInportResultsFromAnothrBase.UseVisualStyleBackColor = true;
+            buttonInportResultsFromAnothrBase.Click += buttonInportResultsFromAnothrBase_Click;
             // 
             // groupBoxStartFee
             // 
@@ -2113,5 +2125,6 @@
         private CheckBox checkBoxDeepClonePersons;
         private Button buttonChipRentFromComment;
         private Button buttonPhoneFtpGetLogs;
+        private Button buttonInportResultsFromAnothrBase;
     }
 }

@@ -271,7 +271,7 @@ namespace SportOrgMultyDay.Processing
                 return EStartLogType.Sportident;
             int ns = startLog.IndexOf('\n');
             if (ns <= -1) return EStartLogType.None;
-            string firstStr = startLog[..ns];
+            string firstStr = GetFirstNonEmptyLine(startLog);
             if (firstStr.Contains('\t'))
             {
                 string[] values = firstStr.Split('\t');
@@ -285,6 +285,21 @@ namespace SportOrgMultyDay.Processing
                     return EStartLogType.Sportiduino;
             }
             return EStartLogType.None;
+        }
+
+        // Получить первую не пустую строку из startLog
+        private static string GetFirstNonEmptyLine(string startLog)
+        {
+            if (string.IsNullOrEmpty(startLog))
+                return string.Empty;
+            string[] lines = startLog.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+            foreach (var line in lines)
+            {
+                string trimmed = line.Trim();
+                if (!string.IsNullOrEmpty(trimmed))
+                    return trimmed;
+            }
+            return string.Empty;
         }
 
         private List<int> GetPersonsBibsStartBefor(TimeSpan time)

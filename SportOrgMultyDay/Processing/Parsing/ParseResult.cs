@@ -19,6 +19,16 @@ namespace SportOrgMultyDay.Processing.Parsing
             catch (Exception ex) { LogError("cniow8c4j", ex); }
             return null;
         }
+        public static int PRcardNumber(JToken result)
+        {
+            try
+            {
+                return (int)result["card_number"];
+            }
+            catch (Exception ex) { LogError("cniow8c4j", ex); }
+            return 0;
+
+        }
         public static string PRPersonId(JToken result)
         {
             try
