@@ -61,7 +61,6 @@ namespace SportOrgMultyDay.Processing
             Dictionary<string, int> coursePersonCount = new Dictionary<string, int>();
             Dictionary<string, int> coursePersonCountReserv = new Dictionary<string, int>();
             Dictionary<string, string> groupCourses = new Dictionary<string, string>();
-
             JArray persons = PBPersons(race);
             JArray courses = PBCourses(race);
             JArray groups = PBGroups(race);
@@ -79,14 +78,12 @@ namespace SportOrgMultyDay.Processing
                     if (!calcReserv)
                         continue;
                 }
-
-
                 string personGroupId = PPGroupId(person);
                 if (groupPersonCount.ContainsKey(personGroupId))
                     groupPersonCount[personGroupId] += 1;
                 else groupPersonCount[personGroupId] = 1;
             }
-
+            
             foreach (JToken group in groups)
             {
                 string groupId = PGId(group);
@@ -146,17 +143,50 @@ namespace SportOrgMultyDay.Processing
                 coursePersonCountReserv.TryGetValue(cp.Key, out int val);
                 // TODO: ВЫнести переенные и UI 
 
-               // int spare = (cp.Value / 10) + val;
-                int spare = (cp.Value / 10);
-                if (spare > 10)
-                    spare = 10;
-                if (spare < 5)
-                    spare = 5;
+                // int spare = (cp.Value / 10) + val;
+                int spare = CalculateSpare(cp.Value);
                 log += $"      {courceName} - {cp.Value + spare} r:{(calcReserv ? "" : "+")}{val} s:{spare} \n";
                 summ += cp.Value + spare;
             }
             log += $"  Всего карт: {summ}\n";
+            log += "\nДля вставки в Google Таблицы:\n";
+            log += GetCopyTable(coursePersonCount, coursePersonCountReserv, courses, calcReserv);
             return log;
+        }
+
+        private static string GetCopyTable(
+            Dictionary<string, int> coursePersonCount,
+            Dictionary<string, int> coursePersonCountReserv,
+            JArray courses,
+            bool calcReserv)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine("Дистанция\tУчастников\tРезерв\tЗапас");
+
+            foreach (var (courseId, count) in coursePersonCount)
+            {
+                JToken? course = FCById(courseId, courses);
+                if (course == null)
+                    continue;
+
+                string name = PCName(course);
+                coursePersonCountReserv.TryGetValue(courseId, out int reserv);
+
+                int spare = CalculateSpare(count);
+
+                sb.AppendLine($"{name}\t{count + spare}\t{(calcReserv ? "" : "+")}{reserv}\t{spare}");
+            }
+
+            return sb.ToString();
+        }
+        private static int CalculateSpare(int count)
+        {
+            int spare = count / 10;
+            if (spare < 5)
+                spare = 5;
+            if (spare > 10)
+                spare = 10;
+            return 0;
         }
     }
 }

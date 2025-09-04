@@ -123,6 +123,7 @@
             buttonGroupRemoveGetList = new Button();
             buttonGroupRemoveIfNotInList = new Button();
             richTextBoxGroupNotRemoveList = new RichTextBox();
+            buttonSetAllDaysToComment = new Button();
             groupBoxGroupRanks = new GroupBox();
             label9 = new Label();
             label6 = new Label();
@@ -195,6 +196,7 @@
             label17 = new Label();
             linkLabelGitHub = new LinkLabel();
             saveFileDialogSFRx = new SaveFileDialog();
+            buttonFindCoursesForGroups = new Button();
             contextMenuStripLog.SuspendLayout();
             tabPageShahmatka.SuspendLayout();
             groupBoxPhoneFtp.SuspendLayout();
@@ -602,7 +604,7 @@
             // 
             // buttonRemovePersonDuplicates
             // 
-            buttonRemovePersonDuplicates.Location = new Point(265, 339);
+            buttonRemovePersonDuplicates.Location = new Point(263, 328);
             buttonRemovePersonDuplicates.Name = "buttonRemovePersonDuplicates";
             buttonRemovePersonDuplicates.Size = new Size(248, 23);
             buttonRemovePersonDuplicates.TabIndex = 28;
@@ -676,14 +678,14 @@
             groupBox3.Controls.Add(groupBox5);
             groupBox3.Location = new Point(259, 6);
             groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(260, 178);
+            groupBox3.Size = new Size(260, 167);
             groupBox3.TabIndex = 24;
             groupBox3.TabStop = false;
             groupBox3.Text = "Синхронизация";
             // 
             // buttonSyncOrganizations
             // 
-            buttonSyncOrganizations.Location = new Point(15, 152);
+            buttonSyncOrganizations.Location = new Point(15, 144);
             buttonSyncOrganizations.Name = "buttonSyncOrganizations";
             buttonSyncOrganizations.Size = new Size(231, 23);
             buttonSyncOrganizations.TabIndex = 15;
@@ -699,7 +701,7 @@
             groupBox5.Controls.Add(label1);
             groupBox5.Location = new Point(9, 22);
             groupBox5.Name = "groupBox5";
-            groupBox5.Size = new Size(243, 124);
+            groupBox5.Size = new Size(243, 117);
             groupBox5.TabIndex = 14;
             groupBox5.TabStop = false;
             groupBox5.Text = "Дозаявки";
@@ -714,7 +716,7 @@
             // 
             // buttonSynchronizeReorders
             // 
-            buttonSynchronizeReorders.Location = new Point(6, 94);
+            buttonSynchronizeReorders.Location = new Point(6, 86);
             buttonSynchronizeReorders.Name = "buttonSynchronizeReorders";
             buttonSynchronizeReorders.Size = new Size(231, 23);
             buttonSynchronizeReorders.TabIndex = 6;
@@ -756,7 +758,7 @@
             groupBox4.Controls.Add(textBoxPersonsFromCopy);
             groupBox4.Controls.Add(textBoxStringFindComment);
             groupBox4.Controls.Add(label2);
-            groupBox4.Location = new Point(259, 190);
+            groupBox4.Location = new Point(259, 179);
             groupBox4.Name = "groupBox4";
             groupBox4.Size = new Size(260, 143);
             groupBox4.TabIndex = 25;
@@ -1131,6 +1133,8 @@
             // 
             tabPageGroups.BackColor = Color.WhiteSmoke;
             tabPageGroups.Controls.Add(groupBoxGroupRemoving);
+            tabPageGroups.Controls.Add(buttonSetAllDaysToComment);
+            tabPageGroups.Controls.Add(buttonFindCoursesForGroups);
             tabPageGroups.Controls.Add(buttonCopyGroupSettings);
             tabPageGroups.Controls.Add(groupBoxGroupRanks);
             tabPageGroups.Location = new Point(4, 24);
@@ -1179,6 +1183,16 @@
             richTextBoxGroupNotRemoveList.Size = new Size(175, 279);
             richTextBoxGroupNotRemoveList.TabIndex = 31;
             richTextBoxGroupNotRemoveList.Text = "";
+            // 
+            // buttonSetAllDaysToComment
+            // 
+            buttonSetAllDaysToComment.Location = new Point(221, 131);
+            buttonSetAllDaysToComment.Name = "buttonSetAllDaysToComment";
+            buttonSetAllDaysToComment.Size = new Size(224, 23);
+            buttonSetAllDaysToComment.TabIndex = 31;
+            buttonSetAllDaysToComment.Text = "Установить в комментарии C:1234";
+            buttonSetAllDaysToComment.UseVisualStyleBackColor = true;
+            buttonSetAllDaysToComment.Click += buttonSetAllDaysToComment_Click;
             // 
             // groupBoxGroupRanks
             // 
@@ -1893,6 +1907,16 @@
             // 
             saveFileDialogSFRx.Filter = "SFRx|*.sfrx|All files|*.*";
             // 
+            // buttonFindCoursesForGroups
+            // 
+            buttonFindCoursesForGroups.Location = new Point(356, 60);
+            buttonFindCoursesForGroups.Name = "buttonFindCoursesForGroups";
+            buttonFindCoursesForGroups.Size = new Size(173, 43);
+            buttonFindCoursesForGroups.TabIndex = 27;
+            buttonFindCoursesForGroups.Text = "Подбор дистанций для групп";
+            buttonFindCoursesForGroups.UseVisualStyleBackColor = true;
+            buttonFindCoursesForGroups.Click += buttonFindCoursesForGroups_Click;
+            // 
             // Utils
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -2126,5 +2150,7 @@
         private Button buttonChipRentFromComment;
         private Button buttonPhoneFtpGetLogs;
         private Button buttonInportResultsFromAnothrBase;
+        private Button buttonSetAllDaysToComment;
+        private Button buttonFindCoursesForGroups;
     }
 }

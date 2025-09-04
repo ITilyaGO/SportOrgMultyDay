@@ -748,7 +748,7 @@ namespace SportOrgMultyDay
 
         private void buttonGroupCurseNamesFormat_Click(object sender, EventArgs e)
         {
-            SendLog(GroupCourseNameFormater.FormatAll(JBase, checkBoxCombineCourse.Checked));
+            SendLog(GroupCourseNameFormater.FormatAll(JBase, checkBoxCombineCourse.Checked, false));
 
         }
 
@@ -1020,6 +1020,16 @@ namespace SportOrgMultyDay
                 newResult["person_id"] = newpid;
                 results.Add(newResult);
             }
+        }
+
+        private void buttonSetAllDaysToComment_Click(object sender, EventArgs e)
+        {
+            SendLog(CommentEditor.SetAllDaysToComment(PBCurrentRaceFromBase(JBase), richTextBoxGroupNotRemoveList.Text, "C:1234"));
+        }
+
+        private void buttonFindCoursesForGroups_Click(object sender, EventArgs e)
+        {
+            SendLog(GroupCourseFinder.Process(PBCurrentRaceFromBase(JBase)));
         }
     }
 }

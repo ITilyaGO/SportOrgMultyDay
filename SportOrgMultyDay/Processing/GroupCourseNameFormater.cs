@@ -20,14 +20,15 @@ namespace SportOrgMultyDay.Processing
 {
     public static class GroupCourseNameFormater
     {
-        public static string FormatAll(JToken jBase, bool combineCourses)
+        public static string FormatAll(JToken jBase, bool combineCourses, bool formatCourseNames)
         {
             string log = "Форматирование назщваний групп и дистанций... \n";
             JToken race = PBCurrentRaceFromBase(jBase);
-            FormatGroupNames(race, ref log);
+            //FormatGroupNames(race, ref log);
             if (combineCourses)
             {
-                FormatCourseNames(race, ref log);
+                if (formatCourseNames)
+                    FormatCourseNames(race, ref log);
                 CompactCourses(race, ref log);
             }
             return log;
@@ -49,33 +50,30 @@ namespace SportOrgMultyDay.Processing
                 // Предобработка начала строки (убрать пробелы/дефисы между буквой и цифрой)
                 string normalizedStart = Regex.Replace(formatedName, @"^([МЖO])\s*[-]?\s*(\d+)", "$1$2");
 
-                if (Regex.IsMatch(normalizedStart, @"^(М|Ж)\d{1,2}$") || Regex.IsMatch(normalizedStart, @"^O\d*$"))
+                if (formatedName.ToLower() == ("мужчины"))
                 {
-                    // Просто обрезаем по строчной или спецсимволу
-                    int cutIndex = -1;
-                    for (int j = 0; j < formatedName.Length; j++)
-                    {
-                        char ch = formatedName[j];
-                        if (char.IsLower(ch) || ch == ' ' || ch == '-' || ch == '(')
-                        {
-                            cutIndex = j;
-                            break;
-                        }
-                    }
-
-                    if (cutIndex > 0)
-                        formatedName = formatedName.Substring(0, cutIndex).Trim();
-                    else
-                        formatedName = normalizedStart;
+                    formatedName = "МЭ";
                 }
-                else if (formatedName.StartsWith("Мужчины"))
+                else if (formatedName.ToLower() == ("женщины"))
                 {
-                    formatedName = "М21";
+                    formatedName = "ЖЭ";
                 }
-                else if (formatedName.StartsWith("Женщины"))
-                {
-                    formatedName = "Ж21";
-                }
+                else if (formatedName.StartsWith("Ж") && formatedName.EndsWith("до15"))
+                    formatedName = "Ж14";
+                else if (formatedName.StartsWith("Ж") && formatedName.EndsWith("до17"))
+                    formatedName = "Ж16";
+                else if (formatedName.StartsWith("Ж") && formatedName.EndsWith("до19"))
+                    formatedName = "Ж18";
+                else if (formatedName.StartsWith("М") && formatedName.EndsWith("до15"))
+                    formatedName = "М14";
+                else if (formatedName.StartsWith("М") && formatedName.EndsWith("до17"))
+                    formatedName = "М16";
+                else if (formatedName.StartsWith("М") && formatedName.EndsWith("до19"))
+                    formatedName = "М18";
+                else if (groupName.StartsWith("М14-18Б"))
+                    formatedName = "М14-18Б";
+                else if (groupName.StartsWith("Ж14-18Б"))
+                    formatedName = "Ж14-18Б";
                 else if (formatedName.StartsWith("OPEN"))
                 {
                     formatedName = Regex.Replace(formatedName, @"^OPEN(\d*)", "O$1");
@@ -94,6 +92,25 @@ namespace SportOrgMultyDay.Processing
                     if (cutIndex > 0)
                         formatedName = formatedName.Substring(0, cutIndex).Trim();
                 }
+                else if (Regex.IsMatch(normalizedStart, @"^(М|Ж)\d{1,2}$") || Regex.IsMatch(normalizedStart, @"^O\d*$"))
+                {
+                    // Просто обрезаем по строчной или спецсимволу
+                    int cutIndex = -1;
+                    for (int j = 0; j < formatedName.Length; j++)
+                    {
+                        char ch = formatedName[j];
+                        if (char.IsLower(ch) || ch == ' ' || ch == '-' || ch == '(')
+                        {
+                            cutIndex = j;
+                            break;
+                        }
+                    }
+
+                    if (cutIndex > 0)
+                        formatedName = formatedName.Substring(0, cutIndex).Trim();
+                    else
+                        formatedName = normalizedStart;
+                }
                 else
                 {
                     int cutIndex = -1;
@@ -110,7 +127,7 @@ namespace SportOrgMultyDay.Processing
                     if (cutIndex > 0)
                         formatedName = formatedName.Substring(0, cutIndex).Trim();
                 }
-
+                formatedName = formatedName.Replace("О", "O");
                 group["name"] = formatedName;
                 log += $"    [{groupName}] > [{formatedName}]\n";
             }
@@ -128,6 +145,8 @@ namespace SportOrgMultyDay.Processing
                 JToken course = courses[i];
                 string courseName = PCName(course);
                 string formatedName = FormatName(courseName);
+                if (formatedName == "РCД")
+                    formatedName = "РСД";
                 formatedName = formatedName.Replace("О", "O");
                 course["name"] = formatedName;
                 log += $"    [{courseName}] > [{formatedName}]\n";
