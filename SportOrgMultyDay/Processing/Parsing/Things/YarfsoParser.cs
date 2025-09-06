@@ -139,8 +139,8 @@ namespace SportOrgMultyDay.Processing.Parsing.Things
             Year = int.Parse(parsedData["year"]);
             Team = parsedData["team"];
             Qual = parsedData["qual"];
-            IsPaid = parsedData["isPaid"].Contains("ОПЛАЧЕНО");
             PayAmount = double.Parse(parsedData["amount"].Replace('.', ',')); ;
+            IsPaid = parsedData["isPaid"].Contains("ОПЛАЧЕНО") || PayAmount == 0;
         }
 
         private static Dictionary<string, string> ParseString(string input)

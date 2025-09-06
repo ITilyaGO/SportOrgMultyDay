@@ -22,10 +22,10 @@ namespace SportOrgMultyDay.Processing.FTP
         public List<PhoneFTP> Devices { get; } = new();
         private readonly Action<string> _sendLog;
 
-        public PhoneFTPManager(string ipsPath, Action<string, bool> sendLog = null)
+        public PhoneFTPManager(string ipsRawText, Action<string, bool> sendLog = null)
         {
             _sendLog = sendLog != null ? (msg => sendLog(msg, true)) : (_ => { });
-            LoadFromFile(ipsPath);
+            LoadFromFile(ipsRawText);
         }
 
         public async Task<string> DownloadAndArchiveLogsAsync()
@@ -105,14 +105,13 @@ namespace SportOrgMultyDay.Processing.FTP
 
         }
 
-        public void LoadFromFile(string ipsPath)
+        public void LoadFromFile(string ipsRawText)
         {
-            if (!File.Exists(ipsPath))
-                throw new FileNotFoundException("Файл с IP не найден", ipsPath);
-
-            var ips = File.ReadAllLines(ipsPath)
+            var ips = ipsRawText.Split("\n", StringSplitOptions.RemoveEmptyEntries)
                           .Select(line => line.Trim())
-                          .Where(line => !string.IsNullOrWhiteSpace(line));
+                          .Where(line => !string.IsNullOrWhiteSpace(line))
+                          .Where(line => line.Length > 0 && char.IsDigit(line[0]));
+
 
             string configPath = "ftpconfig.json";
             PhoneFtpConfig phoneCfg;

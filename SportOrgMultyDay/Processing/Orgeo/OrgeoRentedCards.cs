@@ -43,6 +43,7 @@ namespace SportOrgMultyDay.Processing.Orgeo
                     person["comment"] = comment.Replace(FindingPhraseNo, "").Trim();
                 }
             }
+            log += "Завершено";
 
             return log;
         }

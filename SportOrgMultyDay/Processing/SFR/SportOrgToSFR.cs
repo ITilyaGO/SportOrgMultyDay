@@ -26,8 +26,8 @@ namespace SportOrgMultyDay.Processing.SFR
             {
                 log += "  Сбор информации о базе...";
                 JToken data = PBData(race);
-                sFRGeneral.event_name = PDTitle(data).Replace('\n', ' ');
                 string startDateTime = PDStartDate(data);
+                sFRGeneral.event_name = startDateTime + " - " + PDTitle(data).Replace('\n', ' ');
                 sFRGeneral.Parts.Add(1, new SFRPart(1) { Date = startDateTime, Name = $"Старт {startDateTime}" });
                 log += "  OK\n";
 

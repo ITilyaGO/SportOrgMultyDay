@@ -43,6 +43,8 @@
             comboBoxDays = new ComboBox();
             tabPageShahmatka = new TabPage();
             groupBoxPhoneFtp = new GroupBox();
+            buttonPhoneFtpSaveIps = new Button();
+            richTextBoxPhoneFtpIps = new RichTextBox();
             buttonPhoneFtpGetLogs = new Button();
             buttonPhoneFtpSendBase = new Button();
             checkBoxShahmatkaExtendedLogs = new CheckBox();
@@ -124,6 +126,7 @@
             buttonGroupRemoveIfNotInList = new Button();
             richTextBoxGroupNotRemoveList = new RichTextBox();
             buttonSetAllDaysToComment = new Button();
+            buttonFindCoursesForGroups = new Button();
             groupBoxGroupRanks = new GroupBox();
             label9 = new Label();
             label6 = new Label();
@@ -196,7 +199,9 @@
             label17 = new Label();
             linkLabelGitHub = new LinkLabel();
             saveFileDialogSFRx = new SaveFileDialog();
-            buttonFindCoursesForGroups = new Button();
+            groupBoxStartingFee = new GroupBox();
+            richTextBoxStartingFeeInput = new RichTextBox();
+            buttonStartingFeeSerGroupPrices = new Button();
             contextMenuStripLog.SuspendLayout();
             tabPageShahmatka.SuspendLayout();
             groupBoxPhoneFtp.SuspendLayout();
@@ -226,6 +231,7 @@
             ((System.ComponentModel.ISupportInitialize)personStartMinuteBindingSource).BeginInit();
             tabPage1.SuspendLayout();
             tabControl1.SuspendLayout();
+            groupBoxStartingFee.SuspendLayout();
             SuspendLayout();
             // 
             // buttonBaseImport
@@ -332,6 +338,8 @@
             // 
             // groupBoxPhoneFtp
             // 
+            groupBoxPhoneFtp.Controls.Add(buttonPhoneFtpSaveIps);
+            groupBoxPhoneFtp.Controls.Add(richTextBoxPhoneFtpIps);
             groupBoxPhoneFtp.Controls.Add(buttonPhoneFtpGetLogs);
             groupBoxPhoneFtp.Controls.Add(buttonPhoneFtpSendBase);
             groupBoxPhoneFtp.Location = new Point(326, 157);
@@ -340,6 +348,24 @@
             groupBoxPhoneFtp.TabIndex = 31;
             groupBoxPhoneFtp.TabStop = false;
             groupBoxPhoneFtp.Text = "FTP С телефонами";
+            // 
+            // buttonPhoneFtpSaveIps
+            // 
+            buttonPhoneFtpSaveIps.Location = new Point(109, 84);
+            buttonPhoneFtpSaveIps.Name = "buttonPhoneFtpSaveIps";
+            buttonPhoneFtpSaveIps.Size = new Size(85, 23);
+            buttonPhoneFtpSaveIps.TabIndex = 29;
+            buttonPhoneFtpSaveIps.Text = "Сохранить";
+            buttonPhoneFtpSaveIps.UseVisualStyleBackColor = true;
+            buttonPhoneFtpSaveIps.Click += buttonPhoneFtpSaveIps_Click;
+            // 
+            // richTextBoxPhoneFtpIps
+            // 
+            richTextBoxPhoneFtpIps.Location = new Point(6, 84);
+            richTextBoxPhoneFtpIps.Name = "richTextBoxPhoneFtpIps";
+            richTextBoxPhoneFtpIps.Size = new Size(97, 113);
+            richTextBoxPhoneFtpIps.TabIndex = 28;
+            richTextBoxPhoneFtpIps.Text = "";
             // 
             // buttonPhoneFtpGetLogs
             // 
@@ -569,8 +595,6 @@
             // checkBoxDeepCloneOrganizations
             // 
             checkBoxDeepCloneOrganizations.AutoSize = true;
-            checkBoxDeepCloneOrganizations.Checked = true;
-            checkBoxDeepCloneOrganizations.CheckState = CheckState.Checked;
             checkBoxDeepCloneOrganizations.Location = new Point(429, 404);
             checkBoxDeepCloneOrganizations.Name = "checkBoxDeepCloneOrganizations";
             checkBoxDeepCloneOrganizations.Size = new Size(93, 19);
@@ -581,8 +605,6 @@
             // checkBoxDeepCloneGroups
             // 
             checkBoxDeepCloneGroups.AutoSize = true;
-            checkBoxDeepCloneGroups.Checked = true;
-            checkBoxDeepCloneGroups.CheckState = CheckState.Checked;
             checkBoxDeepCloneGroups.Location = new Point(355, 404);
             checkBoxDeepCloneGroups.Name = "checkBoxDeepCloneGroups";
             checkBoxDeepCloneGroups.Size = new Size(68, 19);
@@ -747,7 +769,7 @@
             label3.AutoSize = true;
             label3.Location = new Point(15, 158);
             label3.Name = "label3";
-            label3.Size = new Size(225, 15);
+            label3.Size = new Size(224, 15);
             label3.TabIndex = 26;
             label3.Text = "Поля для копирования/синхронизации";
             // 
@@ -888,7 +910,7 @@
             checkBoxUseShortStartTimeAlg.AutoSize = true;
             checkBoxUseShortStartTimeAlg.Location = new Point(224, 133);
             checkBoxUseShortStartTimeAlg.Name = "checkBoxUseShortStartTimeAlg";
-            checkBoxUseShortStartTimeAlg.Size = new Size(214, 19);
+            checkBoxUseShortStartTimeAlg.Size = new Size(213, 19);
             checkBoxUseShortStartTimeAlg.TabIndex = 7;
             checkBoxUseShortStartTimeAlg.Text = "Сжимать конец старта в колонках";
             checkBoxUseShortStartTimeAlg.UseVisualStyleBackColor = true;
@@ -1132,6 +1154,7 @@
             // tabPageGroups
             // 
             tabPageGroups.BackColor = Color.WhiteSmoke;
+            tabPageGroups.Controls.Add(groupBoxStartingFee);
             tabPageGroups.Controls.Add(groupBoxGroupRemoving);
             tabPageGroups.Controls.Add(buttonSetAllDaysToComment);
             tabPageGroups.Controls.Add(buttonFindCoursesForGroups);
@@ -1193,6 +1216,16 @@
             buttonSetAllDaysToComment.Text = "Установить в комментарии C:1234";
             buttonSetAllDaysToComment.UseVisualStyleBackColor = true;
             buttonSetAllDaysToComment.Click += buttonSetAllDaysToComment_Click;
+            // 
+            // buttonFindCoursesForGroups
+            // 
+            buttonFindCoursesForGroups.Location = new Point(356, 60);
+            buttonFindCoursesForGroups.Name = "buttonFindCoursesForGroups";
+            buttonFindCoursesForGroups.Size = new Size(173, 43);
+            buttonFindCoursesForGroups.TabIndex = 27;
+            buttonFindCoursesForGroups.Text = "Подбор дистанций для групп";
+            buttonFindCoursesForGroups.UseVisualStyleBackColor = true;
+            buttonFindCoursesForGroups.Click += buttonFindCoursesForGroups_Click;
             // 
             // groupBoxGroupRanks
             // 
@@ -1907,15 +1940,34 @@
             // 
             saveFileDialogSFRx.Filter = "SFRx|*.sfrx|All files|*.*";
             // 
-            // buttonFindCoursesForGroups
+            // groupBoxStartingFee
             // 
-            buttonFindCoursesForGroups.Location = new Point(356, 60);
-            buttonFindCoursesForGroups.Name = "buttonFindCoursesForGroups";
-            buttonFindCoursesForGroups.Size = new Size(173, 43);
-            buttonFindCoursesForGroups.TabIndex = 27;
-            buttonFindCoursesForGroups.Text = "Подбор дистанций для групп";
-            buttonFindCoursesForGroups.UseVisualStyleBackColor = true;
-            buttonFindCoursesForGroups.Click += buttonFindCoursesForGroups_Click;
+            groupBoxStartingFee.Controls.Add(buttonStartingFeeSerGroupPrices);
+            groupBoxStartingFee.Controls.Add(richTextBoxStartingFeeInput);
+            groupBoxStartingFee.Location = new Point(221, 174);
+            groupBoxStartingFee.Name = "groupBoxStartingFee";
+            groupBoxStartingFee.Size = new Size(297, 265);
+            groupBoxStartingFee.TabIndex = 32;
+            groupBoxStartingFee.TabStop = false;
+            groupBoxStartingFee.Text = "groupBox1";
+            // 
+            // richTextBoxStartingFeeInput
+            // 
+            richTextBoxStartingFeeInput.Location = new Point(6, 22);
+            richTextBoxStartingFeeInput.Name = "richTextBoxStartingFeeInput";
+            richTextBoxStartingFeeInput.Size = new Size(185, 154);
+            richTextBoxStartingFeeInput.TabIndex = 0;
+            richTextBoxStartingFeeInput.Text = "";
+            // 
+            // buttonStartingFeeSerGroupPrices
+            // 
+            buttonStartingFeeSerGroupPrices.Location = new Point(6, 182);
+            buttonStartingFeeSerGroupPrices.Name = "buttonStartingFeeSerGroupPrices";
+            buttonStartingFeeSerGroupPrices.Size = new Size(221, 26);
+            buttonStartingFeeSerGroupPrices.TabIndex = 1;
+            buttonStartingFeeSerGroupPrices.Text = "Установить стартовые взносы группам";
+            buttonStartingFeeSerGroupPrices.UseVisualStyleBackColor = true;
+            buttonStartingFeeSerGroupPrices.Click += buttonStartingFeeSerGroupPrices_Click;
             // 
             // Utils
             // 
@@ -1980,6 +2032,7 @@
             ((System.ComponentModel.ISupportInitialize)personStartMinuteBindingSource).EndInit();
             tabPage1.ResumeLayout(false);
             tabControl1.ResumeLayout(false);
+            groupBoxStartingFee.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -2152,5 +2205,10 @@
         private Button buttonInportResultsFromAnothrBase;
         private Button buttonSetAllDaysToComment;
         private Button buttonFindCoursesForGroups;
+        private Button buttonPhoneFtpSaveIps;
+        private RichTextBox richTextBoxPhoneFtpIps;
+        private GroupBox groupBoxStartingFee;
+        private Button buttonStartingFeeSerGroupPrices;
+        private RichTextBox richTextBoxStartingFeeInput;
     }
 }

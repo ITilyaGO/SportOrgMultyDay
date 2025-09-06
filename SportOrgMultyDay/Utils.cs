@@ -53,6 +53,8 @@ namespace SportOrgMultyDay
             { ";",";" }
         };
 
+        string ipsPath = "ips.txt";
+
         private JObject ParseJson(string rawJsonBase)
         {
             try
@@ -331,6 +333,8 @@ namespace SportOrgMultyDay
         private void Utils_Load(object sender, EventArgs e)
         {
             BaseEditButtons(false);
+
+            PhoneFtpLoadIps();
 
             for (int i = 1; i <= 4; i++)
                 comboBoxLogType.Items.Add((EStartLogType)i);
@@ -942,6 +946,16 @@ namespace SportOrgMultyDay
             });
         }
 
+        private void PhoneFtpLoadIps()
+        {
+            if (File.Exists(ipsPath))
+                richTextBoxPhoneFtpIps.Text = File.ReadAllText(ipsPath);
+        }
+
+        private void PhoneFtpSaveIps()
+        {
+            File.WriteAllText(ipsPath, richTextBoxPhoneFtpIps.Text);
+        }
         private void labelHowToWorkStartMinutesSwap_Click(object sender, EventArgs e)
         {
             MessageBox.Show("ПКМ по одному участнику, затем по другому, с которым нужно поменять стартовые минуты местами");
@@ -971,7 +985,7 @@ namespace SportOrgMultyDay
 
         private async void buttonPhoneFtpSendBase_Click(object sender, EventArgs e)
         {
-            PhoneFTPManager phoneFTPManager = new PhoneFTPManager("ips.txt", SendSubLog);
+            PhoneFTPManager phoneFTPManager = new PhoneFTPManager(richTextBoxPhoneFtpIps.Text, SendSubLog);
             SendLog("Запуск задачи");
             await Task.Run(() => phoneFTPManager.SendBaseToAllFromRace(PBCurrentRaceFromBase(JBase)));
         }
@@ -983,7 +997,7 @@ namespace SportOrgMultyDay
 
         private async void buttonPhoneFtpGetLogs_Click(object sender, EventArgs e)
         {
-            PhoneFTPManager phoneFTPManager = new PhoneFTPManager("ips.txt", SendSubLog);
+            PhoneFTPManager phoneFTPManager = new PhoneFTPManager(richTextBoxPhoneFtpIps.Text, SendSubLog);
             SendLog("Запуск задачи");
 
             string summary = await phoneFTPManager.DownloadAndArchiveLogsAsync();
@@ -1030,6 +1044,17 @@ namespace SportOrgMultyDay
         private void buttonFindCoursesForGroups_Click(object sender, EventArgs e)
         {
             SendLog(GroupCourseFinder.Process(PBCurrentRaceFromBase(JBase)));
+        }
+
+        private void buttonPhoneFtpSaveIps_Click(object sender, EventArgs e)
+        {
+            PhoneFtpSaveIps();
+            SendLog("Список IP сохранен");
+        }
+
+        private void buttonStartingFeeSerGroupPrices_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }
