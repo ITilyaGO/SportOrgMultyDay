@@ -68,8 +68,19 @@ namespace SportOrgMultyDay.Processing.SFR
                     string personId = PPId(person);
                     string groupId = PPGroupId(person);
                     string organizationId = PPOrganizationId(person);
-                    int groupIdSFR = soToSfrGroups[groupId];
-                    int organizationIdSFR = soToSfrOrganizations[organizationId];
+                    int organizationIdSFR = -1;
+                    int groupIdSFR = -1;
+
+                    if (organizationId != null)
+                        soToSfrOrganizations.TryGetValue(organizationId, out organizationIdSFR);
+                    else
+                        log += $"\n  Ошибка конвертации участника - команда не присвоена используем 0: {PPToString(person)}";
+
+                    if (groupId != null)
+                        soToSfrGroups.TryGetValue(groupId, out groupIdSFR);
+                    else
+                        log += $"\n  Ошибка конвертации участника - группа не присвоена используем 0: {PPToString(person)}";
+
                     SFRPerson sFRPerson = PersonToSFR(i, groupIdSFR, organizationIdSFR, person, groups, organizations);
                     if (sFRPerson == null)
                     {

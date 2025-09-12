@@ -204,6 +204,8 @@
             saveFileDialogSFRx = new SaveFileDialog();
             checkBoxRenameCourse = new CheckBox();
             checkBoxRenameGroups = new CheckBox();
+            groupBoxOrgUtils = new GroupBox();
+            buttonOrganizationCreateReserveOrg = new Button();
             contextMenuStripLog.SuspendLayout();
             tabPageShahmatka.SuspendLayout();
             groupBoxPhoneFtp.SuspendLayout();
@@ -234,6 +236,7 @@
             ((System.ComponentModel.ISupportInitialize)personStartMinuteBindingSource).BeginInit();
             tabPage1.SuspendLayout();
             tabControl1.SuspendLayout();
+            groupBoxOrgUtils.SuspendLayout();
             SuspendLayout();
             // 
             // buttonBaseImport
@@ -1334,6 +1337,7 @@
             // tabPageOrganizations
             // 
             tabPageOrganizations.BackColor = Color.WhiteSmoke;
+            tabPageOrganizations.Controls.Add(groupBoxOrgUtils);
             tabPageOrganizations.Controls.Add(labelClearOrganozationCity);
             tabPageOrganizations.Controls.Add(labelClearOrganizationNewName);
             tabPageOrganizations.Controls.Add(buttonOrganizationRename);
@@ -1380,7 +1384,7 @@
             // 
             // buttonOrganizationRename
             // 
-            buttonOrganizationRename.Location = new Point(416, 432);
+            buttonOrganizationRename.Location = new Point(416, 174);
             buttonOrganizationRename.Name = "buttonOrganizationRename";
             buttonOrganizationRename.Size = new Size(113, 42);
             buttonOrganizationRename.TabIndex = 12;
@@ -1982,6 +1986,16 @@
             checkBoxRenameCourse.TabIndex = 21;
             checkBoxRenameCourse.Text = "Переиминование дистанций";
             checkBoxRenameCourse.UseVisualStyleBackColor = true;
+            //
+            // groupBoxOrgUtils
+            //
+            groupBoxOrgUtils.Controls.Add(buttonOrganizationCreateReserveOrg);
+            groupBoxOrgUtils.Location = new Point(239, 222);
+            groupBoxOrgUtils.Name = "groupBoxOrgUtils";
+            groupBoxOrgUtils.Size = new Size(290, 223);
+            groupBoxOrgUtils.TabIndex = 14;
+            groupBoxOrgUtils.TabStop = false;
+            groupBoxOrgUtils.Text = "Утилиты коллективов";
             // 
             // checkBoxRenameGroups
             // 
@@ -1992,6 +2006,16 @@
             checkBoxRenameGroups.TabIndex = 22;
             checkBoxRenameGroups.Text = "Переиминование групп";
             checkBoxRenameGroups.UseVisualStyleBackColor = true;
+            //
+            // buttonOrganizationCreateReserveOrg
+            //
+            buttonOrganizationCreateReserveOrg.Location = new Point(6, 22);
+            buttonOrganizationCreateReserveOrg.Name = "buttonOrganizationCreateReserveOrg";
+            buttonOrganizationCreateReserveOrg.Size = new Size(203, 24);
+            buttonOrganizationCreateReserveOrg.TabIndex = 0;
+            buttonOrganizationCreateReserveOrg.Text = "Создать команду _ для резервов";
+            buttonOrganizationCreateReserveOrg.UseVisualStyleBackColor = true;
+            buttonOrganizationCreateReserveOrg.Click += buttonOrganizationCreateReserveOrg_Click;
             // 
             // Utils
             // 
@@ -2057,6 +2081,7 @@
             ((System.ComponentModel.ISupportInitialize)personStartMinuteBindingSource).EndInit();
             tabPage1.ResumeLayout(false);
             tabControl1.ResumeLayout(false);
+            groupBoxOrgUtils.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -2236,5 +2261,7 @@
         private RichTextBox richTextBoxStartingFeeInput;
         private CheckBox checkBoxRenameGroups;
         private CheckBox checkBoxRenameCourse;
+        private GroupBox groupBoxOrgUtils;
+        private Button buttonOrganizationCreateReserveOrg;
     }
 }

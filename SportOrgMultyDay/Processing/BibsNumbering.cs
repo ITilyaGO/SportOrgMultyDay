@@ -132,7 +132,7 @@ namespace SportOrgMultyDay.Processing
                         {
                             string strBib = i.ToString() + StringNormalizer(currentNumber.ToString(), bibNormalization);
                             int relayBib = int.Parse(strBib);
-                            JObject newReserv = PersonTemplate.Reserv;
+                            JObject newReserv = SportOrgTemplates.Reserv;
                             newReserv["group_id"] = groupId;
                             newReserv["bib"] = relayBib;
                             persons.Add(newReserv);
@@ -242,7 +242,7 @@ namespace SportOrgMultyDay.Processing
 
                     while (currentNumber <= numberOfGroup.EndBib && createdReservCount < numberOfGroup.MaxReservCount)
                     {
-                        JObject newReserv = PersonTemplate.Reserv;
+                        JObject newReserv = SportOrgTemplates.Reserv;
                         newReserv["group_id"] = groupId;
                         newReserv["bib"] = currentNumber;
                         persons.Add(newReserv);
