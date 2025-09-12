@@ -121,6 +121,9 @@
             richTextBoxBibsNumbering = new RichTextBox();
             buttonBibsAutoCreateListNumbering = new Button();
             tabPageGroups = new TabPage();
+            groupBoxStartingFee = new GroupBox();
+            buttonStartingFeeSerGroupPrices = new Button();
+            richTextBoxStartingFeeInput = new RichTextBox();
             groupBoxGroupRemoving = new GroupBox();
             buttonGroupRemoveGetList = new Button();
             buttonGroupRemoveIfNotInList = new Button();
@@ -199,9 +202,8 @@
             label17 = new Label();
             linkLabelGitHub = new LinkLabel();
             saveFileDialogSFRx = new SaveFileDialog();
-            groupBoxStartingFee = new GroupBox();
-            richTextBoxStartingFeeInput = new RichTextBox();
-            buttonStartingFeeSerGroupPrices = new Button();
+            groupBoxOrgUtils = new GroupBox();
+            buttonOrganizationCreateReserveOrg = new Button();
             contextMenuStripLog.SuspendLayout();
             tabPageShahmatka.SuspendLayout();
             groupBoxPhoneFtp.SuspendLayout();
@@ -218,6 +220,7 @@
             tabPageBibs.SuspendLayout();
             groupBoxBibs.SuspendLayout();
             tabPageGroups.SuspendLayout();
+            groupBoxStartingFee.SuspendLayout();
             groupBoxGroupRemoving.SuspendLayout();
             groupBoxGroupRanks.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDownGroupResultsCountToCompleteRank).BeginInit();
@@ -231,7 +234,7 @@
             ((System.ComponentModel.ISupportInitialize)personStartMinuteBindingSource).BeginInit();
             tabPage1.SuspendLayout();
             tabControl1.SuspendLayout();
-            groupBoxStartingFee.SuspendLayout();
+            groupBoxOrgUtils.SuspendLayout();
             SuspendLayout();
             // 
             // buttonBaseImport
@@ -1167,6 +1170,35 @@
             tabPageGroups.TabIndex = 4;
             tabPageGroups.Text = "Группы";
             // 
+            // groupBoxStartingFee
+            // 
+            groupBoxStartingFee.Controls.Add(buttonStartingFeeSerGroupPrices);
+            groupBoxStartingFee.Controls.Add(richTextBoxStartingFeeInput);
+            groupBoxStartingFee.Location = new Point(221, 174);
+            groupBoxStartingFee.Name = "groupBoxStartingFee";
+            groupBoxStartingFee.Size = new Size(297, 265);
+            groupBoxStartingFee.TabIndex = 32;
+            groupBoxStartingFee.TabStop = false;
+            groupBoxStartingFee.Text = "groupBox1";
+            // 
+            // buttonStartingFeeSerGroupPrices
+            // 
+            buttonStartingFeeSerGroupPrices.Location = new Point(6, 182);
+            buttonStartingFeeSerGroupPrices.Name = "buttonStartingFeeSerGroupPrices";
+            buttonStartingFeeSerGroupPrices.Size = new Size(221, 26);
+            buttonStartingFeeSerGroupPrices.TabIndex = 1;
+            buttonStartingFeeSerGroupPrices.Text = "Установить стартовые взносы группам";
+            buttonStartingFeeSerGroupPrices.UseVisualStyleBackColor = true;
+            buttonStartingFeeSerGroupPrices.Click += buttonStartingFeeSerGroupPrices_Click;
+            // 
+            // richTextBoxStartingFeeInput
+            // 
+            richTextBoxStartingFeeInput.Location = new Point(6, 22);
+            richTextBoxStartingFeeInput.Name = "richTextBoxStartingFeeInput";
+            richTextBoxStartingFeeInput.Size = new Size(185, 154);
+            richTextBoxStartingFeeInput.TabIndex = 0;
+            richTextBoxStartingFeeInput.Text = "";
+            // 
             // groupBoxGroupRemoving
             // 
             groupBoxGroupRemoving.Controls.Add(buttonGroupRemoveGetList);
@@ -1303,6 +1335,7 @@
             // tabPageOrganizations
             // 
             tabPageOrganizations.BackColor = Color.WhiteSmoke;
+            tabPageOrganizations.Controls.Add(groupBoxOrgUtils);
             tabPageOrganizations.Controls.Add(labelClearOrganozationCity);
             tabPageOrganizations.Controls.Add(labelClearOrganizationNewName);
             tabPageOrganizations.Controls.Add(buttonOrganizationRename);
@@ -1349,7 +1382,7 @@
             // 
             // buttonOrganizationRename
             // 
-            buttonOrganizationRename.Location = new Point(416, 432);
+            buttonOrganizationRename.Location = new Point(416, 174);
             buttonOrganizationRename.Name = "buttonOrganizationRename";
             buttonOrganizationRename.Size = new Size(113, 42);
             buttonOrganizationRename.TabIndex = 12;
@@ -1940,34 +1973,25 @@
             // 
             saveFileDialogSFRx.Filter = "SFRx|*.sfrx|All files|*.*";
             // 
-            // groupBoxStartingFee
+            // groupBoxOrgUtils
             // 
-            groupBoxStartingFee.Controls.Add(buttonStartingFeeSerGroupPrices);
-            groupBoxStartingFee.Controls.Add(richTextBoxStartingFeeInput);
-            groupBoxStartingFee.Location = new Point(221, 174);
-            groupBoxStartingFee.Name = "groupBoxStartingFee";
-            groupBoxStartingFee.Size = new Size(297, 265);
-            groupBoxStartingFee.TabIndex = 32;
-            groupBoxStartingFee.TabStop = false;
-            groupBoxStartingFee.Text = "groupBox1";
+            groupBoxOrgUtils.Controls.Add(buttonOrganizationCreateReserveOrg);
+            groupBoxOrgUtils.Location = new Point(239, 222);
+            groupBoxOrgUtils.Name = "groupBoxOrgUtils";
+            groupBoxOrgUtils.Size = new Size(290, 223);
+            groupBoxOrgUtils.TabIndex = 14;
+            groupBoxOrgUtils.TabStop = false;
+            groupBoxOrgUtils.Text = "Утилиты коллективов";
             // 
-            // richTextBoxStartingFeeInput
+            // buttonOrganizationCreateReserveOrg
             // 
-            richTextBoxStartingFeeInput.Location = new Point(6, 22);
-            richTextBoxStartingFeeInput.Name = "richTextBoxStartingFeeInput";
-            richTextBoxStartingFeeInput.Size = new Size(185, 154);
-            richTextBoxStartingFeeInput.TabIndex = 0;
-            richTextBoxStartingFeeInput.Text = "";
-            // 
-            // buttonStartingFeeSerGroupPrices
-            // 
-            buttonStartingFeeSerGroupPrices.Location = new Point(6, 182);
-            buttonStartingFeeSerGroupPrices.Name = "buttonStartingFeeSerGroupPrices";
-            buttonStartingFeeSerGroupPrices.Size = new Size(221, 26);
-            buttonStartingFeeSerGroupPrices.TabIndex = 1;
-            buttonStartingFeeSerGroupPrices.Text = "Установить стартовые взносы группам";
-            buttonStartingFeeSerGroupPrices.UseVisualStyleBackColor = true;
-            buttonStartingFeeSerGroupPrices.Click += buttonStartingFeeSerGroupPrices_Click;
+            buttonOrganizationCreateReserveOrg.Location = new Point(6, 22);
+            buttonOrganizationCreateReserveOrg.Name = "buttonOrganizationCreateReserveOrg";
+            buttonOrganizationCreateReserveOrg.Size = new Size(203, 24);
+            buttonOrganizationCreateReserveOrg.TabIndex = 0;
+            buttonOrganizationCreateReserveOrg.Text = "Создать команду _ для резервов";
+            buttonOrganizationCreateReserveOrg.UseVisualStyleBackColor = true;
+            buttonOrganizationCreateReserveOrg.Click += buttonOrganizationCreateReserveOrg_Click;
             // 
             // Utils
             // 
@@ -2012,6 +2036,7 @@
             groupBoxBibs.ResumeLayout(false);
             groupBoxBibs.PerformLayout();
             tabPageGroups.ResumeLayout(false);
+            groupBoxStartingFee.ResumeLayout(false);
             groupBoxGroupRemoving.ResumeLayout(false);
             groupBoxGroupRanks.ResumeLayout(false);
             groupBoxGroupRanks.PerformLayout();
@@ -2032,7 +2057,7 @@
             ((System.ComponentModel.ISupportInitialize)personStartMinuteBindingSource).EndInit();
             tabPage1.ResumeLayout(false);
             tabControl1.ResumeLayout(false);
-            groupBoxStartingFee.ResumeLayout(false);
+            groupBoxOrgUtils.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -2210,5 +2235,7 @@
         private GroupBox groupBoxStartingFee;
         private Button buttonStartingFeeSerGroupPrices;
         private RichTextBox richTextBoxStartingFeeInput;
+        private GroupBox groupBoxOrgUtils;
+        private Button buttonOrganizationCreateReserveOrg;
     }
 }

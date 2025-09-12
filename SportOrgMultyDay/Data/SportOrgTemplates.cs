@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SportOrgMultyDay.Data
 {
-    public static class PersonTemplate
+    public static class SportOrgTemplates
     {
         public static JObject Reserv
         {
@@ -45,6 +45,25 @@ namespace SportOrgMultyDay.Data
             JObject person = Reserv;
             person["group_id"] = group_id;
             return person;
+        }
+
+        public static JObject Organization
+        {
+            get
+            {
+                return new()
+                {
+                    ["object"] = "Organization",
+                    ["id"] = Guid.NewGuid().ToString(),
+                    ["name"] = "",
+                    ["country"] = "",
+                    ["region"] = "",
+                    ["contact"] = "",
+                    ["code"] = "",
+                    ["count_person"] = 0,
+                    ["sex"] = 0
+                };
+            }
         }
     }
 }

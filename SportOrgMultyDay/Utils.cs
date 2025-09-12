@@ -1054,7 +1054,53 @@ namespace SportOrgMultyDay
 
         private void buttonStartingFeeSerGroupPrices_Click(object sender, EventArgs e)
         {
-            
+
+        }
+
+        private void buttonOrganizationCreateReserveOrg_Click(object sender, EventArgs e)
+        {
+
+
+            string log = "Создание организаций для резервов...";
+            try
+            {
+                JArray races = PBRaces(JBase);
+                JToken reservOrg = null;
+                foreach (JToken race in races)
+                {
+                    JArray orgs = PBOrganizations(race);
+                    JToken cr_reservOrg = orgs.FirstOrDefault(o => POName(o) == "_");
+                    if (reservOrg != null && POId(reservOrg) != POId(cr_reservOrg))
+                    {
+                        log += "  !!!Найдены разные ID организваций резервов в разных днях. Удалите все команды с названием _ и попробуйте снова\n";
+                    }
+                }
+                if (reservOrg == null)
+                {
+                    reservOrg = SportOrgTemplates.Organization;
+                    reservOrg["name"] = "_";
+                }
+                string reservOrgId = POId(reservOrg);
+
+                for (int i = 0; i < races.Count; i++)
+                {
+                    log += $"  День {i+1}\n";
+                    JToken race = races[i];
+                    JArray persons = PBPersons(race);
+                    JArray orgs = PBOrganizations(race);
+                    orgs.Add(reservOrg.DeepClone());
+                    foreach (JToken person in persons)
+                    {
+                        if (PPSurname(person) == textBoxReservName.Text)
+                        {
+                            log += $"    Найден резерв - {PPToString(person)}. Команда заменена\n";
+                            person["organization_id"] = reservOrgId;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { log += $"Ошибка - {ex.Message}\n"; LogError("aqsd2fasdfsad", ex); }
+            SendLog(log);
         }
     }
 }
