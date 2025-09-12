@@ -121,6 +121,9 @@
             richTextBoxBibsNumbering = new RichTextBox();
             buttonBibsAutoCreateListNumbering = new Button();
             tabPageGroups = new TabPage();
+            groupBoxStartingFee = new GroupBox();
+            buttonStartingFeeSerGroupPrices = new Button();
+            richTextBoxStartingFeeInput = new RichTextBox();
             groupBoxGroupRemoving = new GroupBox();
             buttonGroupRemoveGetList = new Button();
             buttonGroupRemoveIfNotInList = new Button();
@@ -199,9 +202,8 @@
             label17 = new Label();
             linkLabelGitHub = new LinkLabel();
             saveFileDialogSFRx = new SaveFileDialog();
-            groupBoxStartingFee = new GroupBox();
-            richTextBoxStartingFeeInput = new RichTextBox();
-            buttonStartingFeeSerGroupPrices = new Button();
+            checkBoxRenameCourse = new CheckBox();
+            checkBoxRenameGroups = new CheckBox();
             contextMenuStripLog.SuspendLayout();
             tabPageShahmatka.SuspendLayout();
             groupBoxPhoneFtp.SuspendLayout();
@@ -218,6 +220,7 @@
             tabPageBibs.SuspendLayout();
             groupBoxBibs.SuspendLayout();
             tabPageGroups.SuspendLayout();
+            groupBoxStartingFee.SuspendLayout();
             groupBoxGroupRemoving.SuspendLayout();
             groupBoxGroupRanks.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDownGroupResultsCountToCompleteRank).BeginInit();
@@ -231,7 +234,6 @@
             ((System.ComponentModel.ISupportInitialize)personStartMinuteBindingSource).BeginInit();
             tabPage1.SuspendLayout();
             tabControl1.SuspendLayout();
-            groupBoxStartingFee.SuspendLayout();
             SuspendLayout();
             // 
             // buttonBaseImport
@@ -298,7 +300,7 @@
             // buttonCombineAllBase
             // 
             buttonCombineAllBase.Enabled = false;
-            buttonCombineAllBase.Location = new Point(299, 328);
+            buttonCombineAllBase.Location = new Point(260, 363);
             buttonCombineAllBase.Name = "buttonCombineAllBase";
             buttonCombineAllBase.Size = new Size(115, 23);
             buttonCombineAllBase.TabIndex = 20;
@@ -769,7 +771,7 @@
             label3.AutoSize = true;
             label3.Location = new Point(15, 158);
             label3.Name = "label3";
-            label3.Size = new Size(224, 15);
+            label3.Size = new Size(225, 15);
             label3.TabIndex = 26;
             label3.Text = "Поля для копирования/синхронизации";
             // 
@@ -910,7 +912,7 @@
             checkBoxUseShortStartTimeAlg.AutoSize = true;
             checkBoxUseShortStartTimeAlg.Location = new Point(224, 133);
             checkBoxUseShortStartTimeAlg.Name = "checkBoxUseShortStartTimeAlg";
-            checkBoxUseShortStartTimeAlg.Size = new Size(213, 19);
+            checkBoxUseShortStartTimeAlg.Size = new Size(214, 19);
             checkBoxUseShortStartTimeAlg.TabIndex = 7;
             checkBoxUseShortStartTimeAlg.Text = "Сжимать конец старта в колонках";
             checkBoxUseShortStartTimeAlg.UseVisualStyleBackColor = true;
@@ -1166,6 +1168,35 @@
             tabPageGroups.Size = new Size(535, 485);
             tabPageGroups.TabIndex = 4;
             tabPageGroups.Text = "Группы";
+            // 
+            // groupBoxStartingFee
+            // 
+            groupBoxStartingFee.Controls.Add(buttonStartingFeeSerGroupPrices);
+            groupBoxStartingFee.Controls.Add(richTextBoxStartingFeeInput);
+            groupBoxStartingFee.Location = new Point(221, 174);
+            groupBoxStartingFee.Name = "groupBoxStartingFee";
+            groupBoxStartingFee.Size = new Size(297, 265);
+            groupBoxStartingFee.TabIndex = 32;
+            groupBoxStartingFee.TabStop = false;
+            groupBoxStartingFee.Text = "groupBox1";
+            // 
+            // buttonStartingFeeSerGroupPrices
+            // 
+            buttonStartingFeeSerGroupPrices.Location = new Point(6, 182);
+            buttonStartingFeeSerGroupPrices.Name = "buttonStartingFeeSerGroupPrices";
+            buttonStartingFeeSerGroupPrices.Size = new Size(221, 26);
+            buttonStartingFeeSerGroupPrices.TabIndex = 1;
+            buttonStartingFeeSerGroupPrices.Text = "Установить стартовые взносы группам";
+            buttonStartingFeeSerGroupPrices.UseVisualStyleBackColor = true;
+            buttonStartingFeeSerGroupPrices.Click += buttonStartingFeeSerGroupPrices_Click;
+            // 
+            // richTextBoxStartingFeeInput
+            // 
+            richTextBoxStartingFeeInput.Location = new Point(6, 22);
+            richTextBoxStartingFeeInput.Name = "richTextBoxStartingFeeInput";
+            richTextBoxStartingFeeInput.Size = new Size(185, 154);
+            richTextBoxStartingFeeInput.TabIndex = 0;
+            richTextBoxStartingFeeInput.Text = "";
             // 
             // groupBoxGroupRemoving
             // 
@@ -1492,6 +1523,8 @@
             // tabPageOther
             // 
             tabPageOther.BackColor = Color.WhiteSmoke;
+            tabPageOther.Controls.Add(checkBoxRenameGroups);
+            tabPageOther.Controls.Add(checkBoxRenameCourse);
             tabPageOther.Controls.Add(buttonQualFromOtherBase);
             tabPageOther.Controls.Add(buttonVichestStart);
             tabPageOther.Controls.Add(groupBoxMapCountCalculate);
@@ -1592,7 +1625,7 @@
             // checkBoxCombineCourse
             // 
             checkBoxCombineCourse.AutoSize = true;
-            checkBoxCombineCourse.Location = new Point(308, 303);
+            checkBoxCombineCourse.Location = new Point(308, 291);
             checkBoxCombineCourse.Name = "checkBoxCombineCourse";
             checkBoxCombineCourse.Size = new Size(161, 19);
             checkBoxCombineCourse.TabIndex = 7;
@@ -1601,7 +1634,7 @@
             // 
             // buttonGroupCourseNamesFormat
             // 
-            buttonGroupCourseNamesFormat.Location = new Point(308, 257);
+            buttonGroupCourseNamesFormat.Location = new Point(308, 245);
             buttonGroupCourseNamesFormat.Name = "buttonGroupCourseNamesFormat";
             buttonGroupCourseNamesFormat.Size = new Size(188, 40);
             buttonGroupCourseNamesFormat.TabIndex = 6;
@@ -1940,34 +1973,25 @@
             // 
             saveFileDialogSFRx.Filter = "SFRx|*.sfrx|All files|*.*";
             // 
-            // groupBoxStartingFee
+            // checkBoxRenameCourse
             // 
-            groupBoxStartingFee.Controls.Add(buttonStartingFeeSerGroupPrices);
-            groupBoxStartingFee.Controls.Add(richTextBoxStartingFeeInput);
-            groupBoxStartingFee.Location = new Point(221, 174);
-            groupBoxStartingFee.Name = "groupBoxStartingFee";
-            groupBoxStartingFee.Size = new Size(297, 265);
-            groupBoxStartingFee.TabIndex = 32;
-            groupBoxStartingFee.TabStop = false;
-            groupBoxStartingFee.Text = "groupBox1";
+            checkBoxRenameCourse.AutoSize = true;
+            checkBoxRenameCourse.Location = new Point(308, 306);
+            checkBoxRenameCourse.Name = "checkBoxRenameCourse";
+            checkBoxRenameCourse.Size = new Size(184, 19);
+            checkBoxRenameCourse.TabIndex = 21;
+            checkBoxRenameCourse.Text = "Переиминование дистанций";
+            checkBoxRenameCourse.UseVisualStyleBackColor = true;
             // 
-            // richTextBoxStartingFeeInput
+            // checkBoxRenameGroups
             // 
-            richTextBoxStartingFeeInput.Location = new Point(6, 22);
-            richTextBoxStartingFeeInput.Name = "richTextBoxStartingFeeInput";
-            richTextBoxStartingFeeInput.Size = new Size(185, 154);
-            richTextBoxStartingFeeInput.TabIndex = 0;
-            richTextBoxStartingFeeInput.Text = "";
-            // 
-            // buttonStartingFeeSerGroupPrices
-            // 
-            buttonStartingFeeSerGroupPrices.Location = new Point(6, 182);
-            buttonStartingFeeSerGroupPrices.Name = "buttonStartingFeeSerGroupPrices";
-            buttonStartingFeeSerGroupPrices.Size = new Size(221, 26);
-            buttonStartingFeeSerGroupPrices.TabIndex = 1;
-            buttonStartingFeeSerGroupPrices.Text = "Установить стартовые взносы группам";
-            buttonStartingFeeSerGroupPrices.UseVisualStyleBackColor = true;
-            buttonStartingFeeSerGroupPrices.Click += buttonStartingFeeSerGroupPrices_Click;
+            checkBoxRenameGroups.AutoSize = true;
+            checkBoxRenameGroups.Location = new Point(308, 321);
+            checkBoxRenameGroups.Name = "checkBoxRenameGroups";
+            checkBoxRenameGroups.Size = new Size(158, 19);
+            checkBoxRenameGroups.TabIndex = 22;
+            checkBoxRenameGroups.Text = "Переиминование групп";
+            checkBoxRenameGroups.UseVisualStyleBackColor = true;
             // 
             // Utils
             // 
@@ -2012,6 +2036,7 @@
             groupBoxBibs.ResumeLayout(false);
             groupBoxBibs.PerformLayout();
             tabPageGroups.ResumeLayout(false);
+            groupBoxStartingFee.ResumeLayout(false);
             groupBoxGroupRemoving.ResumeLayout(false);
             groupBoxGroupRanks.ResumeLayout(false);
             groupBoxGroupRanks.PerformLayout();
@@ -2032,7 +2057,6 @@
             ((System.ComponentModel.ISupportInitialize)personStartMinuteBindingSource).EndInit();
             tabPage1.ResumeLayout(false);
             tabControl1.ResumeLayout(false);
-            groupBoxStartingFee.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -2210,5 +2234,7 @@
         private GroupBox groupBoxStartingFee;
         private Button buttonStartingFeeSerGroupPrices;
         private RichTextBox richTextBoxStartingFeeInput;
+        private CheckBox checkBoxRenameGroups;
+        private CheckBox checkBoxRenameCourse;
     }
 }

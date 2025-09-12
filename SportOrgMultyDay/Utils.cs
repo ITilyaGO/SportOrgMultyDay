@@ -752,7 +752,7 @@ namespace SportOrgMultyDay
 
         private void buttonGroupCurseNamesFormat_Click(object sender, EventArgs e)
         {
-            SendLog(GroupCourseNameFormater.FormatAll(JBase, checkBoxCombineCourse.Checked, false));
+            SendLog(GroupCourseNameFormater.FormatAll(JBase, checkBoxCombineCourse.Checked, checkBoxRenameCourse.Checked,checkBoxRenameGroups.Checked));
 
         }
 

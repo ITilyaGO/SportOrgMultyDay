@@ -20,11 +20,12 @@ namespace SportOrgMultyDay.Processing
 {
     public static class GroupCourseNameFormater
     {
-        public static string FormatAll(JToken jBase, bool combineCourses, bool formatCourseNames)
+        public static string FormatAll(JToken jBase, bool combineCourses, bool formatCourseNames, bool formatGroups = true)
         {
             string log = "Форматирование назщваний групп и дистанций... \n";
             JToken race = PBCurrentRaceFromBase(jBase);
-            //FormatGroupNames(race, ref log);
+            if (formatGroups)
+                FormatGroupNames(race, ref log);
             if (combineCourses)
             {
                 if (formatCourseNames)
