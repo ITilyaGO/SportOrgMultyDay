@@ -138,6 +138,8 @@
             numericUpDownGroupResultsCountToCompleteRank = new NumericUpDown();
             checkedListBox1 = new CheckedListBox();
             tabPageOrganizations = new TabPage();
+            groupBoxOrgUtils = new GroupBox();
+            buttonOrganizationCreateReserveOrg = new Button();
             labelClearOrganozationCity = new Label();
             labelClearOrganizationNewName = new Label();
             buttonOrganizationRename = new Button();
@@ -156,6 +158,8 @@
             textBoxOrganizationNewName = new TextBox();
             buttonAddOrganizationTweakItem = new Button();
             tabPageOther = new TabPage();
+            checkBoxRenameGroups = new CheckBox();
+            checkBoxRenameCourse = new CheckBox();
             buttonQualFromOtherBase = new Button();
             buttonVichestStart = new Button();
             groupBoxMapCountCalculate = new GroupBox();
@@ -202,10 +206,7 @@
             label17 = new Label();
             linkLabelGitHub = new LinkLabel();
             saveFileDialogSFRx = new SaveFileDialog();
-            checkBoxRenameCourse = new CheckBox();
-            checkBoxRenameGroups = new CheckBox();
-            groupBoxOrgUtils = new GroupBox();
-            buttonOrganizationCreateReserveOrg = new Button();
+            checkBoxIsSaveToGzip = new CheckBox();
             contextMenuStripLog.SuspendLayout();
             tabPageShahmatka.SuspendLayout();
             groupBoxPhoneFtp.SuspendLayout();
@@ -227,6 +228,7 @@
             groupBoxGroupRanks.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDownGroupResultsCountToCompleteRank).BeginInit();
             tabPageOrganizations.SuspendLayout();
+            groupBoxOrgUtils.SuspendLayout();
             tabPageOther.SuspendLayout();
             groupBoxMapCountCalculate.SuspendLayout();
             groupBoxImport.SuspendLayout();
@@ -236,7 +238,6 @@
             ((System.ComponentModel.ISupportInitialize)personStartMinuteBindingSource).BeginInit();
             tabPage1.SuspendLayout();
             tabControl1.SuspendLayout();
-            groupBoxOrgUtils.SuspendLayout();
             SuspendLayout();
             // 
             // buttonBaseImport
@@ -774,7 +775,7 @@
             label3.AutoSize = true;
             label3.Location = new Point(15, 158);
             label3.Name = "label3";
-            label3.Size = new Size(225, 15);
+            label3.Size = new Size(224, 15);
             label3.TabIndex = 26;
             label3.Text = "Поля для копирования/синхронизации";
             // 
@@ -915,7 +916,7 @@
             checkBoxUseShortStartTimeAlg.AutoSize = true;
             checkBoxUseShortStartTimeAlg.Location = new Point(224, 133);
             checkBoxUseShortStartTimeAlg.Name = "checkBoxUseShortStartTimeAlg";
-            checkBoxUseShortStartTimeAlg.Size = new Size(214, 19);
+            checkBoxUseShortStartTimeAlg.Size = new Size(213, 19);
             checkBoxUseShortStartTimeAlg.TabIndex = 7;
             checkBoxUseShortStartTimeAlg.Text = "Сжимать конец старта в колонках";
             checkBoxUseShortStartTimeAlg.UseVisualStyleBackColor = true;
@@ -1362,6 +1363,26 @@
             tabPageOrganizations.TabIndex = 7;
             tabPageOrganizations.Text = "Коллективы";
             // 
+            // groupBoxOrgUtils
+            // 
+            groupBoxOrgUtils.Controls.Add(buttonOrganizationCreateReserveOrg);
+            groupBoxOrgUtils.Location = new Point(239, 222);
+            groupBoxOrgUtils.Name = "groupBoxOrgUtils";
+            groupBoxOrgUtils.Size = new Size(290, 223);
+            groupBoxOrgUtils.TabIndex = 14;
+            groupBoxOrgUtils.TabStop = false;
+            groupBoxOrgUtils.Text = "Утилиты коллективов";
+            // 
+            // buttonOrganizationCreateReserveOrg
+            // 
+            buttonOrganizationCreateReserveOrg.Location = new Point(6, 22);
+            buttonOrganizationCreateReserveOrg.Name = "buttonOrganizationCreateReserveOrg";
+            buttonOrganizationCreateReserveOrg.Size = new Size(203, 24);
+            buttonOrganizationCreateReserveOrg.TabIndex = 0;
+            buttonOrganizationCreateReserveOrg.Text = "Создать команду _ для резервов";
+            buttonOrganizationCreateReserveOrg.UseVisualStyleBackColor = true;
+            buttonOrganizationCreateReserveOrg.Click += buttonOrganizationCreateReserveOrg_Click;
+            // 
             // labelClearOrganozationCity
             // 
             labelClearOrganozationCity.AutoSize = true;
@@ -1546,6 +1567,26 @@
             tabPageOther.Size = new Size(535, 485);
             tabPageOther.TabIndex = 3;
             tabPageOther.Text = "Остальное";
+            // 
+            // checkBoxRenameGroups
+            // 
+            checkBoxRenameGroups.AutoSize = true;
+            checkBoxRenameGroups.Location = new Point(308, 321);
+            checkBoxRenameGroups.Name = "checkBoxRenameGroups";
+            checkBoxRenameGroups.Size = new Size(158, 19);
+            checkBoxRenameGroups.TabIndex = 22;
+            checkBoxRenameGroups.Text = "Переиминование групп";
+            checkBoxRenameGroups.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxRenameCourse
+            // 
+            checkBoxRenameCourse.AutoSize = true;
+            checkBoxRenameCourse.Location = new Point(308, 306);
+            checkBoxRenameCourse.Name = "checkBoxRenameCourse";
+            checkBoxRenameCourse.Size = new Size(184, 19);
+            checkBoxRenameCourse.TabIndex = 21;
+            checkBoxRenameCourse.Text = "Переиминование дистанций";
+            checkBoxRenameCourse.UseVisualStyleBackColor = true;
             // 
             // buttonQualFromOtherBase
             // 
@@ -1965,7 +2006,7 @@
             // linkLabelGitHub
             // 
             linkLabelGitHub.AutoSize = true;
-            linkLabelGitHub.Location = new Point(277, 17);
+            linkLabelGitHub.Location = new Point(261, 16);
             linkLabelGitHub.Name = "linkLabelGitHub";
             linkLabelGitHub.Size = new Size(133, 15);
             linkLabelGitHub.TabIndex = 32;
@@ -1977,51 +2018,24 @@
             // 
             saveFileDialogSFRx.Filter = "SFRx|*.sfrx|All files|*.*";
             // 
-            // checkBoxRenameCourse
+            // checkBoxIsSaveToGzip
             // 
-            checkBoxRenameCourse.AutoSize = true;
-            checkBoxRenameCourse.Location = new Point(308, 306);
-            checkBoxRenameCourse.Name = "checkBoxRenameCourse";
-            checkBoxRenameCourse.Size = new Size(184, 19);
-            checkBoxRenameCourse.TabIndex = 21;
-            checkBoxRenameCourse.Text = "Переиминование дистанций";
-            checkBoxRenameCourse.UseVisualStyleBackColor = true;
-            //
-            // groupBoxOrgUtils
-            //
-            groupBoxOrgUtils.Controls.Add(buttonOrganizationCreateReserveOrg);
-            groupBoxOrgUtils.Location = new Point(239, 222);
-            groupBoxOrgUtils.Name = "groupBoxOrgUtils";
-            groupBoxOrgUtils.Size = new Size(290, 223);
-            groupBoxOrgUtils.TabIndex = 14;
-            groupBoxOrgUtils.TabStop = false;
-            groupBoxOrgUtils.Text = "Утилиты коллективов";
-            // 
-            // checkBoxRenameGroups
-            // 
-            checkBoxRenameGroups.AutoSize = true;
-            checkBoxRenameGroups.Location = new Point(308, 321);
-            checkBoxRenameGroups.Name = "checkBoxRenameGroups";
-            checkBoxRenameGroups.Size = new Size(158, 19);
-            checkBoxRenameGroups.TabIndex = 22;
-            checkBoxRenameGroups.Text = "Переиминование групп";
-            checkBoxRenameGroups.UseVisualStyleBackColor = true;
-            //
-            // buttonOrganizationCreateReserveOrg
-            //
-            buttonOrganizationCreateReserveOrg.Location = new Point(6, 22);
-            buttonOrganizationCreateReserveOrg.Name = "buttonOrganizationCreateReserveOrg";
-            buttonOrganizationCreateReserveOrg.Size = new Size(203, 24);
-            buttonOrganizationCreateReserveOrg.TabIndex = 0;
-            buttonOrganizationCreateReserveOrg.Text = "Создать команду _ для резервов";
-            buttonOrganizationCreateReserveOrg.UseVisualStyleBackColor = true;
-            buttonOrganizationCreateReserveOrg.Click += buttonOrganizationCreateReserveOrg_Click;
+            checkBoxIsSaveToGzip.AutoSize = true;
+            checkBoxIsSaveToGzip.Checked = true;
+            checkBoxIsSaveToGzip.CheckState = CheckState.Checked;
+            checkBoxIsSaveToGzip.Location = new Point(399, 15);
+            checkBoxIsSaveToGzip.Name = "checkBoxIsSaveToGzip";
+            checkBoxIsSaveToGzip.Size = new Size(48, 19);
+            checkBoxIsSaveToGzip.TabIndex = 33;
+            checkBoxIsSaveToGzip.Text = "gzip";
+            checkBoxIsSaveToGzip.UseVisualStyleBackColor = true;
             // 
             // Utils
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1408, 565);
+            Controls.Add(checkBoxIsSaveToGzip);
             Controls.Add(linkLabelGitHub);
             Controls.Add(label17);
             Controls.Add(tabControlFunc);
@@ -2067,6 +2081,7 @@
             ((System.ComponentModel.ISupportInitialize)numericUpDownGroupResultsCountToCompleteRank).EndInit();
             tabPageOrganizations.ResumeLayout(false);
             tabPageOrganizations.PerformLayout();
+            groupBoxOrgUtils.ResumeLayout(false);
             tabPageOther.ResumeLayout(false);
             tabPageOther.PerformLayout();
             groupBoxMapCountCalculate.ResumeLayout(false);
@@ -2081,7 +2096,6 @@
             ((System.ComponentModel.ISupportInitialize)personStartMinuteBindingSource).EndInit();
             tabPage1.ResumeLayout(false);
             tabControl1.ResumeLayout(false);
-            groupBoxOrgUtils.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -2263,5 +2277,6 @@
         private CheckBox checkBoxRenameCourse;
         private GroupBox groupBoxOrgUtils;
         private Button buttonOrganizationCreateReserveOrg;
+        private CheckBox checkBoxIsSaveToGzip;
     }
 }

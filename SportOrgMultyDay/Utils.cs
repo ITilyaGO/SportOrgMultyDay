@@ -1,29 +1,30 @@
 ﻿using Newtonsoft.Json.Linq;
+using SportOrgMultyDay.Data;
+using SportOrgMultyDay.Data.Combine;
+using SportOrgMultyDay.Data.SportOrg;
+using SportOrgMultyDay.Helpers;
 using SportOrgMultyDay.Processing;
+using SportOrgMultyDay.Processing.FTP;
+using SportOrgMultyDay.Processing.Orgeo;
+using SportOrgMultyDay.Processing.Parsing.Things;
+using SportOrgMultyDay.Processing.SFR;
+using SportOrgMultyDay.Processing.SFRSmartTerminal;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO.Compression;
+using System.Reflection.Metadata;
 using System.Text;
+using System.Windows.Forms;
 using static SportOrgMultyDay.Data.QualificationNames;
+using static SportOrgMultyDay.Processing.Logger;
 using static SportOrgMultyDay.Processing.Parsing.ParseBase;
+using static SportOrgMultyDay.Processing.Parsing.ParseData;
 using static SportOrgMultyDay.Processing.Parsing.ParseGroup;
 using static SportOrgMultyDay.Processing.Parsing.ParseOrganization;
 using static SportOrgMultyDay.Processing.Parsing.ParsePerson;
-using static SportOrgMultyDay.Processing.Parsing.ParseData;
 using static SportOrgMultyDay.Processing.Parsing.ParseResult;
 using static SportOrgMultyDay.Processing.Parsing.Things.ParseStartTime;
-using static SportOrgMultyDay.Processing.Logger;
-using SportOrgMultyDay.Processing.SFRSmartTerminal;
-using SportOrgMultyDay.Helpers;
-using SportOrgMultyDay.Data;
-using SportOrgMultyDay.Processing.Parsing.Things;
-using System.Reflection.Metadata;
-using SportOrgMultyDay.Data.SportOrg;
-using SportOrgMultyDay.Data.Combine;
-using System.Diagnostics;
-using System.Windows.Forms;
-using System;
-using System.Collections.Generic;
-using SportOrgMultyDay.Processing.SFR;
-using SportOrgMultyDay.Processing.FTP;
-using SportOrgMultyDay.Processing.Orgeo;
 
 namespace SportOrgMultyDay
 {
@@ -71,13 +72,37 @@ namespace SportOrgMultyDay
 
         private void ExportJson(JObject savingBase)
         {
-            if (saveFileDialogJson.ShowDialog() != DialogResult.OK) return;
+            if (saveFileDialogJson.ShowDialog() != DialogResult.OK)
+                return;
 
+            try
+            {
+                string ojson = savingBase.ToString();
+                string saveJ = ResaveToJsonUnicode.Convert(ojson);
+                string filePath = saveFileDialogJson.FileName;
 
-            string ojson = savingBase.ToString();
-            string saveJ = ResaveToJsonUnicode.Convert(ojson);
-            File.WriteAllText(saveFileDialogJson.FileName, saveJ);
+                if (checkBoxIsSaveToGzip.Checked)
+                {
+                    using (var fs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+                    using (var gzip = new GZipStream(fs, CompressionMode.Compress))
+                    using (var writer = new StreamWriter(gzip))
+                    {
+                        writer.Write(saveJ);
+                    }
 
+                    SendLog("💾 Файл сохранён в GZIP-сжатом виде (.json)");
+                }
+                else
+                {
+                    File.WriteAllText(filePath, saveJ);
+                    SendLog("💾 Файл сохранён как обычный JSON");
+                }
+            }
+            catch (Exception ex)
+            {
+                SendLog($"⚠ Ошибка при экспорте JSON: {ex.Message}");
+                LogError("ExportJson", ex);
+            }
         }
 
         private void ImportBase()
@@ -89,13 +114,42 @@ namespace SportOrgMultyDay
                     SendLog("Импорт отменен");
                     return;
                 }
-                string json = File.ReadAllText(openFileDialogJson.FileName);
+
+                string filePath = openFileDialogJson.FileName;
+                string json;
+
+                // Определяем, GZip это или обычный текст
+                using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                {
+                    bool isGzip = fs.Length > 2 &&
+                                  fs.ReadByte() == 0x1F && // GZIP header bytes
+                                  fs.ReadByte() == 0x8B;
+
+                    fs.Position = 0; // возвращаемся в начало
+
+                    if (isGzip)
+                    {
+                        using (GZipStream gzip = new(fs, CompressionMode.Decompress))
+                        using (StreamReader reader = new(gzip))
+                        {
+                            json = reader.ReadToEnd();
+                        }
+
+                        SendLog("📦 Обнаружен GZIP-файл, выполнена распаковка");
+                    }
+                    else
+                    {
+                        using StreamReader reader = new StreamReader(fs);
+                        json = reader.ReadToEnd();
+                    }
+                }
+
                 ImportBase(json);
             }
             catch (Exception ex)
             {
-                SendLog($"⚠Ошибка импорта базы: {ex.Message}");
-                LogError("sdhd9ds9d", ex);
+                SendLog($"⚠ Ошибка импорта базы: {ex.Message}");
+                LogError("ImportBase", ex);
             }
         }
 
