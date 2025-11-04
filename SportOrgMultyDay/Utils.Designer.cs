@@ -2047,7 +2047,7 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             MinimumSize = new Size(900, 470);
             Name = "Utils";
-            Text = "Утилиты v0.19.0";
+            Text = "Утилиты v0.20.0";
             FormClosing += Utils_FormClosing;
             Load += Utils_Load;
             SizeChanged += Utils_SizeChanged;

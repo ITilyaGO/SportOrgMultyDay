@@ -323,6 +323,16 @@ namespace SportOrgMultyDay
             buttonCalculatePersonStartPrice.Enabled = active;
             buttonExportSFRx.Enabled = active;
             buttonInportResultsFromAnothrBase.Enabled = active;
+            buttonFindCoursesForGroups.Enabled = active;
+            buttonRemovePersonDuplicates.Enabled = active;
+            buttonSetAllDaysToComment.Enabled = active;
+            buttonGroupRemoveGetList.Enabled = active;
+            buttonPhoneFtpGetLogs.Enabled = active;
+            buttonPhoneFtpSaveIps.Enabled = active;
+            buttonPhoneFtpSendBase.Enabled = active;
+            buttonGroupRemoveIfNotInList.Enabled = active;
+            buttonOrganizationCreateReserveOrg.Enabled = active;
+            buttonChipRentFromComment.Enabled = active;
         }
 
         private void ReloadOrganizationRenameList()
