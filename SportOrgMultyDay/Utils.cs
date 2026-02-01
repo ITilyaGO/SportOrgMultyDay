@@ -816,7 +816,7 @@ namespace SportOrgMultyDay
 
         private void buttonGroupCurseNamesFormat_Click(object sender, EventArgs e)
         {
-            SendLog(GroupCourseNameFormater.FormatAll(JBase, checkBoxCombineCourse.Checked, checkBoxRenameCourse.Checked,checkBoxRenameGroups.Checked));
+            SendLog(GroupCourseNameFormater.FormatAll(JBase, checkBoxCombineCourse.Checked, checkBoxRenameCourse.Checked, checkBoxRenameGroups.Checked));
 
         }
 
@@ -1148,7 +1148,7 @@ namespace SportOrgMultyDay
 
                 for (int i = 0; i < races.Count; i++)
                 {
-                    log += $"  День {i+1}\n";
+                    log += $"  День {i + 1}\n";
                     JToken race = races[i];
                     JArray persons = PBPersons(race);
                     JArray orgs = PBOrganizations(race);
@@ -1164,6 +1164,19 @@ namespace SportOrgMultyDay
                 }
             }
             catch (Exception ex) { log += $"Ошибка - {ex.Message}\n"; LogError("aqsd2fasdfsad", ex); }
+            SendLog(log);
+        }
+
+        private void buttonPayidToView_Click(object sender, EventArgs e)
+        {
+            string log = "Установка статуса вне конкурса для неоплативших стартовый взнос...\n";
+            var race = PBCurrentRaceFromBase(JBase);
+            var persons = PBPersons(race);
+            foreach (var person in persons)
+            {
+                person["is_out_of_competition"] = !PPIsPaid(person);
+                log += $"  {PPToString(person)} - {(PPIsPaid(person) ? "Оплатил" : "Не оплатил")} - {(PPIsPaid(person) ? "Снимаем вне конкурса" : "Ставим вне конкурса")}\n";
+            }
             SendLog(log);
         }
     }

@@ -182,6 +182,7 @@
             buttonImportFromYarfso = new Button();
             buttonInportResultsFromAnothrBase = new Button();
             groupBoxStartFee = new GroupBox();
+            buttonPayidToView = new Button();
             buttonCalculatePersonStartPrice = new Button();
             label5 = new Label();
             textBoxStartFeeWithCardSymbol = new TextBox();
@@ -1820,6 +1821,7 @@
             // 
             // groupBoxStartFee
             // 
+            groupBoxStartFee.Controls.Add(buttonPayidToView);
             groupBoxStartFee.Controls.Add(buttonCalculatePersonStartPrice);
             groupBoxStartFee.Controls.Add(label5);
             groupBoxStartFee.Controls.Add(textBoxStartFeeWithCardSymbol);
@@ -1830,6 +1832,16 @@
             groupBoxStartFee.TabIndex = 2;
             groupBoxStartFee.TabStop = false;
             groupBoxStartFee.Text = "Стартовый взнос ";
+            // 
+            // buttonPayidToView
+            // 
+            buttonPayidToView.Location = new Point(105, 51);
+            buttonPayidToView.Name = "buttonPayidToView";
+            buttonPayidToView.Size = new Size(93, 23);
+            buttonPayidToView.TabIndex = 10;
+            buttonPayidToView.Text = "Оплата в ВК";
+            buttonPayidToView.UseVisualStyleBackColor = true;
+            buttonPayidToView.Click += buttonPayidToView_Click;
             // 
             // buttonCalculatePersonStartPrice
             // 
@@ -2278,5 +2290,6 @@
         private GroupBox groupBoxOrgUtils;
         private Button buttonOrganizationCreateReserveOrg;
         private CheckBox checkBoxIsSaveToGzip;
+        private Button buttonPayidToView;
     }
 }
