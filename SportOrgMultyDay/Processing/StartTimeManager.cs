@@ -269,9 +269,11 @@ namespace SportOrgMultyDay.Processing
                 foreach (char c in rawRow)
                     if (c == '+')
                         pluseCount++;
+                    else
+                        break;
 
-                corridor.AdditionalStartTime = TimeSpan.FromMinutes(pluseCount);
-                string row = rawRow.Trim('+');
+                        corridor.AdditionalStartTime = TimeSpan.FromMinutes(pluseCount);
+                string row = rawRow.TrimStart('+');
 
 
                 string[] columns = row.Split(['/', ';']);
