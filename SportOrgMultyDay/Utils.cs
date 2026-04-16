@@ -809,6 +809,20 @@ namespace SportOrgMultyDay
             SendLog(OrgeoCsvParser.AddRegionsKodToOrgs(PBCurrentRaceFromBase(JBase), csv, checkBoxRenameOrgsImportKodRegionsFromCsv.Checked));
         }
 
+        private void buttonImportCommentsFromCSV_Click(object sender, EventArgs e)
+        {
+            if (openFileDialogCsvWO.ShowDialog() != DialogResult.OK)
+            {
+                SendLog("Импорт отменен");
+                return;
+            }
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            string csv = File.ReadAllText(openFileDialogCsvWO.FileName, Encoding.GetEncoding(1251));
+            OrgeoCsvCommentImporter orgeoCsvCommentImporter = new(csv);
+            orgeoCsvCommentImporter.InsertToComments(PBCurrentRaceFromBase(JBase), csv);
+            SendLog(orgeoCsvCommentImporter.GetLog());
+        }
+
         private void buttonMapCountCalculate_Click(object sender, EventArgs e)
         {
 

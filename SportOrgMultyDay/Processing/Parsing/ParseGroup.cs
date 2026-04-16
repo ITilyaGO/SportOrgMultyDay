@@ -111,6 +111,19 @@ namespace SportOrgMultyDay.Processing.Parsing
             catch (Exception ex) { LogError("dh37asdl83h", ex); }
             return groupDict;
         }
+
+        public static Dictionary<string, string> DictGIdGroupName(JArray groups)
+        {
+            Dictionary<string, string> groupDict = new();
+            try
+            {
+                foreach (JToken group in groups)
+                    groupDict.Add(PGId(group), PGName(group));
+            }
+            catch (Exception ex) { LogError("3g7k6jdsakj", ex); }
+            return groupDict;
+
+        }
         public static Dictionary<string, JToken> DictGNameGroup(JArray groups)
         {
             Dictionary<string, JToken> groupDict = new();

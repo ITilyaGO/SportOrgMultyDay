@@ -87,6 +87,16 @@ namespace SportOrgMultyDay.Processing.Parsing
             return null;
         }
 
+        public static string PPMiddleName(JToken person)
+        {
+            try
+            {
+                return (string)person["middle_name"];
+            }
+            catch (Exception ex) { LogError("asd12fwfasdasd", ex); }
+            return null;
+        }
+
         public static string PPSurnameName(JToken person)
         {
             return PPSurname(person) + " " + PPName(person);
