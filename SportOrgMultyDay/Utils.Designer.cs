@@ -158,6 +158,7 @@
             textBoxOrganizationNewName = new TextBox();
             buttonAddOrganizationTweakItem = new Button();
             tabPageOther = new TabPage();
+            buttonCompressAndClearHtml = new Button();
             checkBoxRenameGroups = new CheckBox();
             checkBoxRenameCourse = new CheckBox();
             buttonQualFromOtherBase = new Button();
@@ -210,6 +211,7 @@
             saveFileDialogSFRx = new SaveFileDialog();
             checkBoxIsSaveToGzip = new CheckBox();
             openFileDialogCsvWO = new OpenFileDialog();
+            openFileDialogHtml = new OpenFileDialog();
             contextMenuStripLog.SuspendLayout();
             tabPageShahmatka.SuspendLayout();
             groupBoxPhoneFtp.SuspendLayout();
@@ -1685,6 +1687,7 @@
             // tabPageOther
             // 
             tabPageOther.BackColor = Color.WhiteSmoke;
+            tabPageOther.Controls.Add(buttonCompressAndClearHtml);
             tabPageOther.Controls.Add(checkBoxRenameGroups);
             tabPageOther.Controls.Add(checkBoxRenameCourse);
             tabPageOther.Controls.Add(buttonQualFromOtherBase);
@@ -1705,6 +1708,16 @@
             tabPageOther.Size = new Size(768, 817);
             tabPageOther.TabIndex = 3;
             tabPageOther.Text = "Остальное";
+            // 
+            // buttonCompressAndClearHtml
+            // 
+            buttonCompressAndClearHtml.Location = new Point(9, 667);
+            buttonCompressAndClearHtml.Name = "buttonCompressAndClearHtml";
+            buttonCompressAndClearHtml.Size = new Size(258, 46);
+            buttonCompressAndClearHtml.TabIndex = 23;
+            buttonCompressAndClearHtml.Text = "Очистить и сжать протокол";
+            buttonCompressAndClearHtml.UseVisualStyleBackColor = true;
+            buttonCompressAndClearHtml.Click += buttonCompressAndClearHtml_Click;
             // 
             // checkBoxRenameGroups
             // 
@@ -1742,7 +1755,7 @@
             // 
             // buttonVichestStart
             // 
-            buttonVichestStart.Location = new Point(373, 727);
+            buttonVichestStart.Location = new Point(343, 730);
             buttonVichestStart.Margin = new Padding(4, 5, 4, 5);
             buttonVichestStart.Name = "buttonVichestStart";
             buttonVichestStart.Size = new Size(144, 73);
@@ -2242,6 +2255,11 @@
             openFileDialogCsvWO.FileName = "Импорт CSV";
             openFileDialogCsvWO.Filter = "csv_wo_predstavitel|*csv_wo_predstavitel*.csv|All files|*.*";
             // 
+            // openFileDialogHtml
+            // 
+            openFileDialogHtml.FileName = "Импорт CSV";
+            openFileDialogHtml.Filter = "html |*.html|All files|*.*";
+            // 
             // Utils
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -2494,5 +2512,7 @@
         private Button buttonPayidToView;
         private Button buttonImportCommentsFromCSV;
         private OpenFileDialog openFileDialogCsvWO;
+        private Button buttonCompressAndClearHtml;
+        private OpenFileDialog openFileDialogHtml;
     }
 }

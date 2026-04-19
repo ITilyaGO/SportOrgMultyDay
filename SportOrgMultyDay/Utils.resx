@@ -132,9 +132,6 @@
   <metadata name="saveFileDialogSfrst.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>280, 11</value>
   </metadata>
-  <metadata name="toolTipGeneral.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>771, 13</value>
-  </metadata>
   <data name="checkBoxSetStartTimeSuffleWithOrgs.ToolTip" xml:space="preserve">
     <value>Есть у вас в базе несколько дней, и в комментариях участников указаны дни участия C:1234
 К примеру - вы на втором дне (выбор сверху) в этом дне у вас есть участники с C:34, то есть не учавствующие во втором, они будут проигнорированы</value>
@@ -162,13 +159,16 @@
     <value>1279, 13</value>
   </metadata>
   <metadata name="openFileDialogCsvUTF8.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1624, 51</value>
+    <value>1930, 16</value>
   </metadata>
   <metadata name="saveFileDialogSFRx.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>366, 53</value>
   </metadata>
   <metadata name="openFileDialogCsvWO.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>1627, 8</value>
+  </metadata>
+  <metadata name="openFileDialogHtml.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>1628, 60</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>117</value>

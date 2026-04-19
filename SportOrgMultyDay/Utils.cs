@@ -1193,5 +1193,27 @@ namespace SportOrgMultyDay
             }
             SendLog(log);
         }
+
+        private void buttonCompressAndClearHtml_Click(object sender, EventArgs e)
+        {
+            if (openFileDialogHtml.ShowDialog() != DialogResult.OK)
+                return;
+
+            string html = File.ReadAllText(openFileDialogHtml.FileName, Encoding.UTF8);
+
+            ProtocolHtmlCompressor compressor = new();
+
+            string resultHtml = compressor.CompressProtocolHtmlWithLocalPakoFile(
+                html,
+                "pako.min.js",
+                new ProtocolHtmlCompressorSettings
+                {
+                    ClearPersonsSensitiveData = true,
+                    ClearOrganizationsSensitiveData = true          
+                });
+
+            File.WriteAllText(openFileDialogHtml.FileName + "compressed.html", resultHtml, new UTF8Encoding(false));
+            SendLog( "Уменьшеный протокол - "+ openFileDialogHtml.FileName + "compressed.html");
+        }
     }
 }
