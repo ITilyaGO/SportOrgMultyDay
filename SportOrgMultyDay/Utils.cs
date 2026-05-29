@@ -306,6 +306,10 @@ namespace SportOrgMultyDay
             buttonCalculateRanks.Enabled = active;
             buttonSetAutoOrderStartTimes.Enabled = active;
             buttonSetStartMinutes.Enabled = active;
+            buttonShiftStartMinutesBelow.Enabled = active;
+            buttonShiftAllStartMinutesBack.Enabled = active;
+            buttonShiftAllStartMinutesForward.Enabled = active;
+            buttonApplyGroupStartInterval.Enabled = active;
             buttonImportFromYarfso.Enabled = active;
             buttonGroupSetNumbersByGroups.Enabled = active;
             buttonSyncOrganizations.Enabled = active;
@@ -316,6 +320,10 @@ namespace SportOrgMultyDay
             buttonMapCountCalculateCurrent.Enabled = active;
             buttonGroupCourseNamesFormat.Enabled = active;
             comboBoxStartMinutesGroupSelect.Enabled = active;
+            comboBoxShiftStartMinutesScope.Enabled = active;
+            numericUpDownShiftStartMinutes.Enabled = active;
+            dateTimePickerShiftAllStartMinutes.Enabled = active;
+            dateTimePickerGroupStartInterval.Enabled = active;
             buttonImportKodRegionsFromCsv.Enabled = active;
             buttonMapCountCalculateAll.Enabled = active;
             buttonReplaceAllPersonsForOtherDays.Enabled = active;
@@ -406,6 +414,8 @@ namespace SportOrgMultyDay
             foreach (string s in splitterStartLog.Keys)
                 comboBoxStartLogOutFieldsSplitter.Items.Add(s);
             comboBoxStartLogOutFieldsSplitter.SelectedIndex = 0;
+            comboBoxShiftStartMinutesScope.Items.AddRange(new string[] { "Группа", "Коридор" });
+            comboBoxShiftStartMinutesScope.SelectedIndex = 1;
 
             CheckListBoxItem[] checkListBoxItems = {
                 new("Чип","card_number"),
@@ -947,6 +957,159 @@ namespace SportOrgMultyDay
 
         }
 
+        private void buttonShiftStartMinutesBelow_Click(object sender, EventArgs e)
+        {
+            if (PersonStartMinuteSelected == null)
+            {
+                SendLog("Для сдвига стартовых минут сначала выберите участника правой кнопкой мыши");
+                ReloadSelectedStartMinute();
+                return;
+            }
+
+            JToken race = PBCurrentRaceFromBase(JBase);
+            JArray persons = PBPersons(race);
+            JArray groups = PBGroups(race);
+            string selectedGroupId = PPGroupId(PersonStartMinuteSelected.Person);
+            JToken selectedGroup = FGById(selectedGroupId, groups);
+            int selectedCorridor = PGStartCorridor(selectedGroup);
+            TimeSpan fromStartTime = PersonStartMinuteSelected.StartMinute;
+            TimeSpan shift = TimeSpan.FromMinutes((double)numericUpDownShiftStartMinutes.Value);
+            bool shiftOnlyGroup = comboBoxShiftStartMinutesScope.SelectedIndex == 0;
+
+            int shiftedCount = 0;
+            foreach (JToken person in persons)
+            {
+                if (shiftOnlyGroup)
+                {
+                    if (PPGroupId(person) != selectedGroupId)
+                        continue;
+                }
+                else
+                {
+                    JToken personGroup = FGById(PPGroupId(person), groups);
+                    if (PGStartCorridor(personGroup) != selectedCorridor)
+                        continue;
+                }
+
+                TimeSpan? personStartTime = PPStartTimeTS(person);
+                if (personStartTime == null || personStartTime < fromStartTime)
+                    continue;
+
+                person["start_time"] = personStartTime.Value.Add(shift).TotalMilliseconds;
+                shiftedCount++;
+            }
+
+            string scopeName = shiftOnlyGroup ? $"группе {PGName(selectedGroup)}" : $"коридоре {selectedCorridor}";
+            SendLog($"Сдвинули стартовые минуты в {scopeName} на {shift.TotalMinutes} мин. Начиная с {fromStartTime}: {shiftedCount} участников");
+            PersonStartMinuteSelected = null;
+            ReloadStartMinutes();
+            ReloadSelectedStartMinute();
+        }
+
+        private void buttonShiftAllStartMinutesBack_Click(object sender, EventArgs e)
+        {
+            ShiftAllStartMinutes(-dateTimePickerShiftAllStartMinutes.Value.TimeOfDay);
+        }
+
+        private void buttonShiftAllStartMinutesForward_Click(object sender, EventArgs e)
+        {
+            ShiftAllStartMinutes(dateTimePickerShiftAllStartMinutes.Value.TimeOfDay);
+        }
+
+        private void ShiftAllStartMinutes(TimeSpan shift)
+        {
+            if (shift == TimeSpan.Zero)
+            {
+                SendLog("Сдвиг не выполнен: выбран нулевой интервал");
+                return;
+            }
+
+            if (comboBoxStartMinutesGroupSelect.SelectedItem == null)
+            {
+                SendLog("Сдвиг не выполнен: выберите группу");
+                return;
+            }
+
+            JToken race = PBCurrentRaceFromBase(JBase);
+            JArray persons = PBPersons(race);
+            JArray groups = PBGroups(race);
+            string selectedGroupId = ((ComboBoxItemId)comboBoxStartMinutesGroupSelect.SelectedItem).Id;
+            JToken selectedGroup = FGById(selectedGroupId, groups);
+            int selectedCorridor = PGStartCorridor(selectedGroup);
+            bool shiftOnlyGroup = comboBoxShiftStartMinutesScope.SelectedIndex == 0;
+
+            int shiftedCount = 0;
+            foreach (JToken person in persons)
+            {
+                if (shiftOnlyGroup)
+                {
+                    if (PPGroupId(person) != selectedGroupId)
+                        continue;
+                }
+                else
+                {
+                    JToken personGroup = FGById(PPGroupId(person), groups);
+                    if (PGStartCorridor(personGroup) != selectedCorridor)
+                        continue;
+                }
+
+                if (PPStartTime(person) == 0)
+                    continue;
+
+                TimeSpan? personStartTime = PPStartTimeTS(person);
+                if (personStartTime == null)
+                    continue;
+
+                person["start_time"] = personStartTime.Value.Add(shift).TotalMilliseconds;
+                shiftedCount++;
+            }
+
+            string scopeName = shiftOnlyGroup ? $"группы {PGName(selectedGroup)}" : $"коридора {selectedCorridor}";
+            SendLog($"Сдвинули стартовые минуты {scopeName} на {shift}: {shiftedCount} участников");
+            ReloadStartMinutes();
+            ReloadSelectedStartMinute();
+        }
+
+        private void buttonApplyGroupStartInterval_Click(object sender, EventArgs e)
+        {
+            if (comboBoxStartMinutesGroupSelect.SelectedItem == null)
+            {
+                SendLog("Интервал группы не применен: выберите группу");
+                return;
+            }
+
+            TimeSpan interval = dateTimePickerGroupStartInterval.Value.TimeOfDay;
+            if (interval == TimeSpan.Zero)
+            {
+                SendLog("Интервал группы не применен: выбран нулевой интервал");
+                return;
+            }
+
+            JToken race = PBCurrentRaceFromBase(JBase);
+            JArray persons = PBPersons(race);
+            JArray groups = PBGroups(race);
+            string selectedGroupId = ((ComboBoxItemId)comboBoxStartMinutesGroupSelect.SelectedItem).Id;
+            JToken selectedGroup = FGById(selectedGroupId, groups);
+            List<JToken> groupPersons = FPAllByGroup(selectedGroupId, persons)
+                .Where(person => PPStartTime(person) != 0 && PPStartTimeTS(person) != null)
+                .OrderBy(person => PPStartTimeTS(person))
+                .ToList();
+
+            if (groupPersons.Count == 0)
+            {
+                SendLog($"Интервал группы {PGName(selectedGroup)} не применен: нет участников со стартовой минутой");
+                return;
+            }
+
+            TimeSpan firstStart = PPStartTimeTS(groupPersons[0]).GetValueOrDefault();
+            for (int i = 0; i < groupPersons.Count; i++)
+                groupPersons[i]["start_time"] = firstStart.Add(interval * i).TotalMilliseconds;
+
+            SendLog($"Переустановили интервал группы {PGName(selectedGroup)}: первый старт {firstStart}, интервал {interval}, участников {groupPersons.Count}");
+            ReloadStartMinutes();
+            ReloadSelectedStartMinute();
+        }
+
         private void buttonReplaceAllPersonsForOtherDays_Click(object sender, EventArgs e)
         {
             SendLog(PersonListReplacer.ReplacePersonsListInOtherDays(
@@ -1036,7 +1199,7 @@ namespace SportOrgMultyDay
         }
         private void labelHowToWorkStartMinutesSwap_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("ПКМ по одному участнику, затем по другому, с которым нужно поменять стартовые минуты местами");
+            MessageBox.Show("Обмен минутами: ПКМ по одному участнику, затем ПКМ по другому.\r\n\r\nСдвиг ниже: ПКМ по участнику, выберите \"Группа\" или \"Коридор\", задайте количество минут и нажмите \"Сдвинуть ниже\". Можно указать отрицательное значение.\r\n\r\nСдвиг выбранной области: выберите группу в списке, выберите \"Группа\" или \"Коридор\", задайте время и нажмите \"Раньше\" или \"Позже\".\r\n\r\nИнтервал группы: выберите группу, задайте интервал и нажмите \"Применить интервал\". Первый участник остается на своей минуте, остальные идут в том же порядке с новым интервалом.");
         }
 
         private void labelHTWStartBibs_Click(object sender, EventArgs e)

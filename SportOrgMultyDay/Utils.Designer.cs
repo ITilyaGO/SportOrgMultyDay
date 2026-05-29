@@ -192,6 +192,18 @@
             buttonOpenNumbersForm = new Button();
             buttonRemvoeWorstResult = new Button();
             tabPage2 = new TabPage();
+            buttonApplyGroupStartInterval = new Button();
+            dateTimePickerGroupStartInterval = new DateTimePicker();
+            labelGroupStartInterval = new Label();
+            buttonShiftAllStartMinutesForward = new Button();
+            buttonShiftAllStartMinutesBack = new Button();
+            dateTimePickerShiftAllStartMinutes = new DateTimePicker();
+            labelShiftAllStartMinutes = new Label();
+            comboBoxShiftStartMinutesScope = new ComboBox();
+            labelShiftStartMinutesScope = new Label();
+            buttonShiftStartMinutesBelow = new Button();
+            numericUpDownShiftStartMinutes = new NumericUpDown();
+            labelShiftStartMinutes = new Label();
             labelHowToWorkStartMinutesSwap = new Label();
             labelStartMinutesSelectedPerson = new Label();
             comboBoxStartMinutesGroupSelect = new ComboBox();
@@ -239,6 +251,7 @@
             groupBoxImport.SuspendLayout();
             groupBoxStartFee.SuspendLayout();
             tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownShiftStartMinutes).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridViewPersonMinutes).BeginInit();
             ((System.ComponentModel.ISupportInitialize)personStartMinuteBindingSource).BeginInit();
             tabPage1.SuspendLayout();
@@ -2098,6 +2111,18 @@
             // 
             // tabPage2
             // 
+            tabPage2.Controls.Add(buttonApplyGroupStartInterval);
+            tabPage2.Controls.Add(dateTimePickerGroupStartInterval);
+            tabPage2.Controls.Add(labelGroupStartInterval);
+            tabPage2.Controls.Add(buttonShiftAllStartMinutesForward);
+            tabPage2.Controls.Add(buttonShiftAllStartMinutesBack);
+            tabPage2.Controls.Add(dateTimePickerShiftAllStartMinutes);
+            tabPage2.Controls.Add(labelShiftAllStartMinutes);
+            tabPage2.Controls.Add(comboBoxShiftStartMinutesScope);
+            tabPage2.Controls.Add(labelShiftStartMinutesScope);
+            tabPage2.Controls.Add(buttonShiftStartMinutesBelow);
+            tabPage2.Controls.Add(numericUpDownShiftStartMinutes);
+            tabPage2.Controls.Add(labelShiftStartMinutes);
             tabPage2.Controls.Add(labelHowToWorkStartMinutesSwap);
             tabPage2.Controls.Add(labelStartMinutesSelectedPerson);
             tabPage2.Controls.Add(comboBoxStartMinutesGroupSelect);
@@ -2110,6 +2135,133 @@
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Стартовые минуты";
             tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // buttonApplyGroupStartInterval
+            // 
+            buttonApplyGroupStartInterval.Location = new Point(280, 96);
+            buttonApplyGroupStartInterval.Margin = new Padding(4, 5, 4, 5);
+            buttonApplyGroupStartInterval.Name = "buttonApplyGroupStartInterval";
+            buttonApplyGroupStartInterval.Size = new Size(190, 35);
+            buttonApplyGroupStartInterval.TabIndex = 15;
+            buttonApplyGroupStartInterval.Text = "Применить интервал";
+            buttonApplyGroupStartInterval.UseVisualStyleBackColor = true;
+            buttonApplyGroupStartInterval.Click += buttonApplyGroupStartInterval_Click;
+            // 
+            // dateTimePickerGroupStartInterval
+            // 
+            dateTimePickerGroupStartInterval.Format = DateTimePickerFormat.Time;
+            dateTimePickerGroupStartInterval.Location = new Point(154, 98);
+            dateTimePickerGroupStartInterval.Margin = new Padding(4, 5, 4, 5);
+            dateTimePickerGroupStartInterval.MaxDate = new DateTime(1753, 1, 2, 0, 0, 0, 0);
+            dateTimePickerGroupStartInterval.Name = "dateTimePickerGroupStartInterval";
+            dateTimePickerGroupStartInterval.Size = new Size(117, 31);
+            dateTimePickerGroupStartInterval.TabIndex = 14;
+            dateTimePickerGroupStartInterval.Value = new DateTime(1753, 1, 1, 0, 1, 0, 0);
+            // 
+            // labelGroupStartInterval
+            // 
+            labelGroupStartInterval.AutoSize = true;
+            labelGroupStartInterval.Location = new Point(9, 103);
+            labelGroupStartInterval.Margin = new Padding(4, 0, 4, 0);
+            labelGroupStartInterval.Name = "labelGroupStartInterval";
+            labelGroupStartInterval.Size = new Size(137, 25);
+            labelGroupStartInterval.TabIndex = 13;
+            labelGroupStartInterval.Text = "Интервал группы:";
+            // 
+            // buttonShiftAllStartMinutesForward
+            // 
+            buttonShiftAllStartMinutesForward.Location = new Point(1035, 51);
+            buttonShiftAllStartMinutesForward.Margin = new Padding(4, 5, 4, 5);
+            buttonShiftAllStartMinutesForward.Name = "buttonShiftAllStartMinutesForward";
+            buttonShiftAllStartMinutesForward.Size = new Size(140, 35);
+            buttonShiftAllStartMinutesForward.TabIndex = 12;
+            buttonShiftAllStartMinutesForward.Text = "Позже";
+            buttonShiftAllStartMinutesForward.UseVisualStyleBackColor = true;
+            buttonShiftAllStartMinutesForward.Click += buttonShiftAllStartMinutesForward_Click;
+            // 
+            // buttonShiftAllStartMinutesBack
+            // 
+            buttonShiftAllStartMinutesBack.Location = new Point(907, 51);
+            buttonShiftAllStartMinutesBack.Margin = new Padding(4, 5, 4, 5);
+            buttonShiftAllStartMinutesBack.Name = "buttonShiftAllStartMinutesBack";
+            buttonShiftAllStartMinutesBack.Size = new Size(120, 35);
+            buttonShiftAllStartMinutesBack.TabIndex = 11;
+            buttonShiftAllStartMinutesBack.Text = "Раньше";
+            buttonShiftAllStartMinutesBack.UseVisualStyleBackColor = true;
+            buttonShiftAllStartMinutesBack.Click += buttonShiftAllStartMinutesBack_Click;
+            // 
+            // dateTimePickerShiftAllStartMinutes
+            // 
+            dateTimePickerShiftAllStartMinutes.Format = DateTimePickerFormat.Time;
+            dateTimePickerShiftAllStartMinutes.Location = new Point(780, 53);
+            dateTimePickerShiftAllStartMinutes.Margin = new Padding(4, 5, 4, 5);
+            dateTimePickerShiftAllStartMinutes.MaxDate = new DateTime(1753, 1, 2, 0, 0, 0, 0);
+            dateTimePickerShiftAllStartMinutes.Name = "dateTimePickerShiftAllStartMinutes";
+            dateTimePickerShiftAllStartMinutes.Size = new Size(117, 31);
+            dateTimePickerShiftAllStartMinutes.TabIndex = 10;
+            dateTimePickerShiftAllStartMinutes.Value = new DateTime(1753, 1, 1, 0, 1, 0, 0);
+            // 
+            // labelShiftAllStartMinutes
+            // 
+            labelShiftAllStartMinutes.AutoSize = true;
+            labelShiftAllStartMinutes.Location = new Point(673, 58);
+            labelShiftAllStartMinutes.Margin = new Padding(4, 0, 4, 0);
+            labelShiftAllStartMinutes.Name = "labelShiftAllStartMinutes";
+            labelShiftAllStartMinutes.Size = new Size(93, 25);
+            labelShiftAllStartMinutes.TabIndex = 9;
+            labelShiftAllStartMinutes.Text = "Выбранное:";
+            // 
+            // comboBoxShiftStartMinutesScope
+            // 
+            comboBoxShiftStartMinutesScope.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxShiftStartMinutesScope.FormattingEnabled = true;
+            comboBoxShiftStartMinutesScope.Location = new Point(142, 53);
+            comboBoxShiftStartMinutesScope.Margin = new Padding(4, 5, 4, 5);
+            comboBoxShiftStartMinutesScope.Name = "comboBoxShiftStartMinutesScope";
+            comboBoxShiftStartMinutesScope.Size = new Size(130, 33);
+            comboBoxShiftStartMinutesScope.TabIndex = 8;
+            // 
+            // labelShiftStartMinutesScope
+            // 
+            labelShiftStartMinutesScope.AutoSize = true;
+            labelShiftStartMinutesScope.Location = new Point(9, 58);
+            labelShiftStartMinutesScope.Margin = new Padding(4, 0, 4, 0);
+            labelShiftStartMinutesScope.Name = "labelShiftStartMinutesScope";
+            labelShiftStartMinutesScope.Size = new Size(125, 25);
+            labelShiftStartMinutesScope.TabIndex = 7;
+            labelShiftStartMinutesScope.Text = "Двигать ниже:";
+            // 
+            // buttonShiftStartMinutesBelow
+            // 
+            buttonShiftStartMinutesBelow.Location = new Point(483, 51);
+            buttonShiftStartMinutesBelow.Margin = new Padding(4, 5, 4, 5);
+            buttonShiftStartMinutesBelow.Name = "buttonShiftStartMinutesBelow";
+            buttonShiftStartMinutesBelow.Size = new Size(170, 35);
+            buttonShiftStartMinutesBelow.TabIndex = 6;
+            buttonShiftStartMinutesBelow.Text = "Сдвинуть ниже";
+            buttonShiftStartMinutesBelow.UseVisualStyleBackColor = true;
+            buttonShiftStartMinutesBelow.Click += buttonShiftStartMinutesBelow_Click;
+            // 
+            // numericUpDownShiftStartMinutes
+            // 
+            numericUpDownShiftStartMinutes.Location = new Point(398, 53);
+            numericUpDownShiftStartMinutes.Margin = new Padding(4, 5, 4, 5);
+            numericUpDownShiftStartMinutes.Maximum = new decimal(new int[] { 600, 0, 0, 0 });
+            numericUpDownShiftStartMinutes.Minimum = new decimal(new int[] { 600, 0, 0, int.MinValue });
+            numericUpDownShiftStartMinutes.Name = "numericUpDownShiftStartMinutes";
+            numericUpDownShiftStartMinutes.Size = new Size(77, 31);
+            numericUpDownShiftStartMinutes.TabIndex = 5;
+            numericUpDownShiftStartMinutes.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            // 
+            // labelShiftStartMinutes
+            // 
+            labelShiftStartMinutes.AutoSize = true;
+            labelShiftStartMinutes.Location = new Point(282, 58);
+            labelShiftStartMinutes.Margin = new Padding(4, 0, 4, 0);
+            labelShiftStartMinutes.Name = "labelShiftStartMinutes";
+            labelShiftStartMinutes.Size = new Size(116, 25);
+            labelShiftStartMinutes.TabIndex = 4;
+            labelShiftStartMinutes.Text = "+/- минут:";
             // 
             // labelHowToWorkStartMinutesSwap
             // 
@@ -2145,11 +2297,11 @@
             // dataGridViewPersonMinutes
             // 
             dataGridViewPersonMinutes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewPersonMinutes.Location = new Point(9, 48);
+            dataGridViewPersonMinutes.Location = new Point(9, 144);
             dataGridViewPersonMinutes.Margin = new Padding(4, 5, 4, 5);
             dataGridViewPersonMinutes.Name = "dataGridViewPersonMinutes";
             dataGridViewPersonMinutes.RowHeadersWidth = 62;
-            dataGridViewPersonMinutes.Size = new Size(1173, 798);
+            dataGridViewPersonMinutes.Size = new Size(1173, 702);
             dataGridViewPersonMinutes.TabIndex = 0;
             dataGridViewPersonMinutes.CellMouseUp += dataGridViewPersonMinutes_CellMouseUp;
             // 
@@ -2323,6 +2475,7 @@
             groupBoxStartFee.PerformLayout();
             tabPage2.ResumeLayout(false);
             tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownShiftStartMinutes).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridViewPersonMinutes).EndInit();
             ((System.ComponentModel.ISupportInitialize)personStartMinuteBindingSource).EndInit();
             tabPage1.ResumeLayout(false);
@@ -2464,6 +2617,18 @@
         private BindingSource personStartMinuteBindingSource;
         private ComboBox comboBoxStartMinutesGroupSelect;
         private Label labelStartMinutesSelectedPerson;
+        private Button buttonApplyGroupStartInterval;
+        private DateTimePicker dateTimePickerGroupStartInterval;
+        private Label labelGroupStartInterval;
+        private Button buttonShiftAllStartMinutesForward;
+        private Button buttonShiftAllStartMinutesBack;
+        private DateTimePicker dateTimePickerShiftAllStartMinutes;
+        private Label labelShiftAllStartMinutes;
+        private ComboBox comboBoxShiftStartMinutesScope;
+        private Label labelShiftStartMinutesScope;
+        private Button buttonShiftStartMinutesBelow;
+        private NumericUpDown numericUpDownShiftStartMinutes;
+        private Label labelShiftStartMinutes;
         private CheckBox checkBoxYarfsoParserWriteOldQual;
         private CheckBox checkBoxYarfsoParserPayAmountToWorldCode;
         private CheckBox checkBoxYarfsoParserReplaceQual;
