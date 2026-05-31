@@ -26,7 +26,10 @@ namespace SportOrgMultyDay.Processing.Parsing
         {
             try
             {
-                return (int)person["bib"];
+                var bib = person["bib"];
+                if (bib == null)
+                    return -1;
+                return (int)bib;
             }
             catch (Exception ex) { LogError("8d326vrc", ex); }
             return -1;

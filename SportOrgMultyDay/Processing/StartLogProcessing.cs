@@ -29,7 +29,7 @@ namespace SportOrgMultyDay.Processing
         readonly string startLog;
         string log;
         EStartLogType startLogType;
-        public StartLogProcessing(JToken jBase, string startLog, TimeSpan logExportTime, EStartLogType type, string outFieldsSplitter)
+        public StartLogProcessing(JToken jBase, string startLog, TimeSpan logExportTime, EStartLogType type, string outFieldsSplitter, string dateFilter = "")
         {
             this.startLog = startLog;
             this.jBase = jBase;
@@ -37,10 +37,10 @@ namespace SportOrgMultyDay.Processing
             ChecklessFinished = string.Empty;
             Duplicates = string.Empty;
             DNS = string.Empty;
-            Process(logExportTime, outFieldsSplitter);
+            Process(logExportTime, outFieldsSplitter, dateFilter);
         }
 
-        private void Process(TimeSpan logExportTime, string outFieldsSplitter)
+        private void Process(TimeSpan logExportTime, string outFieldsSplitter, string dateFilter = "")
         {
             try
             {
@@ -53,6 +53,8 @@ namespace SportOrgMultyDay.Processing
                 List<int> allBibs = GetPersonsBibsStartBefor(logExportTime);
                 List<StartCell> startCells = StartLogParse();
                 if (startCells is null) return;
+                if (!string.IsNullOrEmpty(dateFilter))
+                    startCells = startCells.Where(sc => sc.Date == dateFilter).ToList();
                 List<int> startedBibsNoDupl = StartCellsToInt(startCells).Distinct().ToList(); // Стартовавшие
                 List<int> dnsIncludeFinished = GetDNSList(allBibs, startedBibsNoDupl); // Не стартовавшие включающие финишировавших
                 List<int> finished = GetFinished(jBase, ref log); // Финишировавшие
@@ -159,7 +161,7 @@ namespace SportOrgMultyDay.Processing
 
         private static List<StartCell> StartLogParseSFR(string[] logLines, ref string log)
         {
-            List<StartCell> startCells = new();
+            List<StartCell> startCells = [];
             try
             {
                 log += $"  Тип лога SFR smart terminal\n";
@@ -168,8 +170,10 @@ namespace SportOrgMultyDay.Processing
                     try
                     {
                         string[] values = line.Split("\t");
-                        if (values.Length > 1 && int.TryParse(values[0], out int bib))
-                            startCells.Add(new(bib, values[1]));
+                        if (values.Length > 2 && int.TryParse(values[0], out int bib))
+                            startCells.Add(new(bib, values[1], values[2]));
+                        else if (values.Length > 1 && int.TryParse(values[0], out int bib2))
+                            startCells.Add(new(bib2, values[1]));
                         else
                             log += $"    Неудалось распознать строку:[{line}]\n";
                     }

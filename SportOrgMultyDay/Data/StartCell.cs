@@ -10,14 +10,16 @@ namespace SportOrgMultyDay.Data
     {
         public int Bib { get; set; }
         public string Time { get; set; }
-        public StartCell(int bib, string time)
+        public string Date { get; set; }
+        public StartCell(int bib, string time, string date = "")
         {
             Bib = bib;
             Time = time;
+            Date = date;
         }
         public override string ToString()
         {
-            return $"{Bib} {Time}";
+            return $"{Bib} {Time} {Date}";
         }
         public override bool Equals(object obj)
         {

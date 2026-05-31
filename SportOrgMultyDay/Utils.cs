@@ -450,6 +450,8 @@ namespace SportOrgMultyDay
             autoResize.Add(tabControlFunc, false, true);
             autoResize.Add(checkedListBoxWithSync, false, true);
             autoResize.Add(dataGridViewPersonMinutes, true, true);
+
+            textBoxShahmatkaDateFilter.Text = DateTime.Now.ToString("dd.MM.yyyy");
         }
 
         private void LoadOrganizationItems()
@@ -580,7 +582,7 @@ namespace SportOrgMultyDay
         private void StartLogProcess(string startLog)
         {
             StartLogProcessing slp = new(JBase, startLog, dateTimePickerExportStartLog.Value.TimeOfDay, (EStartLogType)comboBoxLogType.SelectedItem,
-                splitterStartLog.TryGetValue(comboBoxStartLogOutFieldsSplitter.Text, out string val) ? val : comboBoxStartLogOutFieldsSplitter.Text);
+                splitterStartLog.TryGetValue(comboBoxStartLogOutFieldsSplitter.Text, out string val) ? val : comboBoxStartLogOutFieldsSplitter.Text, textBoxShahmatkaDateFilter.Text);
             richTextBoxStartLogDupl.Text = slp.Duplicates;
             richTextBoxStartLogDNS.Text = slp.DNS;
             richTextBoxChecklessFinished.Text = slp.ChecklessFinished;
