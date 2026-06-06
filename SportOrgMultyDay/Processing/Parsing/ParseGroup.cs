@@ -31,6 +31,17 @@ namespace SportOrgMultyDay.Processing.Parsing
             catch (Exception ex) { LogError("sd8g6vp23", ex); }
             return null;
         }
+
+        public static string PGLongName(JToken group)
+        {
+            try
+            {
+                return (string)group["long_name"];
+            }
+            catch (Exception ex) { LogError("dwq1rgg343rd", ex); }
+            return null;
+        }
+
         public static string PGId(JToken group)
         {
             try
@@ -124,6 +135,20 @@ namespace SportOrgMultyDay.Processing.Parsing
             return groupDict;
 
         }
+
+        public static Dictionary<string, string> DictGIdGroupLongName(JArray groups)
+        {
+            Dictionary<string, string> groupDict = new();
+            try
+            {
+                foreach (JToken group in groups)
+                    groupDict.Add(PGId(group), PGLongName(group));
+            }
+            catch (Exception ex) { LogError("3g7k6jdsakj", ex); }
+            return groupDict;
+
+        }
+
         public static Dictionary<string, JToken> DictGNameGroup(JArray groups)
         {
             Dictionary<string, JToken> groupDict = new();

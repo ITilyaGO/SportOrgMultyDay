@@ -49,6 +49,8 @@
             buttonPhoneFtpSendBase = new Button();
             checkBoxShahmatkaExtendedLogs = new CheckBox();
             groupBoxStartLogProcessing = new GroupBox();
+            label19 = new Label();
+            textBoxShahmatkaDateFilter = new TextBox();
             label12 = new Label();
             dateTimePickerExportStartLog = new DateTimePicker();
             comboBoxStartLogOutFieldsSplitter = new ComboBox();
@@ -224,8 +226,6 @@
             checkBoxIsSaveToGzip = new CheckBox();
             openFileDialogCsvWO = new OpenFileDialog();
             openFileDialogHtml = new OpenFileDialog();
-            textBoxShahmatkaDateFilter = new TextBox();
-            label19 = new Label();
             contextMenuStripLog.SuspendLayout();
             tabPageShahmatka.SuspendLayout();
             groupBoxPhoneFtp.SuspendLayout();
@@ -262,9 +262,10 @@
             // 
             // buttonBaseImport
             // 
-            buttonBaseImport.Location = new Point(12, 12);
+            buttonBaseImport.Location = new Point(17, 20);
+            buttonBaseImport.Margin = new Padding(4, 5, 4, 5);
             buttonBaseImport.Name = "buttonBaseImport";
-            buttonBaseImport.Size = new Size(109, 23);
+            buttonBaseImport.Size = new Size(156, 38);
             buttonBaseImport.TabIndex = 0;
             buttonBaseImport.Text = "Импорт базы";
             toolTipGeneral.SetToolTip(buttonBaseImport, "Импорт базы SportOrg");
@@ -276,38 +277,40 @@
             contextMenuStripLog.ImageScalingSize = new Size(24, 24);
             contextMenuStripLog.Items.AddRange(new ToolStripItem[] { ScrollLogToolStripMenuItem, ClearLogToolStripMenuItem });
             contextMenuStripLog.Name = "contextMenuStrip1";
-            contextMenuStripLog.Size = new Size(134, 48);
+            contextMenuStripLog.Size = new Size(174, 68);
             // 
             // ScrollLogToolStripMenuItem
             // 
             ScrollLogToolStripMenuItem.Checked = true;
             ScrollLogToolStripMenuItem.CheckState = CheckState.Checked;
             ScrollLogToolStripMenuItem.Name = "ScrollLogToolStripMenuItem";
-            ScrollLogToolStripMenuItem.Size = new Size(133, 22);
+            ScrollLogToolStripMenuItem.Size = new Size(173, 32);
             ScrollLogToolStripMenuItem.Text = "Прокрутка";
             ScrollLogToolStripMenuItem.Click += ScrollLogToolStripMenuItem_Click;
             // 
             // ClearLogToolStripMenuItem
             // 
             ClearLogToolStripMenuItem.Name = "ClearLogToolStripMenuItem";
-            ClearLogToolStripMenuItem.Size = new Size(133, 22);
+            ClearLogToolStripMenuItem.Size = new Size(173, 32);
             ClearLogToolStripMenuItem.Text = "Очистить";
             ClearLogToolStripMenuItem.Click += ClearLogToolStripMenuItem_Click;
             // 
             // labelBaseImport
             // 
             labelBaseImport.AutoSize = true;
-            labelBaseImport.Location = new Point(127, 16);
+            labelBaseImport.Location = new Point(181, 27);
+            labelBaseImport.Margin = new Padding(4, 0, 4, 0);
             labelBaseImport.Name = "labelBaseImport";
-            labelBaseImport.Size = new Size(37, 15);
+            labelBaseImport.Size = new Size(56, 25);
             labelBaseImport.TabIndex = 3;
             labelBaseImport.Text = "День:";
             // 
             // buttonBaseExport
             // 
-            buttonBaseExport.Location = new Point(446, 13);
+            buttonBaseExport.Location = new Point(637, 22);
+            buttonBaseExport.Margin = new Padding(4, 5, 4, 5);
             buttonBaseExport.Name = "buttonBaseExport";
-            buttonBaseExport.Size = new Size(105, 23);
+            buttonBaseExport.Size = new Size(150, 38);
             buttonBaseExport.TabIndex = 5;
             buttonBaseExport.Text = "Сохранить базу";
             buttonBaseExport.UseVisualStyleBackColor = true;
@@ -325,9 +328,10 @@
             // buttonCombineAllBase
             // 
             buttonCombineAllBase.Enabled = false;
-            buttonCombineAllBase.Location = new Point(260, 363);
+            buttonCombineAllBase.Location = new Point(371, 605);
+            buttonCombineAllBase.Margin = new Padding(4, 5, 4, 5);
             buttonCombineAllBase.Name = "buttonCombineAllBase";
-            buttonCombineAllBase.Size = new Size(115, 23);
+            buttonCombineAllBase.Size = new Size(164, 38);
             buttonCombineAllBase.TabIndex = 20;
             buttonCombineAllBase.Text = "Всех в одну базу";
             buttonCombineAllBase.UseVisualStyleBackColor = true;
@@ -341,9 +345,10 @@
             // comboBoxDays
             // 
             comboBoxDays.FormattingEnabled = true;
-            comboBoxDays.Location = new Point(170, 13);
+            comboBoxDays.Location = new Point(243, 22);
+            comboBoxDays.Margin = new Padding(4, 5, 4, 5);
             comboBoxDays.Name = "comboBoxDays";
-            comboBoxDays.Size = new Size(79, 23);
+            comboBoxDays.Size = new Size(111, 33);
             comboBoxDays.TabIndex = 29;
             toolTipGeneral.SetToolTip(comboBoxDays, "Текущий день соревнований");
             comboBoxDays.SelectedIndexChanged += comboBoxDays_SelectedIndexChanged;
@@ -356,10 +361,11 @@
             tabPageShahmatka.Controls.Add(groupBoxStartLogProcessing);
             tabPageShahmatka.Controls.Add(buttonExportSFRx);
             tabPageShahmatka.Controls.Add(buttonExportStartTimes);
-            tabPageShahmatka.Location = new Point(4, 24);
+            tabPageShahmatka.Location = new Point(4, 34);
+            tabPageShahmatka.Margin = new Padding(4, 5, 4, 5);
             tabPageShahmatka.Name = "tabPageShahmatka";
-            tabPageShahmatka.Padding = new Padding(3, 3, 3, 3);
-            tabPageShahmatka.Size = new Size(535, 485);
+            tabPageShahmatka.Padding = new Padding(4, 5, 4, 5);
+            tabPageShahmatka.Size = new Size(768, 817);
             tabPageShahmatka.TabIndex = 1;
             tabPageShahmatka.Text = "Шахматка";
             // 
@@ -369,18 +375,21 @@
             groupBoxPhoneFtp.Controls.Add(richTextBoxPhoneFtpIps);
             groupBoxPhoneFtp.Controls.Add(buttonPhoneFtpGetLogs);
             groupBoxPhoneFtp.Controls.Add(buttonPhoneFtpSendBase);
-            groupBoxPhoneFtp.Location = new Point(326, 157);
+            groupBoxPhoneFtp.Location = new Point(466, 262);
+            groupBoxPhoneFtp.Margin = new Padding(4, 5, 4, 5);
             groupBoxPhoneFtp.Name = "groupBoxPhoneFtp";
-            groupBoxPhoneFtp.Size = new Size(200, 203);
+            groupBoxPhoneFtp.Padding = new Padding(4, 5, 4, 5);
+            groupBoxPhoneFtp.Size = new Size(286, 338);
             groupBoxPhoneFtp.TabIndex = 31;
             groupBoxPhoneFtp.TabStop = false;
             groupBoxPhoneFtp.Text = "FTP С телефонами";
             // 
             // buttonPhoneFtpSaveIps
             // 
-            buttonPhoneFtpSaveIps.Location = new Point(109, 84);
+            buttonPhoneFtpSaveIps.Location = new Point(156, 140);
+            buttonPhoneFtpSaveIps.Margin = new Padding(4, 5, 4, 5);
             buttonPhoneFtpSaveIps.Name = "buttonPhoneFtpSaveIps";
-            buttonPhoneFtpSaveIps.Size = new Size(85, 23);
+            buttonPhoneFtpSaveIps.Size = new Size(121, 38);
             buttonPhoneFtpSaveIps.TabIndex = 29;
             buttonPhoneFtpSaveIps.Text = "Сохранить";
             buttonPhoneFtpSaveIps.UseVisualStyleBackColor = true;
@@ -388,17 +397,19 @@
             // 
             // richTextBoxPhoneFtpIps
             // 
-            richTextBoxPhoneFtpIps.Location = new Point(6, 84);
+            richTextBoxPhoneFtpIps.Location = new Point(9, 140);
+            richTextBoxPhoneFtpIps.Margin = new Padding(4, 5, 4, 5);
             richTextBoxPhoneFtpIps.Name = "richTextBoxPhoneFtpIps";
-            richTextBoxPhoneFtpIps.Size = new Size(97, 113);
+            richTextBoxPhoneFtpIps.Size = new Size(137, 186);
             richTextBoxPhoneFtpIps.TabIndex = 28;
             richTextBoxPhoneFtpIps.Text = "";
             // 
             // buttonPhoneFtpGetLogs
             // 
-            buttonPhoneFtpGetLogs.Location = new Point(6, 53);
+            buttonPhoneFtpGetLogs.Location = new Point(9, 88);
+            buttonPhoneFtpGetLogs.Margin = new Padding(4, 5, 4, 5);
             buttonPhoneFtpGetLogs.Name = "buttonPhoneFtpGetLogs";
-            buttonPhoneFtpGetLogs.Size = new Size(188, 25);
+            buttonPhoneFtpGetLogs.Size = new Size(269, 42);
             buttonPhoneFtpGetLogs.TabIndex = 27;
             buttonPhoneFtpGetLogs.Text = "Получить базу с устройств";
             buttonPhoneFtpGetLogs.UseVisualStyleBackColor = true;
@@ -406,9 +417,10 @@
             // 
             // buttonPhoneFtpSendBase
             // 
-            buttonPhoneFtpSendBase.Location = new Point(6, 22);
+            buttonPhoneFtpSendBase.Location = new Point(9, 37);
+            buttonPhoneFtpSendBase.Margin = new Padding(4, 5, 4, 5);
             buttonPhoneFtpSendBase.Name = "buttonPhoneFtpSendBase";
-            buttonPhoneFtpSendBase.Size = new Size(188, 25);
+            buttonPhoneFtpSendBase.Size = new Size(269, 42);
             buttonPhoneFtpSendBase.TabIndex = 27;
             buttonPhoneFtpSendBase.Text = "Отправить базу на устройства";
             buttonPhoneFtpSendBase.UseVisualStyleBackColor = true;
@@ -417,9 +429,10 @@
             // checkBoxShahmatkaExtendedLogs
             // 
             checkBoxShahmatkaExtendedLogs.AutoSize = true;
-            checkBoxShahmatkaExtendedLogs.Location = new Point(326, 132);
+            checkBoxShahmatkaExtendedLogs.Location = new Point(466, 220);
+            checkBoxShahmatkaExtendedLogs.Margin = new Padding(4, 5, 4, 5);
             checkBoxShahmatkaExtendedLogs.Name = "checkBoxShahmatkaExtendedLogs";
-            checkBoxShahmatkaExtendedLogs.Size = new Size(134, 19);
+            checkBoxShahmatkaExtendedLogs.Size = new Size(193, 29);
             checkBoxShahmatkaExtendedLogs.TabIndex = 30;
             checkBoxShahmatkaExtendedLogs.Text = "Расширенные логи";
             checkBoxShahmatkaExtendedLogs.UseVisualStyleBackColor = true;
@@ -442,47 +455,71 @@
             groupBoxStartLogProcessing.Controls.Add(labelSFRStartLogDupl);
             groupBoxStartLogProcessing.Controls.Add(richTextBoxStartLogDupl);
             groupBoxStartLogProcessing.Controls.Add(labelSFRStartLogCount);
-            groupBoxStartLogProcessing.Location = new Point(6, 6);
+            groupBoxStartLogProcessing.Location = new Point(9, 10);
+            groupBoxStartLogProcessing.Margin = new Padding(4, 5, 4, 5);
             groupBoxStartLogProcessing.Name = "groupBoxStartLogProcessing";
-            groupBoxStartLogProcessing.Size = new Size(290, 462);
+            groupBoxStartLogProcessing.Padding = new Padding(4, 5, 4, 5);
+            groupBoxStartLogProcessing.Size = new Size(414, 770);
             groupBoxStartLogProcessing.TabIndex = 29;
             groupBoxStartLogProcessing.TabStop = false;
             groupBoxStartLogProcessing.Text = "Обработка стартовых логов";
             // 
+            // label19
+            // 
+            label19.AutoSize = true;
+            label19.Location = new Point(9, 113);
+            label19.Margin = new Padding(4, 0, 4, 0);
+            label19.Name = "label19";
+            label19.Size = new Size(111, 25);
+            label19.TabIndex = 44;
+            label19.Text = "Стартовало:";
+            // 
+            // textBoxShahmatkaDateFilter
+            // 
+            textBoxShahmatkaDateFilter.Location = new Point(9, 143);
+            textBoxShahmatkaDateFilter.Margin = new Padding(4, 5, 4, 5);
+            textBoxShahmatkaDateFilter.Name = "textBoxShahmatkaDateFilter";
+            textBoxShahmatkaDateFilter.Size = new Size(155, 31);
+            textBoxShahmatkaDateFilter.TabIndex = 43;
+            // 
             // label12
             // 
             label12.AutoSize = true;
-            label12.Location = new Point(6, 16);
+            label12.Location = new Point(9, 27);
+            label12.Margin = new Padding(4, 0, 4, 0);
             label12.Name = "label12";
-            label12.Size = new Size(184, 15);
+            label12.Size = new Size(278, 25);
             label12.TabIndex = 42;
             label12.Text = "Время загрузки стартового лога";
             // 
             // dateTimePickerExportStartLog
             // 
             dateTimePickerExportStartLog.Format = DateTimePickerFormat.Time;
-            dateTimePickerExportStartLog.Location = new Point(199, 13);
+            dateTimePickerExportStartLog.Location = new Point(284, 22);
+            dateTimePickerExportStartLog.Margin = new Padding(4, 5, 4, 5);
             dateTimePickerExportStartLog.MaxDate = new DateTime(1753, 1, 2, 0, 0, 0, 0);
             dateTimePickerExportStartLog.Name = "dateTimePickerExportStartLog";
-            dateTimePickerExportStartLog.Size = new Size(82, 23);
+            dateTimePickerExportStartLog.Size = new Size(115, 31);
             dateTimePickerExportStartLog.TabIndex = 30;
             dateTimePickerExportStartLog.Value = new DateTime(1753, 1, 1, 22, 0, 0, 0);
             // 
             // comboBoxStartLogOutFieldsSplitter
             // 
             comboBoxStartLogOutFieldsSplitter.FormattingEnabled = true;
-            comboBoxStartLogOutFieldsSplitter.Location = new Point(114, 42);
+            comboBoxStartLogOutFieldsSplitter.Location = new Point(163, 70);
+            comboBoxStartLogOutFieldsSplitter.Margin = new Padding(4, 5, 4, 5);
             comboBoxStartLogOutFieldsSplitter.Name = "comboBoxStartLogOutFieldsSplitter";
-            comboBoxStartLogOutFieldsSplitter.Size = new Size(59, 23);
+            comboBoxStartLogOutFieldsSplitter.Size = new Size(83, 33);
             comboBoxStartLogOutFieldsSplitter.TabIndex = 41;
             toolTipGeneral.SetToolTip(comboBoxStartLogOutFieldsSplitter, "Символ разделения номеров при выводе");
             // 
             // buttonImportStartLogClipboard
             // 
             buttonImportStartLogClipboard.Image = Properties.Resources.paste_48;
-            buttonImportStartLogClipboard.Location = new Point(233, 42);
+            buttonImportStartLogClipboard.Location = new Point(333, 70);
+            buttonImportStartLogClipboard.Margin = new Padding(4, 5, 4, 5);
             buttonImportStartLogClipboard.Name = "buttonImportStartLogClipboard";
-            buttonImportStartLogClipboard.Size = new Size(48, 48);
+            buttonImportStartLogClipboard.Size = new Size(69, 80);
             buttonImportStartLogClipboard.TabIndex = 40;
             toolTipGeneral.SetToolTip(buttonImportStartLogClipboard, "Импори стартового лога из буфера объмена");
             buttonImportStartLogClipboard.UseVisualStyleBackColor = true;
@@ -491,9 +528,10 @@
             // comboBoxLogType
             // 
             comboBoxLogType.FormattingEnabled = true;
-            comboBoxLogType.Location = new Point(6, 42);
+            comboBoxLogType.Location = new Point(9, 70);
+            comboBoxLogType.Margin = new Padding(4, 5, 4, 5);
             comboBoxLogType.Name = "comboBoxLogType";
-            comboBoxLogType.Size = new Size(102, 23);
+            comboBoxLogType.Size = new Size(144, 33);
             comboBoxLogType.TabIndex = 39;
             comboBoxLogType.SelectedIndexChanged += comboBoxLogType_SelectedIndexChanged;
             // 
@@ -501,9 +539,10 @@
             // 
             buttonImportStartLogFile.BackColor = Color.Gainsboro;
             buttonImportStartLogFile.Image = Properties.Resources.file_import_48;
-            buttonImportStartLogFile.Location = new Point(179, 42);
+            buttonImportStartLogFile.Location = new Point(256, 70);
+            buttonImportStartLogFile.Margin = new Padding(4, 5, 4, 5);
             buttonImportStartLogFile.Name = "buttonImportStartLogFile";
-            buttonImportStartLogFile.Size = new Size(48, 48);
+            buttonImportStartLogFile.Size = new Size(69, 80);
             buttonImportStartLogFile.TabIndex = 28;
             toolTipGeneral.SetToolTip(buttonImportStartLogFile, "Импорт стартового лога из файла");
             buttonImportStartLogFile.UseVisualStyleBackColor = false;
@@ -512,25 +551,28 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(6, 243);
+            label4.Location = new Point(9, 405);
+            label4.Margin = new Padding(4, 0, 4, 0);
             label4.Name = "label4";
-            label4.Size = new Size(261, 15);
+            label4.Size = new Size(382, 25);
             label4.TabIndex = 38;
             label4.Text = "Не отмеченные финишировавшие участники";
             // 
             // richTextBoxChecklessFinished
             // 
-            richTextBoxChecklessFinished.Location = new Point(6, 261);
+            richTextBoxChecklessFinished.Location = new Point(9, 435);
+            richTextBoxChecklessFinished.Margin = new Padding(4, 5, 4, 5);
             richTextBoxChecklessFinished.Name = "richTextBoxChecklessFinished";
-            richTextBoxChecklessFinished.Size = new Size(275, 69);
+            richTextBoxChecklessFinished.Size = new Size(391, 112);
             richTextBoxChecklessFinished.TabIndex = 37;
             richTextBoxChecklessFinished.Text = "";
             // 
             // buttonSFRStartLogDNSCopy
             // 
-            buttonSFRStartLogDNSCopy.Location = new Point(42, 336);
+            buttonSFRStartLogDNSCopy.Location = new Point(60, 560);
+            buttonSFRStartLogDNSCopy.Margin = new Padding(4, 5, 4, 5);
             buttonSFRStartLogDNSCopy.Name = "buttonSFRStartLogDNSCopy";
-            buttonSFRStartLogDNSCopy.Size = new Size(136, 23);
+            buttonSFRStartLogDNSCopy.Size = new Size(194, 38);
             buttonSFRStartLogDNSCopy.TabIndex = 34;
             buttonSFRStartLogDNSCopy.Text = "Копировать DNS";
             buttonSFRStartLogDNSCopy.UseVisualStyleBackColor = true;
@@ -539,51 +581,57 @@
             // labelSFRStartLogDNS
             // 
             labelSFRStartLogDNS.AutoSize = true;
-            labelSFRStartLogDNS.Location = new Point(6, 344);
+            labelSFRStartLogDNS.Location = new Point(9, 573);
+            labelSFRStartLogDNS.Margin = new Padding(4, 0, 4, 0);
             labelSFRStartLogDNS.Name = "labelSFRStartLogDNS";
-            labelSFRStartLogDNS.Size = new Size(30, 15);
+            labelSFRStartLogDNS.Size = new Size(48, 25);
             labelSFRStartLogDNS.TabIndex = 33;
             labelSFRStartLogDNS.Text = "DNS";
             // 
             // richTextBoxStartLogDNS
             // 
-            richTextBoxStartLogDNS.Location = new Point(0, 364);
+            richTextBoxStartLogDNS.Location = new Point(0, 607);
+            richTextBoxStartLogDNS.Margin = new Padding(4, 5, 4, 5);
             richTextBoxStartLogDNS.Name = "richTextBoxStartLogDNS";
-            richTextBoxStartLogDNS.Size = new Size(275, 92);
+            richTextBoxStartLogDNS.Size = new Size(391, 151);
             richTextBoxStartLogDNS.TabIndex = 32;
             richTextBoxStartLogDNS.Text = "";
             // 
             // labelSFRStartLogDupl
             // 
             labelSFRStartLogDupl.AutoSize = true;
-            labelSFRStartLogDupl.Location = new Point(6, 130);
+            labelSFRStartLogDupl.Location = new Point(9, 217);
+            labelSFRStartLogDupl.Margin = new Padding(4, 0, 4, 0);
             labelSFRStartLogDupl.Name = "labelSFRStartLogDupl";
-            labelSFRStartLogDupl.Size = new Size(68, 15);
+            labelSFRStartLogDupl.Size = new Size(100, 25);
             labelSFRStartLogDupl.TabIndex = 31;
             labelSFRStartLogDupl.Text = "Дубликаты";
             // 
             // richTextBoxStartLogDupl
             // 
-            richTextBoxStartLogDupl.Location = new Point(6, 148);
+            richTextBoxStartLogDupl.Location = new Point(9, 247);
+            richTextBoxStartLogDupl.Margin = new Padding(4, 5, 4, 5);
             richTextBoxStartLogDupl.Name = "richTextBoxStartLogDupl";
-            richTextBoxStartLogDupl.Size = new Size(275, 92);
+            richTextBoxStartLogDupl.Size = new Size(391, 151);
             richTextBoxStartLogDupl.TabIndex = 30;
             richTextBoxStartLogDupl.Text = "";
             // 
             // labelSFRStartLogCount
             // 
             labelSFRStartLogCount.AutoSize = true;
-            labelSFRStartLogCount.Location = new Point(6, 115);
+            labelSFRStartLogCount.Location = new Point(9, 192);
+            labelSFRStartLogCount.Margin = new Padding(4, 0, 4, 0);
             labelSFRStartLogCount.Name = "labelSFRStartLogCount";
-            labelSFRStartLogCount.Size = new Size(74, 15);
+            labelSFRStartLogCount.Size = new Size(111, 25);
             labelSFRStartLogCount.TabIndex = 30;
             labelSFRStartLogCount.Text = "Стартовало:";
             // 
             // buttonExportSFRx
             // 
-            buttonExportSFRx.Location = new Point(326, 58);
+            buttonExportSFRx.Location = new Point(466, 97);
+            buttonExportSFRx.Margin = new Padding(4, 5, 4, 5);
             buttonExportSFRx.Name = "buttonExportSFRx";
-            buttonExportSFRx.Size = new Size(203, 68);
+            buttonExportSFRx.Size = new Size(290, 113);
             buttonExportSFRx.TabIndex = 27;
             buttonExportSFRx.Text = "Экспорт в SFRx\r\n(Пока не полная поддержка)\r\nВ основном для использования в приложении SFR на старте";
             toolTipGeneral.SetToolTip(buttonExportSFRx, "На данный момент поддержвиется экспорт только одного выбранного дня. \r\nЭкспортируются - Участники, Группы, Команды");
@@ -592,9 +640,10 @@
             // 
             // buttonExportStartTimes
             // 
-            buttonExportStartTimes.Location = new Point(326, 6);
+            buttonExportStartTimes.Location = new Point(466, 10);
+            buttonExportStartTimes.Margin = new Padding(4, 5, 4, 5);
             buttonExportStartTimes.Name = "buttonExportStartTimes";
-            buttonExportStartTimes.Size = new Size(203, 46);
+            buttonExportStartTimes.Size = new Size(290, 77);
             buttonExportStartTimes.TabIndex = 27;
             buttonExportStartTimes.Text = "Экспортировать стартовые минуты для SFR Smart Terminal";
             toolTipGeneral.SetToolTip(buttonExportStartTimes, "SFR Smart Terminal - Старое приложение, для работы с SFR.");
@@ -614,19 +663,21 @@
             tabPageBase.Controls.Add(groupBox3);
             tabPageBase.Controls.Add(label3);
             tabPageBase.Controls.Add(groupBox4);
-            tabPageBase.Location = new Point(4, 24);
+            tabPageBase.Location = new Point(4, 34);
+            tabPageBase.Margin = new Padding(4, 5, 4, 5);
             tabPageBase.Name = "tabPageBase";
-            tabPageBase.Padding = new Padding(3, 3, 3, 3);
-            tabPageBase.Size = new Size(535, 485);
+            tabPageBase.Padding = new Padding(4, 5, 4, 5);
+            tabPageBase.Size = new Size(768, 817);
             tabPageBase.TabIndex = 0;
             tabPageBase.Text = "База";
             // 
             // checkBoxDeepCloneOrganizations
             // 
             checkBoxDeepCloneOrganizations.AutoSize = true;
-            checkBoxDeepCloneOrganizations.Location = new Point(429, 404);
+            checkBoxDeepCloneOrganizations.Location = new Point(613, 673);
+            checkBoxDeepCloneOrganizations.Margin = new Padding(4, 5, 4, 5);
             checkBoxDeepCloneOrganizations.Name = "checkBoxDeepCloneOrganizations";
-            checkBoxDeepCloneOrganizations.Size = new Size(93, 19);
+            checkBoxDeepCloneOrganizations.Size = new Size(135, 29);
             checkBoxDeepCloneOrganizations.TabIndex = 29;
             checkBoxDeepCloneOrganizations.Text = "Коллективы";
             checkBoxDeepCloneOrganizations.UseVisualStyleBackColor = true;
@@ -634,9 +685,10 @@
             // checkBoxDeepCloneGroups
             // 
             checkBoxDeepCloneGroups.AutoSize = true;
-            checkBoxDeepCloneGroups.Location = new Point(355, 404);
+            checkBoxDeepCloneGroups.Location = new Point(507, 673);
+            checkBoxDeepCloneGroups.Margin = new Padding(4, 5, 4, 5);
             checkBoxDeepCloneGroups.Name = "checkBoxDeepCloneGroups";
-            checkBoxDeepCloneGroups.Size = new Size(68, 19);
+            checkBoxDeepCloneGroups.Size = new Size(99, 29);
             checkBoxDeepCloneGroups.TabIndex = 29;
             checkBoxDeepCloneGroups.Text = "Группы";
             checkBoxDeepCloneGroups.UseVisualStyleBackColor = true;
@@ -646,18 +698,20 @@
             checkBoxDeepClonePersons.AutoSize = true;
             checkBoxDeepClonePersons.Checked = true;
             checkBoxDeepClonePersons.CheckState = CheckState.Checked;
-            checkBoxDeepClonePersons.Location = new Point(265, 404);
+            checkBoxDeepClonePersons.Location = new Point(379, 673);
+            checkBoxDeepClonePersons.Margin = new Padding(4, 5, 4, 5);
             checkBoxDeepClonePersons.Name = "checkBoxDeepClonePersons";
-            checkBoxDeepClonePersons.Size = new Size(84, 19);
+            checkBoxDeepClonePersons.Size = new Size(121, 29);
             checkBoxDeepClonePersons.TabIndex = 29;
             checkBoxDeepClonePersons.Text = "Участники";
             checkBoxDeepClonePersons.UseVisualStyleBackColor = true;
             // 
             // buttonRemovePersonDuplicates
             // 
-            buttonRemovePersonDuplicates.Location = new Point(263, 328);
+            buttonRemovePersonDuplicates.Location = new Point(376, 547);
+            buttonRemovePersonDuplicates.Margin = new Padding(4, 5, 4, 5);
             buttonRemovePersonDuplicates.Name = "buttonRemovePersonDuplicates";
-            buttonRemovePersonDuplicates.Size = new Size(248, 23);
+            buttonRemovePersonDuplicates.Size = new Size(354, 38);
             buttonRemovePersonDuplicates.TabIndex = 28;
             buttonRemovePersonDuplicates.Text = "Удалить дубликаты участников";
             buttonRemovePersonDuplicates.UseVisualStyleBackColor = true;
@@ -665,9 +719,10 @@
             // 
             // buttonReplaceAllPersonsForOtherDays
             // 
-            buttonReplaceAllPersonsForOtherDays.Location = new Point(265, 429);
+            buttonReplaceAllPersonsForOtherDays.Location = new Point(379, 715);
+            buttonReplaceAllPersonsForOtherDays.Margin = new Padding(4, 5, 4, 5);
             buttonReplaceAllPersonsForOtherDays.Name = "buttonReplaceAllPersonsForOtherDays";
-            buttonReplaceAllPersonsForOtherDays.Size = new Size(246, 39);
+            buttonReplaceAllPersonsForOtherDays.Size = new Size(351, 65);
             buttonReplaceAllPersonsForOtherDays.TabIndex = 27;
             buttonReplaceAllPersonsForOtherDays.Text = "Заменить список участников во всех днях списком этого дня";
             buttonReplaceAllPersonsForOtherDays.UseVisualStyleBackColor = true;
@@ -678,18 +733,21 @@
             groupBox2.Controls.Add(buttonRemoveMissingPersons);
             groupBox2.Controls.Add(buttonCreateNewAdded);
             groupBox2.Controls.Add(buttonCardNumAsNum);
-            groupBox2.Location = new Point(9, 6);
+            groupBox2.Location = new Point(13, 10);
+            groupBox2.Margin = new Padding(4, 5, 4, 5);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(244, 139);
+            groupBox2.Padding = new Padding(4, 5, 4, 5);
+            groupBox2.Size = new Size(349, 232);
             groupBox2.TabIndex = 23;
             groupBox2.TabStop = false;
             groupBox2.Text = "Остальное";
             // 
             // buttonRemoveMissingPersons
             // 
-            buttonRemoveMissingPersons.Location = new Point(6, 22);
+            buttonRemoveMissingPersons.Location = new Point(9, 37);
+            buttonRemoveMissingPersons.Margin = new Padding(4, 5, 4, 5);
             buttonRemoveMissingPersons.Name = "buttonRemoveMissingPersons";
-            buttonRemoveMissingPersons.Size = new Size(231, 23);
+            buttonRemoveMissingPersons.Size = new Size(330, 38);
             buttonRemoveMissingPersons.TabIndex = 4;
             buttonRemoveMissingPersons.Text = "Удалить отсутствующих по дням";
             buttonRemoveMissingPersons.UseVisualStyleBackColor = true;
@@ -697,9 +755,10 @@
             // 
             // buttonCreateNewAdded
             // 
-            buttonCreateNewAdded.Location = new Point(6, 51);
+            buttonCreateNewAdded.Location = new Point(9, 85);
+            buttonCreateNewAdded.Margin = new Padding(4, 5, 4, 5);
             buttonCreateNewAdded.Name = "buttonCreateNewAdded";
-            buttonCreateNewAdded.Size = new Size(231, 41);
+            buttonCreateNewAdded.Size = new Size(330, 68);
             buttonCreateNewAdded.TabIndex = 15;
             buttonCreateNewAdded.Text = "Создать дозаявленых с тегом Лично в остальных днях";
             buttonCreateNewAdded.UseVisualStyleBackColor = true;
@@ -707,9 +766,10 @@
             // 
             // buttonCardNumAsNum
             // 
-            buttonCardNumAsNum.Location = new Point(6, 98);
+            buttonCardNumAsNum.Location = new Point(9, 163);
+            buttonCardNumAsNum.Margin = new Padding(4, 5, 4, 5);
             buttonCardNumAsNum.Name = "buttonCardNumAsNum";
-            buttonCardNumAsNum.Size = new Size(231, 23);
+            buttonCardNumAsNum.Size = new Size(330, 38);
             buttonCardNumAsNum.TabIndex = 16;
             buttonCardNumAsNum.Text = "Установить номер чипа = номеру";
             buttonCardNumAsNum.UseVisualStyleBackColor = true;
@@ -718,27 +778,31 @@
             // checkedListBoxWithSync
             // 
             checkedListBoxWithSync.FormattingEnabled = true;
-            checkedListBoxWithSync.Location = new Point(15, 176);
+            checkedListBoxWithSync.Location = new Point(21, 293);
+            checkedListBoxWithSync.Margin = new Padding(4, 5, 4, 5);
             checkedListBoxWithSync.Name = "checkedListBoxWithSync";
-            checkedListBoxWithSync.Size = new Size(231, 274);
+            checkedListBoxWithSync.Size = new Size(328, 452);
             checkedListBoxWithSync.TabIndex = 10;
             // 
             // groupBox3
             // 
             groupBox3.Controls.Add(buttonSyncOrganizations);
             groupBox3.Controls.Add(groupBox5);
-            groupBox3.Location = new Point(259, 6);
+            groupBox3.Location = new Point(370, 10);
+            groupBox3.Margin = new Padding(4, 5, 4, 5);
             groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(260, 167);
+            groupBox3.Padding = new Padding(4, 5, 4, 5);
+            groupBox3.Size = new Size(371, 278);
             groupBox3.TabIndex = 24;
             groupBox3.TabStop = false;
             groupBox3.Text = "Синхронизация";
             // 
             // buttonSyncOrganizations
             // 
-            buttonSyncOrganizations.Location = new Point(15, 144);
+            buttonSyncOrganizations.Location = new Point(21, 240);
+            buttonSyncOrganizations.Margin = new Padding(4, 5, 4, 5);
             buttonSyncOrganizations.Name = "buttonSyncOrganizations";
-            buttonSyncOrganizations.Size = new Size(231, 23);
+            buttonSyncOrganizations.Size = new Size(330, 38);
             buttonSyncOrganizations.TabIndex = 15;
             buttonSyncOrganizations.Text = "Синхронизация коллективов";
             buttonSyncOrganizations.UseVisualStyleBackColor = true;
@@ -750,26 +814,30 @@
             groupBox5.Controls.Add(buttonSynchronizeReorders);
             groupBox5.Controls.Add(checkBoxCopyChangedOtherDays);
             groupBox5.Controls.Add(label1);
-            groupBox5.Location = new Point(9, 22);
+            groupBox5.Location = new Point(13, 37);
+            groupBox5.Margin = new Padding(4, 5, 4, 5);
             groupBox5.Name = "groupBox5";
-            groupBox5.Size = new Size(243, 117);
+            groupBox5.Padding = new Padding(4, 5, 4, 5);
+            groupBox5.Size = new Size(347, 195);
             groupBox5.TabIndex = 14;
             groupBox5.TabStop = false;
             groupBox5.Text = "Дозаявки";
             // 
             // textBoxReservName
             // 
-            textBoxReservName.Location = new Point(6, 22);
+            textBoxReservName.Location = new Point(9, 37);
+            textBoxReservName.Margin = new Padding(4, 5, 4, 5);
             textBoxReservName.Name = "textBoxReservName";
-            textBoxReservName.Size = new Size(59, 23);
+            textBoxReservName.Size = new Size(83, 31);
             textBoxReservName.TabIndex = 7;
             textBoxReservName.Text = "_Резерв";
             // 
             // buttonSynchronizeReorders
             // 
-            buttonSynchronizeReorders.Location = new Point(6, 86);
+            buttonSynchronizeReorders.Location = new Point(9, 143);
+            buttonSynchronizeReorders.Margin = new Padding(4, 5, 4, 5);
             buttonSynchronizeReorders.Name = "buttonSynchronizeReorders";
-            buttonSynchronizeReorders.Size = new Size(231, 23);
+            buttonSynchronizeReorders.Size = new Size(330, 38);
             buttonSynchronizeReorders.TabIndex = 6;
             buttonSynchronizeReorders.Text = "Синхронизировать дозаявки";
             buttonSynchronizeReorders.UseVisualStyleBackColor = true;
@@ -777,9 +845,10 @@
             // 
             // checkBoxCopyChangedOtherDays
             // 
-            checkBoxCopyChangedOtherDays.Location = new Point(6, 51);
+            checkBoxCopyChangedOtherDays.Location = new Point(9, 85);
+            checkBoxCopyChangedOtherDays.Margin = new Padding(4, 5, 4, 5);
             checkBoxCopyChangedOtherDays.Name = "checkBoxCopyChangedOtherDays";
-            checkBoxCopyChangedOtherDays.Size = new Size(171, 37);
+            checkBoxCopyChangedOtherDays.Size = new Size(244, 62);
             checkBoxCopyChangedOtherDays.TabIndex = 13;
             checkBoxCopyChangedOtherDays.Text = "Копирование при изменении в других днях";
             checkBoxCopyChangedOtherDays.UseVisualStyleBackColor = true;
@@ -787,18 +856,20 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(71, 25);
+            label1.Location = new Point(101, 42);
+            label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
-            label1.Size = new Size(104, 15);
+            label1.Size = new Size(157, 25);
             label1.TabIndex = 8;
             label1.Text = "Фамилия резерва";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(15, 158);
+            label3.Location = new Point(21, 263);
+            label3.Margin = new Padding(4, 0, 4, 0);
             label3.Name = "label3";
-            label3.Size = new Size(225, 15);
+            label3.Size = new Size(335, 25);
             label3.TabIndex = 26;
             label3.Text = "Поля для копирования/синхронизации";
             // 
@@ -809,18 +880,21 @@
             groupBox4.Controls.Add(textBoxPersonsFromCopy);
             groupBox4.Controls.Add(textBoxStringFindComment);
             groupBox4.Controls.Add(label2);
-            groupBox4.Location = new Point(259, 179);
+            groupBox4.Location = new Point(370, 298);
+            groupBox4.Margin = new Padding(4, 5, 4, 5);
             groupBox4.Name = "groupBox4";
-            groupBox4.Size = new Size(260, 143);
+            groupBox4.Padding = new Padding(4, 5, 4, 5);
+            groupBox4.Size = new Size(371, 238);
             groupBox4.TabIndex = 25;
             groupBox4.TabStop = false;
             groupBox4.Text = "Копирование";
             // 
             // buttonFindAddWithComment
             // 
-            buttonFindAddWithComment.Location = new Point(6, 22);
+            buttonFindAddWithComment.Location = new Point(9, 37);
+            buttonFindAddWithComment.Margin = new Padding(4, 5, 4, 5);
             buttonFindAddWithComment.Name = "buttonFindAddWithComment";
-            buttonFindAddWithComment.Size = new Size(132, 38);
+            buttonFindAddWithComment.Size = new Size(189, 63);
             buttonFindAddWithComment.TabIndex = 21;
             buttonFindAddWithComment.Text = "Найти всех с текстм в комментарии";
             buttonFindAddWithComment.UseVisualStyleBackColor = true;
@@ -828,9 +902,10 @@
             // 
             // buttonCopyPersonByNumber
             // 
-            buttonCopyPersonByNumber.Location = new Point(6, 113);
+            buttonCopyPersonByNumber.Location = new Point(9, 188);
+            buttonCopyPersonByNumber.Margin = new Padding(4, 5, 4, 5);
             buttonCopyPersonByNumber.Name = "buttonCopyPersonByNumber";
-            buttonCopyPersonByNumber.Size = new Size(248, 23);
+            buttonCopyPersonByNumber.Size = new Size(354, 38);
             buttonCopyPersonByNumber.TabIndex = 17;
             buttonCopyPersonByNumber.Text = "Копирвоать участников";
             buttonCopyPersonByNumber.UseVisualStyleBackColor = true;
@@ -838,24 +913,27 @@
             // 
             // textBoxPersonsFromCopy
             // 
-            textBoxPersonsFromCopy.Location = new Point(6, 84);
+            textBoxPersonsFromCopy.Location = new Point(9, 140);
+            textBoxPersonsFromCopy.Margin = new Padding(4, 5, 4, 5);
             textBoxPersonsFromCopy.Name = "textBoxPersonsFromCopy";
-            textBoxPersonsFromCopy.Size = new Size(248, 23);
+            textBoxPersonsFromCopy.Size = new Size(353, 31);
             textBoxPersonsFromCopy.TabIndex = 18;
             // 
             // textBoxStringFindComment
             // 
-            textBoxStringFindComment.Location = new Point(144, 29);
+            textBoxStringFindComment.Location = new Point(206, 48);
+            textBoxStringFindComment.Margin = new Padding(4, 5, 4, 5);
             textBoxStringFindComment.Name = "textBoxStringFindComment";
-            textBoxStringFindComment.Size = new Size(110, 23);
+            textBoxStringFindComment.Size = new Size(155, 31);
             textBoxStringFindComment.TabIndex = 22;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(68, 66);
+            label2.Location = new Point(97, 110);
+            label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
-            label2.Size = new Size(117, 15);
+            label2.Size = new Size(176, 25);
             label2.TabIndex = 19;
             label2.Text = "Номера участников";
             // 
@@ -877,9 +955,11 @@
             groupBoxStartTime.Controls.Add(buttonSetStartMinutes);
             groupBoxStartTime.Controls.Add(richTextBoxGroupStartOrder);
             groupBoxStartTime.Controls.Add(dateTimePickerStartTime);
-            groupBoxStartTime.Location = new Point(6, 6);
+            groupBoxStartTime.Location = new Point(9, 10);
+            groupBoxStartTime.Margin = new Padding(4, 5, 4, 5);
             groupBoxStartTime.Name = "groupBoxStartTime";
-            groupBoxStartTime.Size = new Size(523, 473);
+            groupBoxStartTime.Padding = new Padding(4, 5, 4, 5);
+            groupBoxStartTime.Size = new Size(747, 788);
             groupBoxStartTime.TabIndex = 27;
             groupBoxStartTime.TabStop = false;
             groupBoxStartTime.Text = "Стартовые минуты";
@@ -887,25 +967,28 @@
             // label18
             // 
             label18.AutoSize = true;
-            label18.Location = new Point(272, 246);
+            label18.Location = new Point(389, 410);
+            label18.Margin = new Padding(4, 0, 4, 0);
             label18.Name = "label18";
-            label18.Size = new Size(228, 15);
+            label18.Size = new Size(341, 25);
             label18.TabIndex = 13;
             label18.Text = "Минимальный зазор между командами";
             // 
             // numericUpDownSetStartTimeMinGap
             // 
-            numericUpDownSetStartTimeMinGap.Location = new Point(224, 242);
+            numericUpDownSetStartTimeMinGap.Location = new Point(320, 403);
+            numericUpDownSetStartTimeMinGap.Margin = new Padding(4, 5, 4, 5);
             numericUpDownSetStartTimeMinGap.Name = "numericUpDownSetStartTimeMinGap";
-            numericUpDownSetStartTimeMinGap.Size = new Size(42, 23);
+            numericUpDownSetStartTimeMinGap.Size = new Size(60, 31);
             numericUpDownSetStartTimeMinGap.TabIndex = 12;
             // 
             // checkBoxSetStartTimeSuffleWithOrgs
             // 
             checkBoxSetStartTimeSuffleWithOrgs.AutoSize = true;
-            checkBoxSetStartTimeSuffleWithOrgs.Location = new Point(224, 217);
+            checkBoxSetStartTimeSuffleWithOrgs.Location = new Point(320, 362);
+            checkBoxSetStartTimeSuffleWithOrgs.Margin = new Padding(4, 5, 4, 5);
             checkBoxSetStartTimeSuffleWithOrgs.Name = "checkBoxSetStartTimeSuffleWithOrgs";
-            checkBoxSetStartTimeSuffleWithOrgs.Size = new Size(256, 19);
+            checkBoxSetStartTimeSuffleWithOrgs.Size = new Size(378, 29);
             checkBoxSetStartTimeSuffleWithOrgs.TabIndex = 11;
             checkBoxSetStartTimeSuffleWithOrgs.Text = "Учитывать команды при перемешивании";
             toolTipGeneral.SetToolTip(checkBoxSetStartTimeSuffleWithOrgs, resources.GetString("checkBoxSetStartTimeSuffleWithOrgs.ToolTip"));
@@ -914,9 +997,10 @@
             // labelHTWStartBibs
             // 
             labelHTWStartBibs.AutoSize = true;
-            labelHTWStartBibs.Location = new Point(411, 422);
+            labelHTWStartBibs.Location = new Point(587, 703);
+            labelHTWStartBibs.Margin = new Padding(4, 0, 4, 0);
             labelHTWStartBibs.Name = "labelHTWStartBibs";
-            labelHTWStartBibs.Size = new Size(104, 15);
+            labelHTWStartBibs.Size = new Size(157, 25);
             labelHTWStartBibs.TabIndex = 10;
             labelHTWStartBibs.Text = "Как это работает?";
             labelHTWStartBibs.Click += labelHTWStartBibs_Click;
@@ -926,9 +1010,10 @@
             checkBoxSetStartTimeOnlyCurrentDayPersons.AutoSize = true;
             checkBoxSetStartTimeOnlyCurrentDayPersons.Checked = true;
             checkBoxSetStartTimeOnlyCurrentDayPersons.CheckState = CheckState.Checked;
-            checkBoxSetStartTimeOnlyCurrentDayPersons.Location = new Point(224, 158);
+            checkBoxSetStartTimeOnlyCurrentDayPersons.Location = new Point(320, 263);
+            checkBoxSetStartTimeOnlyCurrentDayPersons.Margin = new Padding(4, 5, 4, 5);
             checkBoxSetStartTimeOnlyCurrentDayPersons.Name = "checkBoxSetStartTimeOnlyCurrentDayPersons";
-            checkBoxSetStartTimeOnlyCurrentDayPersons.Size = new Size(285, 34);
+            checkBoxSetStartTimeOnlyCurrentDayPersons.Size = new Size(424, 54);
             checkBoxSetStartTimeOnlyCurrentDayPersons.TabIndex = 8;
             checkBoxSetStartTimeOnlyCurrentDayPersons.Text = "Выдавать минуты только участникам\r\nтекущего дня - определяется по комментарию";
             toolTipGeneral.SetToolTip(checkBoxSetStartTimeOnlyCurrentDayPersons, resources.GetString("checkBoxSetStartTimeOnlyCurrentDayPersons.ToolTip"));
@@ -937,9 +1022,10 @@
             // checkBoxUseShortStartTimeAlg
             // 
             checkBoxUseShortStartTimeAlg.AutoSize = true;
-            checkBoxUseShortStartTimeAlg.Location = new Point(224, 133);
+            checkBoxUseShortStartTimeAlg.Location = new Point(320, 222);
+            checkBoxUseShortStartTimeAlg.Margin = new Padding(4, 5, 4, 5);
             checkBoxUseShortStartTimeAlg.Name = "checkBoxUseShortStartTimeAlg";
-            checkBoxUseShortStartTimeAlg.Size = new Size(214, 19);
+            checkBoxUseShortStartTimeAlg.Size = new Size(317, 29);
             checkBoxUseShortStartTimeAlg.TabIndex = 7;
             checkBoxUseShortStartTimeAlg.Text = "Сжимать конец старта в колонках";
             checkBoxUseShortStartTimeAlg.UseVisualStyleBackColor = true;
@@ -949,9 +1035,10 @@
             checkBoxStartTimesPersonShuffle.AutoSize = true;
             checkBoxStartTimesPersonShuffle.Checked = true;
             checkBoxStartTimesPersonShuffle.CheckState = CheckState.Checked;
-            checkBoxStartTimesPersonShuffle.Location = new Point(224, 108);
+            checkBoxStartTimesPersonShuffle.Location = new Point(320, 180);
+            checkBoxStartTimesPersonShuffle.Margin = new Padding(4, 5, 4, 5);
             checkBoxStartTimesPersonShuffle.Name = "checkBoxStartTimesPersonShuffle";
-            checkBoxStartTimesPersonShuffle.Size = new Size(226, 19);
+            checkBoxStartTimesPersonShuffle.Size = new Size(335, 29);
             checkBoxStartTimesPersonShuffle.TabIndex = 7;
             checkBoxStartTimesPersonShuffle.Text = "Перемешивать участников в группе";
             checkBoxStartTimesPersonShuffle.UseVisualStyleBackColor = true;
@@ -959,55 +1046,61 @@
             // label13
             // 
             label13.AutoSize = true;
-            label13.Location = new Point(313, 83);
+            label13.Location = new Point(447, 138);
+            label13.Margin = new Padding(4, 0, 4, 0);
             label13.Name = "label13";
-            label13.Size = new Size(202, 15);
+            label13.Size = new Size(299, 25);
             label13.TabIndex = 6;
             label13.Text = "Минимальный интервал в колонке";
             // 
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new Point(313, 55);
+            label11.Location = new Point(447, 92);
+            label11.Margin = new Padding(4, 0, 4, 0);
             label11.Name = "label11";
-            label11.Size = new Size(60, 15);
+            label11.Size = new Size(90, 25);
             label11.TabIndex = 6;
             label11.Text = "Интервал";
             // 
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(313, 27);
+            label10.Location = new Point(447, 45);
+            label10.Margin = new Padding(4, 0, 4, 0);
             label10.Name = "label10";
-            label10.Size = new Size(80, 15);
+            label10.Size = new Size(120, 25);
             label10.TabIndex = 5;
             label10.Text = "Время старта";
             // 
             // dateTimePickerMinColumnStartInterval
             // 
             dateTimePickerMinColumnStartInterval.Format = DateTimePickerFormat.Time;
-            dateTimePickerMinColumnStartInterval.Location = new Point(224, 79);
+            dateTimePickerMinColumnStartInterval.Location = new Point(320, 132);
+            dateTimePickerMinColumnStartInterval.Margin = new Padding(4, 5, 4, 5);
             dateTimePickerMinColumnStartInterval.MaxDate = new DateTime(1753, 1, 2, 0, 0, 0, 0);
             dateTimePickerMinColumnStartInterval.Name = "dateTimePickerMinColumnStartInterval";
-            dateTimePickerMinColumnStartInterval.Size = new Size(83, 23);
+            dateTimePickerMinColumnStartInterval.Size = new Size(117, 31);
             dateTimePickerMinColumnStartInterval.TabIndex = 4;
             dateTimePickerMinColumnStartInterval.Value = new DateTime(1753, 1, 1, 0, 1, 0, 0);
             // 
             // dateTimePickerStartInterval
             // 
             dateTimePickerStartInterval.Format = DateTimePickerFormat.Time;
-            dateTimePickerStartInterval.Location = new Point(224, 51);
+            dateTimePickerStartInterval.Location = new Point(320, 85);
+            dateTimePickerStartInterval.Margin = new Padding(4, 5, 4, 5);
             dateTimePickerStartInterval.MaxDate = new DateTime(1753, 1, 2, 0, 0, 0, 0);
             dateTimePickerStartInterval.Name = "dateTimePickerStartInterval";
-            dateTimePickerStartInterval.Size = new Size(83, 23);
+            dateTimePickerStartInterval.Size = new Size(117, 31);
             dateTimePickerStartInterval.TabIndex = 4;
             dateTimePickerStartInterval.Value = new DateTime(1753, 1, 1, 0, 1, 0, 0);
             // 
             // buttonSetAutoOrderStartTimes
             // 
-            buttonSetAutoOrderStartTimes.Location = new Point(6, 440);
+            buttonSetAutoOrderStartTimes.Location = new Point(9, 733);
+            buttonSetAutoOrderStartTimes.Margin = new Padding(4, 5, 4, 5);
             buttonSetAutoOrderStartTimes.Name = "buttonSetAutoOrderStartTimes";
-            buttonSetAutoOrderStartTimes.Size = new Size(212, 27);
+            buttonSetAutoOrderStartTimes.Size = new Size(303, 45);
             buttonSetAutoOrderStartTimes.TabIndex = 3;
             buttonSetAutoOrderStartTimes.Text = "Создать список автоматически";
             buttonSetAutoOrderStartTimes.UseVisualStyleBackColor = true;
@@ -1015,9 +1108,10 @@
             // 
             // buttonSetStartMinutes
             // 
-            buttonSetStartMinutes.Location = new Point(323, 440);
+            buttonSetStartMinutes.Location = new Point(461, 733);
+            buttonSetStartMinutes.Margin = new Padding(4, 5, 4, 5);
             buttonSetStartMinutes.Name = "buttonSetStartMinutes";
-            buttonSetStartMinutes.Size = new Size(192, 27);
+            buttonSetStartMinutes.Size = new Size(274, 45);
             buttonSetStartMinutes.TabIndex = 1;
             buttonSetStartMinutes.Text = "Установить стартовые минуты";
             buttonSetStartMinutes.UseVisualStyleBackColor = true;
@@ -1025,27 +1119,30 @@
             // 
             // richTextBoxGroupStartOrder
             // 
-            richTextBoxGroupStartOrder.Location = new Point(6, 22);
+            richTextBoxGroupStartOrder.Location = new Point(9, 37);
+            richTextBoxGroupStartOrder.Margin = new Padding(4, 5, 4, 5);
             richTextBoxGroupStartOrder.Name = "richTextBoxGroupStartOrder";
-            richTextBoxGroupStartOrder.Size = new Size(212, 412);
+            richTextBoxGroupStartOrder.Size = new Size(301, 684);
             richTextBoxGroupStartOrder.TabIndex = 2;
             richTextBoxGroupStartOrder.Text = "";
             // 
             // dateTimePickerStartTime
             // 
             dateTimePickerStartTime.Format = DateTimePickerFormat.Time;
-            dateTimePickerStartTime.Location = new Point(224, 22);
+            dateTimePickerStartTime.Location = new Point(320, 37);
+            dateTimePickerStartTime.Margin = new Padding(4, 5, 4, 5);
             dateTimePickerStartTime.MaxDate = new DateTime(1753, 1, 2, 0, 0, 0, 0);
             dateTimePickerStartTime.Name = "dateTimePickerStartTime";
-            dateTimePickerStartTime.Size = new Size(83, 23);
+            dateTimePickerStartTime.Size = new Size(117, 31);
             dateTimePickerStartTime.TabIndex = 0;
             dateTimePickerStartTime.Value = new DateTime(1753, 1, 1, 10, 0, 0, 0);
             // 
             // buttonCopyGroupSettings
             // 
-            buttonCopyGroupSettings.Location = new Point(356, 11);
+            buttonCopyGroupSettings.Location = new Point(509, 18);
+            buttonCopyGroupSettings.Margin = new Padding(4, 5, 4, 5);
             buttonCopyGroupSettings.Name = "buttonCopyGroupSettings";
-            buttonCopyGroupSettings.Size = new Size(173, 43);
+            buttonCopyGroupSettings.Size = new Size(247, 72);
             buttonCopyGroupSettings.TabIndex = 27;
             buttonCopyGroupSettings.Text = "Синхронизировать ранги в группах между днями";
             buttonCopyGroupSettings.UseVisualStyleBackColor = true;
@@ -1054,16 +1151,18 @@
             // comboBoxSourceRankGroupName
             // 
             comboBoxSourceRankGroupName.FormattingEnabled = true;
-            comboBoxSourceRankGroupName.Location = new Point(161, 16);
+            comboBoxSourceRankGroupName.Location = new Point(230, 27);
+            comboBoxSourceRankGroupName.Margin = new Padding(4, 5, 4, 5);
             comboBoxSourceRankGroupName.Name = "comboBoxSourceRankGroupName";
-            comboBoxSourceRankGroupName.Size = new Size(120, 23);
+            comboBoxSourceRankGroupName.Size = new Size(170, 33);
             comboBoxSourceRankGroupName.TabIndex = 27;
             // 
             // buttonCalculateRanks
             // 
-            buttonCalculateRanks.Location = new Point(6, 45);
+            buttonCalculateRanks.Location = new Point(9, 75);
+            buttonCalculateRanks.Margin = new Padding(4, 5, 4, 5);
             buttonCalculateRanks.Name = "buttonCalculateRanks";
-            buttonCalculateRanks.Size = new Size(275, 23);
+            buttonCalculateRanks.Size = new Size(393, 38);
             buttonCalculateRanks.TabIndex = 17;
             buttonCalculateRanks.Text = "Применить настройки рангов";
             buttonCalculateRanks.UseVisualStyleBackColor = true;
@@ -1078,19 +1177,21 @@
             tabControlFunc.Controls.Add(tabPageGroups);
             tabControlFunc.Controls.Add(tabPageOrganizations);
             tabControlFunc.Controls.Add(tabPageOther);
-            tabControlFunc.Location = new Point(12, 42);
+            tabControlFunc.Location = new Point(17, 70);
+            tabControlFunc.Margin = new Padding(4, 5, 4, 5);
             tabControlFunc.Name = "tabControlFunc";
             tabControlFunc.SelectedIndex = 0;
-            tabControlFunc.Size = new Size(543, 513);
+            tabControlFunc.Size = new Size(776, 855);
             tabControlFunc.TabIndex = 30;
             // 
             // tabPageStartTimes
             // 
             tabPageStartTimes.Controls.Add(groupBoxStartTime);
-            tabPageStartTimes.Location = new Point(4, 24);
+            tabPageStartTimes.Location = new Point(4, 34);
+            tabPageStartTimes.Margin = new Padding(4, 5, 4, 5);
             tabPageStartTimes.Name = "tabPageStartTimes";
-            tabPageStartTimes.Padding = new Padding(3, 3, 3, 3);
-            tabPageStartTimes.Size = new Size(535, 485);
+            tabPageStartTimes.Padding = new Padding(4, 5, 4, 5);
+            tabPageStartTimes.Size = new Size(768, 817);
             tabPageStartTimes.TabIndex = 5;
             tabPageStartTimes.Text = "Стартовые минуты";
             tabPageStartTimes.UseVisualStyleBackColor = true;
@@ -1099,10 +1200,11 @@
             // 
             tabPageBibs.BackColor = Color.WhiteSmoke;
             tabPageBibs.Controls.Add(groupBoxBibs);
-            tabPageBibs.Location = new Point(4, 24);
+            tabPageBibs.Location = new Point(4, 34);
+            tabPageBibs.Margin = new Padding(4, 5, 4, 5);
             tabPageBibs.Name = "tabPageBibs";
-            tabPageBibs.Padding = new Padding(3, 3, 3, 3);
-            tabPageBibs.Size = new Size(535, 485);
+            tabPageBibs.Padding = new Padding(4, 5, 4, 5);
+            tabPageBibs.Size = new Size(768, 817);
             tabPageBibs.TabIndex = 6;
             tabPageBibs.Text = "Номера";
             // 
@@ -1114,9 +1216,11 @@
             groupBoxBibs.Controls.Add(buttonGroupSetNumbersByGroups);
             groupBoxBibs.Controls.Add(richTextBoxBibsNumbering);
             groupBoxBibs.Controls.Add(buttonBibsAutoCreateListNumbering);
-            groupBoxBibs.Location = new Point(6, 6);
+            groupBoxBibs.Location = new Point(9, 10);
+            groupBoxBibs.Margin = new Padding(4, 5, 4, 5);
             groupBoxBibs.Name = "groupBoxBibs";
-            groupBoxBibs.Size = new Size(523, 473);
+            groupBoxBibs.Padding = new Padding(4, 5, 4, 5);
+            groupBoxBibs.Size = new Size(747, 788);
             groupBoxBibs.TabIndex = 6;
             groupBoxBibs.TabStop = false;
             groupBoxBibs.Text = "Номера";
@@ -1124,9 +1228,10 @@
             // checkBoxSetNumbersCreateReserv
             // 
             checkBoxSetNumbersCreateReserv.AutoSize = true;
-            checkBoxSetNumbersCreateReserv.Location = new Point(224, 105);
+            checkBoxSetNumbersCreateReserv.Location = new Point(320, 175);
+            checkBoxSetNumbersCreateReserv.Margin = new Padding(4, 5, 4, 5);
             checkBoxSetNumbersCreateReserv.Name = "checkBoxSetNumbersCreateReserv";
-            checkBoxSetNumbersCreateReserv.Size = new Size(130, 19);
+            checkBoxSetNumbersCreateReserv.Size = new Size(198, 29);
             checkBoxSetNumbersCreateReserv.TabIndex = 9;
             checkBoxSetNumbersCreateReserv.Text = "Создавать резервы";
             checkBoxSetNumbersCreateReserv.UseVisualStyleBackColor = true;
@@ -1134,9 +1239,10 @@
             // checkBoxSetNumbersRelay
             // 
             checkBoxSetNumbersRelay.AutoSize = true;
-            checkBoxSetNumbersRelay.Location = new Point(224, 80);
+            checkBoxSetNumbersRelay.Location = new Point(320, 133);
+            checkBoxSetNumbersRelay.Margin = new Padding(4, 5, 4, 5);
             checkBoxSetNumbersRelay.Name = "checkBoxSetNumbersRelay";
-            checkBoxSetNumbersRelay.Size = new Size(76, 19);
+            checkBoxSetNumbersRelay.Size = new Size(110, 29);
             checkBoxSetNumbersRelay.TabIndex = 8;
             checkBoxSetNumbersRelay.Text = "Эстафета";
             checkBoxSetNumbersRelay.UseVisualStyleBackColor = true;
@@ -1144,18 +1250,20 @@
             // checkBoxSetNumbersByGroupsDebug
             // 
             checkBoxSetNumbersByGroupsDebug.AutoSize = true;
-            checkBoxSetNumbersByGroupsDebug.Location = new Point(224, 55);
+            checkBoxSetNumbersByGroupsDebug.Location = new Point(320, 92);
+            checkBoxSetNumbersByGroupsDebug.Margin = new Padding(4, 5, 4, 5);
             checkBoxSetNumbersByGroupsDebug.Name = "checkBoxSetNumbersByGroupsDebug";
-            checkBoxSetNumbersByGroupsDebug.Size = new Size(134, 19);
+            checkBoxSetNumbersByGroupsDebug.Size = new Size(193, 29);
             checkBoxSetNumbersByGroupsDebug.TabIndex = 7;
             checkBoxSetNumbersByGroupsDebug.Text = "Расширенные логи";
             checkBoxSetNumbersByGroupsDebug.UseVisualStyleBackColor = true;
             // 
             // buttonGroupSetNumbersByGroups
             // 
-            buttonGroupSetNumbersByGroups.Location = new Point(224, 22);
+            buttonGroupSetNumbersByGroups.Location = new Point(320, 37);
+            buttonGroupSetNumbersByGroups.Margin = new Padding(4, 5, 4, 5);
             buttonGroupSetNumbersByGroups.Name = "buttonGroupSetNumbersByGroups";
-            buttonGroupSetNumbersByGroups.Size = new Size(191, 27);
+            buttonGroupSetNumbersByGroups.Size = new Size(273, 45);
             buttonGroupSetNumbersByGroups.TabIndex = 6;
             buttonGroupSetNumbersByGroups.Text = "Установить номера по группам";
             buttonGroupSetNumbersByGroups.UseVisualStyleBackColor = true;
@@ -1163,18 +1271,20 @@
             // 
             // richTextBoxBibsNumbering
             // 
-            richTextBoxBibsNumbering.Location = new Point(6, 22);
+            richTextBoxBibsNumbering.Location = new Point(9, 37);
+            richTextBoxBibsNumbering.Margin = new Padding(4, 5, 4, 5);
             richTextBoxBibsNumbering.Name = "richTextBoxBibsNumbering";
-            richTextBoxBibsNumbering.Size = new Size(212, 418);
+            richTextBoxBibsNumbering.Size = new Size(301, 694);
             richTextBoxBibsNumbering.TabIndex = 4;
             richTextBoxBibsNumbering.Text = "";
             // 
             // buttonBibsAutoCreateListNumbering
             // 
             buttonBibsAutoCreateListNumbering.Enabled = false;
-            buttonBibsAutoCreateListNumbering.Location = new Point(6, 446);
+            buttonBibsAutoCreateListNumbering.Location = new Point(9, 743);
+            buttonBibsAutoCreateListNumbering.Margin = new Padding(4, 5, 4, 5);
             buttonBibsAutoCreateListNumbering.Name = "buttonBibsAutoCreateListNumbering";
-            buttonBibsAutoCreateListNumbering.Size = new Size(212, 27);
+            buttonBibsAutoCreateListNumbering.Size = new Size(303, 45);
             buttonBibsAutoCreateListNumbering.TabIndex = 5;
             buttonBibsAutoCreateListNumbering.Text = "Создать список автоматически";
             buttonBibsAutoCreateListNumbering.UseVisualStyleBackColor = true;
@@ -1189,10 +1299,11 @@
             tabPageGroups.Controls.Add(buttonFindCoursesForGroups);
             tabPageGroups.Controls.Add(buttonCopyGroupSettings);
             tabPageGroups.Controls.Add(groupBoxGroupRanks);
-            tabPageGroups.Location = new Point(4, 24);
+            tabPageGroups.Location = new Point(4, 34);
+            tabPageGroups.Margin = new Padding(4, 5, 4, 5);
             tabPageGroups.Name = "tabPageGroups";
-            tabPageGroups.Padding = new Padding(3, 3, 3, 3);
-            tabPageGroups.Size = new Size(535, 485);
+            tabPageGroups.Padding = new Padding(4, 5, 4, 5);
+            tabPageGroups.Size = new Size(768, 817);
             tabPageGroups.TabIndex = 4;
             tabPageGroups.Text = "Группы";
             // 
@@ -1200,18 +1311,21 @@
             // 
             groupBoxStartingFee.Controls.Add(buttonStartingFeeSerGroupPrices);
             groupBoxStartingFee.Controls.Add(richTextBoxStartingFeeInput);
-            groupBoxStartingFee.Location = new Point(221, 174);
+            groupBoxStartingFee.Location = new Point(316, 290);
+            groupBoxStartingFee.Margin = new Padding(4, 5, 4, 5);
             groupBoxStartingFee.Name = "groupBoxStartingFee";
-            groupBoxStartingFee.Size = new Size(297, 265);
+            groupBoxStartingFee.Padding = new Padding(4, 5, 4, 5);
+            groupBoxStartingFee.Size = new Size(424, 442);
             groupBoxStartingFee.TabIndex = 32;
             groupBoxStartingFee.TabStop = false;
             groupBoxStartingFee.Text = "groupBox1";
             // 
             // buttonStartingFeeSerGroupPrices
             // 
-            buttonStartingFeeSerGroupPrices.Location = new Point(6, 182);
+            buttonStartingFeeSerGroupPrices.Location = new Point(9, 303);
+            buttonStartingFeeSerGroupPrices.Margin = new Padding(4, 5, 4, 5);
             buttonStartingFeeSerGroupPrices.Name = "buttonStartingFeeSerGroupPrices";
-            buttonStartingFeeSerGroupPrices.Size = new Size(221, 26);
+            buttonStartingFeeSerGroupPrices.Size = new Size(316, 43);
             buttonStartingFeeSerGroupPrices.TabIndex = 1;
             buttonStartingFeeSerGroupPrices.Text = "Установить стартовые взносы группам";
             buttonStartingFeeSerGroupPrices.UseVisualStyleBackColor = true;
@@ -1219,9 +1333,10 @@
             // 
             // richTextBoxStartingFeeInput
             // 
-            richTextBoxStartingFeeInput.Location = new Point(6, 22);
+            richTextBoxStartingFeeInput.Location = new Point(9, 37);
+            richTextBoxStartingFeeInput.Margin = new Padding(4, 5, 4, 5);
             richTextBoxStartingFeeInput.Name = "richTextBoxStartingFeeInput";
-            richTextBoxStartingFeeInput.Size = new Size(185, 154);
+            richTextBoxStartingFeeInput.Size = new Size(263, 254);
             richTextBoxStartingFeeInput.TabIndex = 0;
             richTextBoxStartingFeeInput.Text = "";
             // 
@@ -1230,18 +1345,21 @@
             groupBoxGroupRemoving.Controls.Add(buttonGroupRemoveGetList);
             groupBoxGroupRemoving.Controls.Add(buttonGroupRemoveIfNotInList);
             groupBoxGroupRemoving.Controls.Add(richTextBoxGroupNotRemoveList);
-            groupBoxGroupRemoving.Location = new Point(6, 109);
+            groupBoxGroupRemoving.Location = new Point(9, 182);
+            groupBoxGroupRemoving.Margin = new Padding(4, 5, 4, 5);
             groupBoxGroupRemoving.Name = "groupBoxGroupRemoving";
-            groupBoxGroupRemoving.Size = new Size(189, 370);
+            groupBoxGroupRemoving.Padding = new Padding(4, 5, 4, 5);
+            groupBoxGroupRemoving.Size = new Size(270, 617);
             groupBoxGroupRemoving.TabIndex = 30;
             groupBoxGroupRemoving.TabStop = false;
             groupBoxGroupRemoving.Text = "Удаление групп";
             // 
             // buttonGroupRemoveGetList
             // 
-            buttonGroupRemoveGetList.Location = new Point(6, 22);
+            buttonGroupRemoveGetList.Location = new Point(9, 37);
+            buttonGroupRemoveGetList.Margin = new Padding(4, 5, 4, 5);
             buttonGroupRemoveGetList.Name = "buttonGroupRemoveGetList";
-            buttonGroupRemoveGetList.Size = new Size(175, 23);
+            buttonGroupRemoveGetList.Size = new Size(250, 38);
             buttonGroupRemoveGetList.TabIndex = 31;
             buttonGroupRemoveGetList.Text = "Получить группы";
             buttonGroupRemoveGetList.UseVisualStyleBackColor = true;
@@ -1249,9 +1367,10 @@
             // 
             // buttonGroupRemoveIfNotInList
             // 
-            buttonGroupRemoveIfNotInList.Location = new Point(6, 336);
+            buttonGroupRemoveIfNotInList.Location = new Point(9, 560);
+            buttonGroupRemoveIfNotInList.Margin = new Padding(4, 5, 4, 5);
             buttonGroupRemoveIfNotInList.Name = "buttonGroupRemoveIfNotInList";
-            buttonGroupRemoveIfNotInList.Size = new Size(175, 23);
+            buttonGroupRemoveIfNotInList.Size = new Size(250, 38);
             buttonGroupRemoveIfNotInList.TabIndex = 31;
             buttonGroupRemoveIfNotInList.Text = "Удалить группы вне списка";
             buttonGroupRemoveIfNotInList.UseVisualStyleBackColor = true;
@@ -1259,17 +1378,19 @@
             // 
             // richTextBoxGroupNotRemoveList
             // 
-            richTextBoxGroupNotRemoveList.Location = new Point(6, 51);
+            richTextBoxGroupNotRemoveList.Location = new Point(9, 85);
+            richTextBoxGroupNotRemoveList.Margin = new Padding(4, 5, 4, 5);
             richTextBoxGroupNotRemoveList.Name = "richTextBoxGroupNotRemoveList";
-            richTextBoxGroupNotRemoveList.Size = new Size(175, 279);
+            richTextBoxGroupNotRemoveList.Size = new Size(248, 462);
             richTextBoxGroupNotRemoveList.TabIndex = 31;
             richTextBoxGroupNotRemoveList.Text = "";
             // 
             // buttonSetAllDaysToComment
             // 
-            buttonSetAllDaysToComment.Location = new Point(221, 131);
+            buttonSetAllDaysToComment.Location = new Point(316, 218);
+            buttonSetAllDaysToComment.Margin = new Padding(4, 5, 4, 5);
             buttonSetAllDaysToComment.Name = "buttonSetAllDaysToComment";
-            buttonSetAllDaysToComment.Size = new Size(224, 23);
+            buttonSetAllDaysToComment.Size = new Size(320, 38);
             buttonSetAllDaysToComment.TabIndex = 31;
             buttonSetAllDaysToComment.Text = "Установить в комментарии C:1234";
             buttonSetAllDaysToComment.UseVisualStyleBackColor = true;
@@ -1277,9 +1398,10 @@
             // 
             // buttonFindCoursesForGroups
             // 
-            buttonFindCoursesForGroups.Location = new Point(356, 60);
+            buttonFindCoursesForGroups.Location = new Point(509, 100);
+            buttonFindCoursesForGroups.Margin = new Padding(4, 5, 4, 5);
             buttonFindCoursesForGroups.Name = "buttonFindCoursesForGroups";
-            buttonFindCoursesForGroups.Size = new Size(173, 43);
+            buttonFindCoursesForGroups.Size = new Size(247, 72);
             buttonFindCoursesForGroups.TabIndex = 27;
             buttonFindCoursesForGroups.Text = "Подбор дистанций для групп";
             buttonFindCoursesForGroups.UseVisualStyleBackColor = true;
@@ -1295,9 +1417,11 @@
             groupBoxGroupRanks.Controls.Add(label7);
             groupBoxGroupRanks.Controls.Add(numericUpDownGroupResultsCountToCompleteRank);
             groupBoxGroupRanks.Controls.Add(checkedListBox1);
-            groupBoxGroupRanks.Location = new Point(6, 11);
+            groupBoxGroupRanks.Location = new Point(9, 18);
+            groupBoxGroupRanks.Margin = new Padding(4, 5, 4, 5);
             groupBoxGroupRanks.Name = "groupBoxGroupRanks";
-            groupBoxGroupRanks.Size = new Size(291, 80);
+            groupBoxGroupRanks.Padding = new Padding(4, 5, 4, 5);
+            groupBoxGroupRanks.Size = new Size(416, 133);
             groupBoxGroupRanks.TabIndex = 29;
             groupBoxGroupRanks.TabStop = false;
             groupBoxGroupRanks.Text = "Ранги";
@@ -1305,9 +1429,10 @@
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(205, 407);
+            label9.Location = new Point(293, 678);
+            label9.Margin = new Padding(4, 0, 4, 0);
             label9.Name = "label9";
-            label9.Size = new Size(73, 15);
+            label9.Size = new Size(111, 25);
             label9.TabIndex = 33;
             label9.Text = "результатов";
             label9.Visible = false;
@@ -1315,18 +1440,20 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(6, 19);
+            label6.Location = new Point(9, 32);
+            label6.Margin = new Padding(4, 0, 4, 0);
             label6.Name = "label6";
-            label6.Size = new Size(149, 15);
+            label6.Size = new Size(221, 25);
             label6.TabIndex = 29;
             label6.Text = "Источник настроек групп";
             // 
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(10, 407);
+            label8.Location = new Point(14, 678);
+            label8.Margin = new Padding(4, 0, 4, 0);
             label8.Name = "label8";
-            label8.Size = new Size(131, 15);
+            label8.Size = new Size(196, 25);
             label8.TabIndex = 32;
             label8.Text = "В группе должно быть";
             label8.Visible = false;
@@ -1334,27 +1461,30 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(6, 71);
+            label7.Location = new Point(9, 118);
+            label7.Margin = new Padding(4, 0, 4, 0);
             label7.Name = "label7";
-            label7.Size = new Size(233, 15);
+            label7.Size = new Size(348, 25);
             label7.TabIndex = 30;
             label7.Text = "Группы в которые применить настройки";
             label7.Visible = false;
             // 
             // numericUpDownGroupResultsCountToCompleteRank
             // 
-            numericUpDownGroupResultsCountToCompleteRank.Location = new Point(147, 405);
+            numericUpDownGroupResultsCountToCompleteRank.Location = new Point(210, 675);
+            numericUpDownGroupResultsCountToCompleteRank.Margin = new Padding(4, 5, 4, 5);
             numericUpDownGroupResultsCountToCompleteRank.Name = "numericUpDownGroupResultsCountToCompleteRank";
-            numericUpDownGroupResultsCountToCompleteRank.Size = new Size(52, 23);
+            numericUpDownGroupResultsCountToCompleteRank.Size = new Size(74, 31);
             numericUpDownGroupResultsCountToCompleteRank.TabIndex = 31;
             numericUpDownGroupResultsCountToCompleteRank.Visible = false;
             // 
             // checkedListBox1
             // 
             checkedListBox1.FormattingEnabled = true;
-            checkedListBox1.Location = new Point(6, 89);
+            checkedListBox1.Location = new Point(9, 148);
+            checkedListBox1.Margin = new Padding(4, 5, 4, 5);
             checkedListBox1.Name = "checkedListBox1";
-            checkedListBox1.Size = new Size(275, 292);
+            checkedListBox1.Size = new Size(391, 480);
             checkedListBox1.TabIndex = 28;
             checkedListBox1.Visible = false;
             // 
@@ -1379,28 +1509,32 @@
             tabPageOrganizations.Controls.Add(listBoxCityOrganizationTweaks);
             tabPageOrganizations.Controls.Add(textBoxOrganizationNewName);
             tabPageOrganizations.Controls.Add(buttonAddOrganizationTweakItem);
-            tabPageOrganizations.Location = new Point(4, 24);
+            tabPageOrganizations.Location = new Point(4, 34);
+            tabPageOrganizations.Margin = new Padding(4, 5, 4, 5);
             tabPageOrganizations.Name = "tabPageOrganizations";
-            tabPageOrganizations.Padding = new Padding(3, 3, 3, 3);
-            tabPageOrganizations.Size = new Size(535, 485);
+            tabPageOrganizations.Padding = new Padding(4, 5, 4, 5);
+            tabPageOrganizations.Size = new Size(768, 817);
             tabPageOrganizations.TabIndex = 7;
             tabPageOrganizations.Text = "Коллективы";
             // 
             // groupBoxOrgUtils
             // 
             groupBoxOrgUtils.Controls.Add(buttonOrganizationCreateReserveOrg);
-            groupBoxOrgUtils.Location = new Point(239, 222);
+            groupBoxOrgUtils.Location = new Point(341, 370);
+            groupBoxOrgUtils.Margin = new Padding(4, 5, 4, 5);
             groupBoxOrgUtils.Name = "groupBoxOrgUtils";
-            groupBoxOrgUtils.Size = new Size(290, 223);
+            groupBoxOrgUtils.Padding = new Padding(4, 5, 4, 5);
+            groupBoxOrgUtils.Size = new Size(414, 372);
             groupBoxOrgUtils.TabIndex = 14;
             groupBoxOrgUtils.TabStop = false;
             groupBoxOrgUtils.Text = "Утилиты коллективов";
             // 
             // buttonOrganizationCreateReserveOrg
             // 
-            buttonOrganizationCreateReserveOrg.Location = new Point(6, 22);
+            buttonOrganizationCreateReserveOrg.Location = new Point(9, 37);
+            buttonOrganizationCreateReserveOrg.Margin = new Padding(4, 5, 4, 5);
             buttonOrganizationCreateReserveOrg.Name = "buttonOrganizationCreateReserveOrg";
-            buttonOrganizationCreateReserveOrg.Size = new Size(203, 24);
+            buttonOrganizationCreateReserveOrg.Size = new Size(290, 40);
             buttonOrganizationCreateReserveOrg.TabIndex = 0;
             buttonOrganizationCreateReserveOrg.Text = "Создать команду _ для резервов";
             buttonOrganizationCreateReserveOrg.UseVisualStyleBackColor = true;
@@ -1409,9 +1543,10 @@
             // labelClearOrganozationCity
             // 
             labelClearOrganozationCity.AutoSize = true;
-            labelClearOrganozationCity.Location = new Point(352, 55);
+            labelClearOrganozationCity.Location = new Point(503, 92);
+            labelClearOrganozationCity.Margin = new Padding(4, 0, 4, 0);
             labelClearOrganozationCity.Name = "labelClearOrganozationCity";
-            labelClearOrganozationCity.Size = new Size(14, 15);
+            labelClearOrganozationCity.Size = new Size(23, 25);
             labelClearOrganozationCity.TabIndex = 13;
             labelClearOrganozationCity.Text = "X";
             labelClearOrganozationCity.Click += labelClearOrganozationCity_Click;
@@ -1419,18 +1554,20 @@
             // labelClearOrganizationNewName
             // 
             labelClearOrganizationNewName.AutoSize = true;
-            labelClearOrganizationNewName.Location = new Point(515, 11);
+            labelClearOrganizationNewName.Location = new Point(736, 18);
+            labelClearOrganizationNewName.Margin = new Padding(4, 0, 4, 0);
             labelClearOrganizationNewName.Name = "labelClearOrganizationNewName";
-            labelClearOrganizationNewName.Size = new Size(14, 15);
+            labelClearOrganizationNewName.Size = new Size(23, 25);
             labelClearOrganizationNewName.TabIndex = 13;
             labelClearOrganizationNewName.Text = "X";
             labelClearOrganizationNewName.Click += labelClearOrganizationNewName_Click;
             // 
             // buttonOrganizationRename
             // 
-            buttonOrganizationRename.Location = new Point(416, 174);
+            buttonOrganizationRename.Location = new Point(594, 290);
+            buttonOrganizationRename.Margin = new Padding(4, 5, 4, 5);
             buttonOrganizationRename.Name = "buttonOrganizationRename";
-            buttonOrganizationRename.Size = new Size(113, 42);
+            buttonOrganizationRename.Size = new Size(161, 70);
             buttonOrganizationRename.TabIndex = 12;
             buttonOrganizationRename.Text = "Переиминовать команды";
             buttonOrganizationRename.UseVisualStyleBackColor = true;
@@ -1439,24 +1576,27 @@
             // comboBoxOrganizationCity
             // 
             comboBoxOrganizationCity.FormattingEnabled = true;
-            comboBoxOrganizationCity.Location = new Point(236, 72);
+            comboBoxOrganizationCity.Location = new Point(337, 120);
+            comboBoxOrganizationCity.Margin = new Padding(4, 5, 4, 5);
             comboBoxOrganizationCity.Name = "comboBoxOrganizationCity";
-            comboBoxOrganizationCity.Size = new Size(130, 23);
+            comboBoxOrganizationCity.Size = new Size(184, 33);
             comboBoxOrganizationCity.TabIndex = 11;
             // 
             // comboBoxOrganizationName
             // 
             comboBoxOrganizationName.FormattingEnabled = true;
-            comboBoxOrganizationName.Location = new Point(236, 29);
+            comboBoxOrganizationName.Location = new Point(337, 48);
+            comboBoxOrganizationName.Margin = new Padding(4, 5, 4, 5);
             comboBoxOrganizationName.Name = "comboBoxOrganizationName";
-            comboBoxOrganizationName.Size = new Size(130, 23);
+            comboBoxOrganizationName.Size = new Size(184, 33);
             comboBoxOrganizationName.TabIndex = 11;
             // 
             // buttonOrganizationTweaksSave
             // 
-            buttonOrganizationTweaksSave.Location = new Point(6, 452);
+            buttonOrganizationTweaksSave.Location = new Point(9, 753);
+            buttonOrganizationTweaksSave.Margin = new Padding(4, 5, 4, 5);
             buttonOrganizationTweaksSave.Name = "buttonOrganizationTweaksSave";
-            buttonOrganizationTweaksSave.Size = new Size(75, 23);
+            buttonOrganizationTweaksSave.Size = new Size(107, 38);
             buttonOrganizationTweaksSave.TabIndex = 10;
             buttonOrganizationTweaksSave.Text = "Сохранить";
             buttonOrganizationTweaksSave.UseVisualStyleBackColor = true;
@@ -1464,9 +1604,10 @@
             // 
             // buttonOrganizationTweaksLoadLast
             // 
-            buttonOrganizationTweaksLoadLast.Location = new Point(163, 452);
+            buttonOrganizationTweaksLoadLast.Location = new Point(233, 753);
+            buttonOrganizationTweaksLoadLast.Margin = new Padding(4, 5, 4, 5);
             buttonOrganizationTweaksLoadLast.Name = "buttonOrganizationTweaksLoadLast";
-            buttonOrganizationTweaksLoadLast.Size = new Size(136, 23);
+            buttonOrganizationTweaksLoadLast.Size = new Size(194, 38);
             buttonOrganizationTweaksLoadLast.TabIndex = 9;
             buttonOrganizationTweaksLoadLast.Text = "Загрузить последний";
             buttonOrganizationTweaksLoadLast.UseVisualStyleBackColor = true;
@@ -1475,9 +1616,10 @@
             // 
             // buttonOrganizationTweaksLoad
             // 
-            buttonOrganizationTweaksLoad.Location = new Point(87, 452);
+            buttonOrganizationTweaksLoad.Location = new Point(124, 753);
+            buttonOrganizationTweaksLoad.Margin = new Padding(4, 5, 4, 5);
             buttonOrganizationTweaksLoad.Name = "buttonOrganizationTweaksLoad";
-            buttonOrganizationTweaksLoad.Size = new Size(70, 23);
+            buttonOrganizationTweaksLoad.Size = new Size(100, 38);
             buttonOrganizationTweaksLoad.TabIndex = 8;
             buttonOrganizationTweaksLoad.Text = "Загрузить";
             buttonOrganizationTweaksLoad.UseVisualStyleBackColor = true;
@@ -1486,9 +1628,10 @@
             // labelOrganizationNameToNewName
             // 
             labelOrganizationNameToNewName.AutoSize = true;
-            labelOrganizationNameToNewName.Location = new Point(370, 32);
+            labelOrganizationNameToNewName.Location = new Point(529, 53);
+            labelOrganizationNameToNewName.Margin = new Padding(4, 0, 4, 0);
             labelOrganizationNameToNewName.Name = "labelOrganizationNameToNewName";
-            labelOrganizationNameToNewName.Size = new Size(23, 15);
+            labelOrganizationNameToNewName.Size = new Size(36, 25);
             labelOrganizationNameToNewName.TabIndex = 7;
             labelOrganizationNameToNewName.Text = ">>";
             labelOrganizationNameToNewName.Click += labelOrganizationNameToNewName_Click;
@@ -1498,9 +1641,10 @@
             checkBoxOrganizationIsShowCity.AutoSize = true;
             checkBoxOrganizationIsShowCity.Checked = true;
             checkBoxOrganizationIsShowCity.CheckState = CheckState.Checked;
-            checkBoxOrganizationIsShowCity.Location = new Point(370, 74);
+            checkBoxOrganizationIsShowCity.Location = new Point(529, 123);
+            checkBoxOrganizationIsShowCity.Margin = new Padding(4, 5, 4, 5);
             checkBoxOrganizationIsShowCity.Name = "checkBoxOrganizationIsShowCity";
-            checkBoxOrganizationIsShowCity.Size = new Size(131, 19);
+            checkBoxOrganizationIsShowCity.Size = new Size(199, 29);
             checkBoxOrganizationIsShowCity.TabIndex = 6;
             checkBoxOrganizationIsShowCity.Text = "Показывать город?";
             checkBoxOrganizationIsShowCity.UseVisualStyleBackColor = true;
@@ -1508,9 +1652,10 @@
             // checkBoxOrganizationIsRemoving
             // 
             checkBoxOrganizationIsRemoving.AutoSize = true;
-            checkBoxOrganizationIsRemoving.Location = new Point(236, 99);
+            checkBoxOrganizationIsRemoving.Location = new Point(337, 165);
+            checkBoxOrganizationIsRemoving.Margin = new Padding(4, 5, 4, 5);
             checkBoxOrganizationIsRemoving.Name = "checkBoxOrganizationIsRemoving";
-            checkBoxOrganizationIsRemoving.Size = new Size(140, 19);
+            checkBoxOrganizationIsRemoving.Size = new Size(207, 29);
             checkBoxOrganizationIsRemoving.TabIndex = 6;
             checkBoxOrganizationIsRemoving.Text = "Удалять участников?";
             checkBoxOrganizationIsRemoving.UseVisualStyleBackColor = true;
@@ -1518,51 +1663,57 @@
             // label15
             // 
             label15.AutoSize = true;
-            label15.Location = new Point(236, 10);
+            label15.Location = new Point(337, 17);
+            label15.Margin = new Padding(4, 0, 4, 0);
             label15.Name = "label15";
-            label15.Size = new Size(55, 15);
+            label15.Size = new Size(84, 25);
             label15.TabIndex = 5;
             label15.Text = "Команда";
             // 
             // label16
             // 
             label16.AutoSize = true;
-            label16.Location = new Point(236, 54);
+            label16.Location = new Point(337, 90);
+            label16.Margin = new Padding(4, 0, 4, 0);
             label16.Name = "label16";
-            label16.Size = new Size(40, 15);
+            label16.Size = new Size(63, 25);
             label16.TabIndex = 4;
             label16.Text = "Город";
             // 
             // label14
             // 
             label14.AutoSize = true;
-            label14.Location = new Point(395, 10);
+            label14.Location = new Point(564, 17);
+            label14.Margin = new Padding(4, 0, 4, 0);
             label14.Name = "label14";
-            label14.Size = new Size(95, 15);
+            label14.Size = new Size(146, 25);
             label14.TabIndex = 4;
             label14.Text = "Новое название";
             // 
             // listBoxCityOrganizationTweaks
             // 
             listBoxCityOrganizationTweaks.FormattingEnabled = true;
-            listBoxCityOrganizationTweaks.Location = new Point(6, 6);
+            listBoxCityOrganizationTweaks.Location = new Point(9, 10);
+            listBoxCityOrganizationTweaks.Margin = new Padding(4, 5, 4, 5);
             listBoxCityOrganizationTweaks.Name = "listBoxCityOrganizationTweaks";
-            listBoxCityOrganizationTweaks.Size = new Size(224, 439);
+            listBoxCityOrganizationTweaks.Size = new Size(318, 729);
             listBoxCityOrganizationTweaks.TabIndex = 3;
             listBoxCityOrganizationTweaks.DoubleClick += listBoxCityOrganizationTweaks_DoubleClick;
             // 
             // textBoxOrganizationNewName
             // 
-            textBoxOrganizationNewName.Location = new Point(395, 28);
+            textBoxOrganizationNewName.Location = new Point(564, 47);
+            textBoxOrganizationNewName.Margin = new Padding(4, 5, 4, 5);
             textBoxOrganizationNewName.Name = "textBoxOrganizationNewName";
-            textBoxOrganizationNewName.Size = new Size(134, 23);
+            textBoxOrganizationNewName.Size = new Size(190, 31);
             textBoxOrganizationNewName.TabIndex = 2;
             // 
             // buttonAddOrganizationTweakItem
             // 
-            buttonAddOrganizationTweakItem.Location = new Point(236, 126);
+            buttonAddOrganizationTweakItem.Location = new Point(337, 210);
+            buttonAddOrganizationTweakItem.Margin = new Padding(4, 5, 4, 5);
             buttonAddOrganizationTweakItem.Name = "buttonAddOrganizationTweakItem";
-            buttonAddOrganizationTweakItem.Size = new Size(293, 24);
+            buttonAddOrganizationTweakItem.Size = new Size(419, 40);
             buttonAddOrganizationTweakItem.TabIndex = 0;
             buttonAddOrganizationTweakItem.Text = "Добавить";
             buttonAddOrganizationTweakItem.UseVisualStyleBackColor = true;
@@ -1585,19 +1736,19 @@
             tabPageOther.Controls.Add(groupBoxStartFee);
             tabPageOther.Controls.Add(buttonOpenNumbersForm);
             tabPageOther.Controls.Add(buttonRemvoeWorstResult);
-            tabPageOther.Location = new Point(4, 24);
+            tabPageOther.Location = new Point(4, 34);
+            tabPageOther.Margin = new Padding(4, 5, 4, 5);
             tabPageOther.Name = "tabPageOther";
-            tabPageOther.Padding = new Padding(3, 3, 3, 3);
-            tabPageOther.Size = new Size(535, 485);
+            tabPageOther.Padding = new Padding(4, 5, 4, 5);
+            tabPageOther.Size = new Size(768, 817);
             tabPageOther.TabIndex = 3;
             tabPageOther.Text = "Остальное";
             // 
             // buttonCompressAndClearHtml
             // 
-            buttonCompressAndClearHtml.Location = new Point(6, 400);
-            buttonCompressAndClearHtml.Margin = new Padding(2, 2, 2, 2);
+            buttonCompressAndClearHtml.Location = new Point(9, 667);
             buttonCompressAndClearHtml.Name = "buttonCompressAndClearHtml";
-            buttonCompressAndClearHtml.Size = new Size(181, 28);
+            buttonCompressAndClearHtml.Size = new Size(259, 47);
             buttonCompressAndClearHtml.TabIndex = 23;
             buttonCompressAndClearHtml.Text = "Очистить и сжать протокол";
             buttonCompressAndClearHtml.UseVisualStyleBackColor = true;
@@ -1606,9 +1757,10 @@
             // checkBoxRenameGroups
             // 
             checkBoxRenameGroups.AutoSize = true;
-            checkBoxRenameGroups.Location = new Point(308, 321);
+            checkBoxRenameGroups.Location = new Point(440, 535);
+            checkBoxRenameGroups.Margin = new Padding(4, 5, 4, 5);
             checkBoxRenameGroups.Name = "checkBoxRenameGroups";
-            checkBoxRenameGroups.Size = new Size(158, 19);
+            checkBoxRenameGroups.Size = new Size(234, 29);
             checkBoxRenameGroups.TabIndex = 22;
             checkBoxRenameGroups.Text = "Переиминование групп";
             checkBoxRenameGroups.UseVisualStyleBackColor = true;
@@ -1616,18 +1768,20 @@
             // checkBoxRenameCourse
             // 
             checkBoxRenameCourse.AutoSize = true;
-            checkBoxRenameCourse.Location = new Point(308, 306);
+            checkBoxRenameCourse.Location = new Point(440, 510);
+            checkBoxRenameCourse.Margin = new Padding(4, 5, 4, 5);
             checkBoxRenameCourse.Name = "checkBoxRenameCourse";
-            checkBoxRenameCourse.Size = new Size(184, 19);
+            checkBoxRenameCourse.Size = new Size(272, 29);
             checkBoxRenameCourse.TabIndex = 21;
             checkBoxRenameCourse.Text = "Переиминование дистанций";
             checkBoxRenameCourse.UseVisualStyleBackColor = true;
             // 
             // buttonQualFromOtherBase
             // 
-            buttonQualFromOtherBase.Location = new Point(416, 328);
+            buttonQualFromOtherBase.Location = new Point(594, 547);
+            buttonQualFromOtherBase.Margin = new Padding(4, 5, 4, 5);
             buttonQualFromOtherBase.Name = "buttonQualFromOtherBase";
-            buttonQualFromOtherBase.Size = new Size(116, 57);
+            buttonQualFromOtherBase.Size = new Size(166, 95);
             buttonQualFromOtherBase.TabIndex = 9;
             buttonQualFromOtherBase.Text = "TEMP Подтянуть квалификации из другой базы";
             buttonQualFromOtherBase.UseVisualStyleBackColor = true;
@@ -1636,9 +1790,10 @@
             // 
             // buttonVichestStart
             // 
-            buttonVichestStart.Location = new Point(240, 438);
+            buttonVichestStart.Location = new Point(343, 730);
+            buttonVichestStart.Margin = new Padding(4, 5, 4, 5);
             buttonVichestStart.Name = "buttonVichestStart";
-            buttonVichestStart.Size = new Size(101, 44);
+            buttonVichestStart.Size = new Size(144, 73);
             buttonVichestStart.TabIndex = 9;
             buttonVichestStart.Text = "TEMP Вычесть старт";
             buttonVichestStart.UseVisualStyleBackColor = true;
@@ -1651,9 +1806,11 @@
             groupBoxMapCountCalculate.Controls.Add(checkBoxMapCountCalculateOnlyInDay);
             groupBoxMapCountCalculate.Controls.Add(buttonMapCountCalculateAll);
             groupBoxMapCountCalculate.Controls.Add(buttonMapCountCalculateCurrent);
-            groupBoxMapCountCalculate.Location = new Point(308, 144);
+            groupBoxMapCountCalculate.Location = new Point(440, 240);
+            groupBoxMapCountCalculate.Margin = new Padding(4, 5, 4, 5);
             groupBoxMapCountCalculate.Name = "groupBoxMapCountCalculate";
-            groupBoxMapCountCalculate.Size = new Size(221, 101);
+            groupBoxMapCountCalculate.Padding = new Padding(4, 5, 4, 5);
+            groupBoxMapCountCalculate.Size = new Size(316, 168);
             groupBoxMapCountCalculate.TabIndex = 8;
             groupBoxMapCountCalculate.TabStop = false;
             groupBoxMapCountCalculate.Text = "Подсчет кол-ва карт";
@@ -1663,9 +1820,10 @@
             checkBoxMapCountCalculateReserv.AutoSize = true;
             checkBoxMapCountCalculateReserv.Checked = true;
             checkBoxMapCountCalculateReserv.CheckState = CheckState.Checked;
-            checkBoxMapCountCalculateReserv.Location = new Point(6, 76);
+            checkBoxMapCountCalculateReserv.Location = new Point(9, 127);
+            checkBoxMapCountCalculateReserv.Margin = new Padding(4, 5, 4, 5);
             checkBoxMapCountCalculateReserv.Name = "checkBoxMapCountCalculateReserv";
-            checkBoxMapCountCalculateReserv.Size = new Size(119, 19);
+            checkBoxMapCountCalculateReserv.Size = new Size(177, 29);
             checkBoxMapCountCalculateReserv.TabIndex = 9;
             checkBoxMapCountCalculateReserv.Text = "Считать резервы";
             checkBoxMapCountCalculateReserv.UseVisualStyleBackColor = true;
@@ -1675,18 +1833,20 @@
             checkBoxMapCountCalculateOnlyInDay.AutoSize = true;
             checkBoxMapCountCalculateOnlyInDay.Checked = true;
             checkBoxMapCountCalculateOnlyInDay.CheckState = CheckState.Checked;
-            checkBoxMapCountCalculateOnlyInDay.Location = new Point(6, 54);
+            checkBoxMapCountCalculateOnlyInDay.Location = new Point(9, 90);
+            checkBoxMapCountCalculateOnlyInDay.Margin = new Padding(4, 5, 4, 5);
             checkBoxMapCountCalculateOnlyInDay.Name = "checkBoxMapCountCalculateOnlyInDay";
-            checkBoxMapCountCalculateOnlyInDay.Size = new Size(199, 19);
+            checkBoxMapCountCalculateOnlyInDay.Size = new Size(294, 29);
             checkBoxMapCountCalculateOnlyInDay.TabIndex = 9;
             checkBoxMapCountCalculateOnlyInDay.Text = "Считать только участников дня";
             checkBoxMapCountCalculateOnlyInDay.UseVisualStyleBackColor = true;
             // 
             // buttonMapCountCalculateAll
             // 
-            buttonMapCountCalculateAll.Location = new Point(115, 24);
+            buttonMapCountCalculateAll.Location = new Point(164, 40);
+            buttonMapCountCalculateAll.Margin = new Padding(4, 5, 4, 5);
             buttonMapCountCalculateAll.Name = "buttonMapCountCalculateAll";
-            buttonMapCountCalculateAll.Size = new Size(100, 27);
+            buttonMapCountCalculateAll.Size = new Size(143, 45);
             buttonMapCountCalculateAll.TabIndex = 5;
             buttonMapCountCalculateAll.Text = "Все дни";
             buttonMapCountCalculateAll.UseVisualStyleBackColor = true;
@@ -1694,9 +1854,10 @@
             // 
             // buttonMapCountCalculateCurrent
             // 
-            buttonMapCountCalculateCurrent.Location = new Point(6, 24);
+            buttonMapCountCalculateCurrent.Location = new Point(9, 40);
+            buttonMapCountCalculateCurrent.Margin = new Padding(4, 5, 4, 5);
             buttonMapCountCalculateCurrent.Name = "buttonMapCountCalculateCurrent";
-            buttonMapCountCalculateCurrent.Size = new Size(100, 27);
+            buttonMapCountCalculateCurrent.Size = new Size(143, 45);
             buttonMapCountCalculateCurrent.TabIndex = 5;
             buttonMapCountCalculateCurrent.Text = "Этот день";
             buttonMapCountCalculateCurrent.UseVisualStyleBackColor = true;
@@ -1705,18 +1866,20 @@
             // checkBoxCombineCourse
             // 
             checkBoxCombineCourse.AutoSize = true;
-            checkBoxCombineCourse.Location = new Point(308, 291);
+            checkBoxCombineCourse.Location = new Point(440, 485);
+            checkBoxCombineCourse.Margin = new Padding(4, 5, 4, 5);
             checkBoxCombineCourse.Name = "checkBoxCombineCourse";
-            checkBoxCombineCourse.Size = new Size(161, 19);
+            checkBoxCombineCourse.Size = new Size(239, 29);
             checkBoxCombineCourse.TabIndex = 7;
             checkBoxCombineCourse.Text = "Объеденение дистанций";
             checkBoxCombineCourse.UseVisualStyleBackColor = true;
             // 
             // buttonGroupCourseNamesFormat
             // 
-            buttonGroupCourseNamesFormat.Location = new Point(308, 245);
+            buttonGroupCourseNamesFormat.Location = new Point(440, 408);
+            buttonGroupCourseNamesFormat.Margin = new Padding(4, 5, 4, 5);
             buttonGroupCourseNamesFormat.Name = "buttonGroupCourseNamesFormat";
-            buttonGroupCourseNamesFormat.Size = new Size(188, 40);
+            buttonGroupCourseNamesFormat.Size = new Size(269, 67);
             buttonGroupCourseNamesFormat.TabIndex = 6;
             buttonGroupCourseNamesFormat.Text = "Привести названия групп и дистанций к одному формату";
             buttonGroupCourseNamesFormat.UseVisualStyleBackColor = true;
@@ -1735,9 +1898,11 @@
             groupBoxImport.Controls.Add(checkBoxYarfsoParserReplaceQual);
             groupBoxImport.Controls.Add(checkBoxPayAmountToComment);
             groupBoxImport.Controls.Add(buttonImportFromYarfso);
-            groupBoxImport.Location = new Point(6, 6);
+            groupBoxImport.Location = new Point(9, 10);
+            groupBoxImport.Margin = new Padding(4, 5, 4, 5);
             groupBoxImport.Name = "groupBoxImport";
-            groupBoxImport.Size = new Size(243, 384);
+            groupBoxImport.Padding = new Padding(4, 5, 4, 5);
+            groupBoxImport.Size = new Size(347, 640);
             groupBoxImport.TabIndex = 4;
             groupBoxImport.TabStop = false;
             groupBoxImport.Text = "Импорт";
@@ -1745,18 +1910,20 @@
             // checkBoxRenameOrgsImportKodRegionsFromCsv
             // 
             checkBoxRenameOrgsImportKodRegionsFromCsv.AutoSize = true;
-            checkBoxRenameOrgsImportKodRegionsFromCsv.Location = new Point(6, 89);
+            checkBoxRenameOrgsImportKodRegionsFromCsv.Location = new Point(9, 148);
+            checkBoxRenameOrgsImportKodRegionsFromCsv.Margin = new Padding(4, 5, 4, 5);
             checkBoxRenameOrgsImportKodRegionsFromCsv.Name = "checkBoxRenameOrgsImportKodRegionsFromCsv";
-            checkBoxRenameOrgsImportKodRegionsFromCsv.Size = new Size(167, 19);
+            checkBoxRenameOrgsImportKodRegionsFromCsv.Size = new Size(249, 29);
             checkBoxRenameOrgsImportKodRegionsFromCsv.TabIndex = 6;
             checkBoxRenameOrgsImportKodRegionsFromCsv.Text = "Переиминование команд";
             checkBoxRenameOrgsImportKodRegionsFromCsv.UseVisualStyleBackColor = true;
             // 
             // buttonChipRentFromComment
             // 
-            buttonChipRentFromComment.Location = new Point(6, 164);
+            buttonChipRentFromComment.Location = new Point(9, 273);
+            buttonChipRentFromComment.Margin = new Padding(4, 5, 4, 5);
             buttonChipRentFromComment.Name = "buttonChipRentFromComment";
-            buttonChipRentFromComment.Size = new Size(230, 23);
+            buttonChipRentFromComment.Size = new Size(329, 38);
             buttonChipRentFromComment.TabIndex = 5;
             buttonChipRentFromComment.Text = "Аренда чипа из комментариев";
             buttonChipRentFromComment.UseVisualStyleBackColor = true;
@@ -1764,9 +1931,10 @@
             // 
             // buttonImportCommentsFromCSV
             // 
-            buttonImportCommentsFromCSV.Location = new Point(6, 135);
+            buttonImportCommentsFromCSV.Location = new Point(9, 225);
+            buttonImportCommentsFromCSV.Margin = new Padding(4, 5, 4, 5);
             buttonImportCommentsFromCSV.Name = "buttonImportCommentsFromCSV";
-            buttonImportCommentsFromCSV.Size = new Size(230, 23);
+            buttonImportCommentsFromCSV.Size = new Size(329, 38);
             buttonImportCommentsFromCSV.TabIndex = 5;
             buttonImportCommentsFromCSV.Text = "Импорт комментариев из CSV";
             buttonImportCommentsFromCSV.UseVisualStyleBackColor = true;
@@ -1774,9 +1942,10 @@
             // 
             // buttonImportKodRegionsFromCsv
             // 
-            buttonImportKodRegionsFromCsv.Location = new Point(6, 107);
+            buttonImportKodRegionsFromCsv.Location = new Point(9, 178);
+            buttonImportKodRegionsFromCsv.Margin = new Padding(4, 5, 4, 5);
             buttonImportKodRegionsFromCsv.Name = "buttonImportKodRegionsFromCsv";
-            buttonImportKodRegionsFromCsv.Size = new Size(230, 23);
+            buttonImportKodRegionsFromCsv.Size = new Size(329, 38);
             buttonImportKodRegionsFromCsv.TabIndex = 5;
             buttonImportKodRegionsFromCsv.Text = "Импорт кодов региона из CSV";
             buttonImportKodRegionsFromCsv.UseVisualStyleBackColor = true;
@@ -1784,9 +1953,10 @@
             // 
             // buttonBaseImportFromUrl
             // 
-            buttonBaseImportFromUrl.Location = new Point(6, 51);
+            buttonBaseImportFromUrl.Location = new Point(9, 85);
+            buttonBaseImportFromUrl.Margin = new Padding(4, 5, 4, 5);
             buttonBaseImportFromUrl.Name = "buttonBaseImportFromUrl";
-            buttonBaseImportFromUrl.Size = new Size(230, 23);
+            buttonBaseImportFromUrl.Size = new Size(329, 38);
             buttonBaseImportFromUrl.TabIndex = 5;
             buttonBaseImportFromUrl.Text = "Импорт базы из протокола по ссылке";
             buttonBaseImportFromUrl.UseVisualStyleBackColor = true;
@@ -1794,9 +1964,10 @@
             // 
             // buttonBaseImportFromProtocol
             // 
-            buttonBaseImportFromProtocol.Location = new Point(6, 22);
+            buttonBaseImportFromProtocol.Location = new Point(9, 37);
+            buttonBaseImportFromProtocol.Margin = new Padding(4, 5, 4, 5);
             buttonBaseImportFromProtocol.Name = "buttonBaseImportFromProtocol";
-            buttonBaseImportFromProtocol.Size = new Size(230, 23);
+            buttonBaseImportFromProtocol.Size = new Size(329, 38);
             buttonBaseImportFromProtocol.TabIndex = 5;
             buttonBaseImportFromProtocol.Text = "Импорт базы из протокола";
             buttonBaseImportFromProtocol.UseVisualStyleBackColor = true;
@@ -1805,9 +1976,10 @@
             // checkBoxYarfsoParserWriteOldQual
             // 
             checkBoxYarfsoParserWriteOldQual.AutoSize = true;
-            checkBoxYarfsoParserWriteOldQual.Location = new Point(6, 275);
+            checkBoxYarfsoParserWriteOldQual.Location = new Point(9, 458);
+            checkBoxYarfsoParserWriteOldQual.Margin = new Padding(4, 5, 4, 5);
             checkBoxYarfsoParserWriteOldQual.Name = "checkBoxYarfsoParserWriteOldQual";
-            checkBoxYarfsoParserWriteOldQual.Size = new Size(217, 19);
+            checkBoxYarfsoParserWriteOldQual.Size = new Size(319, 29);
             checkBoxYarfsoParserWriteOldQual.TabIndex = 3;
             checkBoxYarfsoParserWriteOldQual.Text = "Запомнить старую квалификацию";
             checkBoxYarfsoParserWriteOldQual.UseVisualStyleBackColor = true;
@@ -1817,9 +1989,10 @@
             checkBoxYarfsoParserPayAmountToWorldCode.AutoSize = true;
             checkBoxYarfsoParserPayAmountToWorldCode.Checked = true;
             checkBoxYarfsoParserPayAmountToWorldCode.CheckState = CheckState.Checked;
-            checkBoxYarfsoParserPayAmountToWorldCode.Location = new Point(6, 294);
+            checkBoxYarfsoParserPayAmountToWorldCode.Location = new Point(9, 490);
+            checkBoxYarfsoParserPayAmountToWorldCode.Margin = new Padding(4, 5, 4, 5);
             checkBoxYarfsoParserPayAmountToWorldCode.Name = "checkBoxYarfsoParserPayAmountToWorldCode";
-            checkBoxYarfsoParserPayAmountToWorldCode.Size = new Size(136, 19);
+            checkBoxYarfsoParserPayAmountToWorldCode.Size = new Size(204, 29);
             checkBoxYarfsoParserPayAmountToWorldCode.TabIndex = 3;
             checkBoxYarfsoParserPayAmountToWorldCode.Text = "Оплата в Межд. Код";
             checkBoxYarfsoParserPayAmountToWorldCode.UseVisualStyleBackColor = true;
@@ -1827,9 +2000,10 @@
             // checkBoxYarfsoParserReplaceQual
             // 
             checkBoxYarfsoParserReplaceQual.AutoSize = true;
-            checkBoxYarfsoParserReplaceQual.Location = new Point(6, 256);
+            checkBoxYarfsoParserReplaceQual.Location = new Point(9, 427);
+            checkBoxYarfsoParserReplaceQual.Margin = new Padding(4, 5, 4, 5);
             checkBoxYarfsoParserReplaceQual.Name = "checkBoxYarfsoParserReplaceQual";
-            checkBoxYarfsoParserReplaceQual.Size = new Size(210, 19);
+            checkBoxYarfsoParserReplaceQual.Size = new Size(310, 29);
             checkBoxYarfsoParserReplaceQual.TabIndex = 3;
             checkBoxYarfsoParserReplaceQual.Text = "Установка квалификации с Yarfso";
             checkBoxYarfsoParserReplaceQual.UseVisualStyleBackColor = true;
@@ -1837,18 +2011,20 @@
             // checkBoxPayAmountToComment
             // 
             checkBoxPayAmountToComment.AutoSize = true;
-            checkBoxPayAmountToComment.Location = new Point(6, 313);
+            checkBoxPayAmountToComment.Location = new Point(9, 522);
+            checkBoxPayAmountToComment.Margin = new Padding(4, 5, 4, 5);
             checkBoxPayAmountToComment.Name = "checkBoxPayAmountToComment";
-            checkBoxPayAmountToComment.Size = new Size(196, 19);
+            checkBoxPayAmountToComment.Size = new Size(289, 29);
             checkBoxPayAmountToComment.TabIndex = 3;
             checkBoxPayAmountToComment.Text = "Сумма оплаты в комментарий";
             checkBoxPayAmountToComment.UseVisualStyleBackColor = true;
             // 
             // buttonImportFromYarfso
             // 
-            buttonImportFromYarfso.Location = new Point(6, 338);
+            buttonImportFromYarfso.Location = new Point(9, 563);
+            buttonImportFromYarfso.Margin = new Padding(4, 5, 4, 5);
             buttonImportFromYarfso.Name = "buttonImportFromYarfso";
-            buttonImportFromYarfso.Size = new Size(230, 40);
+            buttonImportFromYarfso.Size = new Size(329, 67);
             buttonImportFromYarfso.TabIndex = 2;
             buttonImportFromYarfso.Text = "Импорт разрядов и статусов оплачено с сайта yarfso";
             buttonImportFromYarfso.UseVisualStyleBackColor = true;
@@ -1856,9 +2032,10 @@
             // 
             // buttonInportResultsFromAnothrBase
             // 
-            buttonInportResultsFromAnothrBase.Location = new Point(260, 392);
+            buttonInportResultsFromAnothrBase.Location = new Point(371, 653);
+            buttonInportResultsFromAnothrBase.Margin = new Padding(4, 5, 4, 5);
             buttonInportResultsFromAnothrBase.Name = "buttonInportResultsFromAnothrBase";
-            buttonInportResultsFromAnothrBase.Size = new Size(269, 45);
+            buttonInportResultsFromAnothrBase.Size = new Size(384, 75);
             buttonInportResultsFromAnothrBase.TabIndex = 20;
             buttonInportResultsFromAnothrBase.Text = "Импорт результатов из другой базы по номерам и присваивание id участников";
             buttonInportResultsFromAnothrBase.UseVisualStyleBackColor = true;
@@ -1871,18 +2048,21 @@
             groupBoxStartFee.Controls.Add(label5);
             groupBoxStartFee.Controls.Add(textBoxStartFeeWithCardSymbol);
             groupBoxStartFee.Controls.Add(buttonStartFeeCalculate);
-            groupBoxStartFee.Location = new Point(308, 6);
+            groupBoxStartFee.Location = new Point(440, 10);
+            groupBoxStartFee.Margin = new Padding(4, 5, 4, 5);
             groupBoxStartFee.Name = "groupBoxStartFee";
-            groupBoxStartFee.Size = new Size(221, 137);
+            groupBoxStartFee.Padding = new Padding(4, 5, 4, 5);
+            groupBoxStartFee.Size = new Size(316, 228);
             groupBoxStartFee.TabIndex = 2;
             groupBoxStartFee.TabStop = false;
             groupBoxStartFee.Text = "Стартовый взнос ";
             // 
             // buttonPayidToView
             // 
-            buttonPayidToView.Location = new Point(105, 51);
+            buttonPayidToView.Location = new Point(150, 85);
+            buttonPayidToView.Margin = new Padding(4, 5, 4, 5);
             buttonPayidToView.Name = "buttonPayidToView";
-            buttonPayidToView.Size = new Size(93, 23);
+            buttonPayidToView.Size = new Size(133, 38);
             buttonPayidToView.TabIndex = 10;
             buttonPayidToView.Text = "Оплата в ВК";
             buttonPayidToView.UseVisualStyleBackColor = true;
@@ -1890,9 +2070,10 @@
             // 
             // buttonCalculatePersonStartPrice
             // 
-            buttonCalculatePersonStartPrice.Location = new Point(6, 74);
+            buttonCalculatePersonStartPrice.Location = new Point(9, 123);
+            buttonCalculatePersonStartPrice.Margin = new Padding(4, 5, 4, 5);
             buttonCalculatePersonStartPrice.Name = "buttonCalculatePersonStartPrice";
-            buttonCalculatePersonStartPrice.Size = new Size(209, 55);
+            buttonCalculatePersonStartPrice.Size = new Size(299, 92);
             buttonCalculatePersonStartPrice.TabIndex = 9;
             buttonCalculatePersonStartPrice.Text = "Посчитать стартовый взнос для участников и записать в world_code";
             buttonCalculatePersonStartPrice.UseVisualStyleBackColor = true;
@@ -1901,25 +2082,28 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(54, 25);
+            label5.Location = new Point(77, 42);
+            label5.Margin = new Padding(4, 0, 4, 0);
             label5.Name = "label5";
-            label5.Size = new Size(145, 15);
+            label5.Size = new Size(216, 25);
             label5.TabIndex = 3;
             label5.Text = "Символ оплаты по карте";
             // 
             // textBoxStartFeeWithCardSymbol
             // 
-            textBoxStartFeeWithCardSymbol.Location = new Point(6, 22);
+            textBoxStartFeeWithCardSymbol.Location = new Point(9, 37);
+            textBoxStartFeeWithCardSymbol.Margin = new Padding(4, 5, 4, 5);
             textBoxStartFeeWithCardSymbol.Name = "textBoxStartFeeWithCardSymbol";
-            textBoxStartFeeWithCardSymbol.Size = new Size(42, 23);
+            textBoxStartFeeWithCardSymbol.Size = new Size(58, 31);
             textBoxStartFeeWithCardSymbol.TabIndex = 1;
             textBoxStartFeeWithCardSymbol.Text = "*";
             // 
             // buttonStartFeeCalculate
             // 
-            buttonStartFeeCalculate.Location = new Point(6, 51);
+            buttonStartFeeCalculate.Location = new Point(9, 85);
+            buttonStartFeeCalculate.Margin = new Padding(4, 5, 4, 5);
             buttonStartFeeCalculate.Name = "buttonStartFeeCalculate";
-            buttonStartFeeCalculate.Size = new Size(93, 23);
+            buttonStartFeeCalculate.Size = new Size(133, 38);
             buttonStartFeeCalculate.TabIndex = 0;
             buttonStartFeeCalculate.Text = "Подсчитать";
             buttonStartFeeCalculate.UseVisualStyleBackColor = true;
@@ -1927,9 +2111,10 @@
             // 
             // buttonOpenNumbersForm
             // 
-            buttonOpenNumbersForm.Location = new Point(441, 438);
+            buttonOpenNumbersForm.Location = new Point(630, 730);
+            buttonOpenNumbersForm.Margin = new Padding(4, 5, 4, 5);
             buttonOpenNumbersForm.Name = "buttonOpenNumbersForm";
-            buttonOpenNumbersForm.Size = new Size(88, 41);
+            buttonOpenNumbersForm.Size = new Size(126, 68);
             buttonOpenNumbersForm.TabIndex = 1;
             buttonOpenNumbersForm.Text = "Номера";
             buttonOpenNumbersForm.UseVisualStyleBackColor = true;
@@ -1937,9 +2122,10 @@
             // 
             // buttonRemvoeWorstResult
             // 
-            buttonRemvoeWorstResult.Location = new Point(6, 438);
+            buttonRemvoeWorstResult.Location = new Point(9, 730);
+            buttonRemvoeWorstResult.Margin = new Padding(4, 5, 4, 5);
             buttonRemvoeWorstResult.Name = "buttonRemvoeWorstResult";
-            buttonRemvoeWorstResult.Size = new Size(209, 41);
+            buttonRemvoeWorstResult.Size = new Size(299, 68);
             buttonRemvoeWorstResult.TabIndex = 0;
             buttonRemvoeWorstResult.Text = "Удалить худшие повторяющиеся результаты одного участника";
             buttonRemvoeWorstResult.UseVisualStyleBackColor = true;
@@ -1963,19 +2149,21 @@
             tabPage2.Controls.Add(labelStartMinutesSelectedPerson);
             tabPage2.Controls.Add(comboBoxStartMinutesGroupSelect);
             tabPage2.Controls.Add(dataGridViewPersonMinutes);
-            tabPage2.Location = new Point(4, 24);
+            tabPage2.Location = new Point(4, 34);
+            tabPage2.Margin = new Padding(4, 5, 4, 5);
             tabPage2.Name = "tabPage2";
-            tabPage2.Padding = new Padding(3, 3, 3, 3);
-            tabPage2.Size = new Size(833, 514);
+            tabPage2.Padding = new Padding(4, 5, 4, 5);
+            tabPage2.Size = new Size(1193, 865);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Стартовые минуты";
             tabPage2.UseVisualStyleBackColor = true;
             // 
             // buttonApplyGroupStartInterval
             // 
-            buttonApplyGroupStartInterval.Location = new Point(196, 58);
+            buttonApplyGroupStartInterval.Location = new Point(280, 97);
+            buttonApplyGroupStartInterval.Margin = new Padding(4, 5, 4, 5);
             buttonApplyGroupStartInterval.Name = "buttonApplyGroupStartInterval";
-            buttonApplyGroupStartInterval.Size = new Size(133, 21);
+            buttonApplyGroupStartInterval.Size = new Size(190, 35);
             buttonApplyGroupStartInterval.TabIndex = 15;
             buttonApplyGroupStartInterval.Text = "Применить интервал";
             buttonApplyGroupStartInterval.UseVisualStyleBackColor = true;
@@ -1984,27 +2172,30 @@
             // dateTimePickerGroupStartInterval
             // 
             dateTimePickerGroupStartInterval.Format = DateTimePickerFormat.Time;
-            dateTimePickerGroupStartInterval.Location = new Point(108, 59);
+            dateTimePickerGroupStartInterval.Location = new Point(154, 98);
+            dateTimePickerGroupStartInterval.Margin = new Padding(4, 5, 4, 5);
             dateTimePickerGroupStartInterval.MaxDate = new DateTime(1753, 1, 2, 0, 0, 0, 0);
             dateTimePickerGroupStartInterval.Name = "dateTimePickerGroupStartInterval";
-            dateTimePickerGroupStartInterval.Size = new Size(83, 23);
+            dateTimePickerGroupStartInterval.Size = new Size(117, 31);
             dateTimePickerGroupStartInterval.TabIndex = 14;
             dateTimePickerGroupStartInterval.Value = new DateTime(1753, 1, 1, 0, 1, 0, 0);
             // 
             // labelGroupStartInterval
             // 
             labelGroupStartInterval.AutoSize = true;
-            labelGroupStartInterval.Location = new Point(6, 62);
+            labelGroupStartInterval.Location = new Point(9, 103);
+            labelGroupStartInterval.Margin = new Padding(4, 0, 4, 0);
             labelGroupStartInterval.Name = "labelGroupStartInterval";
-            labelGroupStartInterval.Size = new Size(107, 15);
+            labelGroupStartInterval.Size = new Size(159, 25);
             labelGroupStartInterval.TabIndex = 13;
             labelGroupStartInterval.Text = "Интервал группы:";
             // 
             // buttonShiftAllStartMinutesForward
             // 
-            buttonShiftAllStartMinutesForward.Location = new Point(724, 31);
+            buttonShiftAllStartMinutesForward.Location = new Point(1034, 52);
+            buttonShiftAllStartMinutesForward.Margin = new Padding(4, 5, 4, 5);
             buttonShiftAllStartMinutesForward.Name = "buttonShiftAllStartMinutesForward";
-            buttonShiftAllStartMinutesForward.Size = new Size(98, 21);
+            buttonShiftAllStartMinutesForward.Size = new Size(140, 35);
             buttonShiftAllStartMinutesForward.TabIndex = 12;
             buttonShiftAllStartMinutesForward.Text = "Позже";
             buttonShiftAllStartMinutesForward.UseVisualStyleBackColor = true;
@@ -2012,9 +2203,10 @@
             // 
             // buttonShiftAllStartMinutesBack
             // 
-            buttonShiftAllStartMinutesBack.Location = new Point(635, 31);
+            buttonShiftAllStartMinutesBack.Location = new Point(907, 52);
+            buttonShiftAllStartMinutesBack.Margin = new Padding(4, 5, 4, 5);
             buttonShiftAllStartMinutesBack.Name = "buttonShiftAllStartMinutesBack";
-            buttonShiftAllStartMinutesBack.Size = new Size(84, 21);
+            buttonShiftAllStartMinutesBack.Size = new Size(120, 35);
             buttonShiftAllStartMinutesBack.TabIndex = 11;
             buttonShiftAllStartMinutesBack.Text = "Раньше";
             buttonShiftAllStartMinutesBack.UseVisualStyleBackColor = true;
@@ -2023,19 +2215,21 @@
             // dateTimePickerShiftAllStartMinutes
             // 
             dateTimePickerShiftAllStartMinutes.Format = DateTimePickerFormat.Time;
-            dateTimePickerShiftAllStartMinutes.Location = new Point(546, 32);
+            dateTimePickerShiftAllStartMinutes.Location = new Point(780, 53);
+            dateTimePickerShiftAllStartMinutes.Margin = new Padding(4, 5, 4, 5);
             dateTimePickerShiftAllStartMinutes.MaxDate = new DateTime(1753, 1, 2, 0, 0, 0, 0);
             dateTimePickerShiftAllStartMinutes.Name = "dateTimePickerShiftAllStartMinutes";
-            dateTimePickerShiftAllStartMinutes.Size = new Size(83, 23);
+            dateTimePickerShiftAllStartMinutes.Size = new Size(117, 31);
             dateTimePickerShiftAllStartMinutes.TabIndex = 10;
             dateTimePickerShiftAllStartMinutes.Value = new DateTime(1753, 1, 1, 0, 1, 0, 0);
             // 
             // labelShiftAllStartMinutes
             // 
             labelShiftAllStartMinutes.AutoSize = true;
-            labelShiftAllStartMinutes.Location = new Point(471, 35);
+            labelShiftAllStartMinutes.Location = new Point(673, 58);
+            labelShiftAllStartMinutes.Margin = new Padding(4, 0, 4, 0);
             labelShiftAllStartMinutes.Name = "labelShiftAllStartMinutes";
-            labelShiftAllStartMinutes.Size = new Size(73, 15);
+            labelShiftAllStartMinutes.Size = new Size(109, 25);
             labelShiftAllStartMinutes.TabIndex = 9;
             labelShiftAllStartMinutes.Text = "Выбранное:";
             // 
@@ -2043,25 +2237,28 @@
             // 
             comboBoxShiftStartMinutesScope.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxShiftStartMinutesScope.FormattingEnabled = true;
-            comboBoxShiftStartMinutesScope.Location = new Point(99, 32);
+            comboBoxShiftStartMinutesScope.Location = new Point(141, 53);
+            comboBoxShiftStartMinutesScope.Margin = new Padding(4, 5, 4, 5);
             comboBoxShiftStartMinutesScope.Name = "comboBoxShiftStartMinutesScope";
-            comboBoxShiftStartMinutesScope.Size = new Size(92, 23);
+            comboBoxShiftStartMinutesScope.Size = new Size(130, 33);
             comboBoxShiftStartMinutesScope.TabIndex = 8;
             // 
             // labelShiftStartMinutesScope
             // 
             labelShiftStartMinutesScope.AutoSize = true;
-            labelShiftStartMinutesScope.Location = new Point(6, 35);
+            labelShiftStartMinutesScope.Location = new Point(9, 58);
+            labelShiftStartMinutesScope.Margin = new Padding(4, 0, 4, 0);
             labelShiftStartMinutesScope.Name = "labelShiftStartMinutesScope";
-            labelShiftStartMinutesScope.Size = new Size(85, 15);
+            labelShiftStartMinutesScope.Size = new Size(127, 25);
             labelShiftStartMinutesScope.TabIndex = 7;
             labelShiftStartMinutesScope.Text = "Двигать ниже:";
             // 
             // buttonShiftStartMinutesBelow
             // 
-            buttonShiftStartMinutesBelow.Location = new Point(338, 31);
+            buttonShiftStartMinutesBelow.Location = new Point(483, 52);
+            buttonShiftStartMinutesBelow.Margin = new Padding(4, 5, 4, 5);
             buttonShiftStartMinutesBelow.Name = "buttonShiftStartMinutesBelow";
-            buttonShiftStartMinutesBelow.Size = new Size(119, 21);
+            buttonShiftStartMinutesBelow.Size = new Size(170, 35);
             buttonShiftStartMinutesBelow.TabIndex = 6;
             buttonShiftStartMinutesBelow.Text = "Сдвинуть ниже";
             buttonShiftStartMinutesBelow.UseVisualStyleBackColor = true;
@@ -2069,29 +2266,32 @@
             // 
             // numericUpDownShiftStartMinutes
             // 
-            numericUpDownShiftStartMinutes.Location = new Point(279, 32);
+            numericUpDownShiftStartMinutes.Location = new Point(399, 53);
+            numericUpDownShiftStartMinutes.Margin = new Padding(4, 5, 4, 5);
             numericUpDownShiftStartMinutes.Maximum = new decimal(new int[] { 600, 0, 0, 0 });
             numericUpDownShiftStartMinutes.Minimum = new decimal(new int[] { 600, 0, 0, int.MinValue });
             numericUpDownShiftStartMinutes.Name = "numericUpDownShiftStartMinutes";
-            numericUpDownShiftStartMinutes.Size = new Size(54, 23);
+            numericUpDownShiftStartMinutes.Size = new Size(77, 31);
             numericUpDownShiftStartMinutes.TabIndex = 5;
             numericUpDownShiftStartMinutes.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // labelShiftStartMinutes
             // 
             labelShiftStartMinutes.AutoSize = true;
-            labelShiftStartMinutes.Location = new Point(197, 35);
+            labelShiftStartMinutes.Location = new Point(281, 58);
+            labelShiftStartMinutes.Margin = new Padding(4, 0, 4, 0);
             labelShiftStartMinutes.Name = "labelShiftStartMinutes";
-            labelShiftStartMinutes.Size = new Size(65, 15);
+            labelShiftStartMinutes.Size = new Size(96, 25);
             labelShiftStartMinutes.TabIndex = 4;
             labelShiftStartMinutes.Text = "+/- минут:";
             // 
             // labelHowToWorkStartMinutesSwap
             // 
             labelHowToWorkStartMinutesSwap.AutoSize = true;
-            labelHowToWorkStartMinutesSwap.Location = new Point(671, 7);
+            labelHowToWorkStartMinutesSwap.Location = new Point(959, 12);
+            labelHowToWorkStartMinutesSwap.Margin = new Padding(4, 0, 4, 0);
             labelHowToWorkStartMinutesSwap.Name = "labelHowToWorkStartMinutesSwap";
-            labelHowToWorkStartMinutesSwap.Size = new Size(156, 15);
+            labelHowToWorkStartMinutesSwap.Size = new Size(230, 25);
             labelHowToWorkStartMinutesSwap.TabIndex = 3;
             labelHowToWorkStartMinutesSwap.Text = "Как это работает? (Кликни)";
             labelHowToWorkStartMinutesSwap.Click += labelHowToWorkStartMinutesSwap_Click;
@@ -2099,28 +2299,31 @@
             // labelStartMinutesSelectedPerson
             // 
             labelStartMinutesSelectedPerson.AutoSize = true;
-            labelStartMinutesSelectedPerson.Location = new Point(133, 9);
+            labelStartMinutesSelectedPerson.Location = new Point(190, 15);
+            labelStartMinutesSelectedPerson.Margin = new Padding(4, 0, 4, 0);
             labelStartMinutesSelectedPerson.Name = "labelStartMinutesSelectedPerson";
-            labelStartMinutesSelectedPerson.Size = new Size(36, 15);
+            labelStartMinutesSelectedPerson.Size = new Size(55, 25);
             labelStartMinutesSelectedPerson.TabIndex = 2;
             labelStartMinutesSelectedPerson.Text = "None";
             // 
             // comboBoxStartMinutesGroupSelect
             // 
             comboBoxStartMinutesGroupSelect.FormattingEnabled = true;
-            comboBoxStartMinutesGroupSelect.Location = new Point(6, 6);
+            comboBoxStartMinutesGroupSelect.Location = new Point(9, 10);
+            comboBoxStartMinutesGroupSelect.Margin = new Padding(4, 5, 4, 5);
             comboBoxStartMinutesGroupSelect.Name = "comboBoxStartMinutesGroupSelect";
-            comboBoxStartMinutesGroupSelect.Size = new Size(121, 23);
+            comboBoxStartMinutesGroupSelect.Size = new Size(171, 33);
             comboBoxStartMinutesGroupSelect.TabIndex = 1;
             comboBoxStartMinutesGroupSelect.SelectedIndexChanged += comboBoxStartMinutesGroupSelect_SelectedIndexChanged;
             // 
             // dataGridViewPersonMinutes
             // 
             dataGridViewPersonMinutes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewPersonMinutes.Location = new Point(6, 86);
+            dataGridViewPersonMinutes.Location = new Point(9, 143);
+            dataGridViewPersonMinutes.Margin = new Padding(4, 5, 4, 5);
             dataGridViewPersonMinutes.Name = "dataGridViewPersonMinutes";
             dataGridViewPersonMinutes.RowHeadersWidth = 62;
-            dataGridViewPersonMinutes.Size = new Size(821, 421);
+            dataGridViewPersonMinutes.Size = new Size(1173, 702);
             dataGridViewPersonMinutes.TabIndex = 0;
             dataGridViewPersonMinutes.CellMouseUp += dataGridViewPersonMinutes_CellMouseUp;
             // 
@@ -2131,10 +2334,11 @@
             // tabPage1
             // 
             tabPage1.Controls.Add(richTextBoxLog);
-            tabPage1.Location = new Point(4, 24);
+            tabPage1.Location = new Point(4, 34);
+            tabPage1.Margin = new Padding(4, 5, 4, 5);
             tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new Padding(3, 3, 3, 3);
-            tabPage1.Size = new Size(833, 514);
+            tabPage1.Padding = new Padding(4, 5, 4, 5);
+            tabPage1.Size = new Size(1193, 865);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Логи";
             tabPage1.UseVisualStyleBackColor = true;
@@ -2142,9 +2346,10 @@
             // richTextBoxLog
             // 
             richTextBoxLog.ContextMenuStrip = contextMenuStripLog;
-            richTextBoxLog.Location = new Point(6, 6);
+            richTextBoxLog.Location = new Point(9, 10);
+            richTextBoxLog.Margin = new Padding(4, 5, 4, 5);
             richTextBoxLog.Name = "richTextBoxLog";
-            richTextBoxLog.Size = new Size(821, 502);
+            richTextBoxLog.Size = new Size(1171, 834);
             richTextBoxLog.TabIndex = 2;
             richTextBoxLog.Text = "";
             richTextBoxLog.WordWrap = false;
@@ -2154,10 +2359,11 @@
             // 
             tabControl1.Controls.Add(tabPage1);
             tabControl1.Controls.Add(tabPage2);
-            tabControl1.Location = new Point(557, 13);
+            tabControl1.Location = new Point(796, 22);
+            tabControl1.Margin = new Padding(4, 5, 4, 5);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(841, 542);
+            tabControl1.Size = new Size(1201, 903);
             tabControl1.TabIndex = 28;
             // 
             // openFileDialogStartLog
@@ -2183,17 +2389,19 @@
             // label17
             // 
             label17.AutoSize = true;
-            label17.Location = new Point(255, 16);
+            label17.Location = new Point(364, 27);
+            label17.Margin = new Padding(4, 0, 4, 0);
             label17.Name = "label17";
-            label17.Size = new Size(0, 15);
+            label17.Size = new Size(0, 25);
             label17.TabIndex = 31;
             // 
             // linkLabelGitHub
             // 
             linkLabelGitHub.AutoSize = true;
-            linkLabelGitHub.Location = new Point(261, 16);
+            linkLabelGitHub.Location = new Point(373, 27);
+            linkLabelGitHub.Margin = new Padding(4, 0, 4, 0);
             linkLabelGitHub.Name = "linkLabelGitHub";
-            linkLabelGitHub.Size = new Size(133, 15);
+            linkLabelGitHub.Size = new Size(199, 25);
             linkLabelGitHub.TabIndex = 32;
             linkLabelGitHub.TabStop = true;
             linkLabelGitHub.Text = "Обновления на GitHub";
@@ -2208,9 +2416,10 @@
             checkBoxIsSaveToGzip.AutoSize = true;
             checkBoxIsSaveToGzip.Checked = true;
             checkBoxIsSaveToGzip.CheckState = CheckState.Checked;
-            checkBoxIsSaveToGzip.Location = new Point(399, 15);
+            checkBoxIsSaveToGzip.Location = new Point(570, 25);
+            checkBoxIsSaveToGzip.Margin = new Padding(4, 5, 4, 5);
             checkBoxIsSaveToGzip.Name = "checkBoxIsSaveToGzip";
-            checkBoxIsSaveToGzip.Size = new Size(48, 19);
+            checkBoxIsSaveToGzip.Size = new Size(72, 29);
             checkBoxIsSaveToGzip.TabIndex = 33;
             checkBoxIsSaveToGzip.Text = "gzip";
             checkBoxIsSaveToGzip.UseVisualStyleBackColor = true;
@@ -2225,27 +2434,11 @@
             openFileDialogHtml.FileName = "Импорт CSV";
             openFileDialogHtml.Filter = "html |*.html|All files|*.*";
             // 
-            // textBoxShahmatkaDateFilter
-            // 
-            textBoxShahmatkaDateFilter.Location = new Point(6, 86);
-            textBoxShahmatkaDateFilter.Name = "textBoxShahmatkaDateFilter";
-            textBoxShahmatkaDateFilter.Size = new Size(110, 23);
-            textBoxShahmatkaDateFilter.TabIndex = 43;
-            // 
-            // label19
-            // 
-            label19.AutoSize = true;
-            label19.Location = new Point(6, 68);
-            label19.Name = "label19";
-            label19.Size = new Size(74, 15);
-            label19.TabIndex = 44;
-            label19.Text = "Стартовало:";
-            // 
             // Utils
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1347, 565);
+            ClientSize = new Size(1924, 942);
             Controls.Add(checkBoxIsSaveToGzip);
             Controls.Add(linkLabelGitHub);
             Controls.Add(label17);
@@ -2256,9 +2449,10 @@
             Controls.Add(labelBaseImport);
             Controls.Add(buttonBaseImport);
             Icon = (Icon)resources.GetObject("$this.Icon");
-            MinimumSize = new Size(898, 463);
+            Margin = new Padding(4, 5, 4, 5);
+            MinimumSize = new Size(1273, 734);
             Name = "Utils";
-            Text = "Утилиты v0.20.0";
+            Text = "Утилиты v0.20.1b";
             FormClosing += Utils_FormClosing;
             Load += Utils_Load;
             SizeChanged += Utils_SizeChanged;

@@ -26,6 +26,7 @@ namespace SportOrgMultyDay.Processing.Orgeo
             JArray groups = PBGroups(race);
             //Dictionary<string, JToken> groupMap = DictGNameGroup(groups);
             Dictionary<string, string> groupIdNames = DictGIdGroupName(groups);
+            Dictionary<string, string> groupIdLongNames = DictGIdGroupLongName(groups);
 
             Dictionary<string, OrgeoCsvParticipantRow> commentMap = new();
             foreach (OrgeoCsvParticipantRow row in ParsedRows)
@@ -45,7 +46,8 @@ namespace SportOrgMultyDay.Processing.Orgeo
                 string fullName = $"{PPSurname(person)} {PPName(person)} {PPMiddleName(person)}".Trim();
                 string groupId = PPGroupId(person);
                 string birthYear = PPYear(person).ToString();
-                string groupName = groupIdNames.TryGetValue(groupId, out string name) ? name : string.Empty;
+                //string groupName = groupIdNames.TryGetValue(groupId, out string name) ? name : string.Empty;
+                string groupName = groupIdLongNames.TryGetValue(groupId, out string name) ? name : string.Empty;
                 string fingerprintKey = $"{fullName}_{groupName}_{birthYear}";
 
                 if (commentMap.TryGetValue(fingerprintKey, out OrgeoCsvParticipantRow matchingRow))

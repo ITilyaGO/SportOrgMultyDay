@@ -126,7 +126,10 @@ namespace SportOrgMultyDay.Processing.Parsing
         {
             try
             {
-                return (int)person["start_time"];
+                var val = person["start_time"];
+                
+                int startTime = int.TryParse(val?.ToString(), out int result) ? result : 0;
+                return startTime;
             }
             catch (Exception ex) { LogError("o8sd6vcla", ex); }
             return -1;
