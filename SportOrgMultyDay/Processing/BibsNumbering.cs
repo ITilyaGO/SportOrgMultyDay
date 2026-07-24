@@ -23,12 +23,12 @@ namespace SportOrgMultyDay.Processing
     public class BibsNumbering
     {
 
-        public static string SetNumbers(JToken jRace, string bibsSample, bool isDebug = false, bool isRelay = false, bool isCreateReserv = false)
+        public static string SetNumbers(JToken jRace, string bibsSample, bool isDebug = false, bool isRelay = false, bool isCreateReserv = false, int SortByActiveDay = -1)
         {
             if (isRelay)
                 return SetRelayNumbers(jRace, bibsSample, isDebug, isCreateReserv);
             else
-                return SetDefaultNumbers(jRace, bibsSample, isDebug, isCreateReserv);
+                return SetDefaultNumbers(jRace, bibsSample, isDebug, isCreateReserv, SortByActiveDay);
         }
 
         public static string SetRelayNumbers(JToken jRace, string bibsSample, bool isDebug = false, bool isCreateReserv = false, int stageCount = 2, int bibNormalization = 3)
@@ -151,7 +151,7 @@ namespace SportOrgMultyDay.Processing
             return log;
         }
 
-        public static string SetDefaultNumbers(JToken jRace, string bibsSample, bool isDebug = false, bool isCreateReserv = false)
+        public static string SetDefaultNumbers(JToken jRace, string bibsSample, bool isDebug = false, bool isCreateReserv = false, int SortByActiveDay = -1)
         {
             bool checkNumberExist = true;
             string log = "Установка номеров участникам групп...\n";
@@ -199,6 +199,18 @@ namespace SportOrgMultyDay.Processing
 
 
                 int currentNumber = numberOfGroup.StartBib;
+                if (SortByActiveDay >= 0)
+                {
+                    // Кэшируем результаты перед сортировкой
+                    List<JToken> sortedPersons = groupPersons
+                        .Select(person => new { Person = person, SortKey = RemoveExtraPersons.RunPersonInDay(person, SortByActiveDay) })
+                        .OrderByDescending(x => x.SortKey)
+                        .Select(x => x.Person)
+                        .ToList();
+                    
+                    groupPersons = sortedPersons;
+                }
+
                 foreach (JToken person in groupPersons)
                 {
                     if (personBibs.Contains(currentNumber))

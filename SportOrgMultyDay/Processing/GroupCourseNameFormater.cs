@@ -39,6 +39,7 @@ namespace SportOrgMultyDay.Processing
 
         public static void FormatGroupNames(JToken race, ref string log)
         {
+            bool isOfficial = true;
             log += $"  Форматирование имен групп...\n";
             JArray groups = PBGroups(race);
 
@@ -51,26 +52,50 @@ namespace SportOrgMultyDay.Processing
                 // Предобработка начала строки (убрать пробелы/дефисы между буквой и цифрой)
                 string normalizedStart = Regex.Replace(formatedName, @"^([МЖO])\s*[-]?\s*(\d+)", "$1$2");
 
-                if (formatedName.ToLower() == ("мужчины"))
+                if (formatedName.Equals("мужчины", StringComparison.OrdinalIgnoreCase))
                 {
-                    formatedName = "МЭ";
+                    if (!isOfficial)
+                        formatedName = "МЭ";
+                    else
+                        formatedName = "Мужчины";
                 }
-                else if (formatedName.ToLower() == ("женщины"))
+                else if (formatedName.Equals("женщины", StringComparison.OrdinalIgnoreCase))
                 {
-                    formatedName = "ЖЭ";
+                    if (!isOfficial)
+                        formatedName = "ЖЭ";
+                    else
+                        formatedName = "Женщины";
                 }
                 else if (formatedName.StartsWith("Ж") && formatedName.EndsWith("до15"))
-                    formatedName = "Ж14";
+                {
+                    if (!isOfficial)
+                        formatedName = "Ж14";
+                }
                 else if (formatedName.StartsWith("Ж") && formatedName.EndsWith("до17"))
-                    formatedName = "Ж16";
+                {
+                    if (!isOfficial)
+                        formatedName = "Ж16";
+                }
                 else if (formatedName.StartsWith("Ж") && formatedName.EndsWith("до19"))
-                    formatedName = "Ж18";
+                {
+                    if (!isOfficial)
+                        formatedName = "Ж18";
+                }
                 else if (formatedName.StartsWith("М") && formatedName.EndsWith("до15"))
-                    formatedName = "М14";
+                {
+                    if (!isOfficial)
+                        formatedName = "М14";
+                }
                 else if (formatedName.StartsWith("М") && formatedName.EndsWith("до17"))
-                    formatedName = "М16";
+                {
+                    if (!isOfficial)
+                        formatedName = "М16";
+                }
                 else if (formatedName.StartsWith("М") && formatedName.EndsWith("до19"))
-                    formatedName = "М18";
+                {
+                    if (!isOfficial)
+                        formatedName = "М18";
+                }
                 else if (groupName.StartsWith("М14-18Б"))
                     formatedName = "М14-18Б";
                 else if (groupName.StartsWith("Ж14-18Б"))

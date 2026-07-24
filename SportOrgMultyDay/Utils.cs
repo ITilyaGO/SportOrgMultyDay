@@ -708,7 +708,8 @@ namespace SportOrgMultyDay
 
         private void buttonGroupSetNumbersByGroups_Click(object sender, EventArgs e)
         {
-            SendLog(BibsNumbering.SetNumbers(PBCurrentRaceFromBase(JBase), richTextBoxBibsNumbering.Text, checkBoxSetNumbersByGroupsDebug.Checked, checkBoxSetNumbersRelay.Checked, checkBoxSetNumbersCreateReserv.Checked));
+            int day = ((int)numericUpDownSetNumbersInActiveDayFirst.Value - 1);
+            SendLog(BibsNumbering.SetNumbers(PBCurrentRaceFromBase(JBase), richTextBoxBibsNumbering.Text, checkBoxSetNumbersByGroupsDebug.Checked, checkBoxSetNumbersRelay.Checked, checkBoxSetNumbersCreateReserv.Checked, day));
         }
 
         private void buttonSyncOrganizations_Click(object sender, EventArgs e)

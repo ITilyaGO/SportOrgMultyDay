@@ -93,6 +93,8 @@
             textBoxStringFindComment = new TextBox();
             label2 = new Label();
             groupBoxStartTime = new GroupBox();
+            label20 = new Label();
+            numericUpDownSetNumbersInActiveDayFirst = new NumericUpDown();
             label18 = new Label();
             numericUpDownSetStartTimeMinGap = new NumericUpDown();
             checkBoxSetStartTimeSuffleWithOrgs = new CheckBox();
@@ -236,6 +238,7 @@
             groupBox5.SuspendLayout();
             groupBox4.SuspendLayout();
             groupBoxStartTime.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownSetNumbersInActiveDayFirst).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownSetStartTimeMinGap).BeginInit();
             tabControlFunc.SuspendLayout();
             tabPageStartTimes.SuspendLayout();
@@ -964,10 +967,30 @@
             groupBoxStartTime.TabStop = false;
             groupBoxStartTime.Text = "Стартовые минуты";
             // 
+            // label20
+            // 
+            label20.AutoSize = true;
+            label20.Location = new Point(380, 243);
+            label20.Margin = new Padding(4, 0, 4, 0);
+            label20.Name = "label20";
+            label20.Size = new Size(373, 25);
+            label20.TabIndex = 15;
+            label20.Text = "Сначала выдать номера заявленным в день";
+            // 
+            // numericUpDownSetNumbersInActiveDayFirst
+            // 
+            numericUpDownSetNumbersInActiveDayFirst.Location = new Point(320, 241);
+            numericUpDownSetNumbersInActiveDayFirst.Margin = new Padding(4, 5, 4, 5);
+            numericUpDownSetNumbersInActiveDayFirst.Minimum = new decimal(new int[] { 1, 0, 0, int.MinValue });
+            numericUpDownSetNumbersInActiveDayFirst.Name = "numericUpDownSetNumbersInActiveDayFirst";
+            numericUpDownSetNumbersInActiveDayFirst.Size = new Size(60, 31);
+            numericUpDownSetNumbersInActiveDayFirst.TabIndex = 14;
+            numericUpDownSetNumbersInActiveDayFirst.Value = new decimal(new int[] { 1, 0, 0, int.MinValue });
+            // 
             // label18
             // 
             label18.AutoSize = true;
-            label18.Location = new Point(389, 410);
+            label18.Location = new Point(386, 439);
             label18.Margin = new Padding(4, 0, 4, 0);
             label18.Name = "label18";
             label18.Size = new Size(341, 25);
@@ -976,7 +999,7 @@
             // 
             // numericUpDownSetStartTimeMinGap
             // 
-            numericUpDownSetStartTimeMinGap.Location = new Point(320, 403);
+            numericUpDownSetStartTimeMinGap.Location = new Point(318, 437);
             numericUpDownSetStartTimeMinGap.Margin = new Padding(4, 5, 4, 5);
             numericUpDownSetStartTimeMinGap.Name = "numericUpDownSetStartTimeMinGap";
             numericUpDownSetStartTimeMinGap.Size = new Size(60, 31);
@@ -985,7 +1008,7 @@
             // checkBoxSetStartTimeSuffleWithOrgs
             // 
             checkBoxSetStartTimeSuffleWithOrgs.AutoSize = true;
-            checkBoxSetStartTimeSuffleWithOrgs.Location = new Point(320, 362);
+            checkBoxSetStartTimeSuffleWithOrgs.Location = new Point(318, 396);
             checkBoxSetStartTimeSuffleWithOrgs.Margin = new Padding(4, 5, 4, 5);
             checkBoxSetStartTimeSuffleWithOrgs.Name = "checkBoxSetStartTimeSuffleWithOrgs";
             checkBoxSetStartTimeSuffleWithOrgs.Size = new Size(378, 29);
@@ -1210,7 +1233,9 @@
             // 
             // groupBoxBibs
             // 
+            groupBoxBibs.Controls.Add(label20);
             groupBoxBibs.Controls.Add(checkBoxSetNumbersCreateReserv);
+            groupBoxBibs.Controls.Add(numericUpDownSetNumbersInActiveDayFirst);
             groupBoxBibs.Controls.Add(checkBoxSetNumbersRelay);
             groupBoxBibs.Controls.Add(checkBoxSetNumbersByGroupsDebug);
             groupBoxBibs.Controls.Add(buttonGroupSetNumbersByGroups);
@@ -2472,6 +2497,7 @@
             groupBox4.PerformLayout();
             groupBoxStartTime.ResumeLayout(false);
             groupBoxStartTime.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownSetNumbersInActiveDayFirst).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownSetStartTimeMinGap).EndInit();
             tabControlFunc.ResumeLayout(false);
             tabPageStartTimes.ResumeLayout(false);
@@ -2703,5 +2729,7 @@
         private OpenFileDialog openFileDialogHtml;
         private Label label19;
         private TextBox textBoxShahmatkaDateFilter;
+        private Label label20;
+        private NumericUpDown numericUpDownSetNumbersInActiveDayFirst;
     }
 }
