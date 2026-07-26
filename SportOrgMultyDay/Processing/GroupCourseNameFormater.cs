@@ -26,10 +26,10 @@ namespace SportOrgMultyDay.Processing
             JToken race = PBCurrentRaceFromBase(jBase);
             if (formatGroups)
                 FormatGroupNames(race, ref log);
+            if (formatCourseNames)
+                FormatCourseNames(race, ref log);
             if (combineCourses)
             {
-                if (formatCourseNames)
-                    FormatCourseNames(race, ref log);
                 CompactCourses(race, ref log);
             }
             return log;
@@ -227,7 +227,9 @@ namespace SportOrgMultyDay.Processing
                 .Select(part =>
                 {
                     var beforeParen = part.Split('(')[0];
-                    return Regex.Replace(beforeParen, @"[^\p{L}\p{N}]", "");
+
+                    // Оставляем буквы, цифры, дефисы и тире
+                    return Regex.Replace(beforeParen, @"[^\p{L}\p{N}\p{Pd}]", "");
                 }));
         }
 
