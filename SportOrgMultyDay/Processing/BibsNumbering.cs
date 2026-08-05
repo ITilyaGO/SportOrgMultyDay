@@ -247,7 +247,7 @@ namespace SportOrgMultyDay.Processing
                     {
                         if (isDebug)
                             log += $"      Максимальние кол-во пересчитано {numberOfGroup.MaxReservCount} ...\n";
-                        numberOfGroup.MaxReservCount = (int)Math.Ceiling(groupPersons.Count() * 0.1);
+                        numberOfGroup.MaxReservCount = (int)Math.Ceiling(groupPersons.Count() * 0.07);
                     }
                     if (isDebug)
                         log += $"      Создание резервов. максимальное кол-во {numberOfGroup.MaxReservCount} ...\n";

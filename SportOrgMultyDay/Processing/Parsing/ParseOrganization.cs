@@ -36,5 +36,28 @@ namespace SportOrgMultyDay.Processing.Parsing
                 if (id == POId(organizations[i])) return organizations[i];
             return null;
         }
+
+        public static Dictionary<string, string> DictOIdOrgName(JArray orgs)
+        {
+            Dictionary<string, string> orgDict = new();
+            try
+            {
+                foreach (JToken org in orgs)
+                    orgDict.Add(POId(org), POName(org));
+            }
+            catch (Exception ex) { LogError("3g7k6jdasdsaaj", ex); }
+            return orgDict;
+        }
+        public static Dictionary<string, string> DictOOrgNameId(JArray orgs)
+        {
+            Dictionary<string, string> orgDict = new();
+            try
+            {
+                foreach (JToken org in orgs)
+                    orgDict.Add(POName(org), POId(org));
+            }
+            catch (Exception ex) { LogError("3g7k6jdsakj", ex); }
+            return orgDict;
+        }
     }
 }

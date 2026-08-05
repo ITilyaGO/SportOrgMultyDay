@@ -1,16 +1,18 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using static SportOrgMultyDay.Extensions.ListExtensions;
 using static SportOrgMultyDay.Processing.Combine.ResultsCountInGroup;
+using static SportOrgMultyDay.Processing.Logger;
 using static SportOrgMultyDay.Processing.Parsing.ParseBase;
-using static SportOrgMultyDay.Processing.Parsing.ParseResult;
 using static SportOrgMultyDay.Processing.Parsing.ParseGroup;
 using static SportOrgMultyDay.Processing.Parsing.ParsePerson;
-using static SportOrgMultyDay.Processing.Logger;
-using static SportOrgMultyDay.Extensions.ListExtensions;
+using static SportOrgMultyDay.Processing.Parsing.ParseResult;
 using static SportOrgMultyDay.Processing.Parsing.Things.ParseStartTime;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskBand;
 
@@ -318,6 +320,122 @@ namespace SportOrgMultyDay.Processing
             }
             log += $"    Все группы найдены\n";
             return CorridorGroups;
+        }
+
+        public static string SetGroupStartTimes(
+            JToken race,
+            int raceId,
+            string rawGroupStartTimes)
+        {
+            string msgLog = "Установка общего стартового времени группам...\n";
+
+            try
+            {
+                JArray groups = PBGroups(race);
+                JArray allPersons = PBPersons(race);
+
+                // Оставляем только участников указанного дня.
+                // raceId == -1 — обрабатываем всех участников.
+                List<JToken> personsList = [];
+
+                if (raceId > -1)
+                {
+                    foreach (JToken person in allPersons)
+                    {
+                        if (RemoveExtraPersons.RunPersonInDay(person, raceId))
+                            personsList.Add(person);
+                    }
+                }
+                else
+                {
+                    personsList = allPersons.ToList();
+                }
+
+                // Поиск групп без учёта регистра.
+                Dictionary<string, JToken> groupsByName =
+                    new(StringComparer.OrdinalIgnoreCase);
+
+                foreach (JToken group in groups)
+                {
+                    string groupName = PGName(group).Trim();
+                    groupsByName[groupName] = group;
+                }
+
+                string[] rows = rawGroupStartTimes.Split(
+                    ['\r', '\n'],
+                    StringSplitOptions.RemoveEmptyEntries
+                );
+
+                foreach (string rawRow in rows)
+                {
+                    string row = rawRow.Trim();
+
+                    // Название группы может содержать пробелы.
+                    // Время обязательно находится в конце строки.
+                    Match match = Regex.Match(
+                        row,
+                        @"^(?<group>.+?)\s+(?<time>\d{1,2}:\d{2}:\d{2})$"
+                    );
+
+                    if (!match.Success)
+                    {
+                        msgLog += $"  Неверный формат строки: [{row}]\n";
+                        continue;
+                    }
+
+                    string groupName = match.Groups["group"].Value.Trim();
+                    string timeRaw = match.Groups["time"].Value;
+
+                    if (!TimeSpan.TryParseExact(
+                            timeRaw,
+                            [@"h\:mm\:ss", @"hh\:mm\:ss"],
+                            CultureInfo.InvariantCulture,
+                            out TimeSpan startTime))
+                    {
+                        msgLog +=
+                            $"  Неверное время у группы [{groupName}]: [{timeRaw}]\n";
+                        continue;
+                    }
+
+                    if (!groupsByName.TryGetValue(groupName, out JToken group))
+                    {
+                        msgLog += $"  Группа не найдена: [{groupName}]\n";
+                        continue;
+                    }
+
+                    List<JToken> personsInGroup =
+                        FPAllByGroup(PGId(group), personsList);
+
+                    if (personsInGroup == null || personsInGroup.Count == 0)
+                    {
+                        msgLog +=
+                            $"  В группе [{groupName}] нет участников этого дня\n";
+                        continue;
+                    }
+
+                    msgLog +=
+                        $"  Группа: {groupName}, старт: {StartTimeToString(startTime)}, " +
+                        $"участников: {personsInGroup.Count}\n";
+
+                    foreach (JToken person in personsInGroup)
+                    {
+                        person["start_time"] = startTime.TotalMilliseconds;
+
+                        msgLog +=
+                            $"    - {StartTimeToString(startTime)} " +
+                            $"{PPToString(person)}\n";
+                    }
+                }
+
+                msgLog += "Установка стартового времени завершена\n";
+            }
+            catch (Exception ex)
+            {
+                msgLog += "\nERROR SetGroupStartTimes() вызвало ошибку\n";
+                LogError("SetGroupStartTimes", ex);
+            }
+
+            return msgLog;
         }
 
         //public static void Shuffle<T>(List<T> list)

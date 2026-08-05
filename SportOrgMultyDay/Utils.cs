@@ -1252,31 +1252,106 @@ namespace SportOrgMultyDay
 
         private void buttonInportResultsFromAnothrBase_Click(object sender, EventArgs e)
         {
+            //Dictionary<int, string> bibIds = [];
+
+            //openFileDialogJson.ShowDialog();
+            //string json = File.ReadAllText(openFileDialogJson.FileName);
+            //JObject rawJBase = ParseJson(json);
+            //var curRaceNew = PBCurrentRaceFromBase(rawJBase);
+            //var resultsNew = PBResults(curRaceNew);
+
+
+            //var race = PBCurrentRaceFromBase(JBase);
+            //var persons = PBPersons(race);
+            //var results = PBResults(race);
+            //foreach (var person in persons)
+            //{
+            //    string pid = PPId(person);
+            //    int pbib = PPBib(person);
+            //    bibIds.Add(pbib, pid);
+            //}
+
+            //foreach (var newResult in resultsNew)
+            //{
+            //    int cardNumber = PRcardNumber(newResult);
+            //    bibIds.TryGetValue(cardNumber, out string newpid);
+            //    newResult["person_id"] = newpid;
+            //    results.Add(newResult);
+            //}
+
+
             Dictionary<int, string> bibIds = [];
 
             openFileDialogJson.ShowDialog();
             string json = File.ReadAllText(openFileDialogJson.FileName);
             JObject rawJBase = ParseJson(json);
             var curRaceNew = PBCurrentRaceFromBase(rawJBase);
-            var resultsNew = PBResults(curRaceNew);
-
-
             var race = PBCurrentRaceFromBase(JBase);
-            var persons = PBPersons(race);
-            var results = PBResults(race);
-            foreach (var person in persons)
-            {
-                string pid = PPId(person);
-                int pbib = PPBib(person);
-                bibIds.Add(pbib, pid);
-            }
 
-            foreach (var newResult in resultsNew)
+
+            var personsNew = PBPersons(curRaceNew);
+
+            var groupsNew = PBGroups(curRaceNew);
+            var dictNewGroups = DictGIdGroupName(groupsNew);
+
+            var orgsNew = PBOrganizations(curRaceNew);
+            var dictNewOrgs = DictOIdOrgName(orgsNew);
+
+            var groups = PBGroups(race);
+            var dictGroups = DictGGroupNameId(groups);
+
+            var orgs = PBOrganizations(race);
+            var dictOrgs = DictOOrgNameId(orgs);
+
+            JArray persons = PBPersons(race);
+            //var results = PBResults(race);
+            //foreach (var person in persons)
+            //{
+            //    string pid = PPId(person);
+            //    int pbib = PPBib(person);
+            //    bibIds.Add(pbib, pid);
+            //}
+            List<JToken> newPersonsToAddInOurBase = new List<JToken>();
+
+            foreach (var newPerson in personsNew)
             {
-                int cardNumber = PRcardNumber(newResult);
-                bibIds.TryGetValue(cardNumber, out string newpid);
-                newResult["person_id"] = newpid;
-                results.Add(newResult);
+                bool notFound = true;
+
+                string NPsname = PPSurname(newPerson);
+                string NPname = PPName(newPerson);
+                string NPmname = PPMiddleName(newPerson);
+
+                foreach (var person in persons)
+                {
+                    string sname = PPSurname(person);
+                    string name = PPName(person);
+                    string mname = PPMiddleName(person);
+                    if (sname == NPsname && name == NPname && mname == NPmname)
+                    {
+                        notFound = false;
+                        person["world_code"] = PPWorldCode(newPerson);
+                        break;
+                    }
+                }
+                if (notFound)
+                {
+                    var newGroupID = PPGroupId(newPerson);
+                    var newGname = dictNewGroups[newGroupID];
+                    var targetGroupId = dictGroups[newGname];
+                    newPerson["group_id"] = targetGroupId;
+
+                    //var newOrgID = PPOrganizationId(newPerson);
+                    //var newOname = dictNewOrgs[newOrgID];
+                    //var targetOrgId = dictOrgs[newOname];
+                    //newPerson["organization_id"] = targetOrgId;
+
+
+                    newPersonsToAddInOurBase.Add(newPerson);
+                }
+            }
+            foreach (var person in newPersonsToAddInOurBase)
+            {
+                persons.Add(person);
             }
         }
 
@@ -1375,11 +1450,19 @@ namespace SportOrgMultyDay
                 new ProtocolHtmlCompressorSettings
                 {
                     ClearPersonsSensitiveData = true,
-                    ClearOrganizationsSensitiveData = true          
+                    ClearOrganizationsSensitiveData = true
                 });
 
             File.WriteAllText(openFileDialogHtml.FileName + "compressed.html", resultHtml, new UTF8Encoding(false));
-            SendLog( "Уменьшеный протокол - "+ openFileDialogHtml.FileName + "compressed.html");
+            SendLog("Уменьшеный протокол - " + openFileDialogHtml.FileName + "compressed.html");
+        }
+
+        private void buttonSetMinutesMasstart_Click(object sender, EventArgs e)
+        {
+            int currentRaceId = checkBoxSetStartTimeOnlyCurrentDayPersons.Checked ? CurrentRaceID(JBase) : -1;
+            JToken race = PBCurrentRaceFromBase(JBase);
+            SendLog( StartTimeManager.SetGroupStartTimes(race, currentRaceId, richTextBoxGroupStartOrder.Text));
+
         }
     }
 }
