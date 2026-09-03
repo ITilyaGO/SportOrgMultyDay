@@ -48,6 +48,9 @@ namespace SportOrgMultyDay
         PersonStartMinute PersonStartMinuteSelected;
         List<PersonStartMinute> PersonStartMinutes = new List<PersonStartMinute>();
 
+        JToken ChessPersonSelected;
+        ShahmatkaGrid ChessGrid;
+
         Dictionary<string, string> splitterStartLog = new()
         {
             { "space"," " },
@@ -957,15 +960,12 @@ namespace SportOrgMultyDay
 
         private void ReloadShahmatka()
         {
-            ShahmatkaDisplayMode displayMode = ShahmatkaDisplayMode.Group;
-            if (radioButtonChessBib.Checked)
-                displayMode = ShahmatkaDisplayMode.Bib;
-            else if (radioButtonChessSurname.Checked)
-                displayMode = ShahmatkaDisplayMode.Surname;
-
             JToken race = PBCurrentRaceFromBase(JBase);
-            DataTable table = ShahmatkaManager.BuildGrid(race, displayMode);
-            dataGridViewChess.DataSource = table;
+            ChessGrid = ShahmatkaManager.BuildGrid(race, checkBoxChessBib.Checked, checkBoxChessGroup.Checked, checkBoxChessSurname.Checked);
+            dataGridViewChess.DataSource = ChessGrid.Table;
+
+            ChessPersonSelected = null;
+            ReloadChessSelectedPerson();
         }
 
         private void buttonChessRefresh_Click(object sender, EventArgs e)
@@ -973,10 +973,83 @@ namespace SportOrgMultyDay
             ReloadShahmatka();
         }
 
-        private void radioButtonChessMode_CheckedChanged(object sender, EventArgs e)
+        private void checkBoxChessMode_CheckedChanged(object sender, EventArgs e)
         {
-            if (((RadioButton)sender).Checked)
-                ReloadShahmatka();
+            ReloadShahmatka();
+        }
+
+        private void ReloadChessSelectedPerson()
+        {
+            if (ChessPersonSelected != null)
+            {
+                labelChessSelectedPerson.ForeColor = Color.Black;
+                labelChessSelectedPerson.Text = $"Выбран: {PPSurnameName(ChessPersonSelected)}";
+            }
+            else
+            {
+                labelChessSelectedPerson.ForeColor = Color.Gray;
+                labelChessSelectedPerson.Text = "Выберите первого участника (ПКМ)";
+            }
+        }
+
+        private void dataGridViewChess_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ChessPersonSelected = null;
+                ReloadChessSelectedPerson();
+                return;
+            }
+
+            if (e.Button != MouseButtons.Right || e.RowIndex < 0 || e.ColumnIndex <= 0 || ChessGrid == null)
+                return;
+
+            List<JToken> personsInCell = ChessGrid.PersonsAt(e.RowIndex, e.ColumnIndex - 1);
+            if (personsInCell == null || personsInCell.Count == 0)
+            {
+                SendLog("В этой ячейке нет участников");
+                return;
+            }
+
+            if (personsInCell.Count == 1)
+            {
+                ChessPickPerson(personsInCell[0]);
+                return;
+            }
+
+            ContextMenuStrip menu = new();
+            foreach (JToken person in personsInCell)
+            {
+                JToken pickedPerson = person;
+                menu.Items.Add($"{PPBib(person)} {PPSurnameName(person)}", null, (s, args) => ChessPickPerson(pickedPerson));
+            }
+            menu.Show(dataGridViewChess, e.Location);
+        }
+
+        private void ChessPickPerson(JToken person)
+        {
+            if (ChessPersonSelected == null)
+            {
+                ChessPersonSelected = person;
+                ReloadChessSelectedPerson();
+                return;
+            }
+
+            if (ChessPersonSelected == person)
+            {
+                ChessPersonSelected = null;
+                ReloadChessSelectedPerson();
+                return;
+            }
+
+            TimeSpan selectedStartTime = PPStartTimeTS(ChessPersonSelected) ?? TimeSpan.Zero;
+            TimeSpan clickedStartTime = PPStartTimeTS(person) ?? TimeSpan.Zero;
+            SendLog($"Поменяли местами стартовые минуты [{PPSurnameName(person)}] {clickedStartTime} и [{PPSurnameName(ChessPersonSelected)}] {selectedStartTime}");
+            person["start_time"] = selectedStartTime.TotalMilliseconds;
+            ChessPersonSelected["start_time"] = clickedStartTime.TotalMilliseconds;
+
+            ChessPersonSelected = null;
+            ReloadShahmatka();
         }
 
         private void dataGridViewPersonMinutes_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)

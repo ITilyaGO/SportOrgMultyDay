@@ -222,10 +222,11 @@
             richTextBoxLog = new RichTextBox();
             tabPageChess = new TabPage();
             dataGridViewChess = new DataGridView();
-            radioButtonChessGroup = new RadioButton();
-            radioButtonChessBib = new RadioButton();
-            radioButtonChessSurname = new RadioButton();
+            checkBoxChessBib = new CheckBox();
+            checkBoxChessGroup = new CheckBox();
+            checkBoxChessSurname = new CheckBox();
             buttonChessRefresh = new Button();
+            labelChessSelectedPerson = new Label();
             tabControl1 = new TabControl();
             openFileDialogStartLog = new OpenFileDialog();
             toolTipGeneral = new ToolTip(components);
@@ -2454,10 +2455,11 @@
             // tabPageChess
             //
             tabPageChess.Controls.Add(dataGridViewChess);
-            tabPageChess.Controls.Add(radioButtonChessGroup);
-            tabPageChess.Controls.Add(radioButtonChessBib);
-            tabPageChess.Controls.Add(radioButtonChessSurname);
+            tabPageChess.Controls.Add(checkBoxChessBib);
+            tabPageChess.Controls.Add(checkBoxChessGroup);
+            tabPageChess.Controls.Add(checkBoxChessSurname);
             tabPageChess.Controls.Add(buttonChessRefresh);
+            tabPageChess.Controls.Add(labelChessSelectedPerson);
             tabPageChess.Location = new Point(4, 34);
             tabPageChess.Margin = new Padding(4, 5, 4, 5);
             tabPageChess.Name = "tabPageChess";
@@ -2479,44 +2481,45 @@
             dataGridViewChess.RowHeadersWidth = 62;
             dataGridViewChess.Size = new Size(1173, 790);
             dataGridViewChess.TabIndex = 0;
+            dataGridViewChess.CellMouseUp += dataGridViewChess_CellMouseUp;
             //
-            // radioButtonChessGroup
+            // checkBoxChessBib
             //
-            radioButtonChessGroup.AutoSize = true;
-            radioButtonChessGroup.Checked = true;
-            radioButtonChessGroup.Location = new Point(9, 18);
-            radioButtonChessGroup.Margin = new Padding(4, 5, 4, 5);
-            radioButtonChessGroup.Name = "radioButtonChessGroup";
-            radioButtonChessGroup.Size = new Size(100, 29);
-            radioButtonChessGroup.TabIndex = 1;
-            radioButtonChessGroup.TabStop = true;
-            radioButtonChessGroup.Text = "Группы";
-            radioButtonChessGroup.UseVisualStyleBackColor = true;
-            radioButtonChessGroup.CheckedChanged += radioButtonChessMode_CheckedChanged;
+            checkBoxChessBib.AutoSize = true;
+            checkBoxChessBib.Location = new Point(9, 18);
+            checkBoxChessBib.Margin = new Padding(4, 5, 4, 5);
+            checkBoxChessBib.Name = "checkBoxChessBib";
+            checkBoxChessBib.Size = new Size(105, 29);
+            checkBoxChessBib.TabIndex = 1;
+            checkBoxChessBib.Text = "Номера";
+            checkBoxChessBib.UseVisualStyleBackColor = true;
+            checkBoxChessBib.CheckedChanged += checkBoxChessMode_CheckedChanged;
             //
-            // radioButtonChessBib
+            // checkBoxChessGroup
             //
-            radioButtonChessBib.AutoSize = true;
-            radioButtonChessBib.Location = new Point(140, 18);
-            radioButtonChessBib.Margin = new Padding(4, 5, 4, 5);
-            radioButtonChessBib.Name = "radioButtonChessBib";
-            radioButtonChessBib.Size = new Size(105, 29);
-            radioButtonChessBib.TabIndex = 2;
-            radioButtonChessBib.Text = "Номера";
-            radioButtonChessBib.UseVisualStyleBackColor = true;
-            radioButtonChessBib.CheckedChanged += radioButtonChessMode_CheckedChanged;
+            checkBoxChessGroup.AutoSize = true;
+            checkBoxChessGroup.Checked = true;
+            checkBoxChessGroup.CheckState = CheckState.Checked;
+            checkBoxChessGroup.Location = new Point(140, 18);
+            checkBoxChessGroup.Margin = new Padding(4, 5, 4, 5);
+            checkBoxChessGroup.Name = "checkBoxChessGroup";
+            checkBoxChessGroup.Size = new Size(100, 29);
+            checkBoxChessGroup.TabIndex = 2;
+            checkBoxChessGroup.Text = "Группы";
+            checkBoxChessGroup.UseVisualStyleBackColor = true;
+            checkBoxChessGroup.CheckedChanged += checkBoxChessMode_CheckedChanged;
             //
-            // radioButtonChessSurname
+            // checkBoxChessSurname
             //
-            radioButtonChessSurname.AutoSize = true;
-            radioButtonChessSurname.Location = new Point(280, 18);
-            radioButtonChessSurname.Margin = new Padding(4, 5, 4, 5);
-            radioButtonChessSurname.Name = "radioButtonChessSurname";
-            radioButtonChessSurname.Size = new Size(115, 29);
-            radioButtonChessSurname.TabIndex = 3;
-            radioButtonChessSurname.Text = "Фамилии";
-            radioButtonChessSurname.UseVisualStyleBackColor = true;
-            radioButtonChessSurname.CheckedChanged += radioButtonChessMode_CheckedChanged;
+            checkBoxChessSurname.AutoSize = true;
+            checkBoxChessSurname.Location = new Point(280, 18);
+            checkBoxChessSurname.Margin = new Padding(4, 5, 4, 5);
+            checkBoxChessSurname.Name = "checkBoxChessSurname";
+            checkBoxChessSurname.Size = new Size(115, 29);
+            checkBoxChessSurname.TabIndex = 3;
+            checkBoxChessSurname.Text = "Фамилии";
+            checkBoxChessSurname.UseVisualStyleBackColor = true;
+            checkBoxChessSurname.CheckedChanged += checkBoxChessMode_CheckedChanged;
             //
             // buttonChessRefresh
             //
@@ -2528,6 +2531,17 @@
             buttonChessRefresh.Text = "Обновить";
             buttonChessRefresh.UseVisualStyleBackColor = true;
             buttonChessRefresh.Click += buttonChessRefresh_Click;
+            //
+            // labelChessSelectedPerson
+            //
+            labelChessSelectedPerson.AutoSize = true;
+            labelChessSelectedPerson.ForeColor = Color.Gray;
+            labelChessSelectedPerson.Location = new Point(600, 18);
+            labelChessSelectedPerson.Margin = new Padding(4, 0, 4, 0);
+            labelChessSelectedPerson.Name = "labelChessSelectedPerson";
+            labelChessSelectedPerson.Size = new Size(400, 25);
+            labelChessSelectedPerson.TabIndex = 5;
+            labelChessSelectedPerson.Text = "Выберите первого участника (ПКМ)";
             //
             // tabControl1
             //
@@ -2727,10 +2741,11 @@
         private RichTextBox richTextBoxLog;
         private TabPage tabPageChess;
         private DataGridView dataGridViewChess;
-        private RadioButton radioButtonChessGroup;
-        private RadioButton radioButtonChessBib;
-        private RadioButton radioButtonChessSurname;
+        private CheckBox checkBoxChessBib;
+        private CheckBox checkBoxChessGroup;
+        private CheckBox checkBoxChessSurname;
         private Button buttonChessRefresh;
+        private Label labelChessSelectedPerson;
         private TabControl tabControl1;
         private GroupBox groupBoxStartLogProcessing;
         private Label labelSFRStartLogCount;

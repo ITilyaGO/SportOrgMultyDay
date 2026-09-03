@@ -9,30 +9,53 @@ using static SportOrgMultyDay.Processing.Parsing.Things.ParseStartTime;
 
 namespace SportOrgMultyDay.Processing
 {
-    public enum ShahmatkaDisplayMode
+    public class ShahmatkaGrid
     {
-        Group,
-        Bib,
-        Surname
+        public DataTable Table { get; }
+        public List<int> Corridors { get; }
+        public List<List<JToken>[]> RowsPersons { get; }
+
+        public ShahmatkaGrid(DataTable table, List<int> corridors, List<List<JToken>[]> rowsPersons)
+        {
+            Table = table;
+            Corridors = corridors;
+            RowsPersons = rowsPersons;
+        }
+
+        public List<JToken> PersonsAt(int rowIndex, int corridorColumnIndex)
+        {
+            if (rowIndex < 0 || rowIndex >= RowsPersons.Count)
+                return null;
+            List<JToken>[] row = RowsPersons[rowIndex];
+            if (corridorColumnIndex < 0 || corridorColumnIndex >= row.Length)
+                return null;
+            return row[corridorColumnIndex];
+        }
     }
 
     public static class ShahmatkaManager
     {
         public const string TimeColumnName = "Время";
 
-        public static DataTable BuildGrid(JToken race, ShahmatkaDisplayMode displayMode)
+        public static ShahmatkaGrid BuildGrid(JToken race, bool showBib, bool showGroup, bool showSurname)
         {
+            if (!showBib && !showGroup && !showSurname)
+                showGroup = true;
+
             DataTable table = new();
             table.Columns.Add(TimeColumnName, typeof(string));
 
             JArray groups = PBGroups(race);
             JArray persons = PBPersons(race);
+            List<int> corridors = new();
+            List<List<JToken>[]> rowsPersons = new();
+
             if (groups == null || persons == null)
-                return table;
+                return new ShahmatkaGrid(table, corridors, rowsPersons);
 
             Dictionary<string, JToken> groupById = groups.ToDictionary(PGId, group => group);
 
-            List<int> corridors = groups
+            corridors = groups
                 .Select(PGStartCorridor)
                 .Where(corridor => corridor > 0)
                 .Distinct()
@@ -76,31 +99,41 @@ namespace SportOrgMultyDay.Processing
             {
                 DataRow row = table.NewRow();
                 row[TimeColumnName] = StartTimeToString(StartTimeToTimeSpan(timeRow.Key));
-                foreach (int corridor in corridors)
+
+                List<JToken>[] rowPersons = new List<JToken>[corridors.Count];
+                for (int i = 0; i < corridors.Count; i++)
                 {
+                    int corridor = corridors[i];
                     if (timeRow.Value.TryGetValue(corridor, out List<JToken> personsInCell))
-                        row[corridor.ToString()] = CellText(personsInCell, groupById, displayMode);
+                    {
+                        row[corridor.ToString()] = CellText(personsInCell, groupById, showBib, showGroup, showSurname);
+                        rowPersons[i] = personsInCell;
+                    }
                 }
                 table.Rows.Add(row);
+                rowsPersons.Add(rowPersons);
             }
 
-            return table;
+            return new ShahmatkaGrid(table, corridors, rowsPersons);
         }
 
-        private static string CellText(List<JToken> personsInCell, Dictionary<string, JToken> groupById, ShahmatkaDisplayMode displayMode)
+        private static string CellText(List<JToken> personsInCell, Dictionary<string, JToken> groupById, bool showBib, bool showGroup, bool showSurname)
         {
-            switch (displayMode)
-            {
-                case ShahmatkaDisplayMode.Bib:
-                    return string.Join(", ", personsInCell.Select(PPBib));
-                case ShahmatkaDisplayMode.Surname:
-                    return string.Join(", ", personsInCell.Select(PPSurname));
-                default:
-                    IEnumerable<string> groupNames = personsInCell
-                        .Select(person => groupById.TryGetValue(PPGroupId(person), out JToken group) ? PGName(group) : "?")
-                        .Distinct();
-                    return string.Join(" / ", groupNames);
-            }
+            IEnumerable<string> labels = personsInCell
+                .Select(person =>
+                {
+                    List<string> parts = new();
+                    if (showBib)
+                        parts.Add(PPBib(person).ToString());
+                    if (showGroup)
+                        parts.Add(groupById.TryGetValue(PPGroupId(person), out JToken group) ? PGName(group) : "?");
+                    if (showSurname)
+                        parts.Add(PPSurname(person));
+                    return string.Join(" ", parts);
+                })
+                .Distinct();
+
+            return string.Join(" / ", labels);
         }
     }
 }
