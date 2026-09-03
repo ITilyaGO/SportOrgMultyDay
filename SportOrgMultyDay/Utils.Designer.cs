@@ -2474,11 +2474,13 @@
             dataGridViewChess.AllowUserToAddRows = false;
             dataGridViewChess.AllowUserToDeleteRows = false;
             dataGridViewChess.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewChess.DefaultCellStyle.Padding = new Padding(2, 0, 2, 0);
             dataGridViewChess.Location = new Point(9, 55);
             dataGridViewChess.Margin = new Padding(4, 5, 4, 5);
             dataGridViewChess.Name = "dataGridViewChess";
             dataGridViewChess.ReadOnly = true;
             dataGridViewChess.RowHeadersWidth = 62;
+            dataGridViewChess.RowTemplate.Height = 24;
             dataGridViewChess.Size = new Size(1173, 790);
             dataGridViewChess.TabIndex = 0;
             dataGridViewChess.CellMouseUp += dataGridViewChess_CellMouseUp;
