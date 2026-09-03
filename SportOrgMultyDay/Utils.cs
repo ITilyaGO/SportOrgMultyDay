@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Linq;
 using SportOrgMultyDay.Data;
 using SportOrgMultyDay.Data.Combine;
 using SportOrgMultyDay.Data.SportOrg;
@@ -341,6 +341,11 @@ namespace SportOrgMultyDay
             buttonGroupRemoveIfNotInList.Enabled = active;
             buttonOrganizationCreateReserveOrg.Enabled = active;
             buttonChipRentFromComment.Enabled = active;
+            buttonSetMinutesMasstart.Enabled = active;
+            buttonRemovePresonsWithOutResultsInAnyDay.Enabled = active;
+            buttonGroupRemoveByPrice.Enabled = active;
+            buttonPayidToView.Enabled = active;
+            buttonImportEstafetRequestsInWorldCodeFromAnotherBase.Enabled = active;
         }
 
         private void ReloadOrganizationRenameList()
@@ -375,6 +380,10 @@ namespace SportOrgMultyDay
         {
             SendLog(RemoveExtraPersons.Remove(JBase));
 
+        }
+        private void buttonRemovePresonsWithOutResultsInAnyDay_Click(object sender, EventArgs e)
+        {
+            SendLog(RemovePersonsWithoutResultsInAnyDay.Remove(JBase));
         }
 
         private void buttonSynchronizeReorders_Click(object sender, EventArgs e)
@@ -1233,7 +1242,7 @@ namespace SportOrgMultyDay
 
         private void labelHTWStartBibs_Click(object sender, EventArgs e)
         {
-            string instruction = "Расширенный генератор минут участников.\r\nКаждая новая строка это \"Карридор\" или колонка группы в строке - своеборазный порядок в корридоре.\r\n\r\nДля правильной авто генерации порядка старта установите коридоры группам в спорт орг. После не забудте проверишть шахматку на предмет стартующих на одной минуте из одного корридора.\r\n\r\nИспользуются два основных символа разделения - \r\n\" \" - пробел\r\n\"/\" - слеш\r\nВ начале стсроки можно написать \"+\" тогда все стартовые минуты в этом корридоре сдвинкться на 1 минуту за каждый +\r\n\r\nЕсли написать группы через пробел то минуты будут присваиваться сначала участникам одной группе зачем второй и т.д.\r\nЕсли использовать слеш то участини будут браться последовательно из разделенных таким способом групп.\r\nСлеши имеют приоритет, то есть сначала строка разделяется на части которым будут применяться минуты по очереди, но внути этих частей разделенных слешем можно использовать последовательные группы.\r\nСжимать конец старта в колонках - если выключено то при использовании слешей в итоговых минутах в каждой группе будет поддерживаться постоянный интервал старта. Включено - когда в одной из групп разделенных слешем кончатся участники, то оставшимся будут выдаваться ближайшие возможные минуты, но не меньше чем минимальный заданный интервал. \r\nПримеры \r\nЕсть группы\r\nМ21 - 3 участника\r\nЖ21 - 3 участника\r\nМ18 - 1 участник\r\nМ35 - 2 участника\r\nСтрока - \"М21 Ж21 М18 М35\" результат - М21 10:01, М21 10:02, М21 10:03, Ж21 10:04, Ж21 10:05, Ж21 10:06, М18 10:07, М35 10:08, М35 10:09\r\nСтрока - \"М21/Ж21/М18/М35\" результат - М21 10:01, Ж21 10:02, М18 10:03, М35 10:04, М21 10:05, Ж21 10:06, М35 10:07, М21 10:08, Ж21 10:09\r\nСтрока - \"М21 Ж21/М18 М35\" результат - М21 10:01, М18 10:02, М21 10:03, М35 10:04, М21 10:05, М35 10:06, Ж21 10:07, Ж21 10:08, Ж21 10:09\r\nСтрока - \"М21/Ж21/М18 М35\" результат - М21 10:01, Ж21 10:02, М18 10:03, М21 10:04, Ж21 10:05, М35 10:06, М21 10:07, Ж21 10:08, М35 10:09 \r\n\r\nЕсли выключено - Сжимать конец старта в колонках \r\nСтрока - \"Ж21 М35/М18/М21\" результат - Ж21 10:00, М18 10:01, М21 10:02, Ж21 10:03, М21 10:05, Ж21 10:06, М21 10:08, М35 10:09, М35 10:12";
+            string instruction = "Расширенный генератор минут участников.\r\nКаждая новая строка это \"Карридор\" или колонка группы в строке - своеборазный порядок в корридоре.\r\n\r\nКнопка \"Установить минуты на масстарт\" назначает всем участникам указанной группы одно общее стартовое время. В поле порядка групп задайте по одной группе в строке в формате \"Название группы ЧЧ:ММ:СС\", например: \"М21 10:00:00\". Если включен флажок текущего дня, время устанавливается только участникам выбранного дня, иначе — всем участникам.\r\n\r\nДля правильной авто генерации порядка старта установите коридоры группам в спорт орг. После не забудте проверишть шахматку на предмет стартующих на одной минуте из одного корридора.\r\n\r\nИспользуются два основных символа разделения - \r\n\" \" - пробел\r\n\"/\" - слеш\r\nВ начале стсроки можно написать \"+\" тогда все стартовые минуты в этом корридоре сдвинкться на 1 минуту за каждый +\r\n\r\nЕсли написать группы через пробел то минуты будут присваиваться сначала участникам одной группе зачем второй и т.д.\r\nЕсли использовать слеш то участини будут браться последовательно из разделенных таким способом групп.\r\nСлеши имеют приоритет, то есть сначала строка разделяется на части которым будут применяться минуты по очереди, но внути этих частей разделенных слешем можно использовать последовательные группы.\r\nСжимать конец старта в колонках - если выключено то при использовании слешей в итоговых минутах в каждой группе будет поддерживаться постоянный интервал старта. Включено - когда в одной из групп разделенных слешем кончатся участники, то оставшимся будут выдаваться ближайшие возможные минуты, но не меньше чем минимальный заданный интервал. \r\nПримеры \r\nЕсть группы\r\nМ21 - 3 участника\r\nЖ21 - 3 участника\r\nМ18 - 1 участник\r\nМ35 - 2 участника\r\nСтрока - \"М21 Ж21 М18 М35\" результат - М21 10:01, М21 10:02, М21 10:03, Ж21 10:04, Ж21 10:05, Ж21 10:06, М18 10:07, М35 10:08, М35 10:09\r\nСтрока - \"М21/Ж21/М18/М35\" результат - М21 10:01, Ж21 10:02, М18 10:03, М35 10:04, М21 10:05, Ж21 10:06, М35 10:07, М21 10:08, Ж21 10:09\r\nСтрока - \"М21 Ж21/М18 М35\" результат - М21 10:01, М18 10:02, М21 10:03, М35 10:04, М21 10:05, М35 10:06, Ж21 10:07, Ж21 10:08, Ж21 10:09\r\nСтрока - \"М21/Ж21/М18 М35\" результат - М21 10:01, Ж21 10:02, М18 10:03, М21 10:04, Ж21 10:05, М35 10:06, М21 10:07, Ж21 10:08, М35 10:09 \r\n\r\nЕсли выключено - Сжимать конец старта в колонках \r\nСтрока - \"Ж21 М35/М18/М21\" результат - Ж21 10:00, М18 10:01, М21 10:02, Ж21 10:03, М21 10:05, Ж21 10:06, М21 10:08, М35 10:09, М35 10:12";
             SendLog(instruction);
             MessageBox.Show(instruction);
         }
@@ -1251,6 +1260,11 @@ namespace SportOrgMultyDay
         private void buttonGroupRemoveGetList_Click(object sender, EventArgs e)
         {
             richTextBoxGroupNotRemoveList.Text = RemoveGroups.GetGroups(PBCurrentRaceFromBase(JBase));
+        }
+
+        private void buttonGroupRemoveByPrice_Click(object sender, EventArgs e)
+        {
+            SendLog(RemoveGroups.RemoveGroupsIfPriceNotEqual(PBCurrentRaceFromBase(JBase), 1));
         }
 
         private async void buttonPhoneFtpSendBase_Click(object sender, EventArgs e)
@@ -1278,106 +1292,31 @@ namespace SportOrgMultyDay
 
         private void buttonInportResultsFromAnothrBase_Click(object sender, EventArgs e)
         {
-            //Dictionary<int, string> bibIds = [];
-
-            //openFileDialogJson.ShowDialog();
-            //string json = File.ReadAllText(openFileDialogJson.FileName);
-            //JObject rawJBase = ParseJson(json);
-            //var curRaceNew = PBCurrentRaceFromBase(rawJBase);
-            //var resultsNew = PBResults(curRaceNew);
-
-
-            //var race = PBCurrentRaceFromBase(JBase);
-            //var persons = PBPersons(race);
-            //var results = PBResults(race);
-            //foreach (var person in persons)
-            //{
-            //    string pid = PPId(person);
-            //    int pbib = PPBib(person);
-            //    bibIds.Add(pbib, pid);
-            //}
-
-            //foreach (var newResult in resultsNew)
-            //{
-            //    int cardNumber = PRcardNumber(newResult);
-            //    bibIds.TryGetValue(cardNumber, out string newpid);
-            //    newResult["person_id"] = newpid;
-            //    results.Add(newResult);
-            //}
-
-
             Dictionary<int, string> bibIds = [];
 
             openFileDialogJson.ShowDialog();
             string json = File.ReadAllText(openFileDialogJson.FileName);
             JObject rawJBase = ParseJson(json);
             var curRaceNew = PBCurrentRaceFromBase(rawJBase);
+            var resultsNew = PBResults(curRaceNew);
+
+
             var race = PBCurrentRaceFromBase(JBase);
-
-
-            var personsNew = PBPersons(curRaceNew);
-
-            var groupsNew = PBGroups(curRaceNew);
-            var dictNewGroups = DictGIdGroupName(groupsNew);
-
-            var orgsNew = PBOrganizations(curRaceNew);
-            var dictNewOrgs = DictOIdOrgName(orgsNew);
-
-            var groups = PBGroups(race);
-            var dictGroups = DictGGroupNameId(groups);
-
-            var orgs = PBOrganizations(race);
-            var dictOrgs = DictOOrgNameId(orgs);
-
-            JArray persons = PBPersons(race);
-            //var results = PBResults(race);
-            //foreach (var person in persons)
-            //{
-            //    string pid = PPId(person);
-            //    int pbib = PPBib(person);
-            //    bibIds.Add(pbib, pid);
-            //}
-            List<JToken> newPersonsToAddInOurBase = new List<JToken>();
-
-            foreach (var newPerson in personsNew)
+            var persons = PBPersons(race);
+            var results = PBResults(race);
+            foreach (var person in persons)
             {
-                bool notFound = true;
-
-                string NPsname = PPSurname(newPerson);
-                string NPname = PPName(newPerson);
-                string NPmname = PPMiddleName(newPerson);
-
-                foreach (var person in persons)
-                {
-                    string sname = PPSurname(person);
-                    string name = PPName(person);
-                    string mname = PPMiddleName(person);
-                    if (sname == NPsname && name == NPname && mname == NPmname)
-                    {
-                        notFound = false;
-                        person["world_code"] = PPWorldCode(newPerson);
-                        break;
-                    }
-                }
-                if (notFound)
-                {
-                    var newGroupID = PPGroupId(newPerson);
-                    var newGname = dictNewGroups[newGroupID];
-                    var targetGroupId = dictGroups[newGname];
-                    newPerson["group_id"] = targetGroupId;
-
-                    //var newOrgID = PPOrganizationId(newPerson);
-                    //var newOname = dictNewOrgs[newOrgID];
-                    //var targetOrgId = dictOrgs[newOname];
-                    //newPerson["organization_id"] = targetOrgId;
-
-
-                    newPersonsToAddInOurBase.Add(newPerson);
-                }
+                string pid = PPId(person);
+                int pbib = PPBib(person);
+                bibIds.Add(pbib, pid);
             }
-            foreach (var person in newPersonsToAddInOurBase)
+
+            foreach (var newResult in resultsNew)
             {
-                persons.Add(person);
+                int cardNumber = PRcardNumber(newResult);
+                bibIds.TryGetValue(cardNumber, out string newpid);
+                newResult["person_id"] = newpid;
+                results.Add(newResult);
             }
         }
 
@@ -1487,8 +1426,106 @@ namespace SportOrgMultyDay
         {
             int currentRaceId = checkBoxSetStartTimeOnlyCurrentDayPersons.Checked ? CurrentRaceID(JBase) : -1;
             JToken race = PBCurrentRaceFromBase(JBase);
-            SendLog( StartTimeManager.SetGroupStartTimes(race, currentRaceId, richTextBoxGroupStartOrder.Text));
+            SendLog(StartTimeManager.SetGroupStartTimes(race, currentRaceId, richTextBoxGroupStartOrder.Text));
 
+        }
+
+        private void buttonImportEstafetRequestsInWorldCodeFromAnotherBase_Click(object sender, EventArgs e)
+        {
+            Dictionary<int, string> bibIds = [];
+
+            if (openFileDialogJson.ShowDialog() != DialogResult.OK)
+            {
+                SendLog("Импорт world_code отменен");
+                return;
+            }
+
+            string log = $"Импорт world_code из другой базы - {openFileDialogJson.FileName}\n";
+            try
+            {
+                string json = File.ReadAllText(openFileDialogJson.FileName);
+                JObject rawJBase = ParseJson(json);
+                var curRaceNew = PBCurrentRaceFromBase(rawJBase);
+                var race = PBCurrentRaceFromBase(JBase);
+
+
+                var personsNew = PBPersons(curRaceNew);
+
+                var groupsNew = PBGroups(curRaceNew);
+                var dictNewGroups = DictGIdGroupName(groupsNew);
+
+                var orgsNew = PBOrganizations(curRaceNew);
+                var dictNewOrgs = DictOIdOrgName(orgsNew);
+
+                var groups = PBGroups(race);
+                var dictGroups = DictGGroupNameId(groups);
+
+                var orgs = PBOrganizations(race);
+                var dictOrgs = DictOOrgNameId(orgs);
+
+                JArray persons = PBPersons(race);
+                //var results = PBResults(race);
+                //foreach (var person in persons)
+                //{
+                //    string pid = PPId(person);
+                //    int pbib = PPBib(person);
+                //    bibIds.Add(pbib, pid);
+                //}
+                List<JToken> newPersonsToAddInOurBase = new List<JToken>();
+                int updatedCount = 0;
+
+                foreach (var newPerson in personsNew)
+                {
+                    bool notFound = true;
+
+                    string NPsname = PPSurname(newPerson);
+                    string NPname = PPName(newPerson);
+                    string NPmname = PPMiddleName(newPerson);
+
+                    foreach (var person in persons)
+                    {
+                        string sname = PPSurname(person);
+                        string name = PPName(person);
+                        string mname = PPMiddleName(person);
+                        if (sname == NPsname && name == NPname && mname == NPmname)
+                        {
+                            notFound = false;
+                            person["world_code"] = PPWorldCode(newPerson);
+                            updatedCount++;
+                            log += $"  Найден - {PPToString(person)}. world_code установлен - {PPWorldCode(newPerson)}\n";
+                            break;
+                        }
+                    }
+                    if (notFound)
+                    {
+                        var newGroupID = PPGroupId(newPerson);
+                        var newGname = dictNewGroups[newGroupID];
+                        var targetGroupId = dictGroups[newGname];
+                        newPerson["group_id"] = targetGroupId;
+
+                        //var newOrgID = PPOrganizationId(newPerson);
+                        //var newOname = dictNewOrgs[newOrgID];
+                        //var targetOrgId = dictOrgs[newOname];
+                        //newPerson["organization_id"] = targetOrgId;
+
+
+                        newPersonsToAddInOurBase.Add(newPerson);
+                        log += $"  Не найден - {NPsname} {NPname} {NPmname}. Будет добавлен новым участником в группу {newGname}\n";
+                    }
+                }
+                foreach (var person in newPersonsToAddInOurBase)
+                {
+                    persons.Add(person);
+                }
+
+                log += $"Готово. Обновлено world_code - {updatedCount}, добавлено новых участников - {newPersonsToAddInOurBase.Count}";
+            }
+            catch (Exception ex)
+            {
+                log += $"Ошибка - {ex.Message}";
+                LogError("importEstafetRequestsWorldCode", ex);
+            }
+            SendLog(log);
         }
     }
 }

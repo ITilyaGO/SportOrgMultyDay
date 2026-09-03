@@ -8,6 +8,7 @@ using static SportOrgMultyDay.Processing.Parsing.ParseBase;
 using static SportOrgMultyDay.Processing.Parsing.ParsePerson;
 using static SportOrgMultyDay.Processing.Parsing.ParseGroup;
 using static SportOrgMultyDay.Processing.Parsing.ParseOrganization;
+using static SportOrgMultyDay.Processing.Parsing.ParseResult;
 using static SportOrgMultyDay.Processing.Logger;
 
 namespace SportOrgMultyDay.Processing
@@ -44,6 +45,48 @@ namespace SportOrgMultyDay.Processing
                 log += $" ОК. Удалено участников: {personsInGroup.Count()}\n";
             }
             log += $"  Осталось групп: {groups.Count} Участников: {persons.Count}\n";
+            log += "Завершено\n";
+            return log;
+        }
+
+        public static string RemoveGroupsIfPriceNotEqual(JToken race, int keepPrice)
+        {
+            string log = string.Empty;
+            log += $"Удаление групп со стартовым взносом != {keepPrice}...\n";
+
+            JArray persons = PBPersons(race);
+            JArray groups = PBGroups(race);
+            JArray results = PBResults(race);
+            log += $"  Группы: {groups.Count}  Участники: {persons.Count}\n";
+
+            List<JToken> groupsToRemove = groups.Where(g => PGPrice(g) != keepPrice).ToList();
+            log += $"  Групп к удалению: {groupsToRemove.Count}\n";
+            log += $"  Удаляем группы: {string.Join(", ", groupsToRemove.Select(g => PGName(g)))}\n";
+            ILookup<string, JToken> groupId_persons = persons.ToLookup(p => PPGroupId(p));
+
+            int removedResults = 0;
+            foreach (JToken group in groupsToRemove)
+            {
+                log += $"    - Удаляем группу: {PGName(group)}... ";
+                List<JToken> personsInGroup = groupId_persons[PGId(group)].ToList();
+                foreach (JToken person in personsInGroup)
+                {
+                    string personId = PPId(person);
+                    for (int r = results.Count - 1; r >= 0; r--)
+                    {
+                        if (PRPersonId(results[r]) == personId)
+                        {
+                            results[r].Remove();
+                            removedResults++;
+                        }
+                    }
+                    persons.Remove(person);
+                }
+                groups.Remove(group);
+                log += $" ОК. Удалено участников: {personsInGroup.Count}\n";
+            }
+            log += $"  Осталось групп: {groups.Count} Участников: {persons.Count}\n";
+            log += $"  Удалено результатов: {removedResults}\n";
             log += "Завершено\n";
             return log;
         }
