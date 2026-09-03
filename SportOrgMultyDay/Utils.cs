@@ -954,6 +954,21 @@ namespace SportOrgMultyDay
             ReloadStartMinutes();
         }
 
+        private void buttonDistributeLateFind_Click(object sender, EventArgs e)
+        {
+            List<LateStartDistributor.LateEntry> entries = LateStartDistributor.FindLateEntries(JBase, checkBoxDistributeLateAllDays.Checked);
+            richTextBoxGroupStartOrder.Text = LateStartDistributor.FormatEntries(entries);
+            SendLog($"Найдено дозаявленных без стартового времени: {entries.Count}\n{LateStartDistributor.FormatEntries(entries)}");
+        }
+
+        private void buttonDistributeLateApply_Click(object sender, EventArgs e)
+        {
+            string log = LateStartDistributor.Distribute(JBase, richTextBoxGroupStartOrder.Text);
+            SendLog(log);
+            ReloadStartMinutes();
+            ReloadShahmatka();
+        }
+
         private void EnsureMultiDayPanel()
         {
             if (panelStartMinutesMultiDay != null)

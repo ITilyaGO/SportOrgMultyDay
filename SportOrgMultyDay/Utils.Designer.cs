@@ -30,6 +30,7 @@
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Utils));
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             buttonBaseImport = new Button();
             contextMenuStripLog = new ContextMenuStrip(components);
             ScrollLogToolStripMenuItem = new ToolStripMenuItem();
@@ -110,6 +111,10 @@
             buttonSetStartMinutes = new Button();
             richTextBoxGroupStartOrder = new RichTextBox();
             dateTimePickerStartTime = new DateTimePicker();
+            groupBoxDistributeLate = new GroupBox();
+            checkBoxDistributeLateAllDays = new CheckBox();
+            buttonDistributeLateFind = new Button();
+            buttonDistributeLateApply = new Button();
             label20 = new Label();
             numericUpDownSetNumbersInActiveDayFirst = new NumericUpDown();
             buttonCopyGroupSettings = new Button();
@@ -252,6 +257,7 @@
             groupBox5.SuspendLayout();
             groupBox4.SuspendLayout();
             groupBoxStartTime.SuspendLayout();
+            groupBoxDistributeLate.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDownSetStartTimeMinGap).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownSetNumbersInActiveDayFirst).BeginInit();
             tabControlFunc.SuspendLayout();
@@ -976,6 +982,7 @@
             groupBoxStartTime.Controls.Add(buttonSetStartMinutes);
             groupBoxStartTime.Controls.Add(richTextBoxGroupStartOrder);
             groupBoxStartTime.Controls.Add(dateTimePickerStartTime);
+            groupBoxStartTime.Controls.Add(groupBoxDistributeLate);
             groupBoxStartTime.Location = new Point(9, 10);
             groupBoxStartTime.Margin = new Padding(4, 5, 4, 5);
             groupBoxStartTime.Name = "groupBoxStartTime";
@@ -999,7 +1006,7 @@
             // label18
             // 
             label18.AutoSize = true;
-            label18.Location = new Point(435, 438);
+            label18.Location = new Point(430, 370);
             label18.Margin = new Padding(4, 0, 4, 0);
             label18.Name = "label18";
             label18.Size = new Size(341, 25);
@@ -1008,7 +1015,7 @@
             // 
             // numericUpDownSetStartTimeMinGap
             // 
-            numericUpDownSetStartTimeMinGap.Location = new Point(368, 437);
+            numericUpDownSetStartTimeMinGap.Location = new Point(363, 369);
             numericUpDownSetStartTimeMinGap.Margin = new Padding(4, 5, 4, 5);
             numericUpDownSetStartTimeMinGap.Name = "numericUpDownSetStartTimeMinGap";
             numericUpDownSetStartTimeMinGap.Size = new Size(60, 31);
@@ -1017,7 +1024,7 @@
             // checkBoxSetStartTimeSuffleWithOrgs
             // 
             checkBoxSetStartTimeSuffleWithOrgs.AutoSize = true;
-            checkBoxSetStartTimeSuffleWithOrgs.Location = new Point(368, 397);
+            checkBoxSetStartTimeSuffleWithOrgs.Location = new Point(366, 336);
             checkBoxSetStartTimeSuffleWithOrgs.Margin = new Padding(4, 5, 4, 5);
             checkBoxSetStartTimeSuffleWithOrgs.Name = "checkBoxSetStartTimeSuffleWithOrgs";
             checkBoxSetStartTimeSuffleWithOrgs.Size = new Size(378, 29);
@@ -1168,6 +1175,53 @@
             dateTimePickerStartTime.Size = new Size(117, 31);
             dateTimePickerStartTime.TabIndex = 0;
             dateTimePickerStartTime.Value = new DateTime(1753, 1, 1, 10, 0, 0, 0);
+            //
+            // groupBoxDistributeLate
+            //
+            groupBoxDistributeLate.Controls.Add(checkBoxDistributeLateAllDays);
+            groupBoxDistributeLate.Controls.Add(buttonDistributeLateFind);
+            groupBoxDistributeLate.Controls.Add(buttonDistributeLateApply);
+            groupBoxDistributeLate.Location = new Point(369, 465);
+            groupBoxDistributeLate.Margin = new Padding(4, 5, 4, 5);
+            groupBoxDistributeLate.Name = "groupBoxDistributeLate";
+            groupBoxDistributeLate.Padding = new Padding(4, 5, 4, 5);
+            groupBoxDistributeLate.Size = new Size(370, 160);
+            groupBoxDistributeLate.TabIndex = 35;
+            groupBoxDistributeLate.TabStop = false;
+            groupBoxDistributeLate.Text = "Дозаявленные без старта";
+            //
+            // checkBoxDistributeLateAllDays
+            //
+            checkBoxDistributeLateAllDays.AutoSize = true;
+            checkBoxDistributeLateAllDays.Location = new Point(10, 25);
+            checkBoxDistributeLateAllDays.Margin = new Padding(4, 5, 4, 5);
+            checkBoxDistributeLateAllDays.Name = "checkBoxDistributeLateAllDays";
+            checkBoxDistributeLateAllDays.Size = new Size(87, 29);
+            checkBoxDistributeLateAllDays.TabIndex = 31;
+            checkBoxDistributeLateAllDays.Text = "Все дни";
+            checkBoxDistributeLateAllDays.UseVisualStyleBackColor = true;
+            //
+            // buttonDistributeLateFind
+            //
+            buttonDistributeLateFind.Location = new Point(10, 60);
+            buttonDistributeLateFind.Margin = new Padding(4, 5, 4, 5);
+            buttonDistributeLateFind.Name = "buttonDistributeLateFind";
+            buttonDistributeLateFind.Size = new Size(350, 35);
+            buttonDistributeLateFind.TabIndex = 32;
+            buttonDistributeLateFind.Text = "Найти дозаявленных";
+            buttonDistributeLateFind.UseVisualStyleBackColor = true;
+            buttonDistributeLateFind.Click += buttonDistributeLateFind_Click;
+            //
+            // buttonDistributeLateApply
+            //
+            buttonDistributeLateApply.Location = new Point(10, 100);
+            buttonDistributeLateApply.Margin = new Padding(4, 5, 4, 5);
+            buttonDistributeLateApply.Name = "buttonDistributeLateApply";
+            buttonDistributeLateApply.Size = new Size(350, 35);
+            buttonDistributeLateApply.TabIndex = 34;
+            buttonDistributeLateApply.Text = "Распределить";
+            buttonDistributeLateApply.UseVisualStyleBackColor = true;
+            buttonDistributeLateApply.Click += buttonDistributeLateApply_Click;
             // 
             // label20
             // 
@@ -2415,19 +2469,19 @@
             comboBoxStartMinutesGroupSelect.Size = new Size(171, 33);
             comboBoxStartMinutesGroupSelect.TabIndex = 1;
             comboBoxStartMinutesGroupSelect.SelectedIndexChanged += comboBoxStartMinutesGroupSelect_SelectedIndexChanged;
-            //
+            // 
             // checkBoxStartMinutesMultiDay
-            //
+            // 
             checkBoxStartMinutesMultiDay.AutoSize = true;
             checkBoxStartMinutesMultiDay.Location = new Point(650, 15);
             checkBoxStartMinutesMultiDay.Margin = new Padding(4, 5, 4, 5);
             checkBoxStartMinutesMultiDay.Name = "checkBoxStartMinutesMultiDay";
-            checkBoxStartMinutesMultiDay.Size = new Size(180, 29);
+            checkBoxStartMinutesMultiDay.Size = new Size(170, 29);
             checkBoxStartMinutesMultiDay.TabIndex = 30;
             checkBoxStartMinutesMultiDay.Text = "Несколько дней";
             checkBoxStartMinutesMultiDay.UseVisualStyleBackColor = true;
             checkBoxStartMinutesMultiDay.CheckedChanged += checkBoxStartMinutesMultiDay_CheckedChanged;
-            //
+            // 
             // dataGridViewPersonMinutes
             // 
             dataGridViewPersonMinutes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -2466,9 +2520,9 @@
             richTextBoxLog.Text = "";
             richTextBoxLog.WordWrap = false;
             richTextBoxLog.TextChanged += richTextBoxLog_TextChanged;
-            //
+            // 
             // tabPageChess
-            //
+            // 
             tabPageChess.Controls.Add(dataGridViewChess);
             tabPageChess.Controls.Add(checkBoxChessBib);
             tabPageChess.Controls.Add(checkBoxChessGroup);
@@ -2484,14 +2538,21 @@
             tabPageChess.TabIndex = 2;
             tabPageChess.Text = "Шахматка";
             tabPageChess.UseVisualStyleBackColor = true;
-            //
+            // 
             // dataGridViewChess
-            //
+            // 
             dataGridViewChess.AllowUserToAddRows = false;
             dataGridViewChess.AllowUserToDeleteRows = false;
             dataGridViewChess.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewChess.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewChess.DefaultCellStyle.Padding = new Padding(2, 0, 2, 0);
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = SystemColors.Window;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle1.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle1.Padding = new Padding(2, 0, 2, 0);
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.False;
+            dataGridViewChess.DefaultCellStyle = dataGridViewCellStyle1;
             dataGridViewChess.Location = new Point(9, 55);
             dataGridViewChess.Margin = new Padding(4, 5, 4, 5);
             dataGridViewChess.Name = "dataGridViewChess";
@@ -2501,59 +2562,59 @@
             dataGridViewChess.Size = new Size(1173, 790);
             dataGridViewChess.TabIndex = 0;
             dataGridViewChess.CellMouseUp += dataGridViewChess_CellMouseUp;
-            //
+            // 
             // checkBoxChessBib
-            //
+            // 
             checkBoxChessBib.AutoSize = true;
             checkBoxChessBib.Location = new Point(9, 18);
             checkBoxChessBib.Margin = new Padding(4, 5, 4, 5);
             checkBoxChessBib.Name = "checkBoxChessBib";
-            checkBoxChessBib.Size = new Size(105, 29);
+            checkBoxChessBib.Size = new Size(104, 29);
             checkBoxChessBib.TabIndex = 1;
             checkBoxChessBib.Text = "Номера";
             checkBoxChessBib.UseVisualStyleBackColor = true;
             checkBoxChessBib.CheckedChanged += checkBoxChessMode_CheckedChanged;
-            //
+            // 
             // checkBoxChessGroup
-            //
+            // 
             checkBoxChessGroup.AutoSize = true;
             checkBoxChessGroup.Checked = true;
             checkBoxChessGroup.CheckState = CheckState.Checked;
             checkBoxChessGroup.Location = new Point(140, 18);
             checkBoxChessGroup.Margin = new Padding(4, 5, 4, 5);
             checkBoxChessGroup.Name = "checkBoxChessGroup";
-            checkBoxChessGroup.Size = new Size(100, 29);
+            checkBoxChessGroup.Size = new Size(99, 29);
             checkBoxChessGroup.TabIndex = 2;
             checkBoxChessGroup.Text = "Группы";
             checkBoxChessGroup.UseVisualStyleBackColor = true;
             checkBoxChessGroup.CheckedChanged += checkBoxChessMode_CheckedChanged;
-            //
+            // 
             // checkBoxChessSurname
-            //
+            // 
             checkBoxChessSurname.AutoSize = true;
             checkBoxChessSurname.Location = new Point(280, 18);
             checkBoxChessSurname.Margin = new Padding(4, 5, 4, 5);
             checkBoxChessSurname.Name = "checkBoxChessSurname";
-            checkBoxChessSurname.Size = new Size(115, 29);
+            checkBoxChessSurname.Size = new Size(112, 29);
             checkBoxChessSurname.TabIndex = 3;
             checkBoxChessSurname.Text = "Фамилии";
             checkBoxChessSurname.UseVisualStyleBackColor = true;
             checkBoxChessSurname.CheckedChanged += checkBoxChessMode_CheckedChanged;
-            //
+            // 
             // checkBoxChessQual
-            //
+            // 
             checkBoxChessQual.AutoSize = true;
             checkBoxChessQual.Location = new Point(410, 18);
             checkBoxChessQual.Margin = new Padding(4, 5, 4, 5);
             checkBoxChessQual.Name = "checkBoxChessQual";
-            checkBoxChessQual.Size = new Size(115, 29);
+            checkBoxChessQual.Size = new Size(108, 29);
             checkBoxChessQual.TabIndex = 4;
             checkBoxChessQual.Text = "Разряды";
             checkBoxChessQual.UseVisualStyleBackColor = true;
             checkBoxChessQual.CheckedChanged += checkBoxChessMode_CheckedChanged;
-            //
+            // 
             // buttonChessRefresh
-            //
+            // 
             buttonChessRefresh.Location = new Point(550, 9);
             buttonChessRefresh.Margin = new Padding(4, 5, 4, 5);
             buttonChessRefresh.Name = "buttonChessRefresh";
@@ -2562,20 +2623,20 @@
             buttonChessRefresh.Text = "Обновить";
             buttonChessRefresh.UseVisualStyleBackColor = true;
             buttonChessRefresh.Click += buttonChessRefresh_Click;
-            //
+            // 
             // labelChessSelectedPerson
-            //
+            // 
             labelChessSelectedPerson.AutoSize = true;
             labelChessSelectedPerson.ForeColor = Color.Gray;
             labelChessSelectedPerson.Location = new Point(720, 18);
             labelChessSelectedPerson.Margin = new Padding(4, 0, 4, 0);
             labelChessSelectedPerson.Name = "labelChessSelectedPerson";
-            labelChessSelectedPerson.Size = new Size(400, 25);
+            labelChessSelectedPerson.Size = new Size(305, 25);
             labelChessSelectedPerson.TabIndex = 6;
             labelChessSelectedPerson.Text = "Выберите первого участника (ПКМ)";
-            //
+            // 
             // tabControl1
-            //
+            // 
             tabControl1.Controls.Add(tabPage1);
             tabControl1.Controls.Add(tabPage2);
             tabControl1.Controls.Add(tabPageChess);
@@ -2586,7 +2647,7 @@
             tabControl1.Size = new Size(1201, 903);
             tabControl1.TabIndex = 28;
             tabControl1.SelectedIndexChanged += tabControl1_SelectedIndexChanged;
-            //
+            // 
             // openFileDialogStartLog
             // 
             openFileDialogStartLog.FileName = "StartLog";
@@ -2691,6 +2752,8 @@
             groupBox5.PerformLayout();
             groupBox4.ResumeLayout(false);
             groupBox4.PerformLayout();
+            groupBoxDistributeLate.ResumeLayout(false);
+            groupBoxDistributeLate.PerformLayout();
             groupBoxStartTime.ResumeLayout(false);
             groupBoxStartTime.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDownSetStartTimeMinGap).EndInit();
@@ -2874,6 +2937,10 @@
         private ComboBox comboBoxStartMinutesGroupSelect;
         private CheckBox checkBoxStartMinutesMultiDay;
         private Label labelStartMinutesSelectedPerson;
+        private GroupBox groupBoxDistributeLate;
+        private CheckBox checkBoxDistributeLateAllDays;
+        private Button buttonDistributeLateFind;
+        private Button buttonDistributeLateApply;
         private Button buttonApplyGroupStartInterval;
         private DateTimePicker dateTimePickerGroupStartInterval;
         private Label labelGroupStartInterval;

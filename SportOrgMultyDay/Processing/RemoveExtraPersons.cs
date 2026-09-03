@@ -43,6 +43,8 @@ namespace SportOrgMultyDay.Processing
         {
             string stringOfEntry = "C:";
             string comment = PPComment(person);
+            if (string.IsNullOrEmpty(comment))
+                return null;
             int cIndex = comment.IndexOf(stringOfEntry);
 
             if (cIndex == -1)
