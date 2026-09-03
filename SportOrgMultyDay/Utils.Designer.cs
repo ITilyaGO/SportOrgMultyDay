@@ -165,11 +165,12 @@
             tabPageOfficial = new TabPage();
             buttonGroupRemoveByPrice = new Button();
             buttonRemovePresonsWithOutResultsInAnyDay = new Button();
+            buttonQualFromOtherBase = new Button();
             tabPageOther = new TabPage();
+            buttonImportEstafetRequestsInWorldCodeFromAnotherBase = new Button();
             buttonCompressAndClearHtml = new Button();
             checkBoxRenameGroups = new CheckBox();
             checkBoxRenameCourse = new CheckBox();
-            buttonQualFromOtherBase = new Button();
             buttonVichestStart = new Button();
             groupBoxMapCountCalculate = new GroupBox();
             checkBoxMapCountCalculateReserv = new CheckBox();
@@ -219,6 +220,12 @@
             personStartMinuteBindingSource = new BindingSource(components);
             tabPage1 = new TabPage();
             richTextBoxLog = new RichTextBox();
+            tabPageChess = new TabPage();
+            dataGridViewChess = new DataGridView();
+            radioButtonChessGroup = new RadioButton();
+            radioButtonChessBib = new RadioButton();
+            radioButtonChessSurname = new RadioButton();
+            buttonChessRefresh = new Button();
             tabControl1 = new TabControl();
             openFileDialogStartLog = new OpenFileDialog();
             toolTipGeneral = new ToolTip(components);
@@ -232,7 +239,6 @@
             checkBoxIsSaveToGzip = new CheckBox();
             openFileDialogCsvWO = new OpenFileDialog();
             openFileDialogHtml = new OpenFileDialog();
-            buttonImportEstafetRequestsInWorldCodeFromAnotherBase = new Button();
             contextMenuStripLog.SuspendLayout();
             tabPageShahmatka.SuspendLayout();
             groupBoxPhoneFtp.SuspendLayout();
@@ -266,6 +272,8 @@
             ((System.ComponentModel.ISupportInitialize)dataGridViewPersonMinutes).BeginInit();
             ((System.ComponentModel.ISupportInitialize)personStartMinuteBindingSource).BeginInit();
             tabPage1.SuspendLayout();
+            tabPageChess.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewChess).BeginInit();
             tabControl1.SuspendLayout();
             SuspendLayout();
             // 
@@ -988,7 +996,7 @@
             // label18
             // 
             label18.AutoSize = true;
-            label18.Location = new Point(386, 438);
+            label18.Location = new Point(435, 438);
             label18.Margin = new Padding(4, 0, 4, 0);
             label18.Name = "label18";
             label18.Size = new Size(341, 25);
@@ -997,7 +1005,7 @@
             // 
             // numericUpDownSetStartTimeMinGap
             // 
-            numericUpDownSetStartTimeMinGap.Location = new Point(319, 437);
+            numericUpDownSetStartTimeMinGap.Location = new Point(368, 437);
             numericUpDownSetStartTimeMinGap.Margin = new Padding(4, 5, 4, 5);
             numericUpDownSetStartTimeMinGap.Name = "numericUpDownSetStartTimeMinGap";
             numericUpDownSetStartTimeMinGap.Size = new Size(60, 31);
@@ -1006,7 +1014,7 @@
             // checkBoxSetStartTimeSuffleWithOrgs
             // 
             checkBoxSetStartTimeSuffleWithOrgs.AutoSize = true;
-            checkBoxSetStartTimeSuffleWithOrgs.Location = new Point(319, 397);
+            checkBoxSetStartTimeSuffleWithOrgs.Location = new Point(368, 397);
             checkBoxSetStartTimeSuffleWithOrgs.Margin = new Padding(4, 5, 4, 5);
             checkBoxSetStartTimeSuffleWithOrgs.Name = "checkBoxSetStartTimeSuffleWithOrgs";
             checkBoxSetStartTimeSuffleWithOrgs.Size = new Size(378, 29);
@@ -1031,7 +1039,7 @@
             checkBoxSetStartTimeOnlyCurrentDayPersons.AutoSize = true;
             checkBoxSetStartTimeOnlyCurrentDayPersons.Checked = true;
             checkBoxSetStartTimeOnlyCurrentDayPersons.CheckState = CheckState.Checked;
-            checkBoxSetStartTimeOnlyCurrentDayPersons.Location = new Point(320, 263);
+            checkBoxSetStartTimeOnlyCurrentDayPersons.Location = new Point(369, 263);
             checkBoxSetStartTimeOnlyCurrentDayPersons.Margin = new Padding(4, 5, 4, 5);
             checkBoxSetStartTimeOnlyCurrentDayPersons.Name = "checkBoxSetStartTimeOnlyCurrentDayPersons";
             checkBoxSetStartTimeOnlyCurrentDayPersons.Size = new Size(424, 54);
@@ -1043,7 +1051,7 @@
             // checkBoxUseShortStartTimeAlg
             // 
             checkBoxUseShortStartTimeAlg.AutoSize = true;
-            checkBoxUseShortStartTimeAlg.Location = new Point(320, 222);
+            checkBoxUseShortStartTimeAlg.Location = new Point(369, 222);
             checkBoxUseShortStartTimeAlg.Margin = new Padding(4, 5, 4, 5);
             checkBoxUseShortStartTimeAlg.Name = "checkBoxUseShortStartTimeAlg";
             checkBoxUseShortStartTimeAlg.Size = new Size(317, 29);
@@ -1056,7 +1064,7 @@
             checkBoxStartTimesPersonShuffle.AutoSize = true;
             checkBoxStartTimesPersonShuffle.Checked = true;
             checkBoxStartTimesPersonShuffle.CheckState = CheckState.Checked;
-            checkBoxStartTimesPersonShuffle.Location = new Point(320, 180);
+            checkBoxStartTimesPersonShuffle.Location = new Point(369, 180);
             checkBoxStartTimesPersonShuffle.Margin = new Padding(4, 5, 4, 5);
             checkBoxStartTimesPersonShuffle.Name = "checkBoxStartTimesPersonShuffle";
             checkBoxStartTimesPersonShuffle.Size = new Size(335, 29);
@@ -1067,7 +1075,7 @@
             // label13
             // 
             label13.AutoSize = true;
-            label13.Location = new Point(447, 138);
+            label13.Location = new Point(496, 138);
             label13.Margin = new Padding(4, 0, 4, 0);
             label13.Name = "label13";
             label13.Size = new Size(299, 25);
@@ -1077,7 +1085,7 @@
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new Point(447, 92);
+            label11.Location = new Point(496, 92);
             label11.Margin = new Padding(4, 0, 4, 0);
             label11.Name = "label11";
             label11.Size = new Size(90, 25);
@@ -1087,7 +1095,7 @@
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(447, 45);
+            label10.Location = new Point(496, 45);
             label10.Margin = new Padding(4, 0, 4, 0);
             label10.Name = "label10";
             label10.Size = new Size(120, 25);
@@ -1097,7 +1105,7 @@
             // dateTimePickerMinColumnStartInterval
             // 
             dateTimePickerMinColumnStartInterval.Format = DateTimePickerFormat.Time;
-            dateTimePickerMinColumnStartInterval.Location = new Point(320, 132);
+            dateTimePickerMinColumnStartInterval.Location = new Point(369, 132);
             dateTimePickerMinColumnStartInterval.Margin = new Padding(4, 5, 4, 5);
             dateTimePickerMinColumnStartInterval.MaxDate = new DateTime(1753, 1, 2, 0, 0, 0, 0);
             dateTimePickerMinColumnStartInterval.Name = "dateTimePickerMinColumnStartInterval";
@@ -1108,7 +1116,7 @@
             // dateTimePickerStartInterval
             // 
             dateTimePickerStartInterval.Format = DateTimePickerFormat.Time;
-            dateTimePickerStartInterval.Location = new Point(320, 85);
+            dateTimePickerStartInterval.Location = new Point(369, 85);
             dateTimePickerStartInterval.Margin = new Padding(4, 5, 4, 5);
             dateTimePickerStartInterval.MaxDate = new DateTime(1753, 1, 2, 0, 0, 0, 0);
             dateTimePickerStartInterval.Name = "dateTimePickerStartInterval";
@@ -1143,14 +1151,14 @@
             richTextBoxGroupStartOrder.Location = new Point(9, 37);
             richTextBoxGroupStartOrder.Margin = new Padding(4, 5, 4, 5);
             richTextBoxGroupStartOrder.Name = "richTextBoxGroupStartOrder";
-            richTextBoxGroupStartOrder.Size = new Size(301, 684);
+            richTextBoxGroupStartOrder.Size = new Size(351, 684);
             richTextBoxGroupStartOrder.TabIndex = 2;
             richTextBoxGroupStartOrder.Text = "";
             // 
             // dateTimePickerStartTime
             // 
             dateTimePickerStartTime.Format = DateTimePickerFormat.Time;
-            dateTimePickerStartTime.Location = new Point(320, 37);
+            dateTimePickerStartTime.Location = new Point(369, 37);
             dateTimePickerStartTime.Margin = new Padding(4, 5, 4, 5);
             dateTimePickerStartTime.MaxDate = new DateTime(1753, 1, 2, 0, 0, 0, 0);
             dateTimePickerStartTime.Name = "dateTimePickerStartTime";
@@ -1796,6 +1804,18 @@
             buttonRemovePresonsWithOutResultsInAnyDay.UseVisualStyleBackColor = true;
             buttonRemovePresonsWithOutResultsInAnyDay.Click += buttonRemovePresonsWithOutResultsInAnyDay_Click;
             // 
+            // buttonQualFromOtherBase
+            // 
+            buttonQualFromOtherBase.Location = new Point(595, 8);
+            buttonQualFromOtherBase.Margin = new Padding(4, 5, 4, 5);
+            buttonQualFromOtherBase.Name = "buttonQualFromOtherBase";
+            buttonQualFromOtherBase.Size = new Size(166, 95);
+            buttonQualFromOtherBase.TabIndex = 9;
+            buttonQualFromOtherBase.Text = "TEMP Подтянуть квалификации из другой базы";
+            buttonQualFromOtherBase.UseVisualStyleBackColor = true;
+            buttonQualFromOtherBase.Visible = false;
+            buttonQualFromOtherBase.Click += buttonQualFromOtherBase_Click;
+            // 
             // tabPageOther
             // 
             tabPageOther.BackColor = Color.WhiteSmoke;
@@ -1820,6 +1840,17 @@
             tabPageOther.Size = new Size(768, 817);
             tabPageOther.TabIndex = 3;
             tabPageOther.Text = "Остальное";
+            // 
+            // buttonImportEstafetRequestsInWorldCodeFromAnotherBase
+            // 
+            buttonImportEstafetRequestsInWorldCodeFromAnotherBase.Location = new Point(343, 607);
+            buttonImportEstafetRequestsInWorldCodeFromAnotherBase.Margin = new Padding(4, 5, 4, 5);
+            buttonImportEstafetRequestsInWorldCodeFromAnotherBase.Name = "buttonImportEstafetRequestsInWorldCodeFromAnotherBase";
+            buttonImportEstafetRequestsInWorldCodeFromAnotherBase.Size = new Size(412, 42);
+            buttonImportEstafetRequestsInWorldCodeFromAnotherBase.TabIndex = 24;
+            buttonImportEstafetRequestsInWorldCodeFromAnotherBase.Text = "Импорт id заявок в world_code из другой базы";
+            buttonImportEstafetRequestsInWorldCodeFromAnotherBase.UseVisualStyleBackColor = true;
+            buttonImportEstafetRequestsInWorldCodeFromAnotherBase.Click += buttonImportEstafetRequestsInWorldCodeFromAnotherBase_Click;
             // 
             // buttonCompressAndClearHtml
             // 
@@ -1852,18 +1883,6 @@
             checkBoxRenameCourse.TabIndex = 21;
             checkBoxRenameCourse.Text = "Переиминование дистанций";
             checkBoxRenameCourse.UseVisualStyleBackColor = true;
-            // 
-            // buttonQualFromOtherBase
-            // 
-            buttonQualFromOtherBase.Location = new Point(595, 8);
-            buttonQualFromOtherBase.Margin = new Padding(4, 5, 4, 5);
-            buttonQualFromOtherBase.Name = "buttonQualFromOtherBase";
-            buttonQualFromOtherBase.Size = new Size(166, 95);
-            buttonQualFromOtherBase.TabIndex = 9;
-            buttonQualFromOtherBase.Text = "TEMP Подтянуть квалификации из другой базы";
-            buttonQualFromOtherBase.UseVisualStyleBackColor = true;
-            buttonQualFromOtherBase.Visible = false;
-            buttonQualFromOtherBase.Click += buttonQualFromOtherBase_Click;
             // 
             // buttonVichestStart
             // 
@@ -2431,11 +2450,90 @@
             richTextBoxLog.Text = "";
             richTextBoxLog.WordWrap = false;
             richTextBoxLog.TextChanged += richTextBoxLog_TextChanged;
-            // 
+            //
+            // tabPageChess
+            //
+            tabPageChess.Controls.Add(dataGridViewChess);
+            tabPageChess.Controls.Add(radioButtonChessGroup);
+            tabPageChess.Controls.Add(radioButtonChessBib);
+            tabPageChess.Controls.Add(radioButtonChessSurname);
+            tabPageChess.Controls.Add(buttonChessRefresh);
+            tabPageChess.Location = new Point(4, 34);
+            tabPageChess.Margin = new Padding(4, 5, 4, 5);
+            tabPageChess.Name = "tabPageChess";
+            tabPageChess.Padding = new Padding(4, 5, 4, 5);
+            tabPageChess.Size = new Size(1193, 865);
+            tabPageChess.TabIndex = 2;
+            tabPageChess.Text = "Шахматка";
+            tabPageChess.UseVisualStyleBackColor = true;
+            //
+            // dataGridViewChess
+            //
+            dataGridViewChess.AllowUserToAddRows = false;
+            dataGridViewChess.AllowUserToDeleteRows = false;
+            dataGridViewChess.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewChess.Location = new Point(9, 55);
+            dataGridViewChess.Margin = new Padding(4, 5, 4, 5);
+            dataGridViewChess.Name = "dataGridViewChess";
+            dataGridViewChess.ReadOnly = true;
+            dataGridViewChess.RowHeadersWidth = 62;
+            dataGridViewChess.Size = new Size(1173, 790);
+            dataGridViewChess.TabIndex = 0;
+            //
+            // radioButtonChessGroup
+            //
+            radioButtonChessGroup.AutoSize = true;
+            radioButtonChessGroup.Checked = true;
+            radioButtonChessGroup.Location = new Point(9, 18);
+            radioButtonChessGroup.Margin = new Padding(4, 5, 4, 5);
+            radioButtonChessGroup.Name = "radioButtonChessGroup";
+            radioButtonChessGroup.Size = new Size(100, 29);
+            radioButtonChessGroup.TabIndex = 1;
+            radioButtonChessGroup.TabStop = true;
+            radioButtonChessGroup.Text = "Группы";
+            radioButtonChessGroup.UseVisualStyleBackColor = true;
+            radioButtonChessGroup.CheckedChanged += radioButtonChessMode_CheckedChanged;
+            //
+            // radioButtonChessBib
+            //
+            radioButtonChessBib.AutoSize = true;
+            radioButtonChessBib.Location = new Point(140, 18);
+            radioButtonChessBib.Margin = new Padding(4, 5, 4, 5);
+            radioButtonChessBib.Name = "radioButtonChessBib";
+            radioButtonChessBib.Size = new Size(105, 29);
+            radioButtonChessBib.TabIndex = 2;
+            radioButtonChessBib.Text = "Номера";
+            radioButtonChessBib.UseVisualStyleBackColor = true;
+            radioButtonChessBib.CheckedChanged += radioButtonChessMode_CheckedChanged;
+            //
+            // radioButtonChessSurname
+            //
+            radioButtonChessSurname.AutoSize = true;
+            radioButtonChessSurname.Location = new Point(280, 18);
+            radioButtonChessSurname.Margin = new Padding(4, 5, 4, 5);
+            radioButtonChessSurname.Name = "radioButtonChessSurname";
+            radioButtonChessSurname.Size = new Size(115, 29);
+            radioButtonChessSurname.TabIndex = 3;
+            radioButtonChessSurname.Text = "Фамилии";
+            radioButtonChessSurname.UseVisualStyleBackColor = true;
+            radioButtonChessSurname.CheckedChanged += radioButtonChessMode_CheckedChanged;
+            //
+            // buttonChessRefresh
+            //
+            buttonChessRefresh.Location = new Point(430, 9);
+            buttonChessRefresh.Margin = new Padding(4, 5, 4, 5);
+            buttonChessRefresh.Name = "buttonChessRefresh";
+            buttonChessRefresh.Size = new Size(150, 38);
+            buttonChessRefresh.TabIndex = 4;
+            buttonChessRefresh.Text = "Обновить";
+            buttonChessRefresh.UseVisualStyleBackColor = true;
+            buttonChessRefresh.Click += buttonChessRefresh_Click;
+            //
             // tabControl1
-            // 
+            //
             tabControl1.Controls.Add(tabPage1);
             tabControl1.Controls.Add(tabPage2);
+            tabControl1.Controls.Add(tabPageChess);
             tabControl1.Location = new Point(796, 22);
             tabControl1.Margin = new Padding(4, 5, 4, 5);
             tabControl1.Name = "tabControl1";
@@ -2511,17 +2609,6 @@
             openFileDialogHtml.FileName = "Импорт CSV";
             openFileDialogHtml.Filter = "html |*.html|All files|*.*";
             // 
-            // buttonImportEstafetRequestsInWorldCodeFromAnotherBase
-            // 
-            buttonImportEstafetRequestsInWorldCodeFromAnotherBase.Location = new Point(343, 607);
-            buttonImportEstafetRequestsInWorldCodeFromAnotherBase.Margin = new Padding(4, 5, 4, 5);
-            buttonImportEstafetRequestsInWorldCodeFromAnotherBase.Name = "buttonImportEstafetRequestsInWorldCodeFromAnotherBase";
-            buttonImportEstafetRequestsInWorldCodeFromAnotherBase.Size = new Size(412, 42);
-            buttonImportEstafetRequestsInWorldCodeFromAnotherBase.TabIndex = 24;
-            buttonImportEstafetRequestsInWorldCodeFromAnotherBase.Text = "Импорт id заявок в world_code из другой базы";
-            buttonImportEstafetRequestsInWorldCodeFromAnotherBase.UseVisualStyleBackColor = true;
-            buttonImportEstafetRequestsInWorldCodeFromAnotherBase.Click += buttonImportEstafetRequestsInWorldCodeFromAnotherBase_Click;
-            // 
             // Utils
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -2591,6 +2678,9 @@
             ((System.ComponentModel.ISupportInitialize)dataGridViewPersonMinutes).EndInit();
             ((System.ComponentModel.ISupportInitialize)personStartMinuteBindingSource).EndInit();
             tabPage1.ResumeLayout(false);
+            tabPageChess.ResumeLayout(false);
+            tabPageChess.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewChess).EndInit();
             tabControl1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
@@ -2635,6 +2725,12 @@
         private Button buttonExportStartTimes;
         private TabPage tabPage1;
         private RichTextBox richTextBoxLog;
+        private TabPage tabPageChess;
+        private DataGridView dataGridViewChess;
+        private RadioButton radioButtonChessGroup;
+        private RadioButton radioButtonChessBib;
+        private RadioButton radioButtonChessSurname;
+        private Button buttonChessRefresh;
         private TabControl tabControl1;
         private GroupBox groupBoxStartLogProcessing;
         private Label labelSFRStartLogCount;

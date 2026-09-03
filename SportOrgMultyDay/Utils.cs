@@ -11,6 +11,7 @@ using SportOrgMultyDay.Processing.SFR;
 using SportOrgMultyDay.Processing.SFRSmartTerminal;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.IO.Compression;
 using System.Reflection.Metadata;
@@ -459,6 +460,7 @@ namespace SportOrgMultyDay
             autoResize.Add(tabControlFunc, false, true);
             autoResize.Add(checkedListBoxWithSync, false, true);
             autoResize.Add(dataGridViewPersonMinutes, true, true);
+            autoResize.Add(dataGridViewChess, true, true);
 
             textBoxShahmatkaDateFilter.Text = DateTime.Now.ToString("dd.MM.yyyy");
         }
@@ -695,6 +697,7 @@ namespace SportOrgMultyDay
             JToken lastPerson = StartTimeManager.LastStartPerson(currentRace);
             SendLog("Последний стартующий участник - " + StartTimeManager.StartPersonToString(lastPerson));
             ReloadStartMinutes();
+            ReloadShahmatka();
             buttonSetStartMinutes.Text = $"{dateTimePickerStartTime.Value.TimeOfDay} - {PPStartTimeTS(lastPerson).Value}";
         }
 
@@ -950,6 +953,30 @@ namespace SportOrgMultyDay
                 labelStartMinutesSelectedPerson.ForeColor = Color.Gray;
                 labelStartMinutesSelectedPerson.Text = "Выберите первого участника (ПКМ)";
             }
+        }
+
+        private void ReloadShahmatka()
+        {
+            ShahmatkaDisplayMode displayMode = ShahmatkaDisplayMode.Group;
+            if (radioButtonChessBib.Checked)
+                displayMode = ShahmatkaDisplayMode.Bib;
+            else if (radioButtonChessSurname.Checked)
+                displayMode = ShahmatkaDisplayMode.Surname;
+
+            JToken race = PBCurrentRaceFromBase(JBase);
+            DataTable table = ShahmatkaManager.BuildGrid(race, displayMode);
+            dataGridViewChess.DataSource = table;
+        }
+
+        private void buttonChessRefresh_Click(object sender, EventArgs e)
+        {
+            ReloadShahmatka();
+        }
+
+        private void radioButtonChessMode_CheckedChanged(object sender, EventArgs e)
+        {
+            if (((RadioButton)sender).Checked)
+                ReloadShahmatka();
         }
 
         private void dataGridViewPersonMinutes_CellMouseUp(object sender, DataGridViewCellMouseEventArgs e)
@@ -1427,6 +1454,7 @@ namespace SportOrgMultyDay
             int currentRaceId = checkBoxSetStartTimeOnlyCurrentDayPersons.Checked ? CurrentRaceID(JBase) : -1;
             JToken race = PBCurrentRaceFromBase(JBase);
             SendLog(StartTimeManager.SetGroupStartTimes(race, currentRaceId, richTextBoxGroupStartOrder.Text));
+            ReloadShahmatka();
 
         }
 
