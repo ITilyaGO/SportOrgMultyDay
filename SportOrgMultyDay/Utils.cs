@@ -1126,9 +1126,19 @@ namespace SportOrgMultyDay
 
         private void ReloadShahmatka()
         {
+            Dictionary<string, int> columnWidths = dataGridViewChess.Columns
+                .Cast<DataGridViewColumn>()
+                .ToDictionary(c => c.Name, c => c.Width);
+
             JToken race = PBCurrentRaceFromBase(JBase);
             ChessGrid = ShahmatkaManager.BuildGrid(race, checkBoxChessBib.Checked, checkBoxChessGroup.Checked, checkBoxChessSurname.Checked, checkBoxChessQual.Checked);
             dataGridViewChess.DataSource = ChessGrid.Table;
+
+            foreach (DataGridViewColumn column in dataGridViewChess.Columns)
+            {
+                if (columnWidths.TryGetValue(column.Name, out int width))
+                    column.Width = width;
+            }
 
             for (int rowIndex = 0; rowIndex < ChessGrid.RowsPersons.Count; rowIndex++)
             {
