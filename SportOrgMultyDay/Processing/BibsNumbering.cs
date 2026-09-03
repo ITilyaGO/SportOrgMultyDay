@@ -22,6 +22,8 @@ namespace SportOrgMultyDay.Processing
 {
     public class BibsNumbering
     {
+        public const int DefaultEndBib = 9999999;
+        public const int AutoStartBib = 100;
 
         public static string SetNumbers(JToken jRace, string bibsSample, bool isDebug = false, bool isRelay = false, bool isCreateReserv = false, int SortByActiveDay = -1)
         {
@@ -51,6 +53,7 @@ namespace SportOrgMultyDay.Processing
             }
 
             log += $"  Установка номеров для групп...\n";
+            int autoNextBib = AutoStartBib;
             foreach (NumbersOfGroup numberOfGroup in numbersOfGroups)
             {
                 JToken group = FGByName(numberOfGroup.GroupName, groups);
@@ -65,6 +68,12 @@ namespace SportOrgMultyDay.Processing
                 {
                     log += $"  Ошибка при поиске участников группы {numberOfGroup.GroupName} ID:{groupId}\n";
                     continue;
+                }
+                if (numberOfGroup.IsAutoStart)
+                {
+                    numberOfGroup.StartBib = autoNextBib;
+                    if (isDebug)
+                        log += $"    Группа {numberOfGroup.GroupName}: авто-номер начинается с {numberOfGroup.StartBib}\n";
                 }
 
                 List<PersonRelayData> personRelayDatas = new();
@@ -144,6 +153,9 @@ namespace SportOrgMultyDay.Processing
                     }
                     reservCreateLog = $" Создано команд резервов: {createdReservCount}.";
                 }
+
+                autoNextBib = Math.Max(autoNextBib, currentNumber);
+
                 log += $"    Номера установлены с {numberOfGroup.StartBib} по {currentNumber - 1}.{reservCreateLog} {numberOfGroup}\n";
             }
             log += $"  Установка номеров завершена!\n";
@@ -171,6 +183,7 @@ namespace SportOrgMultyDay.Processing
             }
 
             log += $"  Установка номеров для групп...\n";
+            int autoNextBib = AutoStartBib;
             foreach (NumbersOfGroup numberOfGroup in numbersOfGroups)
             {
                 JToken group = FGByName(numberOfGroup.GroupName, groups);
@@ -185,6 +198,12 @@ namespace SportOrgMultyDay.Processing
                 {
                     log += $"  Ошибка при поиске участников группы {numberOfGroup.GroupName} ID:{groupId}\n";
                     continue;
+                }
+                if (numberOfGroup.IsAutoStart)
+                {
+                    numberOfGroup.StartBib = autoNextBib;
+                    if (isDebug)
+                        log += $"    Группа {numberOfGroup.GroupName}: авто-номер начинается с {numberOfGroup.StartBib}\n";
                 }
                 if (groupPersons.Count > numberOfGroup.NumbersCount)
                 {
@@ -266,6 +285,8 @@ namespace SportOrgMultyDay.Processing
                     reservCreateLog = $" Создано резервов: {createdReservCount}.";
                 }
 
+                autoNextBib = Math.Max(autoNextBib, currentNumber);
+
                 log += $"    Номера установлены с {numberOfGroup.StartBib} по {currentNumber - 1}.{reservCreateLog} {numberOfGroup}\n";
             }
             log += $"  Установка номеров завершена!\n";
@@ -313,13 +334,17 @@ namespace SportOrgMultyDay.Processing
             string numbersRange = parts[1];
             string rawReservCount = parts.ElementAtOrDefault(2);
 
-            // Попробуем разобрать диапазон номеров
-            if (!TryParseNumbersRange(numbersRange, out int startBib, out int endBib))
+            // "*" значит автоматический старт - номер будет взят по порядку от конца предыдущего пула
+            bool isAutoStart = numbersRange == "*";
+
+            int startBib = 0;
+            int endBib = DefaultEndBib;
+            if (!isAutoStart && !TryParseNumbersRange(numbersRange, out startBib, out endBib))
                 return null;
 
             _ = TryParseReservCount(rawReservCount , out int reservCount);
 
-            return new NumbersOfGroup(groupName, startBib, endBib, reservCount: reservCount);
+            return new NumbersOfGroup(groupName, startBib, endBib, reservCount: reservCount) { IsAutoStart = isAutoStart };
         }
 
         private static bool TryParseReservCount(string rawReservCount, out int reservCount)
@@ -337,8 +362,7 @@ namespace SportOrgMultyDay.Processing
 
         private static bool TryParseNumbersRange(string numbersRange, out int startBib, out int endBib)
         {
-            const int defaultEndBib = 9999999;
-            endBib = defaultEndBib;
+            endBib = DefaultEndBib;
 
             // Разделим диапазон на части
             var rangeParts = numbersRange.Split('-');
@@ -349,7 +373,7 @@ namespace SportOrgMultyDay.Processing
 
             // Если есть второй элемент, попытаемся разобрать его, иначе присвоим дефолтный конец диапазона
             if (rangeParts.Length > 1 && !int.TryParse(rangeParts[1], out endBib))
-                endBib = defaultEndBib;
+                endBib = DefaultEndBib;
 
             return true;
         }
@@ -377,6 +401,7 @@ namespace SportOrgMultyDay.Processing
         public int EndBib { get; set; }
         public int MaxReservCount { get; set; }
         public string GroupName { get; set; }
+        public bool IsAutoStart { get; set; }
         public int NumbersCount => (EndBib - StartBib) + 1;
 
         public NumbersOfGroup(string group, int startBib = 0, int endBib = 0, int numberOfString = 0, int reservCount = 100)
@@ -390,7 +415,8 @@ namespace SportOrgMultyDay.Processing
 
         public override string ToString()
         {
-            return $"Строка: {NumberOfString+1} Имя: {GroupName} Максимум резервов:{MaxReservCount} Номера: {StartBib}-{EndBib}";
+            string numbers = IsAutoStart ? "* (авто, номера по порядку)" : $"{StartBib}-{EndBib}";
+            return $"Строка: {NumberOfString+1} Имя: {GroupName} Максимум резервов:{MaxReservCount} Номера: {numbers}";
         }
     }
 

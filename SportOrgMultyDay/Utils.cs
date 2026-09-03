@@ -701,9 +701,35 @@ namespace SportOrgMultyDay
 
         private void buttonBibsAutoCreateListNumbering_Click(object sender, EventArgs e)
         {
-            string instruction = ("Функция в разработке. \r\n Пишем через пробел - \"[Название группы] [Номера] r:[Резервы]\"\r\nКонечные номера и резервы писать не обязательно не обязательно.\r\n Если написать просто \"М21 100\" то будут присвоены номера с 100 но если добавить \"М18 110\" и в группе М21 будет больше 10 участников, номера переназначатся. Не допускайте пересечения номеров или исопльзуйте ограничение такого плана 100-199\r\n\r\n Пример обычных минут - \r\nМЭ 5000-5199\r\nЖЭ 100-5199\r\n\r\nПример обычных минут с резервами - \r\nМЭ 5000-5199 r:10\r\nЖЭ 100-5199 r:5\r\n\r\nПример эстафеты - \r\nМ21 101-119\r\nМ16-20 201-215\r\nМ45 301-309\r\nЖ21 401-412\r\nЖ16-20 501-504\r\nМ60 601-605\r\nЖ60 701-703\r\nМ12-14 801-816\r\nЖ12-14 901-907");
-            MessageBox.Show(instruction);
-            SendLog(instruction);
+            JToken race = PBCurrentRaceFromBase(JBase);
+            JArray groups = PBGroups(race);
+            JArray persons = PBPersons(race);
+            Dictionary<string, int> groupIdCount = DictGIdPersonsCount(groups, persons);
+
+            StringBuilder sb = new();
+            string log = "Автоматическое формирование списка номеров...\n";
+            foreach (JToken group in groups)
+            {
+                string groupId = PGId(group);
+                string groupName = PGName(group);
+                if (string.IsNullOrWhiteSpace(groupName))
+                    continue;
+
+                int count = groupIdCount.TryGetValue(groupId, out int c) ? c : 0;
+                if (count == 0)
+                {
+                    log += $"  Группа {groupName} пропущена, нет участников\n";
+                    continue;
+                }
+
+                int reserv = (int)Math.Ceiling(count / 10.0);
+                sb.AppendLine($"{groupName} * r:{reserv}");
+                log += $"  {groupName}: участников {count}, резерв {reserv} (номер будет присвоен автоматически по порядку)\n";
+            }
+
+            richTextBoxBibsNumbering.Text = sb.ToString();
+            log += "Список сформирован без распределения пулов номеров: * означает, что номера для группы будут взяты по порядку (продолжая после предыдущей группы) в момент присвоения номеров кнопкой присвоения. Проверьте список и нажмите кнопку присвоения номеров.\n";
+            SendLog(log);
         }
 
         private void buttonGroupSetNumbersByGroups_Click(object sender, EventArgs e)
