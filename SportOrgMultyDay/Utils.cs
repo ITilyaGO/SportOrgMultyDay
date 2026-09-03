@@ -48,6 +48,9 @@ namespace SportOrgMultyDay
         PersonStartMinute PersonStartMinuteSelected;
         List<PersonStartMinute> PersonStartMinutes = new List<PersonStartMinute>();
 
+        Panel panelStartMinutesMultiDay;
+        bool[] StartMinutesMultiDayEnabled;
+
         JToken ChessPersonSelected;
         ShahmatkaGrid ChessGrid;
 
@@ -919,7 +922,137 @@ namespace SportOrgMultyDay
             JToken race = PBCurrentRaceFromBase(JBase);
             JArray groups = PBGroups(race);
             JToken group = FGById(selectedGroupId, groups);
-            ReloadStartMinutes(group);
+
+            if (checkBoxStartMinutesMultiDay.Checked)
+                ReloadStartMinutesMultiDay(PGName(group));
+            else
+                ReloadStartMinutes(group);
+        }
+
+        private void checkBoxStartMinutesMultiDay_CheckedChanged(object sender, EventArgs e)
+        {
+            bool multiDay = checkBoxStartMinutesMultiDay.Checked;
+            EnsureMultiDayPanel();
+            dataGridViewPersonMinutes.Visible = !multiDay;
+            panelStartMinutesMultiDay.Visible = multiDay;
+            ReloadStartMinutes();
+        }
+
+        private void EnsureMultiDayPanel()
+        {
+            if (panelStartMinutesMultiDay != null)
+                return;
+
+            panelStartMinutesMultiDay = new Panel
+            {
+                Location = dataGridViewPersonMinutes.Location,
+                Size = dataGridViewPersonMinutes.Size,
+                Visible = false,
+            };
+            tabPage2.Controls.Add(panelStartMinutesMultiDay);
+            autoResize.Add(panelStartMinutesMultiDay, true, true);
+        }
+
+        private static Control BuildDayColumns(List<Panel> dayPanels, int index)
+        {
+            Panel dayPanel = dayPanels[index];
+            dayPanel.Dock = DockStyle.Fill;
+
+            if (index == dayPanels.Count - 1)
+                return dayPanel;
+
+            SplitContainer split = new()
+            {
+                Dock = DockStyle.Fill,
+                Orientation = Orientation.Vertical,
+                SplitterWidth = 6,
+                Panel1MinSize = 80,
+                Panel2MinSize = 80,
+            };
+            split.Panel1.Controls.Add(dayPanel);
+            split.Panel2.Controls.Add(BuildDayColumns(dayPanels, index + 1));
+            try { split.SplitterDistance = 300; } catch { }
+            return split;
+        }
+
+        private void ReloadStartMinutesMultiDay(string groupName)
+        {
+            EnsureMultiDayPanel();
+            panelStartMinutesMultiDay.SuspendLayout();
+            panelStartMinutesMultiDay.Controls.Clear();
+
+            JArray races = PBRaces(JBase);
+            if (StartMinutesMultiDayEnabled == null || StartMinutesMultiDayEnabled.Length != races.Count)
+                StartMinutesMultiDayEnabled = Enumerable.Repeat(true, races.Count).ToArray();
+
+            Dictionary<int, string> qualsDict = QualificationNames.DictIdToString;
+            List<Panel> dayPanels = new();
+
+            for (int dayIndex = 0; dayIndex < races.Count; dayIndex++)
+            {
+                JToken race = races[dayIndex];
+                JArray groups = PBGroups(race);
+                JToken group = groups.FirstOrDefault(g => PGName(g) == groupName);
+
+                List<PersonStartMinute> dayList = new();
+                if (group != null)
+                {
+                    JArray persons = PBPersons(race);
+                    JArray orgs = PBOrganizations(race);
+                    List<JToken> groupPersons = FPAllByGroup(PGId(group), persons);
+                    foreach (JToken groupPerson in groupPersons)
+                    {
+                        if (PPStartTime(groupPerson) == 0)
+                            continue;
+                        string orgId = PPOrganizationId(groupPerson);
+                        JToken org = FOById(orgId, orgs);
+                        string orgName = POName(org);
+                        string qual = qualsDict[PPQual(groupPerson)];
+                        dayList.Add(new(groupPerson, orgName, qual));
+                    }
+                    dayList.Sort((a, b) => a.StartMinute.CompareTo(b.StartMinute));
+                }
+
+                Panel dayPanel = new();
+
+                int capturedIndex = dayIndex;
+                bool dayEnabled = StartMinutesMultiDayEnabled[dayIndex];
+
+                DataGridView dayGrid = new()
+                {
+                    Dock = DockStyle.Fill,
+                    ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize,
+                    DataSource = dayList,
+                    Visible = dayEnabled,
+                };
+
+                CheckBox dayCheckBox = new()
+                {
+                    Dock = DockStyle.Top,
+                    AutoSize = true,
+                    Checked = dayEnabled,
+                    Text = group == null ? $"День {dayIndex + 1} (нет группы)" : $"День {dayIndex + 1}",
+                };
+                dayCheckBox.CheckedChanged += (s, e) =>
+                {
+                    StartMinutesMultiDayEnabled[capturedIndex] = dayCheckBox.Checked;
+                    dayGrid.Visible = dayCheckBox.Checked;
+                };
+
+                dayPanel.Controls.Add(dayGrid);
+                dayPanel.Controls.Add(dayCheckBox);
+
+                dayPanels.Add(dayPanel);
+            }
+
+            if (dayPanels.Count > 0)
+            {
+                Control root = BuildDayColumns(dayPanels, 0);
+                root.Dock = DockStyle.Fill;
+                panelStartMinutesMultiDay.Controls.Add(root);
+            }
+
+            panelStartMinutesMultiDay.ResumeLayout();
         }
         private void ReloadStartMinutes(JToken group)
         {

@@ -216,6 +216,7 @@
             labelHowToWorkStartMinutesSwap = new Label();
             labelStartMinutesSelectedPerson = new Label();
             comboBoxStartMinutesGroupSelect = new ComboBox();
+            checkBoxStartMinutesMultiDay = new CheckBox();
             dataGridViewPersonMinutes = new DataGridView();
             personStartMinuteBindingSource = new BindingSource(components);
             tabPage1 = new TabPage();
@@ -2245,6 +2246,7 @@
             tabPage2.Controls.Add(labelHowToWorkStartMinutesSwap);
             tabPage2.Controls.Add(labelStartMinutesSelectedPerson);
             tabPage2.Controls.Add(comboBoxStartMinutesGroupSelect);
+            tabPage2.Controls.Add(checkBoxStartMinutesMultiDay);
             tabPage2.Controls.Add(dataGridViewPersonMinutes);
             tabPage2.Location = new Point(4, 34);
             tabPage2.Margin = new Padding(4, 5, 4, 5);
@@ -2412,7 +2414,19 @@
             comboBoxStartMinutesGroupSelect.Size = new Size(171, 33);
             comboBoxStartMinutesGroupSelect.TabIndex = 1;
             comboBoxStartMinutesGroupSelect.SelectedIndexChanged += comboBoxStartMinutesGroupSelect_SelectedIndexChanged;
-            // 
+            //
+            // checkBoxStartMinutesMultiDay
+            //
+            checkBoxStartMinutesMultiDay.AutoSize = true;
+            checkBoxStartMinutesMultiDay.Location = new Point(650, 15);
+            checkBoxStartMinutesMultiDay.Margin = new Padding(4, 5, 4, 5);
+            checkBoxStartMinutesMultiDay.Name = "checkBoxStartMinutesMultiDay";
+            checkBoxStartMinutesMultiDay.Size = new Size(180, 29);
+            checkBoxStartMinutesMultiDay.TabIndex = 30;
+            checkBoxStartMinutesMultiDay.Text = "Несколько дней";
+            checkBoxStartMinutesMultiDay.UseVisualStyleBackColor = true;
+            checkBoxStartMinutesMultiDay.CheckedChanged += checkBoxStartMinutesMultiDay_CheckedChanged;
+            //
             // dataGridViewPersonMinutes
             // 
             dataGridViewPersonMinutes.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -2842,6 +2856,7 @@
         private DataGridView dataGridViewPersonMinutes;
         private BindingSource personStartMinuteBindingSource;
         private ComboBox comboBoxStartMinutesGroupSelect;
+        private CheckBox checkBoxStartMinutesMultiDay;
         private Label labelStartMinutesSelectedPerson;
         private Button buttonApplyGroupStartInterval;
         private DateTimePicker dateTimePickerGroupStartInterval;
