@@ -2474,6 +2474,7 @@
             dataGridViewChess.AllowUserToAddRows = false;
             dataGridViewChess.AllowUserToDeleteRows = false;
             dataGridViewChess.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewChess.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewChess.DefaultCellStyle.Padding = new Padding(2, 0, 2, 0);
             dataGridViewChess.Location = new Point(9, 55);
             dataGridViewChess.Margin = new Padding(4, 5, 4, 5);
