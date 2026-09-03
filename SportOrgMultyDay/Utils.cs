@@ -969,7 +969,7 @@ namespace SportOrgMultyDay
             autoResize.Add(panelStartMinutesMultiDay, true, true);
         }
 
-        private static Control BuildDayColumns(List<Panel> dayPanels, int index, List<int> splitterDistances)
+        private static Control BuildDayColumns(List<Panel> dayPanels, int index)
         {
             Panel dayPanel = dayPanels[index];
             dayPanel.Dock = DockStyle.Fill;
@@ -986,10 +986,7 @@ namespace SportOrgMultyDay
                 Panel2MinSize = 80,
             };
             split.Panel1.Controls.Add(dayPanel);
-            split.Panel2.Controls.Add(BuildDayColumns(dayPanels, index + 1, splitterDistances));
-
-            int distance = (splitterDistances != null && index < splitterDistances.Count) ? splitterDistances[index] : 300;
-            try { split.SplitterDistance = distance; } catch { }
+            split.Panel2.Controls.Add(BuildDayColumns(dayPanels, index + 1));
             return split;
         }
 
@@ -1002,6 +999,84 @@ namespace SportOrgMultyDay
                 root = split.Panel2.Controls.Count > 0 ? split.Panel2.Controls[0] : null;
             }
             return distances;
+        }
+
+        // SplitContainers only report real widths once parented and laid out, so
+        // SplitterDistance has to be applied top-down after attaching to the form -
+        // setting it right after construction (default ~150px wide) silently fails
+        // and resets to a WinForms default, which looked like widths "resetting".
+        private static void ApplySplitterDistances(Control root, List<int> splitterDistances)
+        {
+            if (splitterDistances == null)
+                return;
+
+            int index = 0;
+            while (root is SplitContainer split && index < splitterDistances.Count)
+            {
+                try { split.SplitterDistance = splitterDistances[index]; } catch { }
+                root = split.Panel2.Controls.Count > 0 ? split.Panel2.Controls[0] : null;
+                index++;
+            }
+        }
+
+        private void WireStartMinutesSwap(DataGridView grid, List<PersonStartMinute> list, Label statusLabel)
+        {
+            PersonStartMinute selected = null;
+
+            void UpdateStatusLabel()
+            {
+                if (selected != null)
+                {
+                    statusLabel.ForeColor = Color.Black;
+                    statusLabel.Text = $"Выбран: {selected.FullName} {selected.StartMinute}";
+                }
+                else
+                {
+                    statusLabel.ForeColor = Color.Gray;
+                    statusLabel.Text = "Выберите участника (ПКМ)";
+                }
+            }
+
+            UpdateStatusLabel();
+
+            grid.CellMouseUp += (s, e) =>
+            {
+                if (e.Button == MouseButtons.Right && e.RowIndex >= 0 && e.ColumnIndex >= 0)
+                {
+                    PersonStartMinute psm = (PersonStartMinute)grid.Rows[e.RowIndex].DataBoundItem;
+                    if (psm == null)
+                    {
+                        SendLog("Не удалось получить участника из этой строки");
+                        return;
+                    }
+
+                    if (selected == null)
+                    {
+                        grid.ClearSelection();
+                        grid.Rows[e.RowIndex].Cells[e.ColumnIndex].Selected = true;
+                        selected = psm;
+                    }
+                    else
+                    {
+                        grid.ClearSelection();
+                        TimeSpan selectedStartTime = selected.StartMinute;
+                        TimeSpan clickedStartTime = psm.StartMinute;
+                        psm.StartMinute = selectedStartTime;
+                        selected.StartMinute = clickedStartTime;
+                        SendLog($"Поменяли местами стартовые минуты [{psm.FullName}] {psm.StartMinute} и [{selected.FullName}] {selected.StartMinute}");
+                        selected = null;
+
+                        list.Sort((a, b) => a.StartMinute.CompareTo(b.StartMinute));
+                        grid.Refresh();
+                    }
+                    UpdateStatusLabel();
+                }
+                else if (e.Button == MouseButtons.Left)
+                {
+                    selected = null;
+                    UpdateStatusLabel();
+                }
+            };
         }
 
         private void ReloadStartMinutesMultiDay(string groupName)
@@ -1059,6 +1134,15 @@ namespace SportOrgMultyDay
                     Visible = dayEnabled,
                 };
 
+                Label dayStatusLabel = new()
+                {
+                    Dock = DockStyle.Top,
+                    AutoSize = false,
+                    Height = 25,
+                    TextAlign = ContentAlignment.MiddleLeft,
+                };
+                WireStartMinutesSwap(dayGrid, dayList, dayStatusLabel);
+
                 CheckBox dayCheckBox = new()
                 {
                     Dock = DockStyle.Top,
@@ -1073,6 +1157,7 @@ namespace SportOrgMultyDay
                 };
 
                 dayPanel.Controls.Add(dayGrid);
+                dayPanel.Controls.Add(dayStatusLabel);
                 dayPanel.Controls.Add(dayCheckBox);
 
                 dayPanels.Add(dayPanel);
@@ -1080,12 +1165,24 @@ namespace SportOrgMultyDay
 
             if (dayPanels.Count > 0)
             {
-                Control root = BuildDayColumns(dayPanels, 0, StartMinutesMultiDaySplitterDistances);
+                Control root = BuildDayColumns(dayPanels, 0);
                 root.Dock = DockStyle.Fill;
                 panelStartMinutesMultiDay.Controls.Add(root);
-            }
 
-            panelStartMinutesMultiDay.ResumeLayout();
+                // Resume (forcing the deferred layout) before applying distances -
+                // SplitContainers only get their real width once actually laid out
+                // inside the parent, and setting SplitterDistance any earlier
+                // silently fails against their default unparented size.
+                panelStartMinutesMultiDay.ResumeLayout(true);
+
+                List<int> distances = StartMinutesMultiDaySplitterDistances
+                    ?? Enumerable.Repeat(300, dayPanels.Count - 1).ToList();
+                ApplySplitterDistances(root, distances);
+            }
+            else
+            {
+                panelStartMinutesMultiDay.ResumeLayout();
+            }
         }
         private void ReloadStartMinutes(JToken group)
         {
