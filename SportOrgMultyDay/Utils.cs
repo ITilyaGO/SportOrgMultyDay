@@ -1094,7 +1094,7 @@ namespace SportOrgMultyDay
         private void ReloadShahmatka()
         {
             JToken race = PBCurrentRaceFromBase(JBase);
-            ChessGrid = ShahmatkaManager.BuildGrid(race, checkBoxChessBib.Checked, checkBoxChessGroup.Checked, checkBoxChessSurname.Checked);
+            ChessGrid = ShahmatkaManager.BuildGrid(race, checkBoxChessBib.Checked, checkBoxChessGroup.Checked, checkBoxChessSurname.Checked, checkBoxChessQual.Checked);
             dataGridViewChess.DataSource = ChessGrid.Table;
 
             for (int rowIndex = 0; rowIndex < ChessGrid.RowsPersons.Count; rowIndex++)

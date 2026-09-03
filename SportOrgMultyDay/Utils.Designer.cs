@@ -226,6 +226,7 @@
             checkBoxChessBib = new CheckBox();
             checkBoxChessGroup = new CheckBox();
             checkBoxChessSurname = new CheckBox();
+            checkBoxChessQual = new CheckBox();
             buttonChessRefresh = new Button();
             labelChessSelectedPerson = new Label();
             tabControl1 = new TabControl();
@@ -2472,6 +2473,7 @@
             tabPageChess.Controls.Add(checkBoxChessBib);
             tabPageChess.Controls.Add(checkBoxChessGroup);
             tabPageChess.Controls.Add(checkBoxChessSurname);
+            tabPageChess.Controls.Add(checkBoxChessQual);
             tabPageChess.Controls.Add(buttonChessRefresh);
             tabPageChess.Controls.Add(labelChessSelectedPerson);
             tabPageChess.Location = new Point(4, 34);
@@ -2538,13 +2540,25 @@
             checkBoxChessSurname.UseVisualStyleBackColor = true;
             checkBoxChessSurname.CheckedChanged += checkBoxChessMode_CheckedChanged;
             //
+            // checkBoxChessQual
+            //
+            checkBoxChessQual.AutoSize = true;
+            checkBoxChessQual.Location = new Point(410, 18);
+            checkBoxChessQual.Margin = new Padding(4, 5, 4, 5);
+            checkBoxChessQual.Name = "checkBoxChessQual";
+            checkBoxChessQual.Size = new Size(115, 29);
+            checkBoxChessQual.TabIndex = 4;
+            checkBoxChessQual.Text = "Разряды";
+            checkBoxChessQual.UseVisualStyleBackColor = true;
+            checkBoxChessQual.CheckedChanged += checkBoxChessMode_CheckedChanged;
+            //
             // buttonChessRefresh
             //
-            buttonChessRefresh.Location = new Point(430, 9);
+            buttonChessRefresh.Location = new Point(550, 9);
             buttonChessRefresh.Margin = new Padding(4, 5, 4, 5);
             buttonChessRefresh.Name = "buttonChessRefresh";
             buttonChessRefresh.Size = new Size(150, 38);
-            buttonChessRefresh.TabIndex = 4;
+            buttonChessRefresh.TabIndex = 5;
             buttonChessRefresh.Text = "Обновить";
             buttonChessRefresh.UseVisualStyleBackColor = true;
             buttonChessRefresh.Click += buttonChessRefresh_Click;
@@ -2553,11 +2567,11 @@
             //
             labelChessSelectedPerson.AutoSize = true;
             labelChessSelectedPerson.ForeColor = Color.Gray;
-            labelChessSelectedPerson.Location = new Point(600, 18);
+            labelChessSelectedPerson.Location = new Point(720, 18);
             labelChessSelectedPerson.Margin = new Padding(4, 0, 4, 0);
             labelChessSelectedPerson.Name = "labelChessSelectedPerson";
             labelChessSelectedPerson.Size = new Size(400, 25);
-            labelChessSelectedPerson.TabIndex = 5;
+            labelChessSelectedPerson.TabIndex = 6;
             labelChessSelectedPerson.Text = "Выберите первого участника (ПКМ)";
             //
             // tabControl1
@@ -2761,6 +2775,7 @@
         private CheckBox checkBoxChessBib;
         private CheckBox checkBoxChessGroup;
         private CheckBox checkBoxChessSurname;
+        private CheckBox checkBoxChessQual;
         private Button buttonChessRefresh;
         private Label labelChessSelectedPerson;
         private TabControl tabControl1;

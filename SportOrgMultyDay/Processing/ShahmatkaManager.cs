@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using static SportOrgMultyDay.Data.QualificationNames;
 using static SportOrgMultyDay.Processing.Parsing.ParseBase;
 using static SportOrgMultyDay.Processing.Parsing.ParseGroup;
 using static SportOrgMultyDay.Processing.Parsing.ParsePerson;
@@ -40,9 +41,9 @@ namespace SportOrgMultyDay.Processing
     {
         public const string TimeColumnName = "Время";
 
-        public static ShahmatkaGrid BuildGrid(JToken race, bool showBib, bool showGroup, bool showSurname)
+        public static ShahmatkaGrid BuildGrid(JToken race, bool showBib, bool showGroup, bool showSurname, bool showQual)
         {
-            if (!showBib && !showGroup && !showSurname)
+            if (!showBib && !showGroup && !showSurname && !showQual)
                 showGroup = true;
 
             DataTable table = new();
@@ -111,7 +112,7 @@ namespace SportOrgMultyDay.Processing
                     int corridor = corridors[i];
                     if (timeRow.Value.TryGetValue(corridor, out List<JToken> personsInCell))
                     {
-                        row[corridor.ToString()] = CellText(personsInCell, groupById, showBib, showGroup, showSurname);
+                        row[corridor.ToString()] = CellText(personsInCell, groupById, showBib, showGroup, showSurname, showQual);
                         rowPersons[i] = personsInCell;
                     }
                 }
@@ -123,7 +124,7 @@ namespace SportOrgMultyDay.Processing
             return new ShahmatkaGrid(table, corridors, rowTimes, rowsPersons);
         }
 
-        private static string CellText(List<JToken> personsInCell, Dictionary<string, JToken> groupById, bool showBib, bool showGroup, bool showSurname)
+        private static string CellText(List<JToken> personsInCell, Dictionary<string, JToken> groupById, bool showBib, bool showGroup, bool showSurname, bool showQual)
         {
             IEnumerable<string> labels = personsInCell
                 .Select(person =>
@@ -135,6 +136,8 @@ namespace SportOrgMultyDay.Processing
                         parts.Add(groupById.TryGetValue(PPGroupId(person), out JToken group) ? PGName(group) : "?");
                     if (showSurname)
                         parts.Add(PPSurname(person));
+                    if (showQual)
+                        parts.Add(DictIdToString.TryGetValue(PPQual(person), out string qual) ? qual : "?");
                     return string.Join(" ", parts);
                 })
                 .Distinct();
