@@ -964,6 +964,16 @@ namespace SportOrgMultyDay
             ChessGrid = ShahmatkaManager.BuildGrid(race, checkBoxChessBib.Checked, checkBoxChessGroup.Checked, checkBoxChessSurname.Checked);
             dataGridViewChess.DataSource = ChessGrid.Table;
 
+            for (int rowIndex = 0; rowIndex < ChessGrid.RowsPersons.Count; rowIndex++)
+            {
+                List<JToken>[] rowPersons = ChessGrid.RowsPersons[rowIndex];
+                for (int corridorIndex = 0; corridorIndex < rowPersons.Length; corridorIndex++)
+                {
+                    if (rowPersons[corridorIndex]?.Count > 1)
+                        dataGridViewChess.Rows[rowIndex].Cells[corridorIndex + 1].Style.BackColor = Color.Yellow;
+                }
+            }
+
             ChessPersonSelected = null;
             ReloadChessSelectedPerson();
         }
@@ -1023,7 +1033,7 @@ namespace SportOrgMultyDay
                 JToken pickedPerson = person;
                 menu.Items.Add($"{PPBib(person)} {PPSurnameName(person)}", null, (s, args) => ChessPickPerson(pickedPerson));
             }
-            menu.Show(dataGridViewChess, e.Location);
+            menu.Show(Cursor.Position);
         }
 
         private void ChessPickPerson(JToken person)
