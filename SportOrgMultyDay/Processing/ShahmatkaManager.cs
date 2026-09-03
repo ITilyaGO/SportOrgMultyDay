@@ -1,4 +1,5 @@
 using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -13,12 +14,14 @@ namespace SportOrgMultyDay.Processing
     {
         public DataTable Table { get; }
         public List<int> Corridors { get; }
+        public List<TimeSpan> RowTimes { get; }
         public List<List<JToken>[]> RowsPersons { get; }
 
-        public ShahmatkaGrid(DataTable table, List<int> corridors, List<List<JToken>[]> rowsPersons)
+        public ShahmatkaGrid(DataTable table, List<int> corridors, List<TimeSpan> rowTimes, List<List<JToken>[]> rowsPersons)
         {
             Table = table;
             Corridors = corridors;
+            RowTimes = rowTimes;
             RowsPersons = rowsPersons;
         }
 
@@ -48,10 +51,11 @@ namespace SportOrgMultyDay.Processing
             JArray groups = PBGroups(race);
             JArray persons = PBPersons(race);
             List<int> corridors = new();
+            List<TimeSpan> rowTimes = new();
             List<List<JToken>[]> rowsPersons = new();
 
             if (groups == null || persons == null)
-                return new ShahmatkaGrid(table, corridors, rowsPersons);
+                return new ShahmatkaGrid(table, corridors, rowTimes, rowsPersons);
 
             Dictionary<string, JToken> groupById = groups.ToDictionary(PGId, group => group);
 
@@ -97,8 +101,9 @@ namespace SportOrgMultyDay.Processing
 
             foreach (KeyValuePair<int, Dictionary<int, List<JToken>>> timeRow in byTimeThenCorridor)
             {
+                TimeSpan rowTime = StartTimeToTimeSpan(timeRow.Key);
                 DataRow row = table.NewRow();
-                row[TimeColumnName] = StartTimeToString(StartTimeToTimeSpan(timeRow.Key));
+                row[TimeColumnName] = StartTimeToString(rowTime);
 
                 List<JToken>[] rowPersons = new List<JToken>[corridors.Count];
                 for (int i = 0; i < corridors.Count; i++)
@@ -111,10 +116,11 @@ namespace SportOrgMultyDay.Processing
                     }
                 }
                 table.Rows.Add(row);
+                rowTimes.Add(rowTime);
                 rowsPersons.Add(rowPersons);
             }
 
-            return new ShahmatkaGrid(table, corridors, rowsPersons);
+            return new ShahmatkaGrid(table, corridors, rowTimes, rowsPersons);
         }
 
         private static string CellText(List<JToken> personsInCell, Dictionary<string, JToken> groupById, bool showBib, bool showGroup, bool showSurname)

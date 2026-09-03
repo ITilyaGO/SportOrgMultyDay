@@ -1017,7 +1017,26 @@ namespace SportOrgMultyDay
             List<JToken> personsInCell = ChessGrid.PersonsAt(e.RowIndex, e.ColumnIndex - 1);
             if (personsInCell == null || personsInCell.Count == 0)
             {
-                SendLog("В этой ячейке нет участников");
+                if (ChessPersonSelected == null)
+                {
+                    SendLog("В этой ячейке нет участников");
+                    return;
+                }
+
+                int clickedCorridor = ChessGrid.Corridors[e.ColumnIndex - 1];
+                int selectedCorridor = ChessPersonCorridor(ChessPersonSelected);
+                if (clickedCorridor != selectedCorridor)
+                {
+                    SendLog("Нельзя перенести участника в другой коридор (другую группу)");
+                    return;
+                }
+
+                TimeSpan targetTime = ChessGrid.RowTimes[e.RowIndex];
+                SendLog($"Участник [{PPSurnameName(ChessPersonSelected)}] перенесён на {targetTime}");
+                ChessPersonSelected["start_time"] = targetTime.TotalMilliseconds;
+
+                ChessPersonSelected = null;
+                ReloadShahmatka();
                 return;
             }
 
@@ -1034,6 +1053,14 @@ namespace SportOrgMultyDay
                 menu.Items.Add($"{PPBib(person)} {PPSurnameName(person)}", null, (s, args) => ChessPickPerson(pickedPerson));
             }
             menu.Show(Cursor.Position);
+        }
+
+        private int ChessPersonCorridor(JToken person)
+        {
+            JToken race = PBCurrentRaceFromBase(JBase);
+            JArray groups = PBGroups(race);
+            JToken group = FGById(PPGroupId(person), groups);
+            return group == null ? -1 : PGStartCorridor(group);
         }
 
         private void ChessPickPerson(JToken person)
