@@ -2585,7 +2585,8 @@
             tabControl1.SelectedIndex = 0;
             tabControl1.Size = new Size(1201, 903);
             tabControl1.TabIndex = 28;
-            // 
+            tabControl1.SelectedIndexChanged += tabControl1_SelectedIndexChanged;
+            //
             // openFileDialogStartLog
             // 
             openFileDialogStartLog.FileName = "StartLog";

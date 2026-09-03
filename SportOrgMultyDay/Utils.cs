@@ -50,6 +50,7 @@ namespace SportOrgMultyDay
 
         Panel panelStartMinutesMultiDay;
         bool[] StartMinutesMultiDayEnabled;
+        List<int> StartMinutesMultiDaySplitterDistances;
 
         JToken ChessPersonSelected;
         ShahmatkaGrid ChessGrid;
@@ -251,6 +252,21 @@ namespace SportOrgMultyDay
             PersonStartMinuteSelected = null;
             dataGridViewPersonMinutes.DataSource = null;
 
+            ChessPersonSelected = null;
+            ChessGrid = null;
+            if (tabControl1.SelectedTab == tabPageChess)
+                ReloadShahmatka();
+            else
+            {
+                dataGridViewChess.DataSource = null;
+                ReloadChessSelectedPerson();
+            }
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabControl1.SelectedTab == tabPageChess && ChessGrid == null && JBase != null)
+                ReloadShahmatka();
         }
 
         private void ReloadOrganizationNameListInCombobox(JToken currRace = null)
@@ -953,7 +969,7 @@ namespace SportOrgMultyDay
             autoResize.Add(panelStartMinutesMultiDay, true, true);
         }
 
-        private static Control BuildDayColumns(List<Panel> dayPanels, int index)
+        private static Control BuildDayColumns(List<Panel> dayPanels, int index, List<int> splitterDistances)
         {
             Panel dayPanel = dayPanels[index];
             dayPanel.Dock = DockStyle.Fill;
@@ -970,15 +986,32 @@ namespace SportOrgMultyDay
                 Panel2MinSize = 80,
             };
             split.Panel1.Controls.Add(dayPanel);
-            split.Panel2.Controls.Add(BuildDayColumns(dayPanels, index + 1));
-            try { split.SplitterDistance = 300; } catch { }
+            split.Panel2.Controls.Add(BuildDayColumns(dayPanels, index + 1, splitterDistances));
+
+            int distance = (splitterDistances != null && index < splitterDistances.Count) ? splitterDistances[index] : 300;
+            try { split.SplitterDistance = distance; } catch { }
             return split;
+        }
+
+        private static List<int> CaptureSplitterDistances(Control root)
+        {
+            List<int> distances = new();
+            while (root is SplitContainer split)
+            {
+                distances.Add(split.SplitterDistance);
+                root = split.Panel2.Controls.Count > 0 ? split.Panel2.Controls[0] : null;
+            }
+            return distances;
         }
 
         private void ReloadStartMinutesMultiDay(string groupName)
         {
             EnsureMultiDayPanel();
             panelStartMinutesMultiDay.SuspendLayout();
+
+            if (panelStartMinutesMultiDay.Controls.Count > 0)
+                StartMinutesMultiDaySplitterDistances = CaptureSplitterDistances(panelStartMinutesMultiDay.Controls[0]);
+
             panelStartMinutesMultiDay.Controls.Clear();
 
             JArray races = PBRaces(JBase);
@@ -1047,7 +1080,7 @@ namespace SportOrgMultyDay
 
             if (dayPanels.Count > 0)
             {
-                Control root = BuildDayColumns(dayPanels, 0);
+                Control root = BuildDayColumns(dayPanels, 0, StartMinutesMultiDaySplitterDistances);
                 root.Dock = DockStyle.Fill;
                 panelStartMinutesMultiDay.Controls.Add(root);
             }
