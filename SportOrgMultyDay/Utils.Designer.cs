@@ -68,6 +68,7 @@
             labelSFRStartLogCount = new Label();
             buttonExportSFRx = new Button();
             buttonExportStartTimes = new Button();
+            buttonStartDeviationCheck = new Button();
             tabPageBase = new TabPage();
             checkBoxDeepCloneOrganizations = new CheckBox();
             checkBoxDeepCloneGroups = new CheckBox();
@@ -387,6 +388,7 @@
             tabPageShahmatka.Controls.Add(groupBoxStartLogProcessing);
             tabPageShahmatka.Controls.Add(buttonExportSFRx);
             tabPageShahmatka.Controls.Add(buttonExportStartTimes);
+            tabPageShahmatka.Controls.Add(buttonStartDeviationCheck);
             tabPageShahmatka.Location = new Point(4, 34);
             tabPageShahmatka.Margin = new Padding(4, 5, 4, 5);
             tabPageShahmatka.Name = "tabPageShahmatka";
@@ -675,6 +677,18 @@
             toolTipGeneral.SetToolTip(buttonExportStartTimes, "SFR Smart Terminal - Старое приложение, для работы с SFR.");
             buttonExportStartTimes.UseVisualStyleBackColor = true;
             buttonExportStartTimes.Click += buttonExportStartTimes_Click;
+            //
+            // buttonStartDeviationCheck
+            //
+            buttonStartDeviationCheck.Location = new Point(466, 610);
+            buttonStartDeviationCheck.Margin = new Padding(4, 5, 4, 5);
+            buttonStartDeviationCheck.Name = "buttonStartDeviationCheck";
+            buttonStartDeviationCheck.Size = new Size(286, 45);
+            buttonStartDeviationCheck.TabIndex = 27;
+            buttonStartDeviationCheck.Text = "Проверить отклонения старта по логу";
+            toolTipGeneral.SetToolTip(buttonStartDeviationCheck, "Сравнивает время старта участника (из результата, либо, если там не указано, из стартовой минуты) со временем получения чипа из стартового лога");
+            buttonStartDeviationCheck.UseVisualStyleBackColor = true;
+            buttonStartDeviationCheck.Click += buttonStartDeviationCheck_Click;
             // 
             // tabPageBase
             // 
@@ -2832,6 +2846,7 @@
         private Button buttonImportStartLogFile;
         private TabPage tabPage2;
         private Button buttonExportStartTimes;
+        private Button buttonStartDeviationCheck;
         private TabPage tabPage1;
         private RichTextBox richTextBoxLog;
         private TabPage tabPageChess;

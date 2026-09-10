@@ -602,6 +602,12 @@ namespace SportOrgMultyDay
             StartLogProcess(File.ReadAllText(openFileDialogStartLog.FileName));
         }
 
+        private void buttonStartDeviationCheck_Click(object sender, EventArgs e)
+        {
+            if (openFileDialogStartLog.ShowDialog() != DialogResult.OK) return;
+            SendLog(StartDeviationChecker.Check(JBase, File.ReadAllText(openFileDialogStartLog.FileName)));
+        }
+
         private void buttonImportStartLogClipboard_Click(object sender, EventArgs e)
         {
             if (!Clipboard.ContainsText())

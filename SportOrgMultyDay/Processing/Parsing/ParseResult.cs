@@ -65,6 +65,16 @@ namespace SportOrgMultyDay.Processing.Parsing
             catch (Exception ex) { LogError("843gu89diuq", ex); }
             return -1;
         }
+        public static int PRStartTime(JToken result)
+        {
+            try
+            {
+                var val = result["start_time"];
+                return int.TryParse(val?.ToString(), out int startTime) ? startTime : 0;
+            }
+            catch (Exception ex) { LogError("qp2fh83ndx", ex); }
+            return 0;
+        }
         public static int PRStatus(JToken result)
         {
             try
