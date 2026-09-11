@@ -1289,6 +1289,15 @@ namespace SportOrgMultyDay
             ReloadShahmatka();
         }
 
+        private void trackBarChessRowHeight_Scroll(object sender, EventArgs e)
+        {
+            int height = trackBarChessRowHeight.Value;
+            labelChessRowHeightValue.Text = $"Высота строки: {height}";
+            dataGridViewChess.RowTemplate.Height = height;
+            foreach (DataGridViewRow row in dataGridViewChess.Rows)
+                row.Height = height;
+        }
+
         private void checkBoxChessMode_CheckedChanged(object sender, EventArgs e)
         {
             ReloadShahmatka();
