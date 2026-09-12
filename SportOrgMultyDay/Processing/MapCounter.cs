@@ -113,6 +113,7 @@ namespace SportOrgMultyDay.Processing
 
             log += $"  Группы:\n";
             int summG = 0;
+            var groupLines = new List<(string name, string line)>();
             foreach (var gp in groupPersonCount)
             {
                 JToken group = FGById(gp.Key, groups);
@@ -123,13 +124,16 @@ namespace SportOrgMultyDay.Processing
                 }
                 string groupName = PGName(group);
                 groupPersonCountReserv.TryGetValue(gp.Key, out int val);
-                log += $"      {groupName} - {gp.Value} r:{val} \n";
+                groupLines.Add((groupName, $"      {groupName} - {gp.Value} r:{val} \n"));
                 summG += gp.Value;
             }
+            foreach (var gl in groupLines.OrderBy(gl => gl.name, StringComparer.CurrentCulture))
+                log += gl.line;
             log += $"  Всего карт: {summG}\n";
 
             log += $"  Дистанции:\n";
             int summ = 0;
+            var courseLines = new List<(string name, string line)>();
             foreach (var cp in coursePersonCount)
             {
                 JToken cource = FCById(cp.Key, courses);
@@ -139,15 +143,17 @@ namespace SportOrgMultyDay.Processing
                     continue;
                 }
                 string courceName = PCName(cource);
-                
+
                 coursePersonCountReserv.TryGetValue(cp.Key, out int val);
-                // TODO: ВЫнести переенные и UI 
+                // TODO: ВЫнести переенные и UI
 
                 // int spare = (cp.Value / 10) + val;
                 int spare = CalculateSpare(cp.Value);
-                log += $"      {courceName} - {cp.Value + spare} r:{(calcReserv ? "" : "+")}{val} s:{spare} \n";
+                courseLines.Add((courceName, $"      {courceName} - {cp.Value + spare} r:{(calcReserv ? "" : "+")}{val} s:{spare} \n"));
                 summ += cp.Value + spare;
             }
+            foreach (var cl in courseLines.OrderBy(cl => cl.name, StringComparer.CurrentCulture))
+                log += cl.line;
             log += $"  Всего карт: {summ}\n";
             log += "\nДля вставки в Google Таблицы:\n";
             log += GetCopyTable(coursePersonCount, coursePersonCountReserv, courses, calcReserv);
@@ -163,6 +169,7 @@ namespace SportOrgMultyDay.Processing
             var sb = new StringBuilder();
             sb.AppendLine("Дистанция\tУчастников\tРезерв\tЗапас");
 
+            var rows = new List<(string name, int count, int reserv, int spare)>();
             foreach (var (courseId, count) in coursePersonCount)
             {
                 JToken? course = FCById(courseId, courses);
@@ -174,8 +181,11 @@ namespace SportOrgMultyDay.Processing
 
                 int spare = CalculateSpare(count);
 
-                sb.AppendLine($"{name}\t{count + spare}\t{(calcReserv ? "" : "+")}{reserv}\t{spare}");
+                rows.Add((name, count, reserv, spare));
             }
+
+            foreach (var row in rows.OrderBy(r => r.name, StringComparer.CurrentCulture))
+                sb.AppendLine($"{row.name}\t{row.count + row.spare}\t{(calcReserv ? "" : "+")}{row.reserv}\t{row.spare}");
 
             return sb.ToString();
         }
