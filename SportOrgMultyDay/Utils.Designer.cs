@@ -131,15 +131,13 @@
             buttonGroupSetNumbersByGroups = new Button();
             richTextBoxBibsNumbering = new RichTextBox();
             buttonBibsAutoCreateListNumbering = new Button();
+            labelHTWBibs = new Label();
             tabPageGroups = new TabPage();
-            groupBoxStartingFee = new GroupBox();
-            buttonStartingFeeSerGroupPrices = new Button();
-            richTextBoxStartingFeeInput = new RichTextBox();
             groupBoxGroupRemoving = new GroupBox();
             buttonGroupRemoveGetList = new Button();
+            buttonSetAllDaysToComment = new Button();
             buttonGroupRemoveIfNotInList = new Button();
             richTextBoxGroupNotRemoveList = new RichTextBox();
-            buttonSetAllDaysToComment = new Button();
             buttonFindCoursesForGroups = new Button();
             groupBoxGroupRanks = new GroupBox();
             label9 = new Label();
@@ -258,15 +256,14 @@
             groupBox5.SuspendLayout();
             groupBox4.SuspendLayout();
             groupBoxStartTime.SuspendLayout();
-            groupBoxDistributeLate.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDownSetStartTimeMinGap).BeginInit();
+            groupBoxDistributeLate.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDownSetNumbersInActiveDayFirst).BeginInit();
             tabControlFunc.SuspendLayout();
             tabPageStartTimes.SuspendLayout();
             tabPageBibs.SuspendLayout();
             groupBoxBibs.SuspendLayout();
             tabPageGroups.SuspendLayout();
-            groupBoxStartingFee.SuspendLayout();
             groupBoxGroupRemoving.SuspendLayout();
             groupBoxGroupRanks.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDownGroupResultsCountToCompleteRank).BeginInit();
@@ -677,13 +674,13 @@
             toolTipGeneral.SetToolTip(buttonExportStartTimes, "SFR Smart Terminal - Старое приложение, для работы с SFR.");
             buttonExportStartTimes.UseVisualStyleBackColor = true;
             buttonExportStartTimes.Click += buttonExportStartTimes_Click;
-            //
+            // 
             // buttonStartDeviationCheck
-            //
+            // 
             buttonStartDeviationCheck.Location = new Point(466, 610);
             buttonStartDeviationCheck.Margin = new Padding(4, 5, 4, 5);
             buttonStartDeviationCheck.Name = "buttonStartDeviationCheck";
-            buttonStartDeviationCheck.Size = new Size(286, 45);
+            buttonStartDeviationCheck.Size = new Size(286, 38);
             buttonStartDeviationCheck.TabIndex = 27;
             buttonStartDeviationCheck.Text = "Проверить отклонения старта по логу";
             toolTipGeneral.SetToolTip(buttonStartDeviationCheck, "Сравнивает время старта участника (из результата, либо, если там не указано, из стартовой минуты) со временем получения чипа из стартового лога");
@@ -1189,9 +1186,9 @@
             dateTimePickerStartTime.Size = new Size(117, 31);
             dateTimePickerStartTime.TabIndex = 0;
             dateTimePickerStartTime.Value = new DateTime(1753, 1, 1, 10, 0, 0, 0);
-            //
+            // 
             // groupBoxDistributeLate
-            //
+            // 
             groupBoxDistributeLate.Controls.Add(checkBoxDistributeLateAllDays);
             groupBoxDistributeLate.Controls.Add(buttonDistributeLateFind);
             groupBoxDistributeLate.Controls.Add(buttonDistributeLateApply);
@@ -1203,20 +1200,20 @@
             groupBoxDistributeLate.TabIndex = 35;
             groupBoxDistributeLate.TabStop = false;
             groupBoxDistributeLate.Text = "Дозаявленные без старта";
-            //
+            // 
             // checkBoxDistributeLateAllDays
-            //
+            // 
             checkBoxDistributeLateAllDays.AutoSize = true;
             checkBoxDistributeLateAllDays.Location = new Point(10, 25);
             checkBoxDistributeLateAllDays.Margin = new Padding(4, 5, 4, 5);
             checkBoxDistributeLateAllDays.Name = "checkBoxDistributeLateAllDays";
-            checkBoxDistributeLateAllDays.Size = new Size(87, 29);
+            checkBoxDistributeLateAllDays.Size = new Size(100, 29);
             checkBoxDistributeLateAllDays.TabIndex = 31;
             checkBoxDistributeLateAllDays.Text = "Все дни";
             checkBoxDistributeLateAllDays.UseVisualStyleBackColor = true;
-            //
+            // 
             // buttonDistributeLateFind
-            //
+            // 
             buttonDistributeLateFind.Location = new Point(10, 60);
             buttonDistributeLateFind.Margin = new Padding(4, 5, 4, 5);
             buttonDistributeLateFind.Name = "buttonDistributeLateFind";
@@ -1225,9 +1222,9 @@
             buttonDistributeLateFind.Text = "Найти дозаявленных";
             buttonDistributeLateFind.UseVisualStyleBackColor = true;
             buttonDistributeLateFind.Click += buttonDistributeLateFind_Click;
-            //
+            // 
             // buttonDistributeLateApply
-            //
+            // 
             buttonDistributeLateApply.Location = new Point(10, 100);
             buttonDistributeLateApply.Margin = new Padding(4, 5, 4, 5);
             buttonDistributeLateApply.Name = "buttonDistributeLateApply";
@@ -1339,6 +1336,7 @@
             groupBoxBibs.Controls.Add(buttonGroupSetNumbersByGroups);
             groupBoxBibs.Controls.Add(richTextBoxBibsNumbering);
             groupBoxBibs.Controls.Add(buttonBibsAutoCreateListNumbering);
+            groupBoxBibs.Controls.Add(labelHTWBibs);
             groupBoxBibs.Location = new Point(9, 10);
             groupBoxBibs.Margin = new Padding(4, 5, 4, 5);
             groupBoxBibs.Name = "groupBoxBibs";
@@ -1413,12 +1411,21 @@
             buttonBibsAutoCreateListNumbering.UseVisualStyleBackColor = true;
             buttonBibsAutoCreateListNumbering.Click += buttonBibsAutoCreateListNumbering_Click;
             // 
+            // labelHTWBibs
+            // 
+            labelHTWBibs.AutoSize = true;
+            labelHTWBibs.Location = new Point(509, 758);
+            labelHTWBibs.Margin = new Padding(4, 0, 4, 0);
+            labelHTWBibs.Name = "labelHTWBibs";
+            labelHTWBibs.Size = new Size(230, 25);
+            labelHTWBibs.TabIndex = 12;
+            labelHTWBibs.Text = "Как это работает? (Кликни)";
+            labelHTWBibs.Click += labelHTWBibs_Click;
+            // 
             // tabPageGroups
             // 
             tabPageGroups.BackColor = Color.WhiteSmoke;
-            tabPageGroups.Controls.Add(groupBoxStartingFee);
             tabPageGroups.Controls.Add(groupBoxGroupRemoving);
-            tabPageGroups.Controls.Add(buttonSetAllDaysToComment);
             tabPageGroups.Controls.Add(buttonFindCoursesForGroups);
             tabPageGroups.Controls.Add(buttonCopyGroupSettings);
             tabPageGroups.Controls.Add(groupBoxGroupRanks);
@@ -1430,42 +1437,10 @@
             tabPageGroups.TabIndex = 4;
             tabPageGroups.Text = "Группы";
             // 
-            // groupBoxStartingFee
-            // 
-            groupBoxStartingFee.Controls.Add(buttonStartingFeeSerGroupPrices);
-            groupBoxStartingFee.Controls.Add(richTextBoxStartingFeeInput);
-            groupBoxStartingFee.Location = new Point(316, 290);
-            groupBoxStartingFee.Margin = new Padding(4, 5, 4, 5);
-            groupBoxStartingFee.Name = "groupBoxStartingFee";
-            groupBoxStartingFee.Padding = new Padding(4, 5, 4, 5);
-            groupBoxStartingFee.Size = new Size(424, 442);
-            groupBoxStartingFee.TabIndex = 32;
-            groupBoxStartingFee.TabStop = false;
-            groupBoxStartingFee.Text = "groupBox1";
-            // 
-            // buttonStartingFeeSerGroupPrices
-            // 
-            buttonStartingFeeSerGroupPrices.Location = new Point(9, 303);
-            buttonStartingFeeSerGroupPrices.Margin = new Padding(4, 5, 4, 5);
-            buttonStartingFeeSerGroupPrices.Name = "buttonStartingFeeSerGroupPrices";
-            buttonStartingFeeSerGroupPrices.Size = new Size(316, 43);
-            buttonStartingFeeSerGroupPrices.TabIndex = 1;
-            buttonStartingFeeSerGroupPrices.Text = "Установить стартовые взносы группам";
-            buttonStartingFeeSerGroupPrices.UseVisualStyleBackColor = true;
-            buttonStartingFeeSerGroupPrices.Click += buttonStartingFeeSerGroupPrices_Click;
-            // 
-            // richTextBoxStartingFeeInput
-            // 
-            richTextBoxStartingFeeInput.Location = new Point(9, 37);
-            richTextBoxStartingFeeInput.Margin = new Padding(4, 5, 4, 5);
-            richTextBoxStartingFeeInput.Name = "richTextBoxStartingFeeInput";
-            richTextBoxStartingFeeInput.Size = new Size(263, 254);
-            richTextBoxStartingFeeInput.TabIndex = 0;
-            richTextBoxStartingFeeInput.Text = "";
-            // 
             // groupBoxGroupRemoving
             // 
             groupBoxGroupRemoving.Controls.Add(buttonGroupRemoveGetList);
+            groupBoxGroupRemoving.Controls.Add(buttonSetAllDaysToComment);
             groupBoxGroupRemoving.Controls.Add(buttonGroupRemoveIfNotInList);
             groupBoxGroupRemoving.Controls.Add(richTextBoxGroupNotRemoveList);
             groupBoxGroupRemoving.Location = new Point(9, 182);
@@ -1488,6 +1463,17 @@
             buttonGroupRemoveGetList.UseVisualStyleBackColor = true;
             buttonGroupRemoveGetList.Click += buttonGroupRemoveGetList_Click;
             // 
+            // buttonSetAllDaysToComment
+            // 
+            buttonSetAllDaysToComment.Location = new Point(9, 482);
+            buttonSetAllDaysToComment.Margin = new Padding(4, 5, 4, 5);
+            buttonSetAllDaysToComment.Name = "buttonSetAllDaysToComment";
+            buttonSetAllDaysToComment.Size = new Size(248, 68);
+            buttonSetAllDaysToComment.TabIndex = 31;
+            buttonSetAllDaysToComment.Text = "Установить в комментарии C:1234 для групп";
+            buttonSetAllDaysToComment.UseVisualStyleBackColor = true;
+            buttonSetAllDaysToComment.Click += buttonSetAllDaysToComment_Click;
+            // 
             // buttonGroupRemoveIfNotInList
             // 
             buttonGroupRemoveIfNotInList.Location = new Point(9, 560);
@@ -1504,20 +1490,9 @@
             richTextBoxGroupNotRemoveList.Location = new Point(9, 85);
             richTextBoxGroupNotRemoveList.Margin = new Padding(4, 5, 4, 5);
             richTextBoxGroupNotRemoveList.Name = "richTextBoxGroupNotRemoveList";
-            richTextBoxGroupNotRemoveList.Size = new Size(248, 462);
+            richTextBoxGroupNotRemoveList.Size = new Size(248, 387);
             richTextBoxGroupNotRemoveList.TabIndex = 31;
             richTextBoxGroupNotRemoveList.Text = "";
-            // 
-            // buttonSetAllDaysToComment
-            // 
-            buttonSetAllDaysToComment.Location = new Point(316, 218);
-            buttonSetAllDaysToComment.Margin = new Padding(4, 5, 4, 5);
-            buttonSetAllDaysToComment.Name = "buttonSetAllDaysToComment";
-            buttonSetAllDaysToComment.Size = new Size(320, 38);
-            buttonSetAllDaysToComment.TabIndex = 31;
-            buttonSetAllDaysToComment.Text = "Установить в комментарии C:1234";
-            buttonSetAllDaysToComment.UseVisualStyleBackColor = true;
-            buttonSetAllDaysToComment.Click += buttonSetAllDaysToComment_Click;
             // 
             // buttonFindCoursesForGroups
             // 
@@ -1927,9 +1902,9 @@
             // 
             buttonCompressAndClearHtml.Location = new Point(9, 667);
             buttonCompressAndClearHtml.Name = "buttonCompressAndClearHtml";
-            buttonCompressAndClearHtml.Size = new Size(259, 47);
+            buttonCompressAndClearHtml.Size = new Size(298, 47);
             buttonCompressAndClearHtml.TabIndex = 23;
-            buttonCompressAndClearHtml.Text = "Очистить и сжать протокол";
+            buttonCompressAndClearHtml.Text = "Очистить и сжать протокол (WIP)";
             buttonCompressAndClearHtml.UseVisualStyleBackColor = true;
             buttonCompressAndClearHtml.Click += buttonCompressAndClearHtml_Click;
             // 
@@ -2748,7 +2723,7 @@
             Margin = new Padding(4, 5, 4, 5);
             MinimumSize = new Size(1271, 723);
             Name = "Utils";
-            Text = "Утилиты v0.20.1b";
+            Text = "Утилиты v0.21";
             FormClosing += Utils_FormClosing;
             Load += Utils_Load;
             SizeChanged += Utils_SizeChanged;
@@ -2766,11 +2741,11 @@
             groupBox5.PerformLayout();
             groupBox4.ResumeLayout(false);
             groupBox4.PerformLayout();
-            groupBoxDistributeLate.ResumeLayout(false);
-            groupBoxDistributeLate.PerformLayout();
             groupBoxStartTime.ResumeLayout(false);
             groupBoxStartTime.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDownSetStartTimeMinGap).EndInit();
+            groupBoxDistributeLate.ResumeLayout(false);
+            groupBoxDistributeLate.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDownSetNumbersInActiveDayFirst).EndInit();
             tabControlFunc.ResumeLayout(false);
             tabPageStartTimes.ResumeLayout(false);
@@ -2778,7 +2753,6 @@
             groupBoxBibs.ResumeLayout(false);
             groupBoxBibs.PerformLayout();
             tabPageGroups.ResumeLayout(false);
-            groupBoxStartingFee.ResumeLayout(false);
             groupBoxGroupRemoving.ResumeLayout(false);
             groupBoxGroupRanks.ResumeLayout(false);
             groupBoxGroupRanks.PerformLayout();
@@ -2985,6 +2959,7 @@
         private SaveFileDialog saveFileDialogSFRx;
         private CheckBox checkBoxShahmatkaExtendedLogs;
         private Label labelHTWStartBibs;
+        private Label labelHTWBibs;
         private Button buttonRemovePersonDuplicates;
         private GroupBox groupBoxGroupRemoving;
         private Button buttonGroupRemoveIfNotInList;
@@ -3005,9 +2980,6 @@
         private Button buttonFindCoursesForGroups;
         private Button buttonPhoneFtpSaveIps;
         private RichTextBox richTextBoxPhoneFtpIps;
-        private GroupBox groupBoxStartingFee;
-        private Button buttonStartingFeeSerGroupPrices;
-        private RichTextBox richTextBoxStartingFeeInput;
         private CheckBox checkBoxRenameGroups;
         private CheckBox checkBoxRenameCourse;
         private GroupBox groupBoxOrgUtils;

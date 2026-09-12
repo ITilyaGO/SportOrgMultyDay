@@ -369,6 +369,11 @@ namespace SportOrgMultyDay
             buttonGroupRemoveByPrice.Enabled = active;
             buttonPayidToView.Enabled = active;
             buttonImportEstafetRequestsInWorldCodeFromAnotherBase.Enabled = active;
+            buttonDistributeLateApply.Enabled = active;
+            buttonDistributeLateFind.Enabled = active;
+            buttonChessRefresh.Enabled = active;
+            buttonStartDeviationCheck.Enabled = active;
+            buttonImportCommentsFromCSV.Enabled = active;
         }
 
         private void ReloadOrganizationRenameList()
@@ -776,6 +781,13 @@ namespace SportOrgMultyDay
         {
             int day = ((int)numericUpDownSetNumbersInActiveDayFirst.Value - 1);
             SendLog(BibsNumbering.SetNumbers(PBCurrentRaceFromBase(JBase), richTextBoxBibsNumbering.Text, checkBoxSetNumbersByGroupsDebug.Checked, checkBoxSetNumbersRelay.Checked, checkBoxSetNumbersCreateReserv.Checked, day));
+        }
+
+        private void labelHTWBibs_Click(object sender, EventArgs e)
+        {
+            string instruction = "Массовое присвоение номеров участникам по группам.\r\n\r\nСписок групп задаётся в текстовом поле слева, по одной группе на строку в формате:\r\n\"ИмяГруппы Диапазон\" или \"ИмяГруппы Диапазон r:N\"\r\n\r\nДиапазон:\r\n\"100-199\" — номера с 100 по 199.\r\n\"100\" — начиная с 100, без ограничения сверху.\r\n\"*\" — авто: начать сразу после последнего номера, уже занятого предыдущими группами списка (первая авто-группа начнётся со 100).\r\n\r\nr:N (необязательно) — сколько резервных номеров создать для этой группы, если включена галочка \"Создавать резервы\". Если не указать, резервы для этой группы создаваться не будут.\r\n\r\nКнопка \"Создать список автоматически\" заполняет список всеми группами, где есть участники: каждой ставится диапазон \"*\" и резерв r:N = 10% от числа участников (округление вверх). После этого список можно поправить вручную и нажать \"Установить номера по группам\", чтобы применить.\r\n\r\nКнопка \"Установить номера по группам\" разбирает список и реально присваивает номера участникам групп по порядку. Если номер уже занят другим участником — будет предложено пропустить группу, перезаписать номер или остановить присвоение.\r\n\r\n\"Сначала выдать номера заявленным в день\" + номер дня — перед присвоением участники каждой группы сортируются так, что сначала идут заявленные на указанный день (день считается с 1) — они и получат меньшие номера в диапазоне группы.\r\n\r\n\"Создавать резервы\" — после того как реальным участникам выданы номера, оставшиеся номера в диапазоне группы (до лимита r:N) заполняются пустыми резервными участниками этой же группы.\r\n\r\n\"Эстафета\" — включает эстафетный режим нумерации команд. Команда определяется по международному коду участника (world_code вида \"ИдЗаявки-НомерЭтапа\"), участники без такого кода пропускаются с ошибкой в логе. Командам присваиваются номера подряд начиная со StartBib диапазона (сначала — команды с бОльшим числом участников), итоговый номер бегуна = номер этапа + порядковый номер команды, дополненный нулями до 3 знаков (например, 2 этап, 5-я команда → 2005).\r\n\r\n\"Расширенные логи\" — выводит в лог подробности по каждому участнику (номер до/после).";
+            SendLog(instruction);
+            MessageBox.Show(instruction);
         }
 
         private void buttonSyncOrganizations_Click(object sender, EventArgs e)
@@ -1958,6 +1970,11 @@ namespace SportOrgMultyDay
                 LogError("importEstafetRequestsWorldCode", ex);
             }
             SendLog(log);
+        }
+
+        private void richTextBoxStartingFeeInput_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
