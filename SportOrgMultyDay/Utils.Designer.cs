@@ -167,15 +167,16 @@
             textBoxOrganizationNewName = new TextBox();
             buttonAddOrganizationTweakItem = new Button();
             tabPageOfficial = new TabPage();
+            buttonCompressAndClearHtml = new Button();
             buttonGroupRemoveByPrice = new Button();
             buttonRemovePresonsWithOutResultsInAnyDay = new Button();
+            buttonVichestStart = new Button();
             buttonQualFromOtherBase = new Button();
+            buttonRemvoeWorstResult = new Button();
             tabPageOther = new TabPage();
             buttonImportEstafetRequestsInWorldCodeFromAnotherBase = new Button();
-            buttonCompressAndClearHtml = new Button();
             checkBoxRenameGroups = new CheckBox();
             checkBoxRenameCourse = new CheckBox();
-            buttonVichestStart = new Button();
             groupBoxMapCountCalculate = new GroupBox();
             checkBoxMapCountCalculateReserv = new CheckBox();
             checkBoxMapCountCalculateOnlyInDay = new CheckBox();
@@ -203,7 +204,6 @@
             textBoxStartFeeWithCardSymbol = new TextBox();
             buttonStartFeeCalculate = new Button();
             buttonOpenNumbersForm = new Button();
-            buttonRemvoeWorstResult = new Button();
             tabPage2 = new TabPage();
             buttonApplyGroupStartInterval = new Button();
             dateTimePickerGroupStartInterval = new DateTimePicker();
@@ -233,6 +233,8 @@
             checkBoxChessQual = new CheckBox();
             buttonChessRefresh = new Button();
             labelChessSelectedPerson = new Label();
+            trackBarChessRowHeight = new TrackBar();
+            labelChessRowHeightValue = new Label();
             tabControl1 = new TabControl();
             openFileDialogStartLog = new OpenFileDialog();
             toolTipGeneral = new ToolTip(components);
@@ -281,6 +283,7 @@
             tabPage1.SuspendLayout();
             tabPageChess.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewChess).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)trackBarChessRowHeight).BeginInit();
             tabControl1.SuspendLayout();
             SuspendLayout();
             // 
@@ -352,7 +355,7 @@
             // buttonCombineAllBase
             // 
             buttonCombineAllBase.Enabled = false;
-            buttonCombineAllBase.Location = new Point(462, 760);
+            buttonCombineAllBase.Location = new Point(424, 769);
             buttonCombineAllBase.Margin = new Padding(4, 5, 4, 5);
             buttonCombineAllBase.Name = "buttonCombineAllBase";
             buttonCombineAllBase.Size = new Size(164, 38);
@@ -520,7 +523,7 @@
             // dateTimePickerExportStartLog
             // 
             dateTimePickerExportStartLog.Format = DateTimePickerFormat.Time;
-            dateTimePickerExportStartLog.Location = new Point(284, 22);
+            dateTimePickerExportStartLog.Location = new Point(291, 22);
             dateTimePickerExportStartLog.Margin = new Padding(4, 5, 4, 5);
             dateTimePickerExportStartLog.MaxDate = new DateTime(1753, 1, 2, 0, 0, 0, 0);
             dateTimePickerExportStartLog.Name = "dateTimePickerExportStartLog";
@@ -829,7 +832,7 @@
             groupBox3.Margin = new Padding(4, 5, 4, 5);
             groupBox3.Name = "groupBox3";
             groupBox3.Padding = new Padding(4, 5, 4, 5);
-            groupBox3.Size = new Size(371, 278);
+            groupBox3.Size = new Size(371, 289);
             groupBox3.TabIndex = 24;
             groupBox3.TabStop = false;
             groupBox3.Text = "Синхронизация";
@@ -1196,7 +1199,7 @@
             groupBoxDistributeLate.Margin = new Padding(4, 5, 4, 5);
             groupBoxDistributeLate.Name = "groupBoxDistributeLate";
             groupBoxDistributeLate.Padding = new Padding(4, 5, 4, 5);
-            groupBoxDistributeLate.Size = new Size(370, 160);
+            groupBoxDistributeLate.Size = new Size(370, 146);
             groupBoxDistributeLate.TabIndex = 35;
             groupBoxDistributeLate.TabStop = false;
             groupBoxDistributeLate.Text = "Дозаявленные без старта";
@@ -1230,7 +1233,7 @@
             buttonDistributeLateApply.Name = "buttonDistributeLateApply";
             buttonDistributeLateApply.Size = new Size(350, 35);
             buttonDistributeLateApply.TabIndex = 34;
-            buttonDistributeLateApply.Text = "Распределить";
+            buttonDistributeLateApply.Text = "Распределить в протоколе";
             buttonDistributeLateApply.UseVisualStyleBackColor = true;
             buttonDistributeLateApply.Click += buttonDistributeLateApply_Click;
             // 
@@ -1349,7 +1352,7 @@
             // checkBoxSetNumbersCreateReserv
             // 
             checkBoxSetNumbersCreateReserv.AutoSize = true;
-            checkBoxSetNumbersCreateReserv.Location = new Point(320, 175);
+            checkBoxSetNumbersCreateReserv.Location = new Point(320, 164);
             checkBoxSetNumbersCreateReserv.Margin = new Padding(4, 5, 4, 5);
             checkBoxSetNumbersCreateReserv.Name = "checkBoxSetNumbersCreateReserv";
             checkBoxSetNumbersCreateReserv.Size = new Size(198, 29);
@@ -1360,7 +1363,7 @@
             // checkBoxSetNumbersRelay
             // 
             checkBoxSetNumbersRelay.AutoSize = true;
-            checkBoxSetNumbersRelay.Location = new Point(320, 133);
+            checkBoxSetNumbersRelay.Location = new Point(320, 125);
             checkBoxSetNumbersRelay.Margin = new Padding(4, 5, 4, 5);
             checkBoxSetNumbersRelay.Name = "checkBoxSetNumbersRelay";
             checkBoxSetNumbersRelay.Size = new Size(110, 29);
@@ -1371,7 +1374,7 @@
             // checkBoxSetNumbersByGroupsDebug
             // 
             checkBoxSetNumbersByGroupsDebug.AutoSize = true;
-            checkBoxSetNumbersByGroupsDebug.Location = new Point(320, 92);
+            checkBoxSetNumbersByGroupsDebug.Location = new Point(320, 86);
             checkBoxSetNumbersByGroupsDebug.Margin = new Padding(4, 5, 4, 5);
             checkBoxSetNumbersByGroupsDebug.Name = "checkBoxSetNumbersByGroupsDebug";
             checkBoxSetNumbersByGroupsDebug.Size = new Size(193, 29);
@@ -1384,7 +1387,7 @@
             buttonGroupSetNumbersByGroups.Location = new Point(320, 37);
             buttonGroupSetNumbersByGroups.Margin = new Padding(4, 5, 4, 5);
             buttonGroupSetNumbersByGroups.Name = "buttonGroupSetNumbersByGroups";
-            buttonGroupSetNumbersByGroups.Size = new Size(273, 45);
+            buttonGroupSetNumbersByGroups.Size = new Size(306, 39);
             buttonGroupSetNumbersByGroups.TabIndex = 6;
             buttonGroupSetNumbersByGroups.Text = "Установить номера по группам";
             buttonGroupSetNumbersByGroups.UseVisualStyleBackColor = true;
@@ -1820,9 +1823,12 @@
             // tabPageOfficial
             // 
             tabPageOfficial.BackColor = Color.WhiteSmoke;
+            tabPageOfficial.Controls.Add(buttonCompressAndClearHtml);
             tabPageOfficial.Controls.Add(buttonGroupRemoveByPrice);
             tabPageOfficial.Controls.Add(buttonRemovePresonsWithOutResultsInAnyDay);
+            tabPageOfficial.Controls.Add(buttonVichestStart);
             tabPageOfficial.Controls.Add(buttonQualFromOtherBase);
+            tabPageOfficial.Controls.Add(buttonRemvoeWorstResult);
             tabPageOfficial.Location = new Point(4, 34);
             tabPageOfficial.Name = "tabPageOfficial";
             tabPageOfficial.Padding = new Padding(3);
@@ -1830,9 +1836,19 @@
             tabPageOfficial.TabIndex = 8;
             tabPageOfficial.Text = "Протоколы";
             // 
+            // buttonCompressAndClearHtml
+            // 
+            buttonCompressAndClearHtml.Location = new Point(11, 8);
+            buttonCompressAndClearHtml.Name = "buttonCompressAndClearHtml";
+            buttonCompressAndClearHtml.Size = new Size(298, 47);
+            buttonCompressAndClearHtml.TabIndex = 23;
+            buttonCompressAndClearHtml.Text = "Очистить и сжать протокол (WIP)";
+            buttonCompressAndClearHtml.UseVisualStyleBackColor = true;
+            buttonCompressAndClearHtml.Click += buttonCompressAndClearHtml_Click;
+            // 
             // buttonGroupRemoveByPrice
             // 
-            buttonGroupRemoveByPrice.Location = new Point(6, 75);
+            buttonGroupRemoveByPrice.Location = new Point(11, 748);
             buttonGroupRemoveByPrice.Name = "buttonGroupRemoveByPrice";
             buttonGroupRemoveByPrice.Size = new Size(322, 63);
             buttonGroupRemoveByPrice.TabIndex = 1;
@@ -1842,7 +1858,7 @@
             // 
             // buttonRemovePresonsWithOutResultsInAnyDay
             // 
-            buttonRemovePresonsWithOutResultsInAnyDay.Location = new Point(6, 6);
+            buttonRemovePresonsWithOutResultsInAnyDay.Location = new Point(11, 679);
             buttonRemovePresonsWithOutResultsInAnyDay.Name = "buttonRemovePresonsWithOutResultsInAnyDay";
             buttonRemovePresonsWithOutResultsInAnyDay.Size = new Size(322, 63);
             buttonRemovePresonsWithOutResultsInAnyDay.TabIndex = 0;
@@ -1850,9 +1866,21 @@
             buttonRemovePresonsWithOutResultsInAnyDay.UseVisualStyleBackColor = true;
             buttonRemovePresonsWithOutResultsInAnyDay.Click += buttonRemovePresonsWithOutResultsInAnyDay_Click;
             // 
+            // buttonVichestStart
+            // 
+            buttonVichestStart.Location = new Point(395, 775);
+            buttonVichestStart.Margin = new Padding(4, 5, 4, 5);
+            buttonVichestStart.Name = "buttonVichestStart";
+            buttonVichestStart.Size = new Size(192, 34);
+            buttonVichestStart.TabIndex = 9;
+            buttonVichestStart.Text = "TEMP Вычесть старт";
+            buttonVichestStart.UseVisualStyleBackColor = true;
+            buttonVichestStart.Visible = false;
+            buttonVichestStart.Click += buttonVichestStart_Click;
+            // 
             // buttonQualFromOtherBase
             // 
-            buttonQualFromOtherBase.Location = new Point(595, 8);
+            buttonQualFromOtherBase.Location = new Point(595, 714);
             buttonQualFromOtherBase.Margin = new Padding(4, 5, 4, 5);
             buttonQualFromOtherBase.Name = "buttonQualFromOtherBase";
             buttonQualFromOtherBase.Size = new Size(166, 95);
@@ -1862,14 +1890,23 @@
             buttonQualFromOtherBase.Visible = false;
             buttonQualFromOtherBase.Click += buttonQualFromOtherBase_Click;
             // 
+            // buttonRemvoeWorstResult
+            // 
+            buttonRemvoeWorstResult.Location = new Point(11, 603);
+            buttonRemvoeWorstResult.Margin = new Padding(4, 5, 4, 5);
+            buttonRemvoeWorstResult.Name = "buttonRemvoeWorstResult";
+            buttonRemvoeWorstResult.Size = new Size(322, 68);
+            buttonRemvoeWorstResult.TabIndex = 0;
+            buttonRemvoeWorstResult.Text = "Удалить худшие повторяющиеся результаты одного участника";
+            buttonRemvoeWorstResult.UseVisualStyleBackColor = true;
+            buttonRemvoeWorstResult.Click += buttonRemvoeWorstResult_Click;
+            // 
             // tabPageOther
             // 
             tabPageOther.BackColor = Color.WhiteSmoke;
             tabPageOther.Controls.Add(buttonImportEstafetRequestsInWorldCodeFromAnotherBase);
-            tabPageOther.Controls.Add(buttonCompressAndClearHtml);
             tabPageOther.Controls.Add(checkBoxRenameGroups);
             tabPageOther.Controls.Add(checkBoxRenameCourse);
-            tabPageOther.Controls.Add(buttonVichestStart);
             tabPageOther.Controls.Add(groupBoxMapCountCalculate);
             tabPageOther.Controls.Add(checkBoxCombineCourse);
             tabPageOther.Controls.Add(buttonGroupCourseNamesFormat);
@@ -1878,7 +1915,6 @@
             tabPageOther.Controls.Add(buttonCombineAllBase);
             tabPageOther.Controls.Add(groupBoxStartFee);
             tabPageOther.Controls.Add(buttonOpenNumbersForm);
-            tabPageOther.Controls.Add(buttonRemvoeWorstResult);
             tabPageOther.Location = new Point(4, 34);
             tabPageOther.Margin = new Padding(4, 5, 4, 5);
             tabPageOther.Name = "tabPageOther";
@@ -1889,7 +1925,7 @@
             // 
             // buttonImportEstafetRequestsInWorldCodeFromAnotherBase
             // 
-            buttonImportEstafetRequestsInWorldCodeFromAnotherBase.Location = new Point(343, 607);
+            buttonImportEstafetRequestsInWorldCodeFromAnotherBase.Location = new Point(9, 680);
             buttonImportEstafetRequestsInWorldCodeFromAnotherBase.Margin = new Padding(4, 5, 4, 5);
             buttonImportEstafetRequestsInWorldCodeFromAnotherBase.Name = "buttonImportEstafetRequestsInWorldCodeFromAnotherBase";
             buttonImportEstafetRequestsInWorldCodeFromAnotherBase.Size = new Size(412, 42);
@@ -1897,16 +1933,6 @@
             buttonImportEstafetRequestsInWorldCodeFromAnotherBase.Text = "Импорт id заявок в world_code из другой базы";
             buttonImportEstafetRequestsInWorldCodeFromAnotherBase.UseVisualStyleBackColor = true;
             buttonImportEstafetRequestsInWorldCodeFromAnotherBase.Click += buttonImportEstafetRequestsInWorldCodeFromAnotherBase_Click;
-            // 
-            // buttonCompressAndClearHtml
-            // 
-            buttonCompressAndClearHtml.Location = new Point(9, 667);
-            buttonCompressAndClearHtml.Name = "buttonCompressAndClearHtml";
-            buttonCompressAndClearHtml.Size = new Size(298, 47);
-            buttonCompressAndClearHtml.TabIndex = 23;
-            buttonCompressAndClearHtml.Text = "Очистить и сжать протокол (WIP)";
-            buttonCompressAndClearHtml.UseVisualStyleBackColor = true;
-            buttonCompressAndClearHtml.Click += buttonCompressAndClearHtml_Click;
             // 
             // checkBoxRenameGroups
             // 
@@ -1929,18 +1955,6 @@
             checkBoxRenameCourse.TabIndex = 21;
             checkBoxRenameCourse.Text = "Переиминование дистанций";
             checkBoxRenameCourse.UseVisualStyleBackColor = true;
-            // 
-            // buttonVichestStart
-            // 
-            buttonVichestStart.Location = new Point(18, 624);
-            buttonVichestStart.Margin = new Padding(4, 5, 4, 5);
-            buttonVichestStart.Name = "buttonVichestStart";
-            buttonVichestStart.Size = new Size(192, 34);
-            buttonVichestStart.TabIndex = 9;
-            buttonVichestStart.Text = "TEMP Вычесть старт";
-            buttonVichestStart.UseVisualStyleBackColor = true;
-            buttonVichestStart.Visible = false;
-            buttonVichestStart.Click += buttonVichestStart_Click;
             // 
             // groupBoxMapCountCalculate
             // 
@@ -2174,7 +2188,7 @@
             // 
             // buttonInportResultsFromAnothrBase
             // 
-            buttonInportResultsFromAnothrBase.Location = new Point(343, 653);
+            buttonInportResultsFromAnothrBase.Location = new Point(8, 732);
             buttonInportResultsFromAnothrBase.Margin = new Padding(4, 5, 4, 5);
             buttonInportResultsFromAnothrBase.Name = "buttonInportResultsFromAnothrBase";
             buttonInportResultsFromAnothrBase.Size = new Size(412, 75);
@@ -2253,7 +2267,7 @@
             // 
             // buttonOpenNumbersForm
             // 
-            buttonOpenNumbersForm.Location = new Point(630, 730);
+            buttonOpenNumbersForm.Location = new Point(634, 739);
             buttonOpenNumbersForm.Margin = new Padding(4, 5, 4, 5);
             buttonOpenNumbersForm.Name = "buttonOpenNumbersForm";
             buttonOpenNumbersForm.Size = new Size(126, 68);
@@ -2261,17 +2275,6 @@
             buttonOpenNumbersForm.Text = "Номера";
             buttonOpenNumbersForm.UseVisualStyleBackColor = true;
             buttonOpenNumbersForm.Click += buttonOpenNumbersForm_Click;
-            // 
-            // buttonRemvoeWorstResult
-            // 
-            buttonRemvoeWorstResult.Location = new Point(9, 730);
-            buttonRemvoeWorstResult.Margin = new Padding(4, 5, 4, 5);
-            buttonRemvoeWorstResult.Name = "buttonRemvoeWorstResult";
-            buttonRemvoeWorstResult.Size = new Size(299, 68);
-            buttonRemvoeWorstResult.TabIndex = 0;
-            buttonRemvoeWorstResult.Text = "Удалить худшие повторяющиеся результаты одного участника";
-            buttonRemvoeWorstResult.UseVisualStyleBackColor = true;
-            buttonRemvoeWorstResult.Click += buttonRemvoeWorstResult_Click;
             // 
             // tabPage2
             // 
@@ -2519,6 +2522,8 @@
             tabPageChess.Controls.Add(checkBoxChessQual);
             tabPageChess.Controls.Add(buttonChessRefresh);
             tabPageChess.Controls.Add(labelChessSelectedPerson);
+            tabPageChess.Controls.Add(trackBarChessRowHeight);
+            tabPageChess.Controls.Add(labelChessRowHeightValue);
             tabPageChess.Location = new Point(4, 34);
             tabPageChess.Margin = new Padding(4, 5, 4, 5);
             tabPageChess.Name = "tabPageChess";
@@ -2542,13 +2547,13 @@
             dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.False;
             dataGridViewChess.DefaultCellStyle = dataGridViewCellStyle1;
-            dataGridViewChess.Location = new Point(9, 55);
+            dataGridViewChess.Location = new Point(9, 100);
             dataGridViewChess.Margin = new Padding(4, 5, 4, 5);
             dataGridViewChess.Name = "dataGridViewChess";
             dataGridViewChess.ReadOnly = true;
             dataGridViewChess.RowHeadersWidth = 62;
             dataGridViewChess.RowTemplate.Height = 24;
-            dataGridViewChess.Size = new Size(1173, 790);
+            dataGridViewChess.Size = new Size(1173, 745);
             dataGridViewChess.TabIndex = 0;
             dataGridViewChess.CellMouseUp += dataGridViewChess_CellMouseUp;
             // 
@@ -2624,6 +2629,29 @@
             labelChessSelectedPerson.TabIndex = 6;
             labelChessSelectedPerson.Text = "Выберите первого участника (ПКМ)";
             // 
+            // trackBarChessRowHeight
+            // 
+            trackBarChessRowHeight.Location = new Point(9, 50);
+            trackBarChessRowHeight.Margin = new Padding(4, 5, 4, 5);
+            trackBarChessRowHeight.Maximum = 60;
+            trackBarChessRowHeight.Minimum = 1;
+            trackBarChessRowHeight.Name = "trackBarChessRowHeight";
+            trackBarChessRowHeight.Size = new Size(250, 69);
+            trackBarChessRowHeight.TabIndex = 7;
+            trackBarChessRowHeight.TickFrequency = 4;
+            trackBarChessRowHeight.Value = 24;
+            trackBarChessRowHeight.Scroll += trackBarChessRowHeight_Scroll;
+            // 
+            // labelChessRowHeightValue
+            // 
+            labelChessRowHeightValue.AutoSize = true;
+            labelChessRowHeightValue.Location = new Point(266, 58);
+            labelChessRowHeightValue.Margin = new Padding(4, 0, 4, 0);
+            labelChessRowHeightValue.Name = "labelChessRowHeightValue";
+            labelChessRowHeightValue.Size = new Size(160, 25);
+            labelChessRowHeightValue.TabIndex = 8;
+            labelChessRowHeightValue.Text = "Высота строки: 24";
+            // 
             // tabControl1
             // 
             tabControl1.Controls.Add(tabPage1);
@@ -2669,7 +2697,7 @@
             // linkLabelGitHub
             // 
             linkLabelGitHub.AutoSize = true;
-            linkLabelGitHub.Location = new Point(373, 27);
+            linkLabelGitHub.Location = new Point(362, 27);
             linkLabelGitHub.Margin = new Padding(4, 0, 4, 0);
             linkLabelGitHub.Name = "linkLabelGitHub";
             linkLabelGitHub.Size = new Size(199, 25);
@@ -2687,7 +2715,7 @@
             checkBoxIsSaveToGzip.AutoSize = true;
             checkBoxIsSaveToGzip.Checked = true;
             checkBoxIsSaveToGzip.CheckState = CheckState.Checked;
-            checkBoxIsSaveToGzip.Location = new Point(570, 25);
+            checkBoxIsSaveToGzip.Location = new Point(561, 26);
             checkBoxIsSaveToGzip.Margin = new Padding(4, 5, 4, 5);
             checkBoxIsSaveToGzip.Name = "checkBoxIsSaveToGzip";
             checkBoxIsSaveToGzip.Size = new Size(72, 29);
@@ -2778,6 +2806,7 @@
             tabPageChess.ResumeLayout(false);
             tabPageChess.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewChess).EndInit();
+            ((System.ComponentModel.ISupportInitialize)trackBarChessRowHeight).EndInit();
             tabControl1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
@@ -2831,6 +2860,8 @@
         private CheckBox checkBoxChessQual;
         private Button buttonChessRefresh;
         private Label labelChessSelectedPerson;
+        private TrackBar trackBarChessRowHeight;
+        private Label labelChessRowHeightValue;
         private TabControl tabControl1;
         private GroupBox groupBoxStartLogProcessing;
         private Label labelSFRStartLogCount;
