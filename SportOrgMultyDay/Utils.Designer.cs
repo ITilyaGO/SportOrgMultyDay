@@ -2751,7 +2751,7 @@
             Margin = new Padding(4, 5, 4, 5);
             MinimumSize = new Size(1271, 723);
             Name = "Utils";
-            Text = "Утилиты v0.21";
+            Text = "Утилиты v0.21.2";
             FormClosing += Utils_FormClosing;
             Load += Utils_Load;
             SizeChanged += Utils_SizeChanged;
