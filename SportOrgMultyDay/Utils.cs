@@ -351,6 +351,7 @@ namespace SportOrgMultyDay
             buttonMapCountCalculateAll.Enabled = active;
             buttonReplaceAllPersonsForOtherDays.Enabled = active;
             buttonBibsAutoCreateListNumbering.Enabled = active;
+            buttonBibsFillParams.Enabled = active;
             buttonCalculatePersonStartPrice.Enabled = active;
             buttonExportSFRx.Enabled = active;
             buttonInportResultsFromAnothrBase.Enabled = active;
@@ -767,9 +768,11 @@ namespace SportOrgMultyDay
                     continue;
                 }
 
-                int reserv = (int)Math.Ceiling(count / 10.0);
-                sb.AppendLine($"{groupName} * r:{reserv}");
-                log += $"  {groupName}: участников {count}, резерв {reserv} (номер будет присвоен автоматически по порядку)\n";
+                GetAutoGroupParams(group, persons, count, out int reserv, out int legs, out string relayInfo);
+                string legsKey = legs > 0 ? $" l:{legs}" : string.Empty;
+                string legsLog = legs > 0 ? $", этапов {legs}" : relayInfo;
+                sb.AppendLine($"{groupName} * r:{reserv}{legsKey}");
+                log += $"  {groupName}: участников {count}, резерв {reserv}{legsLog} (номер будет присвоен автоматически по порядку)\n";
             }
 
             richTextBoxBibsNumbering.Text = sb.ToString();
@@ -777,15 +780,88 @@ namespace SportOrgMultyDay
             SendLog(log);
         }
 
+        /// <summary>
+        /// Авто-параметры группы для списка номеров: резерв r (10% от участников, вверх)
+        /// и число этапов l (только для эстафетных групп типа 3 при включенной галочке "Эстафета"; 0 - не добавлять).
+        /// </summary>
+        private void GetAutoGroupParams(JToken group, JArray persons, int count, out int reserv, out int legs, out string relayInfo)
+        {
+            reserv = (int)Math.Ceiling(count / 10.0);
+            legs = 0;
+            relayInfo = string.Empty;
+            if (!checkBoxSetNumbersRelay.Checked)
+                relayInfo = ", l не добавлен: галочка \"Эстафета\" выключена";
+            else if (PGType(group) != 3)
+                relayInfo = $", l не добавлен: тип группы {PGType(group)} (нужен 3)";
+            else
+            {
+                // Эстафета: число этапов - максимальный номер этапа из world_code участников группы
+                string groupId = PGId(group);
+                legs = persons.Where(p => PPGroupId(p) == groupId)
+                    .Select(p => new PersonRelayData(p, out _).Stage)
+                    .DefaultIfEmpty(0).Max();
+                if (legs <= 0)
+                    relayInfo = ", l не добавлен: в world_code участников не найден номер этапа";
+            }
+        }
+
+        private void buttonBibsFillParams_Click(object sender, EventArgs e)
+        {
+            JToken race = PBCurrentRaceFromBase(JBase);
+            JArray groups = PBGroups(race);
+            JArray persons = PBPersons(race);
+            Dictionary<string, int> groupIdCount = DictGIdPersonsCount(groups, persons);
+
+            string log = "Дополнение списка номеров параметрами...\n";
+            string[] lines = richTextBoxBibsNumbering.Text.Split('\n');
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string line = lines[i].TrimEnd('\r');
+                string[] parts = line.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                if (parts.Length < 2)
+                    continue;
+
+                JToken group = FGByName(parts[0], groups);
+                if (group == null)
+                {
+                    log += $"  Строка {i + 1}: группа {parts[0]} не найдена, строка не изменена\n";
+                    continue;
+                }
+
+                bool hasReserv = parts.Skip(2).Any(p => p.StartsWith("r:"));
+                bool hasLegs = parts.Skip(2).Any(p => p.StartsWith("l:"));
+                int count = groupIdCount.TryGetValue(PGId(group), out int c) ? c : 0;
+                GetAutoGroupParams(group, persons, count, out int reserv, out int legs, out string relayInfo);
+
+                string added = string.Empty;
+                if (!hasReserv)
+                    added += $" r:{reserv}";
+                if (!hasLegs && legs > 0)
+                    added += $" l:{legs}";
+
+                if (added.Length > 0)
+                {
+                    lines[i] = line.TrimEnd() + added;
+                    log += $"  {parts[0]}:{added}{(hasLegs ? string.Empty : relayInfo)}\n";
+                }
+                else if (!hasLegs)
+                    log += $"  {parts[0]}: ничего не добавлено{relayInfo}\n";
+            }
+
+            richTextBoxBibsNumbering.Text = string.Join("\n", lines);
+            log += "Готово. Уже указанные параметры не менялись.\n";
+            SendLog(log);
+        }
+
         private void buttonGroupSetNumbersByGroups_Click(object sender, EventArgs e)
         {
             int day = ((int)numericUpDownSetNumbersInActiveDayFirst.Value - 1);
-            SendLog(BibsNumbering.SetNumbers(PBCurrentRaceFromBase(JBase), richTextBoxBibsNumbering.Text, checkBoxSetNumbersByGroupsDebug.Checked, checkBoxSetNumbersRelay.Checked, checkBoxSetNumbersCreateReserv.Checked, day));
+            SendLog(BibsNumbering.SetNumbers(PBCurrentRaceFromBase(JBase), richTextBoxBibsNumbering.Text, checkBoxSetNumbersByGroupsDebug.Checked, checkBoxSetNumbersRelay.Checked, checkBoxSetNumbersCreateReserv.Checked, day, checkBoxSetNumbersRelayFillIncomplete.Checked));
         }
 
         private void labelHTWBibs_Click(object sender, EventArgs e)
         {
-            string instruction = "Массовое присвоение номеров участникам по группам.\r\n\r\nСписок групп задаётся в текстовом поле слева, по одной группе на строку в формате:\r\n\"ИмяГруппы Диапазон\" или \"ИмяГруппы Диапазон r:N\"\r\n\r\nДиапазон:\r\n\"100-199\" — номера с 100 по 199.\r\n\"100\" — начиная с 100, без ограничения сверху.\r\n\"*\" — авто: начать сразу после последнего номера, уже занятого предыдущими группами списка (первая авто-группа начнётся со 100).\r\n\r\nr:N (необязательно) — сколько резервных номеров создать для этой группы, если включена галочка \"Создавать резервы\". Если не указать, резервы для этой группы создаваться не будут.\r\n\r\nКнопка \"Создать список автоматически\" заполняет список всеми группами, где есть участники: каждой ставится диапазон \"*\" и резерв r:N = 10% от числа участников (округление вверх). После этого список можно поправить вручную и нажать \"Установить номера по группам\", чтобы применить.\r\n\r\nКнопка \"Установить номера по группам\" разбирает список и реально присваивает номера участникам групп по порядку. Если номер уже занят другим участником — будет предложено пропустить группу, перезаписать номер или остановить присвоение.\r\n\r\n\"Сначала выдать номера заявленным в день\" + номер дня — перед присвоением участники каждой группы сортируются так, что сначала идут заявленные на указанный день (день считается с 1) — они и получат меньшие номера в диапазоне группы.\r\n\r\n\"Создавать резервы\" — после того как реальным участникам выданы номера, оставшиеся номера в диапазоне группы (до лимита r:N) заполняются пустыми резервными участниками этой же группы.\r\n\r\n\"Эстафета\" — включает эстафетный режим нумерации команд. Команда определяется по международному коду участника (world_code вида \"ИдЗаявки-НомерЭтапа\"), участники без такого кода пропускаются с ошибкой в логе. Командам присваиваются номера подряд начиная со StartBib диапазона (сначала — команды с бОльшим числом участников), итоговый номер бегуна = номер этапа + порядковый номер команды, дополненный нулями до 3 знаков (например, 2 этап, 5-я команда → 2005).\r\n\r\n\"Расширенные логи\" — выводит в лог подробности по каждому участнику (номер до/после).";
+            string instruction = "Массовое присвоение номеров участникам по группам.\r\n\r\nСписок групп задаётся в текстовом поле слева, по одной группе на строку в формате:\r\n\"ИмяГруппы Диапазон\" или \"ИмяГруппы Диапазон r:N\"\r\n\r\nДиапазон:\r\n\"100-199\" — номера с 100 по 199.\r\n\"100\" — начиная с 100, без ограничения сверху.\r\n\"*\" — авто: начать сразу после последнего номера, уже занятого предыдущими группами списка (первая авто-группа начнётся со 100).\r\n\r\nr:N (необязательно) — сколько резервных номеров создать для этой группы, если включена галочка \"Создавать резервы\". Если не указать, резервы для этой группы создаваться не будут.\r\n\r\nl:N (необязательно, для эстафет) — число этапов в группе, например \"Э_М * r:5 l:3\". Если не указано, берётся максимальный номер этапа из заявок группы.\r\n\r\nКнопка \"Создать список автоматически\" заполняет список всеми группами, где есть участники: каждой ставится диапазон \"*\" и резерв r:N = 10% от числа участников (округление вверх). После этого список можно поправить вручную и нажать \"Установить номера по группам\", чтобы применить.\r\n\r\nКнопка \"Установить номера по группам\" разбирает список и реально присваивает номера участникам групп по порядку. Если номер уже занят другим участником — будет предложено пропустить группу, перезаписать номер или остановить присвоение.\r\n\r\n\"Сначала выдать номера заявленным в день\" + номер дня — перед присвоением участники каждой группы сортируются так, что сначала идут заявленные на указанный день (день считается с 1) — они и получат меньшие номера в диапазоне группы.\r\n\r\n\"Создавать резервы\" — после того как реальным участникам выданы номера, оставшиеся номера в диапазоне группы (до лимита r:N) заполняются пустыми резервными участниками этой же группы.\r\n\r\n\"Эстафета\" — включает эстафетный режим нумерации команд. Команда определяется по международному коду участника (world_code вида \"ИдЗаявки-НомерЭтапа\"), участники без такого кода пропускаются с ошибкой в логе. Командам присваиваются номера подряд начиная со StartBib диапазона (сначала — команды с бОльшим числом участников), итоговый номер бегуна = номер этапа + порядковый номер команды, дополненный нулями до 3 знаков (например, 2 этап, 5-я команда → 2005). Число этапов резервных команд берётся из l:N или из заявок группы.\r\n\r\n\"Дополнять неполные команды\" (эстафета) — для команд (в том числе из одного участника), у которых заявлено меньше этапов, чем в группе, на пропущенные этапы создаются пустые резервы с номером этой команды.\r\n\r\n\"Расширенные логи\" — выводит в лог подробности по каждому участнику (номер до/после).";
             SendLog(instruction);
             MessageBox.Show(instruction);
         }

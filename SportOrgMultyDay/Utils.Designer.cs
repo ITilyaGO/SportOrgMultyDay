@@ -126,6 +126,8 @@
             tabPageBibs = new TabPage();
             groupBoxBibs = new GroupBox();
             checkBoxSetNumbersCreateReserv = new CheckBox();
+            checkBoxSetNumbersRelayFillIncomplete = new CheckBox();
+            buttonBibsFillParams = new Button();
             checkBoxSetNumbersRelay = new CheckBox();
             checkBoxSetNumbersByGroupsDebug = new CheckBox();
             buttonGroupSetNumbersByGroups = new Button();
@@ -1240,7 +1242,7 @@
             // label20
             // 
             label20.AutoSize = true;
-            label20.Location = new Point(380, 243);
+            label20.Location = new Point(380, 322);
             label20.Margin = new Padding(4, 0, 4, 0);
             label20.Name = "label20";
             label20.Size = new Size(373, 25);
@@ -1249,7 +1251,7 @@
             // 
             // numericUpDownSetNumbersInActiveDayFirst
             // 
-            numericUpDownSetNumbersInActiveDayFirst.Location = new Point(320, 242);
+            numericUpDownSetNumbersInActiveDayFirst.Location = new Point(320, 321);
             numericUpDownSetNumbersInActiveDayFirst.Margin = new Padding(4, 5, 4, 5);
             numericUpDownSetNumbersInActiveDayFirst.Minimum = new decimal(new int[] { 1, 0, 0, int.MinValue });
             numericUpDownSetNumbersInActiveDayFirst.Name = "numericUpDownSetNumbersInActiveDayFirst";
@@ -1332,6 +1334,8 @@
             // groupBoxBibs
             // 
             groupBoxBibs.Controls.Add(label20);
+            groupBoxBibs.Controls.Add(buttonBibsFillParams);
+            groupBoxBibs.Controls.Add(checkBoxSetNumbersRelayFillIncomplete);
             groupBoxBibs.Controls.Add(checkBoxSetNumbersCreateReserv);
             groupBoxBibs.Controls.Add(numericUpDownSetNumbersInActiveDayFirst);
             groupBoxBibs.Controls.Add(checkBoxSetNumbersRelay);
@@ -1359,6 +1363,17 @@
             checkBoxSetNumbersCreateReserv.TabIndex = 9;
             checkBoxSetNumbersCreateReserv.Text = "Создавать резервы";
             checkBoxSetNumbersCreateReserv.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxSetNumbersRelayFillIncomplete
+            // 
+            checkBoxSetNumbersRelayFillIncomplete.AutoSize = true;
+            checkBoxSetNumbersRelayFillIncomplete.Location = new Point(320, 203);
+            checkBoxSetNumbersRelayFillIncomplete.Margin = new Padding(4, 5, 4, 5);
+            checkBoxSetNumbersRelayFillIncomplete.Name = "checkBoxSetNumbersRelayFillIncomplete";
+            checkBoxSetNumbersRelayFillIncomplete.Size = new Size(300, 29);
+            checkBoxSetNumbersRelayFillIncomplete.TabIndex = 10;
+            checkBoxSetNumbersRelayFillIncomplete.Text = "Дополнять неполные команды";
+            checkBoxSetNumbersRelayFillIncomplete.UseVisualStyleBackColor = true;
             // 
             // checkBoxSetNumbersRelay
             // 
@@ -1401,6 +1416,18 @@
             richTextBoxBibsNumbering.Size = new Size(301, 694);
             richTextBoxBibsNumbering.TabIndex = 4;
             richTextBoxBibsNumbering.Text = "";
+            // 
+            // buttonBibsFillParams
+            // 
+            buttonBibsFillParams.Enabled = false;
+            buttonBibsFillParams.Location = new Point(320, 380);
+            buttonBibsFillParams.Margin = new Padding(4, 5, 4, 5);
+            buttonBibsFillParams.Name = "buttonBibsFillParams";
+            buttonBibsFillParams.Size = new Size(306, 39);
+            buttonBibsFillParams.TabIndex = 13;
+            buttonBibsFillParams.Text = "Дополнить параметрами";
+            buttonBibsFillParams.UseVisualStyleBackColor = true;
+            buttonBibsFillParams.Click += buttonBibsFillParams_Click;
             // 
             // buttonBibsAutoCreateListNumbering
             // 
@@ -2978,6 +3005,8 @@
         private CheckBox checkBoxYarfsoParserReplaceQual;
         private CheckBox checkBoxRenameOrgsImportKodRegionsFromCsv;
         private CheckBox checkBoxSetNumbersRelay;
+        private CheckBox checkBoxSetNumbersRelayFillIncomplete;
+        private Button buttonBibsFillParams;
         private Button buttonReplaceAllPersonsForOtherDays;
         private Button buttonCalculatePersonStartPrice;
         private Button buttonVichestStart;

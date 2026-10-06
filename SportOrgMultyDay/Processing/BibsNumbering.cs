@@ -25,15 +25,15 @@ namespace SportOrgMultyDay.Processing
         public const int DefaultEndBib = 9999999;
         public const int AutoStartBib = 100;
 
-        public static string SetNumbers(JToken jRace, string bibsSample, bool isDebug = false, bool isRelay = false, bool isCreateReserv = false, int SortByActiveDay = -1)
+        public static string SetNumbers(JToken jRace, string bibsSample, bool isDebug = false, bool isRelay = false, bool isCreateReserv = false, int SortByActiveDay = -1, bool isFillIncompleteTeams = false)
         {
             if (isRelay)
-                return SetRelayNumbers(jRace, bibsSample, isDebug, isCreateReserv);
+                return SetRelayNumbers(jRace, bibsSample, isDebug, isCreateReserv, isFillIncompleteTeams: isFillIncompleteTeams);
             else
                 return SetDefaultNumbers(jRace, bibsSample, isDebug, isCreateReserv, SortByActiveDay);
         }
 
-        public static string SetRelayNumbers(JToken jRace, string bibsSample, bool isDebug = false, bool isCreateReserv = false, int stageCount = 2, int bibNormalization = 3)
+        public static string SetRelayNumbers(JToken jRace, string bibsSample, bool isDebug = false, bool isCreateReserv = false, int stageCount = 2, int bibNormalization = 3, bool isFillIncompleteTeams = false)
         {
             bool checkNumberExist = true;
             string log = "Установка эстафетных номеров участникам групп...\n";
@@ -96,7 +96,15 @@ namespace SportOrgMultyDay.Processing
                         return log;
                 }
 
+                // Число этапов: ключ l:N из списка, иначе максимум этапа в заявках группы
+                int groupStageCount = numberOfGroup.LegsCount > 0
+                    ? numberOfGroup.LegsCount
+                    : personRelayDatas.Select(p => p.Stage).DefaultIfEmpty(0).Max();
+                if (groupStageCount <= 0)
+                    groupStageCount = stageCount;
+
                 int currentNumber = numberOfGroup.StartBib;
+                int filledStagesCount = 0;
                 foreach (IGrouping<string, PersonRelayData> prGroup in personRelayGrouped)
                 {
                     foreach (PersonRelayData personRelay in prGroup)
@@ -127,9 +135,29 @@ namespace SportOrgMultyDay.Processing
                         if (isDebug)
                             log += $"      Установка номера. Номер до:{beforBib} Установлено: {PersonToString.BibName(person)}\n";
                     }
+
+                    // Дополнение команды резервами на недостающие этапы (включая одиночек)
+                    if (isFillIncompleteTeams && prGroup.Key != null && groupStageCount > 1)
+                    {
+                        HashSet<int> existStages = prGroup.Select(p => p.Stage).ToHashSet();
+                        for (int stage = 1; stage <= groupStageCount; stage++)
+                        {
+                            if (existStages.Contains(stage)) continue;
+                            int fillBib = int.Parse(stage.ToString() + StringNormalizer(currentNumber.ToString(), bibNormalization));
+                            JObject fillReserv = SportOrgTemplates.Reserv;
+                            fillReserv["group_id"] = groupId;
+                            fillReserv["bib"] = fillBib;
+                            persons.Add(fillReserv);
+                            filledStagesCount++;
+                            if (isDebug)
+                                log += $"        Дополнение команды {prGroup.Key}: создан - {PPToString(fillReserv)}\n";
+                        }
+                    }
                     currentNumber++;
                 }
                 string reservCreateLog = string.Empty;
+                if (filledStagesCount > 0)
+                    reservCreateLog += $" Дополнено этапов резервами: {filledStagesCount}.";
                 if (isCreateReserv)
                 {
                     int createdReservCount = 0;
@@ -137,7 +165,7 @@ namespace SportOrgMultyDay.Processing
                         log += $"      Создание резервов...\n";
                     while (currentNumber <= numberOfGroup.EndBib && createdReservCount < numberOfGroup.MaxReservCount)
                     {
-                        for (int i = 1; i <= stageCount; i++)
+                        for (int i = 1; i <= groupStageCount; i++)
                         {
                             string strBib = i.ToString() + StringNormalizer(currentNumber.ToString(), bibNormalization);
                             int relayBib = int.Parse(strBib);
@@ -151,7 +179,7 @@ namespace SportOrgMultyDay.Processing
                         currentNumber++;
                         createdReservCount++;
                     }
-                    reservCreateLog = $" Создано команд резервов: {createdReservCount}.";
+                    reservCreateLog += $" Создано команд резервов: {createdReservCount}.";
                 }
 
                 autoNextBib = Math.Max(autoNextBib, currentNumber);
@@ -332,7 +360,6 @@ namespace SportOrgMultyDay.Processing
 
             string groupName = parts[0];
             string numbersRange = parts[1];
-            string rawReservCount = parts.ElementAtOrDefault(2);
 
             // "*" значит автоматический старт - номер будет взят по порядку от конца предыдущего пула
             bool isAutoStart = numbersRange == "*";
@@ -342,21 +369,30 @@ namespace SportOrgMultyDay.Processing
             if (!isAutoStart && !TryParseNumbersRange(numbersRange, out startBib, out endBib))
                 return null;
 
-            _ = TryParseReservCount(rawReservCount , out int reservCount);
+            // Необязательные ключи: r:N - резервы, l:N - число этапов эстафеты
+            int reservCount = 0;
+            int legsCount = 0;
+            foreach (string key in parts.Skip(2))
+            {
+                if (TryParseKeyValue(key, "r", out int r))
+                    reservCount = r;
+                else if (TryParseKeyValue(key, "l", out int l))
+                    legsCount = l;
+            }
 
-            return new NumbersOfGroup(groupName, startBib, endBib, reservCount: reservCount) { IsAutoStart = isAutoStart };
+            return new NumbersOfGroup(groupName, startBib, endBib, reservCount: reservCount) { IsAutoStart = isAutoStart, LegsCount = legsCount };
         }
 
-        private static bool TryParseReservCount(string rawReservCount, out int reservCount)
+        private static bool TryParseKeyValue(string rawKey, string key, out int value)
         {
-            reservCount = 0;
-            if (string.IsNullOrWhiteSpace(rawReservCount))
+            value = 0;
+            if (string.IsNullOrWhiteSpace(rawKey))
                 return false;
-            string[] parts = rawReservCount.Split(':', StringSplitOptions.RemoveEmptyEntries);
+            string[] parts = rawKey.Split(':', StringSplitOptions.RemoveEmptyEntries);
             if (parts.Length < 2)
                 return false;
-            if (parts[0] == "r")
-                return int.TryParse(parts[1], out reservCount);
+            if (parts[0] == key)
+                return int.TryParse(parts[1], out value);
             return false;
         }
 
@@ -402,6 +438,8 @@ namespace SportOrgMultyDay.Processing
         public int MaxReservCount { get; set; }
         public string GroupName { get; set; }
         public bool IsAutoStart { get; set; }
+        /// <summary>Число этапов эстафеты (ключ l:N). 0 - определить по заявке.</summary>
+        public int LegsCount { get; set; }
         public int NumbersCount => (EndBib - StartBib) + 1;
 
         public NumbersOfGroup(string group, int startBib = 0, int endBib = 0, int numberOfString = 0, int reservCount = 100)
@@ -416,7 +454,7 @@ namespace SportOrgMultyDay.Processing
         public override string ToString()
         {
             string numbers = IsAutoStart ? "* (авто, номера по порядку)" : $"{StartBib}-{EndBib}";
-            return $"Строка: {NumberOfString+1} Имя: {GroupName} Максимум резервов:{MaxReservCount} Номера: {numbers}";
+            return $"Строка: {NumberOfString+1} Имя: {GroupName} Максимум резервов:{MaxReservCount} Этапов:{(LegsCount > 0 ? LegsCount.ToString() : "авто")} Номера: {numbers}";
         }
     }
 

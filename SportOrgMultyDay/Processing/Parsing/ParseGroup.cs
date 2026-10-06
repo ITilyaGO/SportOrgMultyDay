@@ -70,6 +70,17 @@ namespace SportOrgMultyDay.Processing.Parsing
             return -1;
         }
 
+        /// <summary>Тип группы (поле __type): 3 - эстафета</summary>
+        public static int PGType(JToken group)
+        {
+            try
+            {
+                return (int)group["__type"];
+            }
+            catch (Exception ex) { LogError("g7tq2ype1", ex); }
+            return -1;
+        }
+
         public static int PGPrice(JToken group)
         {
             try
