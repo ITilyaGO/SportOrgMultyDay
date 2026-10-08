@@ -63,7 +63,7 @@ namespace SportOrgMultyDay
             };
             buttonIncompleteTeamsForm.Click += (_, _) =>
             {
-                using var form = new IncompleteTeamsForm(PBCurrentRaceFromBase(JBase));
+                using var form = new IncompleteTeamsForm(PBCurrentRaceFromBase(JBase), msg => SendLog(msg));
                 form.ShowDialog(this);
             };
             buttonRemovePersonDuplicates.Parent.Controls.Add(buttonIncompleteTeamsForm);

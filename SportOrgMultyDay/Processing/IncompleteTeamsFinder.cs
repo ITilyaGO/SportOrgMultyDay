@@ -26,6 +26,13 @@ namespace SportOrgMultyDay.Processing
         public static List<JToken> RelayGroups(JToken race) =>
             PBGroups(race).Where(g => PGType(g) == DuplicateFinder.RelayGroupType).ToList();
 
+        /// <summary>Число этапов группы: максимальный этап среди участников.</summary>
+        public static int GroupLegs(JToken race, JToken group)
+        {
+            string id = PGId(group);
+            return PBPersons(race).Where(p => PPGroupId(p) == id).Select(p => DuplicateFinder.ParseRelay(p).Stage).DefaultIfEmpty(0).Max();
+        }
+
         /// <summary>
         /// Участники заявок, в которых нет хотя бы одного этапа из 1..N, где N - максимальный этап в группе
         /// (так же определяется число этапов при присвоении номеров). Заявка без id в world_code считается одиночкой.
