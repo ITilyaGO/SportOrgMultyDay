@@ -120,24 +120,22 @@ namespace SportOrgMultyDay.Processing
 
         /// <summary>
         /// Авто-пометка: в каждом наборе остается один дубль (см. ChooseKeeper), остальные помечаются.
-        /// Если ignoreDifferentGroups - наборы, где дубли лежат в разных группах, пропускаются.
+        /// Если ignoreDifferentGroups - остается по одному дублю в каждой группе набора (лишние заявки внутри группы помечаются).
         /// </summary>
-        public static HashSet<JToken> AutoMark(IEnumerable<DuplicateSet> sets, JToken race, bool ignoreDifferentGroups,
-            out int processed, out int skipped)
+        public static HashSet<JToken> AutoMark(IEnumerable<DuplicateSet> sets, JToken race, bool ignoreDifferentGroups)
         {
             var result = new HashSet<JToken>();
-            processed = skipped = 0;
             foreach (DuplicateSet set in sets)
             {
-                if (ignoreDifferentGroups && set.Persons.Select(PPGroupId).Distinct().Count() > 1)
+                IEnumerable<List<JToken>> parts = ignoreDifferentGroups
+                    ? set.Persons.GroupBy(p => PPGroupId(p)).Select(g => g.ToList())
+                    : new[] { set.Persons };
+                foreach (List<JToken> part in parts)
                 {
-                    skipped++;
-                    continue;
+                    JToken keeper = ChooseKeeper(new DuplicateSet { Key = set.Key, Persons = part, HasRelay = set.HasRelay, Title = set.Title }, race);
+                    foreach (JToken p in part)
+                        if (!ReferenceEquals(p, keeper)) result.Add(p);
                 }
-                JToken keeper = ChooseKeeper(set, race);
-                foreach (JToken p in set.Persons)
-                    if (!ReferenceEquals(p, keeper)) result.Add(p);
-                processed++;
             }
             return result;
         }

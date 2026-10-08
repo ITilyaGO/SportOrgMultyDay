@@ -16,6 +16,7 @@ namespace SportOrgMultyDay
     public class DuplicatesForm : Form
     {
         private static readonly Color DoneColor = Color.FromArgb(198, 239, 206);
+        private static readonly Color AllMarkedColor = Color.FromArgb(255, 199, 206);
         private static readonly Color DupColor = Color.FromArgb(255, 249, 219);
 
         private readonly JToken race;
@@ -75,6 +76,7 @@ namespace SportOrgMultyDay
             bottomGrid.CellValueChanged += BottomCellValueChanged;
 
             buttonAutoMark.Click += (_, _) => AutoMark();
+            checkIgnoreDifferentGroups.CheckedChanged += (_, _) => RefreshAfterMarkChange();
             buttonKeepSelected.Click += (_, _) => KeepSelected();
             buttonUnmarkSet.Click += (_, _) => UnmarkSet();
             buttonMarkApplication.Click += (_, _) => MarkApplication();
@@ -146,13 +148,23 @@ namespace SportOrgMultyDay
         {
             var set = (DuplicateSet)row.Tag;
             row.Cells[3].Value = set.Persons.Count(marked.Contains);
-            // Зеленая - остался ровно один непомеченный, то есть тот, кого оставляем.
-            row.DefaultCellStyle.BackColor = UnmarkedCount(set) == 1 ? DoneColor : Color.Empty;
+            row.DefaultCellStyle.BackColor = IsDone(set) ? DoneColor : UnmarkedCount(set) == 0 ? AllMarkedColor : Color.Empty;
+        }
+
+        /// <summary>
+        /// Набор готов (зеленый): остался ровно один непомеченный - тот, кого оставляем.
+        /// При включенном игноре групп - ровно один непомеченный в каждой группе набора.
+        /// </summary>
+        private bool IsDone(DuplicateSet set)
+        {
+            if (!checkIgnoreDifferentGroups.Checked)
+                return UnmarkedCount(set) == 1;
+            return set.Persons.GroupBy(p => PPGroupId(p)).All(g => g.Count(p => !marked.Contains(p)) == 1);
         }
 
         private void UpdateInfo()
         {
-            int done = sets.Count(s => UnmarkedCount(s) == 1);
+            int done = sets.Count(IsDone);
             labelInfo.Text = $"Наборов: {sets.Count}, готово (зеленые): {done}, помечено на удаление: {marked.Count}";
             buttonReview.Text = $"Помеченные ({marked.Count})...";
         }
@@ -222,16 +234,13 @@ namespace SportOrgMultyDay
             if (marked.Count > 0 && MessageBox.Show("Текущие пометки в обрабатываемых наборах будут заменены. Продолжить?", "Авто-пометка",
                 MessageBoxButtons.YesNo) != DialogResult.Yes)
                 return;
-            HashSet<JToken> auto = DuplicateFinder.AutoMark(sets, race, checkIgnoreDifferentGroups.Checked, out int processed, out int skipped);
-            // Пропущенные наборы (разные группы) не трогаем, остальные перезаписываем результатом алгоритма
-            var skippedSets = checkIgnoreDifferentGroups.Checked
-                ? sets.Where(s => s.Persons.Select(PPGroupId).Distinct().Count() > 1).SelectMany(s => s.Persons).ToHashSet()
-                : new HashSet<JToken>();
-            marked.RemoveWhere(p => !skippedSets.Contains(p));
+            HashSet<JToken> auto = DuplicateFinder.AutoMark(sets, race, checkIgnoreDifferentGroups.Checked);
+            // Пометки участников найденных наборов перезаписываем результатом алгоритма
+            marked.ExceptWith(sets.SelectMany(s => s.Persons));
             marked.UnionWith(auto);
             LoadBottom();
             RefreshAfterMarkChange();
-            MessageBox.Show($"Обработано наборов: {processed}, пропущено (разные группы): {skipped}, помечено на удаление: {auto.Count}.\nОстальные помеченные ранее участники вне наборов не затронуты.");
+            MessageBox.Show($"Обработано наборов: {sets.Count}, помечено на удаление: {auto.Count}.");
         }
 
         private void KeepSelected()
