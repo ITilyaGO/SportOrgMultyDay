@@ -27,6 +27,7 @@ namespace SportOrgMultyDay
         private readonly Dictionary<JToken, int> teamSizes = new();
 
         private readonly ComboBox comboGroup = new() { DropDownStyle = ComboBoxStyle.DropDownList, Width = 200 };
+        private readonly NumericUpDown numericMinLegs = new() { Minimum = 1, Maximum = 20, Value = IncompleteTeamsFinder.DefaultMinLegs, Width = 50 };
         private readonly CheckBox checkOnlySingles = new() { Text = "Только одиночки (1 участник в заявке)", AutoSize = true, Padding = new Padding(8, 4, 0, 0) };
         private readonly CheckBox checkMergeMode = new() { Text = "Режим объединения", AutoSize = true, Padding = new Padding(8, 4, 8, 0) };
         private readonly Button buttonSave = new() { Text = "В буфер (Пробел)", AutoSize = true, Enabled = false };
@@ -61,7 +62,7 @@ namespace SportOrgMultyDay
 
             var panel = new FlowLayoutPanel { Dock = DockStyle.Top, AutoSize = true, Padding = new Padding(4) };
             panel.Controls.AddRange(new Control[] { new Label { Text = "Группа:", AutoSize = true, Padding = new Padding(0, 6, 0, 0) },
-                comboGroup, checkOnlySingles, buttonRefresh, checkMergeMode, buttonSave, buttonClear, buttonReverse, labelInfo });
+                comboGroup, new Label { Text = "Минимум этапов:", AutoSize = true, Padding = new Padding(8, 6, 0, 0) }, numericMinLegs, checkOnlySingles, buttonRefresh, checkMergeMode, buttonSave, buttonClear, buttonReverse, labelInfo });
             var autoPanel = new FlowLayoutPanel { Dock = DockStyle.Top, AutoSize = true, Padding = new Padding(4) };
             autoPanel.Controls.AddRange(new Control[] { new Label { Text = "Авто-объединение:", AutoSize = true, Padding = new Padding(0, 6, 0, 0) },
                 comboClubMode, checkRank, checkAge, checkStages, buttonAuto });
@@ -105,6 +106,7 @@ namespace SportOrgMultyDay
 
             comboGroup.SelectedIndexChanged += (_, _) => Reload();
             checkOnlySingles.CheckedChanged += (_, _) => Reload();
+            numericMinLegs.ValueChanged += (_, _) => Reload();
             buttonRefresh.Click += (_, _) => Reload();
             checkMergeMode.CheckedChanged += (_, _) => MergeModeChanged();
             buttonSave.Click += (_, _) => MoveToBuffer();
@@ -137,6 +139,8 @@ namespace SportOrgMultyDay
         {
             public override string ToString() => PGName(Group);
         }
+
+        private int MinLegs => (int)numericMinLegs.Value;
 
         private bool MergeMode => checkMergeMode.Checked;
 
@@ -183,7 +187,7 @@ namespace SportOrgMultyDay
                 return false;
             }
             JToken group = FGById(PPGroupId(person), PBGroups(race));
-            int legs = IncompleteTeamsFinder.GroupLegs(race, group);
+            int legs = IncompleteTeamsFinder.GroupLegs(race, group, MinLegs);
             if (legs > 0 && mergeList.Count >= legs)
             {
                 MessageBox.Show($"В группе {PGName(group)} всего этапов: {legs}, больше участников добавить нельзя.");
@@ -356,7 +360,7 @@ namespace SportOrgMultyDay
                 UseDeclaredStages = checkStages.Checked
             };
             var buffered = BufferedPersons;
-            var singles = IncompleteTeamsFinder.Find(race, groupId)
+            var singles = IncompleteTeamsFinder.Find(race, groupId, MinLegs)
                 .Where(m => m.TeamSize == 1 && !buffered.Contains(m.Person) && !mergeList.Contains(m.Person)).ToList();
 
             int teams = 0, left = 0;
@@ -376,7 +380,7 @@ namespace SportOrgMultyDay
         {
             string groupId = comboGroup.SelectedItem is GroupItem gi ? PGId(gi.Group) : null;
             var orgNames = DictOIdOrgName(PBOrganizations(race));
-            var all = IncompleteTeamsFinder.Find(race, null);
+            var all = IncompleteTeamsFinder.Find(race, null, MinLegs);
             var alive = all.Select(m => m.Person).ToHashSet();
 
             // Пропавших из списка (например, ставших полными по другой причине) убираем из наборов

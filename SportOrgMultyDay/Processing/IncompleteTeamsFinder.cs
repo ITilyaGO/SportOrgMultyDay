@@ -26,14 +26,14 @@ namespace SportOrgMultyDay.Processing
         public static List<JToken> RelayGroups(JToken race) =>
             PBGroups(race).Where(g => PGType(g) == DuplicateFinder.RelayGroupType).ToList();
 
-        /// <summary>Минимальное число этапов эстафетной группы.</summary>
-        public const int MinLegs = 2;
+        /// <summary>Минимальное число этапов эстафетной группы по умолчанию.</summary>
+        public const int DefaultMinLegs = 2;
 
-        /// <summary>Число этапов группы: максимальный этап среди участников, но не меньше MinLegs.</summary>
-        public static int GroupLegs(JToken race, JToken group)
+        /// <summary>Число этапов группы: максимальный этап среди участников, но не меньше minLegs.</summary>
+        public static int GroupLegs(JToken race, JToken group, int minLegs = DefaultMinLegs)
         {
             string id = PGId(group);
-            return Math.Max(MinLegs, PBPersons(race).Where(p => PPGroupId(p) == id).Select(p => DuplicateFinder.ParseRelay(p).Stage).DefaultIfEmpty(0).Max());
+            return Math.Max(minLegs, PBPersons(race).Where(p => PPGroupId(p) == id).Select(p => DuplicateFinder.ParseRelay(p).Stage).DefaultIfEmpty(0).Max());
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace SportOrgMultyDay.Processing
         /// (так же определяется число этапов при присвоении номеров). Заявка без id в world_code считается одиночкой.
         /// groupId = null - все эстафетные группы.
         /// </summary>
-        public static List<IncompleteTeamMember> Find(JToken race, string groupId = null)
+        public static List<IncompleteTeamMember> Find(JToken race, string groupId = null, int minLegs = DefaultMinLegs)
         {
             JArray persons = PBPersons(race);
             var result = new List<IncompleteTeamMember>();
@@ -51,7 +51,7 @@ namespace SportOrgMultyDay.Processing
                 if (groupId != null && id != groupId) continue;
 
                 var members = persons.Where(p => PPGroupId(p) == id).Select(DuplicateFinder.ParseRelay).ToList();
-                int legs = Math.Max(MinLegs, members.Select(m => m.Stage).DefaultIfEmpty(0).Max());
+                int legs = Math.Max(minLegs, members.Select(m => m.Stage).DefaultIfEmpty(0).Max());
 
                 // Участники без id заявки - каждый сам по себе
                 var teams = members.Where(m => !string.IsNullOrEmpty(m.ApplicationId)).GroupBy(m => m.ApplicationId)
