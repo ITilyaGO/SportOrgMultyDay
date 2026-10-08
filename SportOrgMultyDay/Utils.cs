@@ -36,6 +36,27 @@ namespace SportOrgMultyDay
             NumbersForm = numbersForm;
             GeneralForm = generalForm;
             InitializeComponent();
+            InitDuplicatesFormButton();
+        }
+        Button buttonFindDuplicatesForm;
+        private void InitDuplicatesFormButton()
+        {
+            buttonFindDuplicatesForm = new Button
+            {
+                Text = "Поиск дубликатов заявок...",
+                Location = new Point(buttonRemovePersonDuplicates.Left, buttonRemovePersonDuplicates.Bottom + 4),
+                Size = buttonRemovePersonDuplicates.Size,
+                Enabled = buttonRemovePersonDuplicates.Enabled,
+                UseVisualStyleBackColor = true
+            };
+            buttonFindDuplicatesForm.Click += buttonFindDuplicatesForm_Click;
+            buttonRemovePersonDuplicates.Parent.Controls.Add(buttonFindDuplicatesForm);
+        }
+        private void buttonFindDuplicatesForm_Click(object sender, EventArgs e)
+        {
+            using var form = new DuplicatesForm(PBCurrentRaceFromBase(JBase), msg => SendLog(msg));
+            form.ShowDialog(this);
+            ReloadShahmatka();
         }
         public Numbers NumbersForm;
         public General GeneralForm;
@@ -357,6 +378,7 @@ namespace SportOrgMultyDay
             buttonInportResultsFromAnothrBase.Enabled = active;
             buttonFindCoursesForGroups.Enabled = active;
             buttonRemovePersonDuplicates.Enabled = active;
+            buttonFindDuplicatesForm.Enabled = active;
             buttonSetAllDaysToComment.Enabled = active;
             buttonGroupRemoveGetList.Enabled = active;
             buttonPhoneFtpGetLogs.Enabled = active;
