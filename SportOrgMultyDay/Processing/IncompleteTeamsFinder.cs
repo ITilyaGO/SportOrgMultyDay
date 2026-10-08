@@ -26,11 +26,14 @@ namespace SportOrgMultyDay.Processing
         public static List<JToken> RelayGroups(JToken race) =>
             PBGroups(race).Where(g => PGType(g) == DuplicateFinder.RelayGroupType).ToList();
 
-        /// <summary>Число этапов группы: максимальный этап среди участников.</summary>
+        /// <summary>Минимальное число этапов эстафетной группы.</summary>
+        public const int MinLegs = 2;
+
+        /// <summary>Число этапов группы: максимальный этап среди участников, но не меньше MinLegs.</summary>
         public static int GroupLegs(JToken race, JToken group)
         {
             string id = PGId(group);
-            return PBPersons(race).Where(p => PPGroupId(p) == id).Select(p => DuplicateFinder.ParseRelay(p).Stage).DefaultIfEmpty(0).Max();
+            return Math.Max(MinLegs, PBPersons(race).Where(p => PPGroupId(p) == id).Select(p => DuplicateFinder.ParseRelay(p).Stage).DefaultIfEmpty(0).Max());
         }
 
         /// <summary>
@@ -48,8 +51,7 @@ namespace SportOrgMultyDay.Processing
                 if (groupId != null && id != groupId) continue;
 
                 var members = persons.Where(p => PPGroupId(p) == id).Select(DuplicateFinder.ParseRelay).ToList();
-                int legs = members.Select(m => m.Stage).DefaultIfEmpty(0).Max();
-                if (legs <= 1) continue;
+                int legs = Math.Max(MinLegs, members.Select(m => m.Stage).DefaultIfEmpty(0).Max());
 
                 // Участники без id заявки - каждый сам по себе
                 var teams = members.Where(m => !string.IsNullOrEmpty(m.ApplicationId)).GroupBy(m => m.ApplicationId)
