@@ -322,10 +322,16 @@ namespace SportOrgMultyDay.Processing
             return log;
         }
 
+        private static readonly string[] LineSeparators = { "\r\n", "\n", "\r", "\v", "\f", "\u0085", "\u2028", "\u2029" };
+
+        /// <summary>Делит список номеров на строки по любым переводам строки (в т.ч. \r, \v, U+2028 из вставленного текста).</summary>
+        public static string[] SplitLines(string text) =>
+            text.Split(LineSeparators, StringSplitOptions.RemoveEmptyEntries);
+
         internal static List<NumbersOfGroup> ParseBibsSample(string sample, ref string log)
         {
             log += $"  Парсинг списка номеров групп...\n";
-            string[] groupSamples = sample.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+            string[] groupSamples = SplitLines(sample);
 
             List<NumbersOfGroup> numbersOfGroups = new();
             
@@ -354,7 +360,7 @@ namespace SportOrgMultyDay.Processing
             if (string.IsNullOrWhiteSpace(groupSample))
                 return null;
 
-            var parts = groupSample.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            var parts = groupSample.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
             if (parts.Length < 2)
                 return null;
 
@@ -372,12 +378,22 @@ namespace SportOrgMultyDay.Processing
             // Необязательные ключи: r:N - резервы, l:N - число этапов эстафеты
             int reservCount = 0;
             int legsCount = 0;
+            bool hasReserv = false, hasLegs = false;
             foreach (string key in parts.Skip(2))
             {
-                if (TryParseKeyValue(key, "r", out int r))
+                // Неизвестный или повторный ключ - ошибка: так видны слипшиеся строки (например, "...l:2 O1 501-549 r:10")
+                if (!hasReserv && TryParseKeyValue(key, "r", out int r))
+                {
                     reservCount = r;
-                else if (TryParseKeyValue(key, "l", out int l))
+                    hasReserv = true;
+                }
+                else if (!hasLegs && TryParseKeyValue(key, "l", out int l))
+                {
                     legsCount = l;
+                    hasLegs = true;
+                }
+                else
+                    return null;
             }
 
             return new NumbersOfGroup(groupName, startBib, endBib, reservCount: reservCount) { IsAutoStart = isAutoStart, LegsCount = legsCount };
