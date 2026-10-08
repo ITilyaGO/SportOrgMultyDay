@@ -17,6 +17,7 @@ namespace SportOrgMultyDay
     {
         private static readonly Color DoneColor = Color.FromArgb(198, 239, 206);
         private static readonly Color AllMarkedColor = Color.FromArgb(255, 199, 206);
+        private static readonly Color DifferentGroupsColor = Color.FromArgb(204, 229, 255);
         private static readonly Color DupColor = Color.FromArgb(255, 249, 219);
 
         private readonly JToken race;
@@ -148,7 +149,20 @@ namespace SportOrgMultyDay
         {
             var set = (DuplicateSet)row.Tag;
             row.Cells[3].Value = set.Persons.Count(marked.Contains);
-            row.DefaultCellStyle.BackColor = IsDone(set) ? DoneColor : UnmarkedCount(set) == 0 ? AllMarkedColor : Color.Empty;
+            bool differentGroups = set.Persons.Select(p => PPGroupId(p)).Distinct().Count() > 1;
+            Color color = IsDone(set) ? DoneColor
+                : UnmarkedCount(set) == 0 ? AllMarkedColor
+                : differentGroups ? DifferentGroupsColor
+                : Color.White;
+            ApplyRowColor(row, color);
+        }
+
+        /// <summary>Цвет строки и цвет выделения того же оттенка (темнее), чтобы при выборе строки был виден ее цвет.</summary>
+        private static void ApplyRowColor(DataGridViewRow row, Color color)
+        {
+            row.DefaultCellStyle.BackColor = color;
+            row.DefaultCellStyle.SelectionBackColor = Color.FromArgb(color.R * 8 / 10, color.G * 8 / 10, color.B * 8 / 10);
+            row.DefaultCellStyle.SelectionForeColor = Color.Black;
         }
 
         /// <summary>
@@ -195,9 +209,9 @@ namespace SportOrgMultyDay
                             PPCardNumber(p) > 0 ? PPCardNumber(p).ToString() : "", PPComment(p), PPWorldCode(p));
                         DataGridViewRow row = bottomGrid.Rows[i];
                         row.Tag = p;
+                        ApplyRowColor(row, isDup ? DupColor : Color.White);
                         if (isDup)
                         {
-                            row.DefaultCellStyle.BackColor = DupColor;
                             row.DefaultCellStyle.Font = new Font(bottomGrid.Font, FontStyle.Bold);
                         }
                     }
