@@ -10,7 +10,7 @@ namespace SportOrgMultyDay
 {
     /// <summary>
     /// Неполные эстафетные заявки: участники команд, где не хватает этапов, и объединение одиночек в команды.
-    /// Слева список и сборка новой команды, справа буфер готовых команд: в базу ничего не пишется, пока не нажато "Применить буфер".
+    /// Слева список и сборка новой команды, справа буфер готовых команд: в базу ничего не пишется, пока не нажато "Сохранить".
     /// Режим объединения: ПКМ по участнику добавляет его в новую команду, Пробел отправляет команду в буфер
     /// (этапы по порядку добавления), C - сброс, R - реверс порядка, Del - вернуть выбранную команду из буфера.
     /// Форма собрана кодом (без дизайнера).
@@ -38,7 +38,7 @@ namespace SportOrgMultyDay
         private readonly CheckBox checkAge = new() { Text = "Близкие по возрасту", AutoSize = true, Checked = true, Padding = new Padding(8, 4, 0, 0) };
         private readonly CheckBox checkStages = new() { Text = "Учитывать заявленные этапы", AutoSize = true, Checked = true, Padding = new Padding(8, 4, 8, 0) };
         private readonly Button buttonAuto = new() { Text = "Авто-объединение в буфер", AutoSize = true };
-        private readonly Button buttonApply = new() { Text = "Применить буфер", AutoSize = true };
+        private readonly Button buttonApply = new() { Text = "Сохранить", AutoSize = true };
         private readonly Button buttonReturnTeam = new() { Text = "Вернуть команду (Del)", AutoSize = true };
         private readonly Button buttonClearBuffer = new() { Text = "Очистить буфер", AutoSize = true };
         private readonly Label labelInfo = new() { AutoSize = true, Padding = new Padding(8, 6, 0, 0) };
@@ -118,7 +118,7 @@ namespace SportOrgMultyDay
             bufferGrid.CellMouseDown += BufferCellMouseDown;
             FormClosing += (_, e) =>
             {
-                if (buffer.Count > 0 && MessageBox.Show($"В буфере {buffer.Count} команд, они не применены и будут потеряны. Закрыть форму?", "Буфер",
+                if (buffer.Count > 0 && MessageBox.Show($"В буфере {buffer.Count} команд, они не сохранены и будут потеряны. Закрыть форму?", "Буфер",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
                     e.Cancel = true;
             };
@@ -327,7 +327,7 @@ namespace SportOrgMultyDay
         {
             if (buffer.Count == 0) return;
             List<string> ids = PlanApplicationIds(buffer);
-            string log = $"Применение буфера эстафетных команд ({buffer.Count}):\n";
+            string log = $"Сохранение буфера эстафетных команд ({buffer.Count}):\n";
             for (int t = 0; t < buffer.Count; t++)
             {
                 string groupName = PGName(FGById(PPGroupId(buffer[t][0]), PBGroups(race)));
@@ -369,7 +369,7 @@ namespace SportOrgMultyDay
                 left += byGroup.Count() - built.Sum(t => t.Count);
             }
             Reload();
-            MessageBox.Show($"Собрано команд: {teams}. Без команды осталось одиночек: {left}.\nРезультат в буфере справа, в базу ничего не записано - проверьте и нажмите \"Применить буфер\".");
+            MessageBox.Show($"Собрано команд: {teams}. Без команды осталось одиночек: {left}.\nРезультат в буфере справа, в базу ничего не записано - проверьте и нажмите \"Сохранить\".");
         }
 
         private void Reload()
