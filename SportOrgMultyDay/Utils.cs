@@ -39,6 +39,7 @@ namespace SportOrgMultyDay
             InitDuplicatesFormButton();
         }
         Button buttonFindDuplicatesForm;
+        Button buttonIncompleteTeamsForm;
         private void InitDuplicatesFormButton()
         {
             buttonFindDuplicatesForm = new Button
@@ -51,6 +52,21 @@ namespace SportOrgMultyDay
             };
             buttonFindDuplicatesForm.Click += buttonFindDuplicatesForm_Click;
             buttonRemovePersonDuplicates.Parent.Controls.Add(buttonFindDuplicatesForm);
+
+            buttonIncompleteTeamsForm = new Button
+            {
+                Text = "Неполные эстафетные заявки...",
+                Location = new Point(buttonFindDuplicatesForm.Left, buttonFindDuplicatesForm.Bottom + 4),
+                Size = buttonRemovePersonDuplicates.Size,
+                Enabled = buttonRemovePersonDuplicates.Enabled,
+                UseVisualStyleBackColor = true
+            };
+            buttonIncompleteTeamsForm.Click += (_, _) =>
+            {
+                using var form = new IncompleteTeamsForm(PBCurrentRaceFromBase(JBase));
+                form.ShowDialog(this);
+            };
+            buttonRemovePersonDuplicates.Parent.Controls.Add(buttonIncompleteTeamsForm);
         }
         private void buttonFindDuplicatesForm_Click(object sender, EventArgs e)
         {
@@ -379,6 +395,7 @@ namespace SportOrgMultyDay
             buttonFindCoursesForGroups.Enabled = active;
             buttonRemovePersonDuplicates.Enabled = active;
             buttonFindDuplicatesForm.Enabled = active;
+            buttonIncompleteTeamsForm.Enabled = active;
             buttonSetAllDaysToComment.Enabled = active;
             buttonGroupRemoveGetList.Enabled = active;
             buttonPhoneFtpGetLogs.Enabled = active;
