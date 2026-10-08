@@ -35,6 +35,7 @@ namespace SportOrgMultyDay
         private readonly Button buttonUnmarkSet = new() { Text = "Снять пометки с набора", AutoSize = true };
         private readonly Button buttonMarkApplication = new() { Text = "Пометить всю заявку строки", AutoSize = true };
         private readonly CheckBox checkIgnoreDifferentGroups = new() { Text = "Игнорировать дубликаты в разных группах", AutoSize = true, Padding = new Padding(0, 4, 8, 0) };
+        private readonly CheckBox checkYearOnly = new() { Text = "Учитывать только год рождения", AutoSize = true, Padding = new Padding(0, 4, 8, 0) };
         private readonly Button buttonAutoMark = new() { Text = "Авто-пометка", AutoSize = true };
         private readonly Button buttonReview = new() { Text = "Помеченные...", AutoSize = true };
         private readonly Button buttonRefresh = new() { Text = "Обновить", AutoSize = true };
@@ -50,7 +51,7 @@ namespace SportOrgMultyDay
             StartPosition = FormStartPosition.CenterParent;
 
             var buttons = new FlowLayoutPanel { Dock = DockStyle.Top, AutoSize = true, Padding = new Padding(4) };
-            buttons.Controls.AddRange(new Control[] { checkIgnoreDifferentGroups, buttonAutoMark, buttonKeepSelected, buttonUnmarkSet, buttonMarkApplication, buttonReview, buttonRefresh, labelInfo });
+            buttons.Controls.AddRange(new Control[] { checkYearOnly, checkIgnoreDifferentGroups, buttonAutoMark, buttonKeepSelected, buttonUnmarkSet, buttonMarkApplication, buttonReview, buttonRefresh, labelInfo });
 
             var split = new SplitContainer { Dock = DockStyle.Fill, Orientation = Orientation.Horizontal };
             split.Panel1.Controls.Add(topGrid);
@@ -77,6 +78,7 @@ namespace SportOrgMultyDay
             bottomGrid.CellValueChanged += BottomCellValueChanged;
 
             buttonAutoMark.Click += (_, _) => AutoMark();
+            checkYearOnly.CheckedChanged += (_, _) => Reload();
             checkIgnoreDifferentGroups.CheckedChanged += (_, _) => RefreshAfterMarkChange();
             buttonKeepSelected.Click += (_, _) => KeepSelected();
             buttonUnmarkSet.Click += (_, _) => UnmarkSet();
@@ -116,7 +118,7 @@ namespace SportOrgMultyDay
         {
             groupNames = DictGIdGroupName(PBGroups(race));
             orgNames = DictOIdOrgName(PBOrganizations(race));
-            sets = DuplicateFinder.Find(race);
+            sets = DuplicateFinder.Find(race, checkYearOnly.Checked);
             string selectedKey = SelectedSet?.Key;
 
             var alive = PBPersons(race).ToHashSet();
@@ -126,7 +128,7 @@ namespace SportOrgMultyDay
             foreach (DuplicateSet set in sets)
             {
                 JToken first = set.Persons[0];
-                int i = topGrid.Rows.Add(set.Title, DuplicateFinder.BirthDate(first), set.Persons.Count, 0,
+                int i = topGrid.Rows.Add(set.Title, checkYearOnly.Checked ? PPYear(first).ToString() : DuplicateFinder.BirthDate(first), set.Persons.Count, 0,
                     string.Join(", ", set.Persons.Select(GroupName).Distinct()), set.HasRelay ? "да" : "");
                 topGrid.Rows[i].Tag = set;
             }

@@ -44,7 +44,7 @@ namespace SportOrgMultyDay.Processing
         public static bool IsReserv(JToken person) => (PPSurname(person) ?? string.Empty).StartsWith("_Резерв");
 
         /// <summary>Ищет дубликаты в гонке. Дубликат - совпадение фамилии, имени и даты рождения (если даты нет - года) в любых группах.</summary>
-        public static List<DuplicateSet> Find(JToken race)
+        public static List<DuplicateSet> Find(JToken race, bool yearOnly = false)
         {
             JArray persons = PBPersons(race);
             JArray groups = PBGroups(race);
@@ -52,7 +52,7 @@ namespace SportOrgMultyDay.Processing
 
             return persons
                 .Where(p => !IsReserv(p))
-                .GroupBy(p => $"{Norm(PPSurname(p))}|{Norm(PPName(p))}|{BirthDate(p)}")
+                .GroupBy(p => $"{Norm(PPSurname(p))}|{Norm(PPName(p))}|{(yearOnly ? PPYear(p).ToString() : BirthDate(p))}")
                 .Where(g => g.Count() > 1)
                 .Select(g => new DuplicateSet
                 {
