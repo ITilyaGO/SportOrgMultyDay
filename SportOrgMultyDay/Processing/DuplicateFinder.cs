@@ -100,6 +100,48 @@ namespace SportOrgMultyDay.Processing
             return group != null && PGType(group) == RelayGroupType;
         }
 
+        /// <summary>
+        /// Выбирает дубль, которого нужно оставить. Приоритет: больше участников в заявке
+        /// (для не эстафетных - 1), затем больший номер заявки (позже сделана), затем более поздняя запись в базе.
+        /// </summary>
+        public static JToken ChooseKeeper(DuplicateSet set, JToken race)
+        {
+            JArray persons = PBPersons(race);
+            JArray groups = PBGroups(race);
+            var relayGroupIds = groups.Where(g => PGType(g) == RelayGroupType).Select(g => PGId(g)).ToHashSet();
+            var indexInBase = persons.Select((p, i) => (p, i)).ToDictionary(x => x.p, x => x.i);
+
+            return set.Persons
+                .OrderByDescending(p => relayGroupIds.Contains(PPGroupId(p)) ? RelayTeam(p, persons).Count : 1)
+                .ThenByDescending(p => long.TryParse(ParseRelay(p).ApplicationId, out long app) ? app : -1)
+                .ThenByDescending(p => indexInBase.TryGetValue(p, out int i) ? i : -1)
+                .First();
+        }
+
+        /// <summary>
+        /// Авто-пометка: в каждом наборе остается один дубль (см. ChooseKeeper), остальные помечаются.
+        /// Если ignoreDifferentGroups - наборы, где дубли лежат в разных группах, пропускаются.
+        /// </summary>
+        public static HashSet<JToken> AutoMark(IEnumerable<DuplicateSet> sets, JToken race, bool ignoreDifferentGroups,
+            out int processed, out int skipped)
+        {
+            var result = new HashSet<JToken>();
+            processed = skipped = 0;
+            foreach (DuplicateSet set in sets)
+            {
+                if (ignoreDifferentGroups && set.Persons.Select(PPGroupId).Distinct().Count() > 1)
+                {
+                    skipped++;
+                    continue;
+                }
+                JToken keeper = ChooseKeeper(set, race);
+                foreach (JToken p in set.Persons)
+                    if (!ReferenceEquals(p, keeper)) result.Add(p);
+                processed++;
+            }
+            return result;
+        }
+
         /// <summary>Удаляет участников из гонки. Результаты не трогает.</summary>
         public static int Remove(IEnumerable<JToken> toRemove)
         {

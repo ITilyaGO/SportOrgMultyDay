@@ -1,4 +1,4 @@
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using SportOrgMultyDay.Processing;
 
 using static SportOrgMultyDay.Processing.Parsing.ParseBase;
@@ -32,6 +32,8 @@ namespace SportOrgMultyDay
         private readonly Button buttonKeepSelected = new() { Text = "Оставить выбранного (пометить остальных дублей)", AutoSize = true };
         private readonly Button buttonUnmarkSet = new() { Text = "Снять пометки с набора", AutoSize = true };
         private readonly Button buttonMarkApplication = new() { Text = "Пометить всю заявку строки", AutoSize = true };
+        private readonly CheckBox checkIgnoreDifferentGroups = new() { Text = "Игнорировать дубликаты в разных группах", AutoSize = true, Padding = new Padding(0, 4, 8, 0) };
+        private readonly Button buttonAutoMark = new() { Text = "Авто-пометка", AutoSize = true };
         private readonly Button buttonReview = new() { Text = "Помеченные...", AutoSize = true };
         private readonly Button buttonRefresh = new() { Text = "Обновить", AutoSize = true };
         private readonly Label labelInfo = new() { AutoSize = true, Padding = new Padding(8, 6, 0, 0) };
@@ -46,7 +48,7 @@ namespace SportOrgMultyDay
             StartPosition = FormStartPosition.CenterParent;
 
             var buttons = new FlowLayoutPanel { Dock = DockStyle.Top, AutoSize = true, Padding = new Padding(4) };
-            buttons.Controls.AddRange(new Control[] { buttonKeepSelected, buttonUnmarkSet, buttonMarkApplication, buttonReview, buttonRefresh, labelInfo });
+            buttons.Controls.AddRange(new Control[] { checkIgnoreDifferentGroups, buttonAutoMark, buttonKeepSelected, buttonUnmarkSet, buttonMarkApplication, buttonReview, buttonRefresh, labelInfo });
 
             var split = new SplitContainer { Dock = DockStyle.Fill, Orientation = Orientation.Horizontal };
             split.Panel1.Controls.Add(topGrid);
@@ -72,6 +74,7 @@ namespace SportOrgMultyDay
             };
             bottomGrid.CellValueChanged += BottomCellValueChanged;
 
+            buttonAutoMark.Click += (_, _) => AutoMark();
             buttonKeepSelected.Click += (_, _) => KeepSelected();
             buttonUnmarkSet.Click += (_, _) => UnmarkSet();
             buttonMarkApplication.Click += (_, _) => MarkApplication();
@@ -211,6 +214,24 @@ namespace SportOrgMultyDay
             if (value) marked.Add(person); else marked.Remove(person);
             foreach (DataGridViewRow row in bottomGrid.Rows)
                 if (ReferenceEquals(row.Tag, person)) row.Cells[0].Value = value;
+        }
+
+        private void AutoMark()
+        {
+            if (sets.Count == 0) return;
+            if (marked.Count > 0 && MessageBox.Show("Текущие пометки в обрабатываемых наборах будут заменены. Продолжить?", "Авто-пометка",
+                MessageBoxButtons.YesNo) != DialogResult.Yes)
+                return;
+            HashSet<JToken> auto = DuplicateFinder.AutoMark(sets, race, checkIgnoreDifferentGroups.Checked, out int processed, out int skipped);
+            // Пропущенные наборы (разные группы) не трогаем, остальные перезаписываем результатом алгоритма
+            var skippedSets = checkIgnoreDifferentGroups.Checked
+                ? sets.Where(s => s.Persons.Select(PPGroupId).Distinct().Count() > 1).SelectMany(s => s.Persons).ToHashSet()
+                : new HashSet<JToken>();
+            marked.RemoveWhere(p => !skippedSets.Contains(p));
+            marked.UnionWith(auto);
+            LoadBottom();
+            RefreshAfterMarkChange();
+            MessageBox.Show($"Обработано наборов: {processed}, пропущено (разные группы): {skipped}, помечено на удаление: {auto.Count}.\nОстальные помеченные ранее участники вне наборов не затронуты.");
         }
 
         private void KeepSelected()
