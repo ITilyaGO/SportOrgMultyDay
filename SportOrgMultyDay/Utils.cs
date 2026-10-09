@@ -352,6 +352,7 @@ namespace SportOrgMultyDay
             buttonReplaceAllPersonsForOtherDays.Enabled = active;
             buttonBibsAutoCreateListNumbering.Enabled = active;
             buttonBibsFillParams.Enabled = active;
+            buttonBibsSetWorldCodes.Enabled = active;
             buttonCalculatePersonStartPrice.Enabled = active;
             buttonExportSFRx.Enabled = active;
             buttonInportResultsFromAnothrBase.Enabled = active;
@@ -803,6 +804,11 @@ namespace SportOrgMultyDay
                 if (legs <= 0)
                     relayInfo = ", l не добавлен: в world_code участников не найден номер этапа";
             }
+        }
+
+        private void buttonBibsSetWorldCodes_Click(object sender, EventArgs e)
+        {
+            SendLog(RelayWorldCodes.SetFromBibs(PBCurrentRaceFromBase(JBase), checkBoxSetNumbersByGroupsDebug.Checked));
         }
 
         private void buttonBibsFillParams_Click(object sender, EventArgs e)

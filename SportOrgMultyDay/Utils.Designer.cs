@@ -128,6 +128,7 @@
             checkBoxSetNumbersCreateReserv = new CheckBox();
             checkBoxSetNumbersRelayFillIncomplete = new CheckBox();
             buttonBibsFillParams = new Button();
+            buttonBibsSetWorldCodes = new Button();
             checkBoxSetNumbersRelay = new CheckBox();
             checkBoxSetNumbersByGroupsDebug = new CheckBox();
             buttonGroupSetNumbersByGroups = new Button();
@@ -1334,6 +1335,7 @@
             // groupBoxBibs
             // 
             groupBoxBibs.Controls.Add(label20);
+            groupBoxBibs.Controls.Add(buttonBibsSetWorldCodes);
             groupBoxBibs.Controls.Add(buttonBibsFillParams);
             groupBoxBibs.Controls.Add(checkBoxSetNumbersRelayFillIncomplete);
             groupBoxBibs.Controls.Add(checkBoxSetNumbersCreateReserv);
@@ -1428,6 +1430,18 @@
             buttonBibsFillParams.Text = "Дополнить параметрами";
             buttonBibsFillParams.UseVisualStyleBackColor = true;
             buttonBibsFillParams.Click += buttonBibsFillParams_Click;
+            // 
+            // buttonBibsSetWorldCodes
+            // 
+            buttonBibsSetWorldCodes.Enabled = false;
+            buttonBibsSetWorldCodes.Location = new Point(320, 430);
+            buttonBibsSetWorldCodes.Margin = new Padding(4, 5, 4, 5);
+            buttonBibsSetWorldCodes.Name = "buttonBibsSetWorldCodes";
+            buttonBibsSetWorldCodes.Size = new Size(306, 58);
+            buttonBibsSetWorldCodes.TabIndex = 14;
+            buttonBibsSetWorldCodes.Text = "Расставить заявки (world_code) из номеров";
+            buttonBibsSetWorldCodes.UseVisualStyleBackColor = true;
+            buttonBibsSetWorldCodes.Click += buttonBibsSetWorldCodes_Click;
             // 
             // buttonBibsAutoCreateListNumbering
             // 
@@ -3007,6 +3021,7 @@
         private CheckBox checkBoxSetNumbersRelay;
         private CheckBox checkBoxSetNumbersRelayFillIncomplete;
         private Button buttonBibsFillParams;
+        private Button buttonBibsSetWorldCodes;
         private Button buttonReplaceAllPersonsForOtherDays;
         private Button buttonCalculatePersonStartPrice;
         private Button buttonVichestStart;
