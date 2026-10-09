@@ -892,6 +892,11 @@ namespace SportOrgMultyDay
             SendLog(log);
         }
 
+        private void buttonBibsUsedPools_Click(object sender, EventArgs e)
+        {
+            SendLog(BibsNumbering.GetUsedPools(PBCurrentRaceFromBase(JBase)));
+        }
+
         private void buttonGroupSetNumbersByGroups_Click(object sender, EventArgs e)
         {
             int day = ((int)numericUpDownSetNumbersInActiveDayFirst.Value - 1);

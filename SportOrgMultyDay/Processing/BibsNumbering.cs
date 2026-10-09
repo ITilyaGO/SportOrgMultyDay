@@ -322,6 +322,52 @@ namespace SportOrgMultyDay.Processing
             return log;
         }
 
+        /// <summary>
+        /// Текущие пулы использованных номеров по группам в формате списка номеров: "Группа 001-030 r:4 l:2".
+        /// Эстафетность определяется типом группы (3): тогда пул считается по номеру команды (без цифры этапа), l - число этапов.
+        /// r - число резервов (для эстафеты - резервных команд).
+        /// </summary>
+        public static string GetUsedPools(JToken jRace, int bibNormalization = 3)
+        {
+            JArray persons = PBPersons(jRace);
+            JArray groups = PBGroups(jRace);
+            string log = "Текущие пулы использованных номеров:\n";
+            int divider = (int)Math.Pow(10, bibNormalization);
+            List<(int Min, string Line)> poolLines = new();
+
+            foreach (JToken group in groups)
+            {
+                string groupId = PGId(group);
+                bool isRelay = PGType(group) == 3;
+                List<JToken> groupPersons = persons.Where(p => PPGroupId(p) == groupId && PPBib(p) > 0).ToList();
+                if (groupPersons.Count == 0)
+                    continue;
+
+                // Для эстафеты номер = этап * 10^N + номер команды
+                Func<JToken, int> pool = p => isRelay ? PPBib(p) % divider : PPBib(p);
+                string Fmt(int n) => isRelay ? StringNormalizer(n.ToString(), bibNormalization) : n.ToString();
+
+                int min = groupPersons.Min(pool);
+                int max = groupPersons.Max(pool);
+                int reserv = groupPersons.Where(p => (PPSurname(p) ?? string.Empty).StartsWith("_Резерв")).Select(pool).Distinct().Count();
+                if (!isRelay)
+                    reserv = groupPersons.Count(p => (PPSurname(p) ?? string.Empty).StartsWith("_Резерв"));
+
+                string line = $"{PGName(group)} {Fmt(min)}-{Fmt(max)} r:{reserv}";
+                if (isRelay)
+                {
+                    int legs = PGRelayLegs(group);
+                    if (legs <= 0)
+                        legs = groupPersons.Select(p => PPBib(p) / divider).DefaultIfEmpty(0).Max();
+                    line += $" l:{legs}";
+                }
+                poolLines.Add((min, line));
+            }
+            foreach (var (_, line) in poolLines.OrderBy(l => l.Min))
+                log += line + "\n";
+            return log;
+        }
+
         private static readonly string[] LineSeparators = { "\r\n", "\n", "\r", "\v", "\f", "\u0085", "\u2028", "\u2029" };
 
         /// <summary>Делит список номеров на строки по любым переводам строки (в т.ч. \r, \v, U+2028 из вставленного текста).</summary>

@@ -128,6 +128,7 @@
             checkBoxSetNumbersCreateReserv = new CheckBox();
             checkBoxSetNumbersRelayFillIncomplete = new CheckBox();
             buttonBibsFillParams = new Button();
+            buttonBibsUsedPools = new Button();
             checkBoxSetNumbersRelay = new CheckBox();
             checkBoxSetNumbersByGroupsDebug = new CheckBox();
             buttonGroupSetNumbersByGroups = new Button();
@@ -1335,6 +1336,7 @@
             // 
             groupBoxBibs.Controls.Add(label20);
             groupBoxBibs.Controls.Add(buttonBibsFillParams);
+            groupBoxBibs.Controls.Add(buttonBibsUsedPools);
             groupBoxBibs.Controls.Add(checkBoxSetNumbersRelayFillIncomplete);
             groupBoxBibs.Controls.Add(checkBoxSetNumbersCreateReserv);
             groupBoxBibs.Controls.Add(numericUpDownSetNumbersInActiveDayFirst);
@@ -1428,6 +1430,17 @@
             buttonBibsFillParams.Text = "Дополнить параметрами";
             buttonBibsFillParams.UseVisualStyleBackColor = true;
             buttonBibsFillParams.Click += buttonBibsFillParams_Click;
+            // 
+            // buttonBibsUsedPools
+            // 
+            buttonBibsUsedPools.Location = new Point(320, 425);
+            buttonBibsUsedPools.Margin = new Padding(4, 5, 4, 5);
+            buttonBibsUsedPools.Name = "buttonBibsUsedPools";
+            buttonBibsUsedPools.Size = new Size(306, 39);
+            buttonBibsUsedPools.TabIndex = 14;
+            buttonBibsUsedPools.Text = "Вывести пулы номеров в лог";
+            buttonBibsUsedPools.UseVisualStyleBackColor = true;
+            buttonBibsUsedPools.Click += buttonBibsUsedPools_Click;
             // 
             // buttonBibsAutoCreateListNumbering
             // 
@@ -3007,6 +3020,7 @@
         private CheckBox checkBoxSetNumbersRelay;
         private CheckBox checkBoxSetNumbersRelayFillIncomplete;
         private Button buttonBibsFillParams;
+        private Button buttonBibsUsedPools;
         private Button buttonReplaceAllPersonsForOtherDays;
         private Button buttonCalculatePersonStartPrice;
         private Button buttonVichestStart;
