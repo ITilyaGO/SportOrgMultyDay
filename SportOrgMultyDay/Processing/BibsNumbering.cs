@@ -84,7 +84,10 @@ namespace SportOrgMultyDay.Processing
                     log += llog;
                 }
 
-                IEnumerable<IGrouping<string, PersonRelayData>> personRelayGrouped = personRelayDatas.GroupBy(p => p.ApplicationId).OrderByDescending(g => g.Count()); ;
+                IEnumerable<IGrouping<string, PersonRelayData>> personRelayGrouped = personRelayDatas.GroupBy(p => p.ApplicationId)
+                    // Команды без заявки и команды, состоящие только из резервов, - в конец
+                    .OrderBy(g => g.Key == null ? 2 : g.All(p => IsReserv(p.Person)) ? 1 : 0)
+                    .ThenByDescending(g => g.Count());
 
                 if (personRelayGrouped.Count() > numberOfGroup.NumbersCount)
                 {
@@ -258,6 +261,15 @@ namespace SportOrgMultyDay.Processing
                     groupPersons = sortedPersons;
                 }
 
+                // Уже существующие резервы получают номера в конце (OrderBy стабилен, остальной порядок сохраняется)
+                int existReservCount = groupPersons.Count(IsReserv);
+                if (existReservCount > 0)
+                {
+                    groupPersons = groupPersons.OrderBy(p => IsReserv(p) ? 1 : 0).ToList();
+                    if (isDebug)
+                        log += $"      Найдено резервов: {existReservCount}, номера им выданы в конце\n";
+                }
+
                 foreach (JToken person in groupPersons)
                 {
                     if (personBibs.Contains(currentNumber))
@@ -321,6 +333,8 @@ namespace SportOrgMultyDay.Processing
 
             return log;
         }
+
+        internal static bool IsReserv(JToken person) => PPSurname(person) == SportOrgTemplates.Reserv["surname"].ToString();
 
         internal static List<NumbersOfGroup> ParseBibsSample(string sample, ref string log)
         {
