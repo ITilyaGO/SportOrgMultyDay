@@ -77,8 +77,15 @@ namespace SportOrgMultyDay.Processing
                 }
 
                 List<PersonRelayData> personRelayDatas = new();
+                // Существующие резервы без заявки (например, созданные прошлым присвоением) - собираются в команды резервов в конце
+                List<JToken> orphanReservs = new();
                 foreach (JToken person in groupPersons)
                 {
+                    if (IsReserv(person) && string.IsNullOrEmpty(PPWorldCode(person)))
+                    {
+                        orphanReservs.Add(person);
+                        continue;
+                    }
                     PersonRelayData personRD = new(person, out string llog);
                     personRelayDatas.Add(personRD);
                     log += llog;
@@ -89,7 +96,15 @@ namespace SportOrgMultyDay.Processing
                     .OrderBy(g => g.Key == null ? 2 : g.All(p => IsReserv(p.Person)) ? 1 : 0)
                     .ThenByDescending(g => g.Count());
 
-                if (personRelayGrouped.Count() > numberOfGroup.NumbersCount)
+                // Число этапов: ключ l:N из списка, иначе максимум этапа в заявках группы
+                int groupStageCount = numberOfGroup.LegsCount > 0
+                    ? numberOfGroup.LegsCount
+                    : personRelayDatas.Select(p => p.Stage).DefaultIfEmpty(0).Max();
+                if (groupStageCount <= 0)
+                    groupStageCount = stageCount;
+
+                int orphanReservTeams = (int)Math.Ceiling(orphanReservs.Count / (double)groupStageCount);
+                if (personRelayGrouped.Count() + orphanReservTeams > numberOfGroup.NumbersCount)
                 {
                     string msg = $" В группе {numberOfGroup.GroupName} недостаточно номеров. Участников: {groupPersons.Count} Номеров: {numberOfGroup.NumbersCount}";
                     log += msg + "\n";
@@ -98,13 +113,6 @@ namespace SportOrgMultyDay.Processing
                     else
                         return log;
                 }
-
-                // Число этапов: ключ l:N из списка, иначе максимум этапа в заявках группы
-                int groupStageCount = numberOfGroup.LegsCount > 0
-                    ? numberOfGroup.LegsCount
-                    : personRelayDatas.Select(p => p.Stage).DefaultIfEmpty(0).Max();
-                if (groupStageCount <= 0)
-                    groupStageCount = stageCount;
 
                 int currentNumber = numberOfGroup.StartBib;
                 int filledStagesCount = 0;
@@ -158,12 +166,25 @@ namespace SportOrgMultyDay.Processing
                     }
                     currentNumber++;
                 }
+
+                // Команды резервов в конце: резервы без заявки по groupStageCount штук в команду, этапы 1..N
+                for (int i = 0; i < orphanReservs.Count; i++)
+                {
+                    int stage = i % groupStageCount + 1;
+                    orphanReservs[i]["bib"] = int.Parse(stage.ToString() + StringNormalizer(currentNumber.ToString(), bibNormalization));
+                    if (stage == groupStageCount || i == orphanReservs.Count - 1)
+                        currentNumber++;
+                }
+                // Уже существующие команды резервов (с заявкой и без) учитываются в лимите r:N
+                int existReservTeams = orphanReservTeams
+                    + personRelayGrouped.Count(g => g.Key != null && g.All(p => IsReserv(p.Person)));
+
                 string reservCreateLog = string.Empty;
                 if (filledStagesCount > 0)
                     reservCreateLog += $" Дополнено этапов резервами: {filledStagesCount}.";
                 if (isCreateReserv)
                 {
-                    int createdReservCount = 0;
+                    int createdReservCount = existReservTeams;
                     if (isDebug)
                         log += $"      Создание резервов...\n";
                     while (currentNumber <= numberOfGroup.EndBib && createdReservCount < numberOfGroup.MaxReservCount)
@@ -182,7 +203,7 @@ namespace SportOrgMultyDay.Processing
                         currentNumber++;
                         createdReservCount++;
                     }
-                    reservCreateLog += $" Создано команд резервов: {createdReservCount}.";
+                    reservCreateLog += $" Создано команд резервов: {createdReservCount - existReservTeams} (уже было: {existReservTeams}).";
                 }
 
                 autoNextBib = Math.Max(autoNextBib, currentNumber);
@@ -301,7 +322,8 @@ namespace SportOrgMultyDay.Processing
                 string reservCreateLog = string.Empty;
                 if (isCreateReserv)
                 {
-                    int createdReservCount = 0;
+                    // Уже существующие резервы учитываются в лимите r:N
+                    int createdReservCount = existReservCount;
                     if (numberOfGroup.MaxReservCount == -1)
                     {
                         if (isDebug)
@@ -322,7 +344,7 @@ namespace SportOrgMultyDay.Processing
                         currentNumber++;
                         createdReservCount++;
                     }
-                    reservCreateLog = $" Создано резервов: {createdReservCount}.";
+                    reservCreateLog = $" Создано резервов: {createdReservCount - existReservCount} (уже было: {existReservCount}).";
                 }
 
                 autoNextBib = Math.Max(autoNextBib, currentNumber);
