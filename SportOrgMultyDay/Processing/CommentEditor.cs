@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SportOrgMultyDay.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,7 +27,7 @@ namespace SportOrgMultyDay.Processing
             JArray groups = PBGroups(race);
 
            
-            string[] selectedGroupNames = groupsList.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+            string[] selectedGroupNames = groupsList.NormalizeLineBreaks().Split('\n', StringSplitOptions.RemoveEmptyEntries);
             List<JToken> groupsToRecomment = [];
 
             foreach (JToken group in groups)

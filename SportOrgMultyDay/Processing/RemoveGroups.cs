@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using SportOrgMultyDay.Extensions;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace SportOrgMultyDay.Processing
         {
             string log = string.Empty;
             log += "Удаление групп, не входящих в список...\n";
-            string[] selectedGroupNames = groupsList.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+            string[] selectedGroupNames = groupsList.NormalizeLineBreaks().Split('\n', StringSplitOptions.RemoveEmptyEntries);
 
             JArray persons = PBPersons(race);
             JArray groups = PBGroups(race);

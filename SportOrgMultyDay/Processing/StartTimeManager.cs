@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using SportOrgMultyDay.Extensions;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -262,7 +263,7 @@ namespace SportOrgMultyDay.Processing
             Dictionary<string, JToken> groupsByName = DictGNameGroup(groups);
 
             List<Corridor> corridors = [];
-            string[] rowsOfRawOrder = rawOrder.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+            string[] rowsOfRawOrder = rawOrder.NormalizeLineBreaks().Split('\n', StringSplitOptions.RemoveEmptyEntries);
             foreach (string rawRow in rowsOfRawOrder)
             {
                 Corridor corridor = new();
@@ -361,7 +362,7 @@ namespace SportOrgMultyDay.Processing
                     groupsByName[groupName] = group;
                 }
 
-                string[] rows = rawGroupStartTimes.Split(
+                string[] rows = rawGroupStartTimes.NormalizeLineBreaks().Split(
                     ['\r', '\n'],
                     StringSplitOptions.RemoveEmptyEntries
                 );

@@ -1,3 +1,4 @@
+using SportOrgMultyDay.Extensions;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -98,7 +99,7 @@ namespace SportOrgMultyDay.Processing
             }
 
             HashSet<string> processed = new();
-            string[] lines = (rawText ?? "").Replace("\r", "").Split('\n');
+            string[] lines = (rawText ?? "").NormalizeLineBreaks().Split('\n');
 
             foreach (string rawLine in lines)
             {

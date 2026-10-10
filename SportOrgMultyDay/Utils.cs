@@ -1,3 +1,4 @@
+using SportOrgMultyDay.Extensions;
 using Newtonsoft.Json.Linq;
 using SportOrgMultyDay.Data;
 using SportOrgMultyDay.Data.Combine;
@@ -819,7 +820,7 @@ namespace SportOrgMultyDay
             Dictionary<string, int> groupIdCount = DictGIdPersonsCount(groups, persons);
 
             string log = "Дополнение списка номеров параметрами...\n";
-            string[] lines = richTextBoxBibsNumbering.Text.Split('\n');
+            string[] lines = richTextBoxBibsNumbering.Text.NormalizeLineBreaks().Split('\n');
             for (int i = 0; i < lines.Length; i++)
             {
                 string line = lines[i].TrimEnd('\r');

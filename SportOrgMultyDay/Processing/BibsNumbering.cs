@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using SportOrgMultyDay.Extensions;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -361,7 +362,7 @@ namespace SportOrgMultyDay.Processing
         internal static List<NumbersOfGroup> ParseBibsSample(string sample, ref string log)
         {
             log += $"  Парсинг списка номеров групп...\n";
-            string[] groupSamples = sample.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+            string[] groupSamples = sample.NormalizeLineBreaks().Split('\n', StringSplitOptions.RemoveEmptyEntries);
 
             List<NumbersOfGroup> numbersOfGroups = new();
             
