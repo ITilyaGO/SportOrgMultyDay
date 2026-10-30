@@ -26,6 +26,26 @@ namespace SportOrgMultyDay.Processing
         public const int DefaultEndBib = 9999999;
         public const int AutoStartBib = 100;
 
+        public static string GetAssignedBibPools(JToken race)
+        {
+            var bibsByGroup = PBPersons(race)
+                .Select(person => new { GroupId = PPGroupId(person), Bib = PPBib(person) })
+                .Where(person => person.Bib > 0)
+                .ToLookup(person => person.GroupId, person => person.Bib);
+
+            StringBuilder pools = new();
+            foreach (JToken group in PBGroups(race))
+            {
+                var bibs = bibsByGroup[PGId(group)];
+                if (!bibs.Any())
+                    continue;
+
+                pools.AppendLine($"{PGName(group)} {bibs.Min()}-{bibs.Max()}");
+            }
+
+            return pools.ToString();
+        }
+
         public static string SetNumbers(JToken jRace, string bibsSample, bool isDebug = false, bool isRelay = false, bool isCreateReserv = false, int SortByActiveDay = -1, bool isFillIncompleteTeams = false)
         {
             if (isRelay)

@@ -354,6 +354,7 @@ namespace SportOrgMultyDay
             buttonBibsAutoCreateListNumbering.Enabled = active;
             buttonBibsFillParams.Enabled = active;
             buttonBibsSetWorldCodes.Enabled = active;
+            buttonLogAssignedBibPools.Enabled = active;
             buttonCalculatePersonStartPrice.Enabled = active;
             buttonExportSFRx.Enabled = active;
             buttonInportResultsFromAnothrBase.Enabled = active;
@@ -745,6 +746,15 @@ namespace SportOrgMultyDay
         private void comboBoxLogType_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void buttonLogAssignedBibPools_Click(object sender, EventArgs e)
+        {
+            string pools = BibsNumbering.GetAssignedBibPools(PBCurrentRaceFromBase(JBase));
+            if (string.IsNullOrEmpty(pools))
+                SendLog("В выбранном дне нет присвоенных номеров.");
+            else
+                SendLog("Пулы присвоенных номеров выбранного дня:\n" + pools.TrimEnd('\r', '\n'));
         }
 
         private void buttonBibsAutoCreateListNumbering_Click(object sender, EventArgs e)

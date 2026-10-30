@@ -177,6 +177,7 @@
             buttonQualFromOtherBase = new Button();
             buttonRemvoeWorstResult = new Button();
             tabPageOther = new TabPage();
+            buttonLogAssignedBibPools = new Button();
             buttonImportEstafetRequestsInWorldCodeFromAnotherBase = new Button();
             checkBoxRenameGroups = new CheckBox();
             checkBoxRenameCourse = new CheckBox();
@@ -1945,6 +1946,7 @@
             // tabPageOther
             // 
             tabPageOther.BackColor = Color.WhiteSmoke;
+            tabPageOther.Controls.Add(buttonLogAssignedBibPools);
             tabPageOther.Controls.Add(buttonImportEstafetRequestsInWorldCodeFromAnotherBase);
             tabPageOther.Controls.Add(checkBoxRenameGroups);
             tabPageOther.Controls.Add(checkBoxRenameCourse);
@@ -1963,6 +1965,18 @@
             tabPageOther.Size = new Size(768, 817);
             tabPageOther.TabIndex = 3;
             tabPageOther.Text = "Остальное";
+            //
+            // buttonLogAssignedBibPools
+            //
+            buttonLogAssignedBibPools.Enabled = false;
+            buttonLogAssignedBibPools.Location = new Point(440, 580);
+            buttonLogAssignedBibPools.Margin = new Padding(4, 5, 4, 5);
+            buttonLogAssignedBibPools.Name = "buttonLogAssignedBibPools";
+            buttonLogAssignedBibPools.Size = new Size(316, 60);
+            buttonLogAssignedBibPools.TabIndex = 25;
+            buttonLogAssignedBibPools.Text = "Вывести пулы присвоенных номеров в лог";
+            buttonLogAssignedBibPools.UseVisualStyleBackColor = true;
+            buttonLogAssignedBibPools.Click += buttonLogAssignedBibPools_Click;
             // 
             // buttonImportEstafetRequestsInWorldCodeFromAnotherBase
             // 
@@ -2919,6 +2933,7 @@
         private TextBox textBoxStartFeeWithCardSymbol;
         private Button buttonStartFeeCalculate;
         private TabPage tabPageOther;
+        private Button buttonLogAssignedBibPools;
         private Button buttonRemvoeWorstResult;
         private ComboBox comboBoxLogType;
         private Button buttonImportStartLogClipboard;
