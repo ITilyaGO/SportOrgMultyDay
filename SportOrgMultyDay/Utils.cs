@@ -367,6 +367,8 @@ namespace SportOrgMultyDay
             buttonPhoneFtpSendBase.Enabled = active;
             buttonGroupRemoveIfNotInList.Enabled = active;
             buttonOrganizationCreateReserveOrg.Enabled = active;
+            buttonOrganizationSetOutOfCompetition.Enabled = active;
+            textBoxOrganizationCompetitionRegion.Enabled = active;
             buttonChipRentFromComment.Enabled = active;
             buttonSetMinutesMasstart.Enabled = active;
             buttonRemovePresonsWithOutResultsInAnyDay.Enabled = active;
@@ -1930,6 +1932,12 @@ namespace SportOrgMultyDay
             }
             catch (Exception ex) { log += $"Ошибка - {ex.Message}\n"; LogError("aqsd2fasdfsad", ex); }
             SendLog(log);
+        }
+
+        private void buttonOrganizationSetOutOfCompetition_Click(object sender, EventArgs e)
+        {
+            SendLog(OrganizationTweaker.SetOutOfCompetitionExceptRegion(
+                PBCurrentRaceFromBase(JBase), textBoxOrganizationCompetitionRegion.Text));
         }
 
         private void buttonPayidToView_Click(object sender, EventArgs e)

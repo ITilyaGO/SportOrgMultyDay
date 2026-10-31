@@ -15,6 +15,47 @@ namespace SportOrgMultyDay.Processing
 {
     public static class OrganizationTweaker
     {
+        public static string SetOutOfCompetitionExceptRegion(JToken race, string regionText)
+        {
+            string regionCode = regionText?.Trim();
+            if (string.IsNullOrEmpty(regionCode) || regionCode.Any(c => c < '0' || c > '9') ||
+                !int.TryParse(regionCode, out int region) || region <= 0)
+                return "Введите код региона — целое положительное число. Изменения не выполнены.";
+
+            if (race?["organizations"] is not JArray organizations || race["persons"] is not JArray persons)
+                return "Не найдены коллективы или участники выбранного дня. Изменения не выполнены.";
+
+            HashSet<string> outOfCompetitionOrganizationIds = new();
+            foreach (JToken organization in organizations)
+            {
+                string id = POId(organization);
+                if (!string.IsNullOrEmpty(id) &&
+                    int.TryParse(POCode(organization), out int organizationCode) && organizationCode != region)
+                    outOfCompetitionOrganizationIds.Add(id);
+            }
+
+            int changedCount = 0;
+            int skippedCount = 0;
+            foreach (JToken person in persons)
+            {
+                if (!outOfCompetitionOrganizationIds.Contains(PPOrganizationId(person)))
+                {
+                    skippedCount++;
+                    continue;
+                }
+
+                if (PPIsOutOfCompetition(person) != true)
+                {
+                    person["is_out_of_competition"] = true;
+                    changedCount++;
+                }
+            }
+
+            return $"Установка В/К участникам коллективов с числовым кодом, отличным от {region}, в выбранном дне завершена.\n" +
+                $"  Найдено коллективов: {outOfCompetitionOrganizationIds.Count}. Установлено В/К: {changedCount}. Пропущено участников: {skippedCount}.\n" +
+                "  Участники без коллектива, с пустым или нечисловым кодом коллектива оставлены без изменений.";
+        }
+
         public static string RenameOrganizations(OrganizationItemsController controller, JToken race)
         {
             string msgLog = "Переиминование коллективов...\n";

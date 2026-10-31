@@ -151,6 +151,8 @@
             checkedListBox1 = new CheckedListBox();
             tabPageOrganizations = new TabPage();
             groupBoxOrgUtils = new GroupBox();
+            buttonOrganizationSetOutOfCompetition = new Button();
+            textBoxOrganizationCompetitionRegion = new TextBox();
             buttonOrganizationCreateReserveOrg = new Button();
             labelClearOrganozationCity = new Label();
             labelClearOrganizationNewName = new Label();
@@ -1663,6 +1665,8 @@
             // groupBoxOrgUtils
             // 
             groupBoxOrgUtils.Controls.Add(buttonOrganizationCreateReserveOrg);
+            groupBoxOrgUtils.Controls.Add(buttonOrganizationSetOutOfCompetition);
+            groupBoxOrgUtils.Controls.Add(textBoxOrganizationCompetitionRegion);
             groupBoxOrgUtils.Location = new Point(341, 370);
             groupBoxOrgUtils.Margin = new Padding(4, 5, 4, 5);
             groupBoxOrgUtils.Name = "groupBoxOrgUtils";
@@ -1683,6 +1687,27 @@
             buttonOrganizationCreateReserveOrg.UseVisualStyleBackColor = true;
             buttonOrganizationCreateReserveOrg.Click += buttonOrganizationCreateReserveOrg_Click;
             // 
+            // buttonOrganizationSetOutOfCompetition
+            //
+            buttonOrganizationSetOutOfCompetition.Location = new Point(9, 87);
+            buttonOrganizationSetOutOfCompetition.Margin = new Padding(4, 5, 4, 5);
+            buttonOrganizationSetOutOfCompetition.Name = "buttonOrganizationSetOutOfCompetition";
+            buttonOrganizationSetOutOfCompetition.Size = new Size(290, 40);
+            buttonOrganizationSetOutOfCompetition.TabIndex = 2;
+            buttonOrganizationSetOutOfCompetition.Text = "В/К всем, кроме региона";
+            buttonOrganizationSetOutOfCompetition.UseVisualStyleBackColor = true;
+            buttonOrganizationSetOutOfCompetition.Click += buttonOrganizationSetOutOfCompetition_Click;
+            //
+            // textBoxOrganizationCompetitionRegion
+            //
+            textBoxOrganizationCompetitionRegion.AccessibleName = "Код региона для сохранения статуса участников";
+            textBoxOrganizationCompetitionRegion.Location = new Point(307, 92);
+            textBoxOrganizationCompetitionRegion.Margin = new Padding(4, 5, 4, 5);
+            textBoxOrganizationCompetitionRegion.Name = "textBoxOrganizationCompetitionRegion";
+            textBoxOrganizationCompetitionRegion.PlaceholderText = "Код";
+            textBoxOrganizationCompetitionRegion.Size = new Size(96, 31);
+            textBoxOrganizationCompetitionRegion.TabIndex = 1;
+            //
             // labelClearOrganozationCity
             // 
             labelClearOrganozationCity.AutoSize = true;
@@ -2843,6 +2868,7 @@
             tabPageOrganizations.ResumeLayout(false);
             tabPageOrganizations.PerformLayout();
             groupBoxOrgUtils.ResumeLayout(false);
+            groupBoxOrgUtils.PerformLayout();
             tabPageOfficial.ResumeLayout(false);
             tabPageOther.ResumeLayout(false);
             tabPageOther.PerformLayout();
@@ -3073,6 +3099,8 @@
         private CheckBox checkBoxRenameGroups;
         private CheckBox checkBoxRenameCourse;
         private GroupBox groupBoxOrgUtils;
+        private Button buttonOrganizationSetOutOfCompetition;
+        private TextBox textBoxOrganizationCompetitionRegion;
         private Button buttonOrganizationCreateReserveOrg;
         private CheckBox checkBoxIsSaveToGzip;
         private Button buttonPayidToView;

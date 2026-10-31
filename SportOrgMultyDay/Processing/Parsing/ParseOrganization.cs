@@ -30,6 +30,28 @@ namespace SportOrgMultyDay.Processing.Parsing
             catch (Exception ex) { LogError("86flvuwcq", ex); }
             return null;
         }
+        public static string PORegion(JToken organization)
+        {
+            try
+            {
+                if (organization == null) return null;
+                return (string)organization["region"];
+            }
+            catch (Exception ex) { LogError("hsdf87lpoj", ex); }
+            return null;
+        }
+
+        public static string POCode(JToken organization)
+        {
+            try
+            {
+                if (organization == null) return null;
+                return (string)organization["code"];
+            }
+            catch (Exception ex) { LogError("ewf23fasd32", ex); }
+            return null;
+        }
+
         public static JToken FOById(string id, JArray organizations)
         {
             for (int i = 0; i < organizations.Count; i++)

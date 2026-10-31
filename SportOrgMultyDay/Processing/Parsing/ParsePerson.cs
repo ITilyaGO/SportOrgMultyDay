@@ -162,6 +162,17 @@ namespace SportOrgMultyDay.Processing.Parsing
             catch (Exception ex) { LogError("qwdgs2254ff", ex); }
             return false;
         }
+
+        public static bool PPIsOutOfCompetition(JToken person)
+        {
+            try
+            {
+                return (bool)person["is_out_of_competition"];
+            }
+            catch (Exception ex) { LogError("h546jdfgh4fg", ex); }
+            return false;
+        }
+
         public static TimeSpan? PPStartTimeTS(JToken person)
         {
             try
